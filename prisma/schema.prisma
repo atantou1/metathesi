@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 5.1 Lookup Tables
+
+model Sector {
+  id        Int        @id @default(autoincrement())
+  name      String
+  divisions Division[]
+
+  @@map("sectors")
+}
+
+model Division {
+  id       Int       @id @default(autoincrement())
+  sectorId Int       @map("sector_id")
+  name     String
+  sector   Sector    @relation(fields: [sectorId], references: [id])
+  profiles Profile[]
+
+  @@map("divisions")
+}
+
+model Specialty {
+  id                  Int       @id @default(autoincrement())
+  code                String    @unique
+  name                String
+  branchCode          String    @map("branch_code")
+  branchName          String    @map("branch_name")
+  educationalCategory String    @map("educational_category")
+  isPrimary           Boolean   @map("is_primary")
+  isSecondary         Boolean   @map("is_secondary")
+  profiles            Profile[]
+
+  @@map("specialties")
+}
+
+model Region {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  postingZones PostingZone[]
+
+  @@map("regions")
+}
+
+enum DivisionType {
+  Primary
+  Secondary
+}
+
+model PostingZone {
+  id             Int          @id @default(autoincrement())
+  regionId       Int          @map("region_id")
+  divisionType   DivisionType @map("division_type")
+  name           String
+  region         Region       @relation(fields: [regionId], references: [id])
+  currentProfiles Profile[]
+  targetRequests TargetZone[]
+
+  @@map("posting_zones")
+}
+
+// 5.2 User & Profile Tables
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  fullName     String   @map("full_name")
+  createdAt    DateTime @default(now()) @map("created_at")
+  profile      Profile?
+
+  @@map("users")
+}
+
+model Profile {
+  id              Int              @id @default(autoincrement())
+  userId          Int              @unique @map("user_id")
+  user            User             @relation(fields: [userId], references: [id])
+  specialtyId     Int              @map("specialty_id")
+  specialty       Specialty        @relation(fields: [specialtyId], references: [id])
+  divisionId      Int              @map("division_id")
+  division        Division         @relation(fields: [divisionId], references: [id])
+  currentZoneId   Int              @map("current_zone_id")
+  currentZone     PostingZone      @relation(fields: [currentZoneId], references: [id])
+  bio             String?
+  transferRequest TransferRequest?
+
+  @@map("profiles")
+}
+
+// 5.3 Request Tables
+
+enum RequestStatus {
+  active
+  matched
+  paused
+}
+
+model TransferRequest {
+  id          Int           @id @default(autoincrement())
+  profileId   Int           @unique @map("profile_id")
+  profile     Profile       @relation(fields: [profileId], references: [id])
+  status      RequestStatus @default(active)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  targetZones TargetZone[]
+
+  @@map("transfer_requests")
+}
+
+model TargetZone {
+  id            Int             @id @default(autoincrement())
+  requestId     Int             @map("request_id")
+  request       TransferRequest @relation(fields: [requestId], references: [id])
+  zoneId        Int             @map("zone_id")
+  zone          PostingZone     @relation(fields: [zoneId], references: [id])
+  priorityOrder Int             @map("priority_order")
+
+  @@map("target_zones")
+}
