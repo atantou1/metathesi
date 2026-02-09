@@ -3,7 +3,6 @@
 import { DivisionType, Prisma } from "@prisma/client"
 import { auth } from "@/auth"
 import { requestSchema, RequestValues } from "@/lib/schemas"
-import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 
 export async function getUserProfile() {
@@ -67,23 +66,18 @@ export async function createTransferRequest(values: RequestValues) {
         return { error: "Η περιοχή οργανικής δεν μπορεί να είναι περιοχή μετάθεσης." }
     }
 
+    // Check for existing request
+    const existing = await prisma.transferRequest.findUnique({
+        where: { profileId: profile.id },
+    })
+
+    if (existing) {
+        return { error: "Υπάρχει ήδη ενεργή αίτηση. Πρέπει να τη διαγράψετε για να υποβάλετε νέα." }
+    }
+
     try {
         // Transaction to create request and target zones
         await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-            // Check if active request exists?
-            // Specs say "can create transfer request". Maybe update existing?
-            // For Phase 1, assume 1 active request per user.
-            // Let's delete existing active request if any
-            const existing = await tx.transferRequest.findUnique({
-                where: { profileId: profile.id },
-            })
-
-            if (existing) {
-                // Optionally update or delete. Let's delete to overwrite.
-                await tx.targetZone.deleteMany({ where: { requestId: existing.id } })
-                await tx.transferRequest.delete({ where: { id: existing.id } })
-            }
-
             const request = await tx.transferRequest.create({
                 data: {
                     profileId: profile.id,
@@ -107,5 +101,56 @@ export async function createTransferRequest(values: RequestValues) {
         return { error: "Η υποβολή αίτησης απέτυχε." }
     }
 
-    redirect("/dashboard") // Or wherever appropriate
+    // We don't redirect here anymore, we returning success to show the message
+    return { success: true }
+}
+
+export async function getTransferRequest() {
+    const session = await auth()
+    if (!session?.user?.id) return null
+
+    const userId = parseInt(session.user.id)
+    const profile = await prisma.profile.findUnique({ where: { userId } })
+    if (!profile) return null
+
+    return await prisma.transferRequest.findUnique({
+        where: { profileId: profile.id },
+        include: {
+            targetZones: {
+                include: {
+                    zone: true
+                },
+                orderBy: {
+                    priorityOrder: 'asc'
+                }
+            }
+        }
+    })
+}
+
+export async function deleteTransferRequest() {
+    const session = await auth()
+    if (!session?.user?.id) return { error: "Δεν είστε συνδεδεμένοι." }
+
+    const userId = parseInt(session.user.id)
+    const profile = await prisma.profile.findUnique({ where: { userId } })
+    if (!profile) return { error: "Δεν βρέθηκε προφίλ." }
+
+    try {
+        const existing = await prisma.transferRequest.findUnique({
+            where: { profileId: profile.id },
+        })
+
+        if (!existing) return { error: "Δεν βρέθηκε αίτηση." }
+
+        await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+            await tx.targetZone.deleteMany({ where: { requestId: existing.id } })
+            await tx.transferRequest.delete({ where: { id: existing.id } })
+        })
+
+        return { success: true }
+    } catch (error) {
+        console.error("Delete request error:", error)
+        return { error: "Η διαγραφή απέτυχε." }
+    }
 }

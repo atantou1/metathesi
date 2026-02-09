@@ -4,7 +4,7 @@ import { useTransition, useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { requestSchema, RequestValues } from "@/lib/schemas"
-import { createTransferRequest, getUserProfile, getAvailableZones } from "@/actions/request"
+import { createTransferRequest, getUserProfile, getAvailableZones, deleteTransferRequest } from "@/actions/request"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -23,17 +23,37 @@ import {
 } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { X } from "lucide-react"
+import { X, CheckCircle, Trash2 } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 type Option = { id: number; name: string }
 
-export function RequestForm() {
+type TransferRequestWithZones = {
+    id: number
+    status: string
+    targetZones: {
+        id: number
+        priorityOrder: number
+        zone: {
+            name: string
+        }
+    }[]
+}
+
+type Props = {
+    initialRequest?: TransferRequestWithZones | null
+}
+
+export function RequestForm({ initialRequest }: Props) {
+    const router = useRouter()
     const [isPending, startTransition] = useTransition()
+    const [isDeleting, startDeleteTransition] = useTransition()
 
     const [currentZone, setCurrentZone] = useState<Option | null>(null)
 
     const [selectedZones, setSelectedZones] = useState<Option[]>([])
     const [loadingProfile, setLoadingProfile] = useState(true)
+    const [success, setSuccess] = useState(false)
 
     const form = useForm<RequestValues>({
         resolver: zodResolver(requestSchema),
@@ -126,6 +146,9 @@ export function RequestForm() {
                 const result = await createTransferRequest(values)
                 if (result?.error) {
                     form.setError("root", { message: result.error })
+                } else if (result?.success) {
+                    setSuccess(true)
+                    router.refresh() // Refresh to update server state (though we show success UI locally)
                 }
             } catch (error) {
                 form.setError("root", { message: "Κάτι πήγε στραβά." })
@@ -133,8 +156,87 @@ export function RequestForm() {
         })
     }
 
+    function handleDelete() {
+        if (!confirm("Είστε σίγουροι ότι θέλετε να διαγράψετε την αίτηση;")) return;
+
+        startDeleteTransition(async () => {
+            const result = await deleteTransferRequest()
+            if (result.success) {
+                router.refresh()
+            } else {
+                alert(result.error)
+            }
+        })
+    }
+
     if (loadingProfile) return <div>Φόρτωση...</div>
 
+    // SUCCESS STATE
+    if (success) {
+        return (
+            <Card className="w-full max-w-2xl mx-auto border-green-200 bg-green-50">
+                <CardContent className="pt-6 flex flex-col items-center justify-center text-center space-y-4">
+                    <CheckCircle className="w-16 h-16 text-green-600" />
+                    <h2 className="text-2xl font-bold text-green-800">Επιτυχής Καταχώρηση!</h2>
+                    <p className="text-green-700">Η αίτησή σας υποβλήθηκε με επιτυχία.</p>
+                    <Button onClick={() => window.location.reload()} variant="outline" className="border-green-600 text-green-700 hover:bg-green-100">
+                        Επιστροφή
+                    </Button>
+                </CardContent>
+            </Card>
+        )
+    }
+
+    // EXISTING REQUEST STATE
+    if (initialRequest) {
+        return (
+            <Card className="w-full max-w-2xl mx-auto">
+                <CardHeader>
+                    <CardTitle className="flex justify-between items-center text-xl">
+                        <span>Ενεργή Αίτηση</span>
+                        <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
+                            {initialRequest.status === 'active' ? 'Ενεργή' : initialRequest.status}
+                        </Badge>
+                    </CardTitle>
+                    <CardDescription>
+                        Έχετε ήδη υποβάλει αίτηση μετάθεσης.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div>
+                        <h4 className="text-sm font-medium text-muted-foreground mb-2">Επιλεγμένες Περιοχές (με σειρά προτεραιότητας):</h4>
+                        <div className="space-y-2">
+                            {initialRequest.targetZones.map((tz) => (
+                                <div key={tz.id} className="p-2 bg-slate-50 border rounded flex items-center gap-3">
+                                    <Badge variant="secondary" className="w-6 h-6 rounded-full flex items-center justify-center p-0">
+                                        {tz.priorityOrder}
+                                    </Badge>
+                                    <span className="font-medium">{tz.zone.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="pt-4 border-t">
+                        <Button
+                            variant="destructive"
+                            className="w-full sm:w-auto"
+                            onClick={handleDelete}
+                            disabled={isDeleting}
+                        >
+                            {isDeleting ? "Διαγραφή..." : "Διαγραφή Αίτησης"}
+                            <Trash2 className="w-4 h-4 ml-2" />
+                        </Button>
+                        <p className="text-xs text-muted-foreground mt-2">
+                            * Για να υποβάλετε νέα αίτηση, πρέπει πρώτα να διαγράψετε την τρέχουσα.
+                        </p>
+                    </div>
+                </CardContent>
+            </Card>
+        )
+    }
+
+    // NEW REQUEST FORM (Existing Rendering)
     return (
         <Card className="w-full max-w-2xl mx-auto">
             <CardHeader>
