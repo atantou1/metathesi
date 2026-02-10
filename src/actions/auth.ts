@@ -19,7 +19,7 @@ export async function login(values: LoginValues) {
         await signIn("credentials", {
             email,
             password,
-            redirectTo: "/profile/create", // Redirect to profile creation/check
+            redirectTo: "/profile",
         })
     } catch (error) {
         if (error instanceof AuthError) {

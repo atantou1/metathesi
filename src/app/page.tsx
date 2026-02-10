@@ -50,8 +50,8 @@ export default async function Home() {
       <div className="container mx-auto py-20 text-center space-y-6">
         <h2 className="text-3xl font-bold">Καλωσήρθατε, {user.name || "Χρήστη"}!</h2>
         <p className="text-lg text-muted-foreground">Για να ξεκινήσετε τη διαδικασία matching, πρέπει πρώτα να δημιουργήσετε το επαγγελματικό σας προφίλ.</p>
-        <Link href="/profile/create">
-          <Button size="lg">Δημιουργία Προφίλ <ArrowRight className="ml-2 w-4 h-4" /></Button>
+        <Link href="/profile">
+          <Button>Δημιουργία Προφίλ</Button>
         </Link>
       </div>
     )

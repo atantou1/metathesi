@@ -363,10 +363,16 @@ export function RequestForm({ initialRequest }: Props) {
                                 {selectedZones.map((zone, index) => (
                                     <Badge key={zone.id} variant="secondary" className="px-3 py-1 text-sm flex items-center gap-2">
                                         {index + 1}. {zone.name}
-                                        <X
-                                            className="w-4 h-4 cursor-pointer hover:text-red-500"
-                                            onClick={() => removeZone(zone.id)}
-                                        />
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                removeZone(zone.id)
+                                            }}
+                                            className="hover:bg-red-100 rounded-full p-0.5 transition-colors"
+                                        >
+                                            <X className="w-4 h-4 text-muted-foreground hover:text-red-500" />
+                                        </button>
                                     </Badge>
                                 ))}
                             </div>

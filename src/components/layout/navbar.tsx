@@ -18,7 +18,7 @@ export async function Navbar() {
                         </Link>
                         {session && (
                             <>
-                                <Link href="/profile/create" className="text-muted-foreground hover:text-foreground">
+                                <Link href="/profile" className="text-muted-foreground hover:text-foreground">
                                     Προφίλ
                                 </Link>
                                 <Link href="/request/create" className="text-muted-foreground hover:text-foreground">
