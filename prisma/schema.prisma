@@ -119,6 +119,7 @@ model TransferRequest {
   status      RequestStatus @default(active)
   createdAt   DateTime      @default(now()) @map("created_at")
   targetZones TargetZone[]
+  matchParticipations MatchParticipant[] // Relation to matches
 
   @@map("transfer_requests")
 }
@@ -131,5 +132,27 @@ model TargetZone {
   zone          PostingZone     @relation(fields: [zoneId], references: [id])
   priorityOrder Int             @map("priority_order")
 
+  @@unique([requestId, zoneId])
   @@map("target_zones")
+}
+
+model Match {
+  id        Int      @id @default(autoincrement())
+  type      String   // 'direct', 'circular'
+  status    String   @default("active") // 'active', 'inactive'
+  createdAt DateTime @default(now()) @map("created_at")
+
+  participants MatchParticipant[]
+
+  @@map("matches")
+}
+
+model MatchParticipant {
+  id        Int      @id @default(autoincrement())
+  matchId   Int      @map("match_id")
+  match     Match    @relation(fields: [matchId], references: [id])
+  requestId Int      @map("request_id")
+  request   TransferRequest @relation(fields: [requestId], references: [id])
+
+  @@map("match_participants")
 }

@@ -84,7 +84,11 @@ export default async function Home() {
   }
 
   // 3. MATCHING RESULTS
-  const matches = await findMatches(profile.id);
+  const currentRequest = request; // Assuming currentRequest refers to the 'request' variable
+  const matches = currentRequest && profile ? await findMatches(profile.id) : []
+
+  const activeMatches = matches.filter(m => m.status === 'active')
+  const inactiveMatches = matches.filter(m => m.status !== 'active');
 
   return (
     <div className="container mx-auto py-10 space-y-8">
@@ -104,66 +108,108 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="grid gap-6">
-        <h3 className="text-xl font-semibold flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 text-green-600" />
-          Βρέθηκαν {matches.length} Συμβατές Μεταθέσεις
-        </h3>
+      <div className="space-y-8">
+        {/* Active Matches Section */}
+        <div>
+          <h3 className="text-xl font-semibold flex items-center gap-2 mb-4">
+            <CheckCircle2 className="w-5 h-5 text-green-600" />
+            Ενεργά Ταιριάσματα ({activeMatches.length})
+          </h3>
 
-        {matches.length === 0 ? (
-          <Card className="bg-slate-50 border-dashed">
-            <CardContent className="py-12 text-center text-muted-foreground">
-              <p className="text-lg">Δεν βρέθηκαν ακόμη χρήστες για αμοιβαία μετάθεση.</p>
-              <p className="text-sm mt-2">Θα ειδοποιηθείτε μόλις υπάρξει ενδιαφέρον.</p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {matches.map((match) => (
-              <Card key={match.id} className="overflow-hidden border-l-4 border-l-green-500 shadow-md hover:shadow-lg transition-shadow">
-                <CardHeader className="bg-slate-50 pb-3">
-                  <div className="flex justify-between items-start">
-                    <div className="space-y-1">
-                      <CardTitle className="text-lg flex items-center gap-2">
-                        <User className="w-4 h-4 text-muted-foreground" />
-                        {match.user.fullName}
-                      </CardTitle>
-                      <CardDescription>
-                        {match.user.email}
-                      </CardDescription>
+          {activeMatches.length === 0 ? (
+            <Card className="bg-slate-50 border-dashed">
+              <CardContent className="py-8 text-center text-muted-foreground">
+                <p>Δεν υπάρχουν ενεργά ταιριάσματα αυτή τη στιγμή.</p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {activeMatches.map((match) => (
+                <Card key={match.id} className="overflow-hidden border-l-4 border-l-green-500 shadow-md hover:shadow-lg transition-shadow">
+                  <CardHeader className="bg-slate-50 pb-3">
+                    <div className="flex justify-between items-start">
+                      <div className="space-y-1">
+                        <CardTitle className="text-lg flex items-center gap-2">
+                          <User className="w-4 h-4 text-muted-foreground" />
+                          {match.user.fullName}
+                        </CardTitle>
+                        <CardDescription>
+                          {match.user.email}
+                        </CardDescription>
+                      </div>
+                      <Badge className="bg-green-600 hover:bg-green-700">Active</Badge>
                     </div>
-                    <Badge className="bg-green-600 hover:bg-green-700">Direct Match</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-4 space-y-4">
-                  <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground uppercase tracking-wider font-semibold">Υπηρετει:</div>
-                    <div className="flex items-center gap-2 font-medium">
-                      <MapPin className="w-4 h-4 text-blue-500" />
-                      {match.currentZone.name}
-                      <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full ml-auto">
-                        (Είναι στις επιλογές σας)
-                      </span>
+                  </CardHeader>
+                  <CardContent className="pt-4 space-y-4">
+                    <div className="space-y-2">
+                      <div className="text-sm text-muted-foreground uppercase tracking-wider font-semibold">Υπηρετει:</div>
+                      <div className="flex items-center gap-2 font-medium">
+                        <MapPin className="w-4 h-4 text-blue-500" />
+                        {match.user.currentZone.name}
+                        <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full ml-auto">
+                          (Επιθυμητή)
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground uppercase tracking-wider font-semibold">Επιθυμει:</div>
-                    <div className="flex flex-wrap gap-2">
-                      {match.transferRequest?.targetZones.map(tz => (
-                        <Badge
-                          key={tz.id}
-                          variant={tz.zone.id === profile.currentZone.id ? "default" : "secondary"}
-                          className={tz.zone.id === profile.currentZone.id ? "bg-blue-600 hover:bg-blue-700" : ""}
-                        >
-                          {tz.zone.name}
-                        </Badge>
-                      ))}
+                    <div className="space-y-2">
+                      <div className="text-sm text-muted-foreground uppercase tracking-wider font-semibold">Επιθυμει:</div>
+                      <div className="flex flex-wrap gap-2">
+                        {match.targetZones.map(tz => (
+                          <Badge
+                            key={tz.id}
+                            variant={tz.id === profile.currentZone.id ? "default" : "secondary"}
+                            className={tz.id === profile.currentZone.id ? "bg-blue-600 hover:bg-blue-700" : ""}
+                          >
+                            {tz.name}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Inactive Matches (History) Section - Only show if there are entries */}
+        {inactiveMatches.length > 0 && (
+          <div className="pt-8 border-t">
+            <h3 className="text-xl font-semibold flex items-center gap-2 mb-4 text-muted-foreground">
+              <span className="text-2xl">📜</span>
+              Ιστορικό Ταιριασμάτων ({inactiveMatches.length})
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-75">
+              {inactiveMatches.map((match) => (
+                <Card key={match.id} className="bg-slate-50 border-slate-200">
+                  <CardHeader className="pb-3">
+                    <div className="flex justify-between items-start">
+                      <div className="space-y-1">
+                        <CardTitle className="text-lg flex items-center gap-2 text-muted-foreground">
+                          <User className="w-4 h-4" />
+                          {match.user.fullName}
+                        </CardTitle>
+                        <CardDescription>{match.user.email}</CardDescription>
+                      </div>
+                      <Badge variant="secondary">Ανενεργό</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-4 space-y-4">
+                    <div className="space-y-2">
+                      <div className="text-sm text-muted-foreground uppercase tracking-wider font-semibold">Υπηρετούσε:</div>
+                      <div className="flex items-center gap-2 font-medium text-muted-foreground">
+                        <MapPin className="w-4 h-4" />
+                        {match.user.currentZone.name}
+                      </div>
+                    </div>
+                    <div className="text-xs text-muted-foreground text-right mt-2">
+                      Ημ/νία: {match.matchDate.toLocaleDateString('el-GR')}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
       </div>

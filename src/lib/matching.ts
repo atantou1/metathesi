@@ -1,34 +1,27 @@
 import { prisma } from "@/lib/prisma"
 import { Prisma } from "@prisma/client"
 
-export type MatchResult = Prisma.ProfileGetPayload<{
-    include: {
-        user: {
-            select: {
-                email: true,
-                fullName: true,
-            }
-        },
-        currentZone: true,
-        transferRequest: {
-            include: {
-                targetZones: {
-                    include: {
-                        zone: true
-                    }
-                }
-            }
-        }
+export type MatchResult = {
+    id: number // Match ID
+    user: {
+        id: number
+        fullName: string
+        email: string
+        specialty: { name: string }
+        currentZone: { name: string }
     }
-}>
+    targetZones: { id: number, name: string }[]
+    matchDate: Date
+    status: string // "active" | "inactive"
+}
 
 export async function findMatches(profileId: number): Promise<MatchResult[]> {
-    // 1. Fetch current user's full profile and request
-    const currentUserProfile = await prisma.profile.findUnique({
+    const userProfile = await prisma.profile.findUnique({
         where: { id: profileId },
         include: {
+            user: true,
+            currentZone: true,
             transferRequest: {
-                where: { status: 'active' },
                 include: {
                     targetZones: true
                 }
@@ -36,54 +29,38 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         }
     })
 
-    if (!currentUserProfile || !currentUserProfile.transferRequest) {
-        return [] // No profile or no active request, so no matches
+    if (!userProfile || !userProfile.transferRequest) {
+        return []
     }
 
-    const currentRequest = currentUserProfile.transferRequest
+    const userRequest = userProfile.transferRequest
+    const userTargetZoneIds = userRequest.targetZones.map(tz => tz.zoneId)
 
-    // If user has no active request, they can't match
-    if (!currentRequest) return []
-
-    const myCurrentZoneId = currentUserProfile.currentZoneId
-    const myTargetZoneIds = currentRequest.targetZones.map(tz => tz.zoneId)
-
-    // 2. Find potential matches
-    // Criteria:
-    // - Same Specialty
-    // - Same Division
-    // - Their Current Zone is in My Target Zones
-    // - My Current Zone is in Their Target Zones
-    // - They have an active request
-
-    const matches = await prisma.profile.findMany({
+    // 1. Check for EXISTING ACTIVE matches in DB
+    const existingMatches = await prisma.match.findMany({
         where: {
-            id: { not: profileId }, // Exclude self
-            specialtyId: currentUserProfile.specialtyId, // 1. Same Specialty
-            divisionId: currentUserProfile.divisionId,   // 2. Same Division
-            currentZoneId: { in: myTargetZoneIds },      // 3. Their Current is My Target
-            transferRequest: {
-                status: 'active',
-                targetZones: {
-                    some: {
-                        zoneId: myCurrentZoneId          // 4. My Current is Their Target
-                    }
+            status: "active",
+            participants: {
+                some: {
+                    requestId: userRequest.id
                 }
             }
         },
         include: {
-            user: {
-                select: {
-                    email: true,
-                    fullName: true,
-                }
-            },
-            currentZone: true,
-            transferRequest: {
+            participants: {
                 include: {
-                    targetZones: {
+                    request: {
                         include: {
-                            zone: true
+                            targetZones: {
+                                include: { zone: true }
+                            },
+                            profile: {
+                                include: {
+                                    user: true,
+                                    specialty: true,
+                                    currentZone: true
+                                }
+                            }
                         }
                     }
                 }
@@ -91,5 +68,98 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         }
     })
 
-    return matches as MatchResult[]
+    if (existingMatches.length > 0) {
+        // Return existing matches formatted as MatchResult
+        return existingMatches.map(match => {
+            // Find the "other" participant
+            const otherParticipant = match.participants.find(p => p.requestId !== userRequest.id)
+            if (!otherParticipant) return null
+
+            const otherProfile = otherParticipant.request.profile
+            return {
+                id: match.id,
+                user: {
+                    id: otherProfile.userId,
+                    fullName: otherProfile.user.fullName,
+                    email: otherProfile.user.email,
+                    specialty: { name: otherProfile.specialty.name },
+                    currentZone: { name: otherProfile.currentZone.name }
+                },
+                targetZones: otherParticipant.request.targetZones.map(tz => ({ id: tz.zone.id, name: tz.zone.name })),
+                matchDate: match.createdAt,
+                status: match.status
+            }
+        }).filter(Boolean) as MatchResult[]
+    }
+
+    // 2. If no existing matches, run algorithm to find NEW matches
+    const potentialMatches = await prisma.profile.findMany({
+        where: {
+            id: { not: profileId }, // Not self
+            specialtyId: userProfile.specialtyId,
+            divisionId: userProfile.divisionId,
+            currentZoneId: { in: userTargetZoneIds }, // They are in where we want to go
+            transferRequest: {
+                status: "active",
+                targetZones: {
+                    some: {
+                        zoneId: userProfile.currentZoneId // We are where they want to go
+                    }
+                }
+            }
+        },
+        include: {
+            user: true,
+            currentZone: true,
+            specialty: true,
+            transferRequest: {
+                include: {
+                    targetZones: {
+                        include: { zone: true }
+                    }
+                }
+            }
+        }
+    })
+
+    const newMatches: MatchResult[] = []
+
+    for (const matchProfile of potentialMatches) {
+        if (!matchProfile.transferRequest) continue
+
+        // Create the match in DB
+        let matchId = 0;
+        await prisma.$transaction(async (tx) => {
+            const newMatch = await (tx as any).match.create({
+                data: {
+                    type: "direct",
+                    status: "active",
+                }
+            })
+            matchId = newMatch.id
+
+            await (tx as any).matchParticipant.createMany({
+                data: [
+                    { matchId: newMatch.id, requestId: userRequest.id },
+                    { matchId: newMatch.id, requestId: matchProfile.transferRequest!.id }
+                ]
+            })
+        })
+
+        newMatches.push({
+            id: matchId,
+            user: {
+                id: matchProfile.userId,
+                fullName: matchProfile.user.fullName,
+                email: matchProfile.user.email,
+                specialty: { name: matchProfile.specialty.name },
+                currentZone: { name: matchProfile.currentZone.name }
+            },
+            targetZones: matchProfile.transferRequest.targetZones.map(tz => ({ id: tz.zone.id, name: tz.zone.name })),
+            matchDate: new Date(),
+            status: "active"
+        })
+    }
+
+    return newMatches
 }

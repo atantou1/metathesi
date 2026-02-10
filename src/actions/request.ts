@@ -143,8 +143,29 @@ export async function deleteTransferRequest() {
 
         if (!existing) return { error: "Δεν βρέθηκε αίτηση." }
 
-        await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+        await prisma.$transaction(async (tx) => {
+            // 1. Invalidate active matches linked to this request
+            await (tx as any).match.updateMany({
+                where: {
+                    status: "active",
+                    participants: {
+                        some: {
+                            requestId: existing.id
+                        }
+                    }
+                },
+                data: { status: "inactive" }
+            })
+
+            // 2. Delete match participants (Clean up before deleting request)
+            await (tx as any).matchParticipant.deleteMany({
+                where: { requestId: existing.id }
+            })
+
+            // 3. Delete target zones
             await tx.targetZone.deleteMany({ where: { requestId: existing.id } })
+
+            // 4. Delete request
             await tx.transferRequest.delete({ where: { id: existing.id } })
         })
 
@@ -179,13 +200,26 @@ export async function updateTransferRequest(values: RequestValues) {
     if (!existing) return { error: "Δεν βρέθηκε αίτηση προς επεξεργασία." }
 
     try {
-        await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-            // 1. Delete existing target zones
+        await prisma.$transaction(async (tx) => {
+            // 1. Invalidate any existing active matches
+            await (tx as any).match.updateMany({
+                where: {
+                    status: "active",
+                    participants: {
+                        some: {
+                            requestId: existing.id
+                        }
+                    }
+                },
+                data: { status: "inactive" }
+            })
+
+            // 2. Delete existing target zones
             await tx.targetZone.deleteMany({
                 where: { requestId: existing.id }
             })
 
-            // 2. Create new target zones
+            // 3. Create new target zones
             await Promise.all(targetZoneIds.map((zoneId, index) => {
                 return tx.targetZone.create({
                     data: {
@@ -196,7 +230,7 @@ export async function updateTransferRequest(values: RequestValues) {
                 })
             }))
 
-            // 3. Update request status/timestamp if needed (optional)
+            // 4. Update request status/timestamp if needed (optional)
             await tx.transferRequest.update({
                 where: { id: existing.id },
                 data: { status: "active" } // Ensure it's active
