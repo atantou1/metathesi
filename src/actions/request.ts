@@ -154,3 +154,58 @@ export async function deleteTransferRequest() {
         return { error: "Η διαγραφή απέτυχε." }
     }
 }
+
+export async function updateTransferRequest(values: RequestValues) {
+    const session = await auth()
+    if (!session?.user?.id) return { error: "Δεν είστε συνδεδεμένοι." }
+
+    const userId = parseInt(session.user.id)
+    const profile = await prisma.profile.findUnique({ where: { userId } })
+    if (!profile) return { error: "Δεν βρέθηκε προφίλ." }
+
+    const validatedFields = requestSchema.safeParse(values)
+    if (!validatedFields.success) return { error: "Μη έγκυρα δεδομένα." }
+
+    const { targetZoneIds } = validatedFields.data
+
+    if (targetZoneIds.includes(profile.currentZoneId)) {
+        return { error: "Η περιοχή οργανικής δεν μπορεί να είναι περιοχή μετάθεσης." }
+    }
+
+    const existing = await prisma.transferRequest.findUnique({
+        where: { profileId: profile.id },
+    })
+
+    if (!existing) return { error: "Δεν βρέθηκε αίτηση προς επεξεργασία." }
+
+    try {
+        await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+            // 1. Delete existing target zones
+            await tx.targetZone.deleteMany({
+                where: { requestId: existing.id }
+            })
+
+            // 2. Create new target zones
+            await Promise.all(targetZoneIds.map((zoneId, index) => {
+                return tx.targetZone.create({
+                    data: {
+                        requestId: existing.id,
+                        zoneId,
+                        priorityOrder: index + 1,
+                    }
+                })
+            }))
+
+            // 3. Update request status/timestamp if needed (optional)
+            await tx.transferRequest.update({
+                where: { id: existing.id },
+                data: { status: "active" } // Ensure it's active
+            })
+        })
+
+        return { success: true }
+    } catch (error) {
+        console.error("Update request error:", error)
+        return { error: "Η ενημέρωση απέτυχε." }
+    }
+}

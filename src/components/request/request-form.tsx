@@ -4,7 +4,7 @@ import { useTransition, useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { requestSchema, RequestValues } from "@/lib/schemas"
-import { createTransferRequest, getUserProfile, getAvailableZones, deleteTransferRequest } from "@/actions/request"
+import { createTransferRequest, getUserProfile, getAvailableZones, deleteTransferRequest, updateTransferRequest } from "@/actions/request"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -35,6 +35,7 @@ type TransferRequestWithZones = {
         id: number
         priorityOrder: number
         zone: {
+            id: number
             name: string
         }
     }[]
@@ -54,11 +55,38 @@ export function RequestForm({ initialRequest }: Props) {
     const [selectedZones, setSelectedZones] = useState<Option[]>([])
     const [loadingProfile, setLoadingProfile] = useState(true)
     const [success, setSuccess] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+
+    // Initialize state from initialRequest if available
+    useEffect(() => {
+        if (initialRequest) {
+            const zones = initialRequest.targetZones
+                .sort((a, b) => a.priorityOrder - b.priorityOrder)
+                .map(tz => ({ id: tz.zone.id, name: tz.zone.name } as Option)) // Map to Option type
+            // Note: tz.zone has only name in type definition above? 
+            // We need to make sure we have IDs. 
+            // The type TransferRequestWithZones says targetZones[].zone.name. 
+            // But targetZones[].id is the ID of the join table, NOT the zoneId.
+            // Wait, getTransferRequest include: targetZones: { include: { zone: true } }
+            // So targetZones[i].zone has ID and Name.
+            // Let's check type definition.
+
+            // Fix: The type definition in this file might be incomplete for `zone`. 
+            // See line 37: zone: { name: string }. It probably has id too from Prisma include.
+
+            // I will cast to any to be safe or update type.
+            // Actually, the server action returns full zone object.
+
+            // Let's assume we can map it.
+            // We need to map `targetZones` to `selectedZones`.
+        }
+    }, [initialRequest])
 
     const form = useForm<RequestValues>({
         resolver: zodResolver(requestSchema),
         defaultValues: {
-            targetZoneIds: [] as number[],
+            // If editing, we set this dynamically later or in useEffect
+            targetZoneIds: [],
         },
     })
 
@@ -136,6 +164,23 @@ export function RequestForm({ initialRequest }: Props) {
         form.setValue("targetZoneIds", newSelected.map(z => z.id))
     }
 
+    // Initialize state from initialRequest
+    useEffect(() => {
+        if (initialRequest) {
+            // Map initial request zones to Option[]
+            const zones = initialRequest.targetZones
+                .sort((a, b) => a.priorityOrder - b.priorityOrder)
+                .map(tz => ({ id: tz.zone.id, name: tz.zone.name }))
+
+            setSelectedZones(zones)
+            form.setValue("targetZoneIds", zones.map(z => z.id))
+        }
+    }, [initialRequest, form])
+
+    // ... (loadData effect stays same) ...
+
+    // ... (regions effect stays same) ...
+
     function onSubmit(values: RequestValues) {
         if (selectedZones.length === 0) {
             form.setError("root", { message: "Επιλέξτε τουλάχιστον μία περιοχή." })
@@ -143,12 +188,19 @@ export function RequestForm({ initialRequest }: Props) {
         }
         startTransition(async () => {
             try {
-                const result = await createTransferRequest(values)
+                let result;
+                if (isEditing) {
+                    result = await updateTransferRequest(values)
+                } else {
+                    result = await createTransferRequest(values)
+                }
+
                 if (result?.error) {
                     form.setError("root", { message: result.error })
                 } else if (result?.success) {
                     setSuccess(true)
-                    router.refresh() // Refresh to update server state (though we show success UI locally)
+                    setIsEditing(false) // Exit edit mode
+                    router.refresh()
                 }
             } catch (error) {
                 form.setError("root", { message: "Κάτι πήγε στραβά." })
@@ -187,8 +239,8 @@ export function RequestForm({ initialRequest }: Props) {
         )
     }
 
-    // EXISTING REQUEST STATE
-    if (initialRequest) {
+    // EXISTING REQUEST STATE (Read Only)
+    if (initialRequest && !isEditing) {
         return (
             <Card className="w-full max-w-2xl mx-auto">
                 <CardHeader>
@@ -217,19 +269,24 @@ export function RequestForm({ initialRequest }: Props) {
                         </div>
                     </div>
 
-                    <div className="pt-4 border-t">
+                    <div className="pt-4 border-t flex flex-col gap-3">
                         <Button
-                            variant="destructive"
-                            className="w-full sm:w-auto"
+                            onClick={() => setIsEditing(true)}
+                            className="w-full"
+                        >
+                            Επεξεργασία Αίτησης
+                        </Button>
+
+                        <Button
+                            variant="outline" // Changed to outline for secondary action look, or keep destructive? User wants to edit mostly.
+                            // Let's keep destructive but maybe secondary styling or distinct.
+                            className="w-full text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700"
                             onClick={handleDelete}
                             disabled={isDeleting}
                         >
                             {isDeleting ? "Διαγραφή..." : "Διαγραφή Αίτησης"}
                             <Trash2 className="w-4 h-4 ml-2" />
                         </Button>
-                        <p className="text-xs text-muted-foreground mt-2">
-                            * Για να υποβάλετε νέα αίτηση, πρέπει πρώτα να διαγράψετε την τρέχουσα.
-                        </p>
                     </div>
                 </CardContent>
             </Card>
@@ -240,7 +297,7 @@ export function RequestForm({ initialRequest }: Props) {
     return (
         <Card className="w-full max-w-2xl mx-auto">
             <CardHeader>
-                <CardTitle>Αίτηση Μετάθεσης</CardTitle>
+                <CardTitle>{isEditing ? "Επεξεργασία Αίτησης" : "Αίτηση Μετάθεσης"}</CardTitle>
                 <CardDescription>
                     Τρέχουσα Οργανική: <span className="font-semibold">{currentZone?.name || "-"}</span>
                 </CardDescription>
@@ -249,6 +306,7 @@ export function RequestForm({ initialRequest }: Props) {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
+                        {/* ... fields ... */}
                         <div className="space-y-4 border p-4 rounded-md bg-slate-50">
                             <h3 className="font-medium">Προσθήκη Επιλογών (Κατά σειρά προτίμησης)</h3>
 
@@ -322,9 +380,22 @@ export function RequestForm({ initialRequest }: Props) {
                             <div className="text-red-500 text-sm">{form.formState.errors.targetZoneIds.message}</div>
                         )}
 
-                        <Button type="submit" className="w-full" disabled={isPending}>
-                            {isPending ? "Υποβολή..." : "Υποβολή Αίτησης"}
-                        </Button>
+                        <div className="flex gap-3">
+                            <Button type="submit" className="flex-1" disabled={isPending}>
+                                {isPending ? "Αποθήκευση..." : (isEditing ? "Αποθήκευση Αλλαγών" : "Υποβολή Αίτησης")}
+                            </Button>
+
+                            {isEditing && (
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => setIsEditing(false)}
+                                    disabled={isPending}
+                                >
+                                    Ακύρωση
+                                </Button>
+                            )}
+                        </div>
                     </form>
                 </Form>
             </CardContent>

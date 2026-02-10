@@ -68,7 +68,7 @@ export async function createProfile(values: ProfileValues) {
         return { error: "Μη έγκυρα δεδομένα." }
     }
 
-    const { divisionId, specialtyId, currentZoneId, bio } = validatedFields.data
+    const { divisionId, specialtyId, currentZoneId } = validatedFields.data
     const userId = parseInt(session.user.id)
 
     try {
@@ -78,7 +78,7 @@ export async function createProfile(values: ProfileValues) {
                 divisionId,
                 specialtyId,
                 currentZoneId,
-                bio,
+                // hireDate & service fields use DB defaults
             }
         })
     } catch (error) {

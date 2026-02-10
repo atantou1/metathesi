@@ -20,7 +20,11 @@ export const profileSchema = z.object({
     divisionId: z.number().min(1, "Επιλέξτε βαθμίδα"),
     specialtyId: z.number().min(1, "Επιλέξτε ειδικότητα"),
     currentZoneId: z.number().min(1, "Επιλέξτε περιοχή οργανικής"),
-    bio: z.string().optional(),
+    // bio: z.string().optional(), // Removed
+    // hireDate: z.string().min(1, "Επιλέξτε ημερομηνία διορισμού"), // Hidden for now
+    // serviceYears: z.number().min(0), // Hidden for now
+    // serviceMonths: z.number().min(0).max(11), // Hidden for now
+    // serviceDays: z.number().min(0).max(30), // Hidden for now
 })
 
 export const requestSchema = z.object({

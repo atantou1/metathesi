@@ -91,7 +91,14 @@ model Profile {
   division        Division         @relation(fields: [divisionId], references: [id])
   currentZoneId   Int              @map("current_zone_id")
   currentZone     PostingZone      @relation(fields: [currentZoneId], references: [id])
-  bio             String?
+  // bio             String? // Removed
+  
+  // New Fields
+  hireDate        DateTime         @default("2020-01-01T00:00:00Z") @map("hire_date")
+  serviceYears    Int              @default(10) @map("service_years")
+  serviceMonths   Int              @default(10) @map("service_months")
+  serviceDays     Int              @default(10) @map("service_days")
+
   transferRequest TransferRequest?
 
   @@map("profiles")

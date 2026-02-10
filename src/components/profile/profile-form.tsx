@@ -45,7 +45,6 @@ export function ProfileForm() {
             divisionId: 0,
             specialtyId: 0,
             currentZoneId: 0,
-            bio: "",
         },
     })
 
@@ -239,24 +238,7 @@ export function ProfileForm() {
                             />
                         </div>
 
-                        {/* Bio */}
-                        <FormField
-                            control={form.control}
-                            name="bio"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Σύντομο Βιογραφικό (Προαιρετικό)</FormLabel>
-                                    <FormControl>
-                                        <Textarea
-                                            placeholder="Λίγα λόγια για εσάς..."
-                                            className="resize-none"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        {/* Bio, Hire Date, Service Time removed for Phase 1 simplification */}
 
                         {form.formState.errors.root && (
                             <div className="text-red-500 text-sm">{form.formState.errors.root.message}</div>
