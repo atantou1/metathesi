@@ -54,6 +54,21 @@ export async function getZones(regionId: number, divisionId: number) {
             divisionType,
         }
     })
+    return await prisma.postingZone.findMany({
+        where: {
+            regionId,
+            divisionType,
+        }
+    })
+}
+
+export async function getZonesByIds(ids: number[]) {
+    if (!ids || ids.length === 0) return []
+    return await prisma.postingZone.findMany({
+        where: {
+            id: { in: ids }
+        }
+    })
 }
 
 export async function createProfile(values: ProfileValues) {

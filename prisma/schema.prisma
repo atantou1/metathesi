@@ -98,6 +98,8 @@ model Profile {
   serviceYears    Int              @default(10) @map("service_years")
   serviceMonths   Int              @default(10) @map("service_months")
   serviceDays     Int              @default(10) @map("service_days")
+  
+  fullName        String?          @map("full_name")
 
   transferRequest TransferRequest?
 

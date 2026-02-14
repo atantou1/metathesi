@@ -18,7 +18,7 @@ export default function Home() {
             Tame the <span className="text-transparent bg-clip-text bg-gradient-to-br from-slate-900 to-blue-600 dark:from-white dark:to-blue-500">Bureaucracy</span>.
           </h1>
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Find your perfect mutual transfer match instantly. Stop searching through forums and spreadsheets. One centralized, intelligent dashboard designed for public sector mobility.
+            Ξέχνα το χάος των ομάδων στο Viber και το Facebook. Η πρώτη έξυπνη πλατφόρμα που ταιριάζει αυτόματα τις επιθυμίες των εκπαιδευτικών, με βάση την ειδικότητα και την περιοχή."
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
             <Link href="/signup" className="w-full sm:w-auto">
