@@ -142,7 +142,8 @@ model Match {
   id        Int      @id @default(autoincrement())
   type      String   // 'direct', 'circular'
   status    String   @default("active") // 'active', 'inactive'
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  completedAt DateTime? @map("completed_at")
 
   participants MatchParticipant[]
 

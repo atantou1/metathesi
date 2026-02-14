@@ -12,7 +12,9 @@ export type MatchResult = {
     }
     targetZones: { id: number, name: string }[]
     matchDate: Date
+    completedAt?: Date | null
     status: string // "active" | "inactive"
+    rank: number
 }
 
 export async function findMatches(profileId: number): Promise<MatchResult[]> {
@@ -86,9 +88,18 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
                 specialty: { name: otherProfile.specialty.name },
                 currentZone: { name: otherProfile.currentZone.name }
             },
+            // Calculate Rank: Where IS the current user in the OTHER person's target list?
+            // We know `otherParticipant.request.targetZones` contains the zones effectively.
+            // But wait, `targetZones` in the result is `otherParticipant.request.targetZones`.
+            // We need to find `userProfile.currentZoneId` in `otherParticipant.request.targetZones`.
             targetZones: otherParticipant.request.targetZones.map((tz: any) => ({ id: tz.zone.id, name: tz.zone.name })),
             matchDate: match.createdAt,
-            status: match.status
+            completedAt: match.completedAt,
+            status: match.status,
+            rank: (() => {
+                const target = otherParticipant.request.targetZones.find((tz: any) => tz.zoneId === userProfile.currentZoneId)
+                return target ? target.priorityOrder : 0
+            })()
         }
     }).filter(Boolean) as MatchResult[]
 
@@ -179,7 +190,12 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
             },
             targetZones: matchProfile.transferRequest.targetZones.map(tz => ({ id: tz.zone.id, name: tz.zone.name })),
             matchDate: createdAt,
-            status: "active"
+            completedAt: null,
+            status: "active",
+            rank: (() => {
+                const target = matchProfile.transferRequest!.targetZones.find(t => t.zoneId === userProfile.currentZoneId)
+                return target ? target.priorityOrder : 0
+            })()
         })
     }
 
