@@ -12,10 +12,10 @@ export default function Home() {
         <section className="text-center w-full max-w-4xl mx-auto mb-20 md:mb-32">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-600/10 text-blue-600 text-sm font-semibold mb-6 animate-fade-in-up">
             <Zap className="w-4 h-4" />
-            <span>The Future of Mutual Transfers</span>
+            <span>Βάλε την αναζήτηση στον αυτόματο πιλότο</span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-slate-900 dark:text-white leading-[1.1]">
-            Tame the <span className="text-transparent bg-clip-text bg-gradient-to-br from-slate-900 to-blue-600 dark:from-white dark:to-blue-500">Bureaucracy</span>.
+            Το Ψηφιακό Κέντρο Αμοιβαίων <span className="text-transparent bg-clip-text bg-gradient-to-br from-slate-900 to-blue-600 dark:from-white dark:to-blue-500">Μεταθέσεων</span>.
           </h1>
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto leading-relaxed">
             Ξέχνα το χάος των ομάδων στο Viber και το Facebook. Η πρώτη έξυπνη πλατφόρμα που ταιριάζει αυτόματα τις επιθυμίες των εκπαιδευτικών, με βάση την ειδικότητα και την περιοχή."
@@ -23,7 +23,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
             <Link href="/signup" className="w-full sm:w-auto">
               <button className="w-full px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-blue-600/30 transition-all duration-300 flex items-center justify-center gap-2">
-                Get Started Free
+                Ξεκίνα Δωρεάν
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
@@ -77,7 +77,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-bold mb-4">The Chaos</h3>
                 <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                  Endless forums, outdated lists, and uncertainty. You are losing opportunities every day to manual searching and unverified posts.
+                  Χάνεις ώρες σκρολάροντας σε δεκάδες αναρτήσεις στα Social Media χωρίς φίλτρα και οργάνωση.
                 </p>
                 <div className="text-sm font-semibold text-blue-600 uppercase tracking-wider flex items-center gap-1">
                   Hover to Solve <Smartphone className="w-4 h-4" />
@@ -105,7 +105,7 @@ export default function Home() {
         <section className="w-full max-w-4xl mx-auto mb-24 md:mb-32 relative" id="how-it-works">
           <div className="text-center mb-16">
             <span className="text-blue-600 font-semibold uppercase tracking-wider text-sm">Process</span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-2 text-slate-900 dark:text-white">How it Works</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mt-2 text-slate-900 dark:text-white">Πως λειτουργεί</h2>
           </div>
 
           <div className="absolute left-[20px] md:left-1/2 top-32 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-800 -translate-x-1/2 md:translate-x-0 h-[80%] z-0"></div>
@@ -114,8 +114,8 @@ export default function Home() {
             {/* Step 1 */}
             <div className="flex flex-col md:flex-row items-start md:items-center group">
               <div className="w-full md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 pl-12 md:pl-0 mt-2 md:mt-0">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Create Profile</h3>
-                <p className="text-slate-600 dark:text-slate-400">Securely sign up and define your current position using our government-aligned database.</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Δημιούργησε το Προφίλ σου</h3>
+                <p className="text-slate-600 dark:text-slate-400">Επίλεξε Ειδικότητα και την Τρέχουσα Θέση σου μέσα από την ενημερωμένη βάση δεδομένων μας.</p>
               </div>
               <div className="absolute left-[20px] md:left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 border-4 border-slate-50 dark:border-slate-900 shadow-lg group-hover:scale-110 transition-transform order-1 md:order-2">
                 <span className="text-white text-sm font-bold">1</span>
@@ -128,16 +128,16 @@ export default function Home() {
                 <span className="text-blue-600 font-bold text-sm">2</span>
               </div>
               <div className="w-full md:w-1/2 md:pl-12 order-2 md:order-3 pl-12 md:pl-0 mt-2 md:mt-0 ml-auto">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Define Request</h3>
-                <p className="text-slate-600 dark:text-slate-400">Set your intent. Choose what regions, cities, or specific positions you are looking for.</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Δήλωσε Επιθυμία</h3>
+                <p className="text-slate-600 dark:text-slate-400">Επίλεξε μία ή περισσότερες περιοχές που επιθυμείς να μετατεθείς.</p>
               </div>
             </div>
 
             {/* Step 3 */}
             <div className="flex flex-col md:flex-row items-start md:items-center group">
               <div className="w-full md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 pl-12 md:pl-0 mt-2 md:mt-0">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Get Matched</h3>
-                <p className="text-slate-600 dark:text-slate-400">Experience a curated feed. No ads, no distractions, just pure matches tailored to you.</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Λάβε Ειδοποίηση</h3>
+                <p className="text-slate-600 dark:text-slate-400">Το σύστημα εντοπίζει αυτόματα συναδέλφους που θέλουν τη δική σου θέση και κατέχουν τη θέση που θέλεις εσύ.</p>
               </div>
               <div className="absolute left-[20px] md:left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 border-4 border-slate-50 dark:border-slate-900 shadow-lg group-hover:scale-110 transition-transform order-1 md:order-2">
                 <span className="text-white text-sm font-bold">3</span>

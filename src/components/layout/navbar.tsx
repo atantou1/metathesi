@@ -12,6 +12,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { MainNav } from "@/components/layout/main-nav"
 
 export async function Navbar() {
     const session = await auth()
@@ -28,22 +29,7 @@ export async function Navbar() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex space-x-8">
-                        {session ? (
-                            <>
-                                <Link href="/dashboard" className="text-slate-900 dark:text-slate-100 font-medium px-1 py-2 border-b-2 border-blue-600">
-                                    Dashboard
-                                </Link>
-                                <Link href="/request/create" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 font-medium px-1 py-2 border-b-2 border-transparent hover:border-slate-300 transition-colors">
-                                    My Request
-                                </Link>
-                                {/* Future page for Matches */}
-                                <Link href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 font-medium px-1 py-2 border-b-2 border-transparent hover:border-slate-300 transition-colors">
-                                    Matches
-                                </Link>
-                            </>
-                        ) : null}
-                    </div>
+                    {session ? <MainNav /> : null}
 
                     <div className="flex items-center gap-4">
                         {session ? (
