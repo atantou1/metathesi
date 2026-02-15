@@ -74,38 +74,60 @@ export default async function Dashboard() {
                     {/* LEFT COLUMN */}
                     <div className="lg:col-span-8 space-y-6">
 
-                        {/* Active Request Card */}
+                        {/* Active Request Card with Embedded Scanning Block */}
                         <div className="relative overflow-hidden rounded-2xl glass-card">
                             <div className="absolute top-0 right-0 -mt-8 -mr-8 w-40 h-40 bg-blue-100/50 dark:bg-blue-900/20 rounded-full blur-3xl pointer-events-none"></div>
                             <div className="p-6 sm:p-8 relative z-10">
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                                     <div>
                                         <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-3">
-                                            Transfer Request
+                                            Αίτηση Αμοιβαίας
                                             <span className="px-2 py-0.5 rounded text-[10px] bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 font-mono">
                                                 #TR-{request.id}
                                             </span>
                                         </h2>
                                         <div className="flex items-center gap-2 mt-2">
-                                            <span className="text-sm text-slate-500">Submitted on <span className="text-slate-700 dark:text-slate-300 font-medium">{request.createdAt.toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>
+                                            <span className="text-sm text-slate-500">Υποβλήθηκε στις <span className="text-slate-700 dark:text-slate-300 font-medium">{request.createdAt.toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>
                                         </div>
                                     </div>
                                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 border border-emerald-200 shadow-sm">
                                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
-                                        Active Status
+                                        Ενεργή
                                     </span>
                                 </div>
 
-                                <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 border border-slate-200 dark:border-slate-800 mb-8">
-                                    <div className="flex items-start gap-4">
-                                        <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400 flex-shrink-0 border border-blue-200 dark:border-blue-800">
-                                            <Eye className="w-6 h-6" />
+                                {/* Scanning Block Embedded */}
+                                <div className="scanning-pulse relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-900 to-[#1e3a8a] border border-blue-800/50 shadow-xl shadow-blue-900/10 mb-8">
+                                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+                                    <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-blue-600/20 to-transparent"></div>
+                                    <div className="relative p-6 flex flex-col md:flex-row items-center md:items-start gap-6 text-center md:text-left">
+                                        <div className="flex-shrink-0 relative">
+                                            <div className="w-16 h-16 relative flex items-center justify-center">
+                                                <span className="absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-20 animate-ping" style={{ animationDuration: '3s' }}></span>
+                                                <span className="absolute inline-flex h-[140%] w-[140%] rounded-full bg-blue-400 opacity-10 animate-pulse"></span>
+                                                <div className="relative w-14 h-14 rounded-full bg-blue-950 border border-blue-700/50 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                                                    <Radio className="w-8 h-8 text-blue-400 animate-pulse" />
+                                                    <div className="absolute inset-0 rounded-full border-t-2 border-blue-500/30 animate-spin" style={{ animationDuration: '4s' }}></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Profile Visibility: High</h3>
-                                            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed max-w-2xl">
-                                                Your request is currently active in the national pool. Officers from your designated target zones can view your anonymized profile details.
+                                        <div className="flex-grow w-full">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <h3 className="text-base font-bold text-white">Scanning for Matches...</h3>
+                                                <span className="text-[10px] font-mono text-blue-300 bg-blue-900/60 px-1.5 py-0.5 rounded border border-blue-800">REALTIME</span>
+                                            </div>
+                                            <p className="text-blue-100/80 text-xs mb-4 leading-relaxed">
+                                                Our algorithm is analyzing mutual transfer opportunities based on your target zones.
                                             </p>
+                                            <div className="w-full bg-blue-950/50 rounded-full h-1.5 mb-3 overflow-hidden shadow-inner border border-blue-900/30">
+                                                <div className="bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 h-full rounded-full w-3/4 animate-shimmer relative overflow-hidden">
+                                                    <div className="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full animate-shimmer"></div>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-between items-center text-[10px] text-blue-300/80 font-mono">
+                                                <span>Phase 1: Zone Analysis</span>
+                                                <span className="text-blue-200 flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span> Live Connection</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -113,48 +135,12 @@ export default async function Dashboard() {
                                 <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-200 dark:border-slate-800 pt-6">
                                     <Link href="/request/create" className="flex-1 sm:flex-none">
                                         <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg shadow-blue-900/10 active:scale-[0.98]">
-                                            Edit Request Details
+                                            Επεξεργασία
                                         </button>
                                     </Link>
                                     <button className="flex-1 sm:flex-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">
-                                        Withdraw
+                                        Διαγραφή
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Scanning Card */}
-                        <div className="scanning-pulse relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900 to-[#1e3a8a] border border-blue-800/50 shadow-xl shadow-blue-900/10">
-                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-                            <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-blue-600/20 to-transparent"></div>
-                            <div className="relative p-6 sm:p-8 flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
-                                <div className="flex-shrink-0 relative">
-                                    <div className="w-24 h-24 relative flex items-center justify-center">
-                                        <span className="absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-20 animate-ping" style={{ animationDuration: '3s' }}></span>
-                                        <span className="absolute inline-flex h-[140%] w-[140%] rounded-full bg-blue-400 opacity-10 animate-pulse"></span>
-                                        <div className="relative w-20 h-20 rounded-full bg-blue-950 border border-blue-700/50 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                                            <Radio className="w-10 h-10 text-blue-400 animate-pulse" />
-                                            <div className="absolute inset-0 rounded-full border-t-2 border-blue-500/30 animate-spin" style={{ animationDuration: '4s' }}></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex-grow w-full">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <h3 className="text-lg font-bold text-white">Scanning for Matches...</h3>
-                                        <span className="text-xs font-mono text-blue-300 bg-blue-900/60 px-2 py-1 rounded border border-blue-800">REALTIME</span>
-                                    </div>
-                                    <p className="text-blue-100/80 text-sm mb-6 max-w-lg leading-relaxed">
-                                        Our algorithm is currently analyzing mutual transfer opportunities based on your target zones and profile criteria.
-                                    </p>
-                                    <div className="w-full bg-blue-950/50 rounded-full h-1.5 mb-4 overflow-hidden shadow-inner border border-blue-900/30">
-                                        <div className="bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 h-full rounded-full w-3/4 animate-shimmer relative overflow-hidden">
-                                            <div className="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full animate-shimmer"></div>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between items-center text-xs text-blue-300/80 font-mono">
-                                        <span>Phase 1: Zone Analysis</span>
-                                        <span className="text-blue-200 flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span> Live Connection</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
