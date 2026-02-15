@@ -47,21 +47,167 @@ export default async function Dashboard() {
 
     if (!request) {
         return (
-            <div className="container mx-auto py-20 space-y-8">
-                <div className="flex justify-between items-center">
-                    <h2 className="text-2xl font-bold">Το Προφίλ μου: {profile.specialty.name}</h2>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                        <MapPin className="w-4 h-4" />
-                        <span>{profile.currentZone.name}</span>
-                    </div>
-                </div>
+            <div className="min-h-screen pt-20 bg-slate-50/50 dark:bg-slate-950 flex flex-col">
+                <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+                        {/* LEFT COLUMN */}
+                        <div className="lg:col-span-8 space-y-6">
+                            {/* No Active Request Card */}
+                            <div className="glass-card rounded-2xl overflow-hidden relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-blue-700"></div>
+                                <div className="p-8 sm:p-12 flex flex-col items-center text-center">
+                                    <div className="w-24 h-24 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-6 relative">
+                                        <MapPin className="text-blue-600 dark:text-blue-400 w-12 h-12" />
+                                        <div className="absolute -top-1 -right-1 w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center border-4 border-white dark:border-slate-900">
+                                            <Plus className="text-white w-5 h-5" />
+                                        </div>
+                                    </div>
+                                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Δεν έχετε ενεργή αίτηση</h2>
+                                    <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-10 leading-relaxed">
+                                        Ξεκινήστε τώρα τη διαδικασία για να βρείτε την ιδανική αμοιβαία μετάθεση. Η διαδικασία είναι απλή και γρήγορη.
+                                    </p>
+                                    <Link href="/request/create">
+                                        <button className="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white px-8 py-4 rounded-xl text-base font-semibold transition-all shadow-lg shadow-blue-900/10 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer">
+                                            <Plus className="w-6 h-6" />
+                                            Δημιουργία Νέας Αίτησης
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-2xl p-8 text-center space-y-4">
-                    <h3 className="text-xl font-semibold text-blue-900">Δεν έχετε ενεργή αίτηση μετάθεσης.</h3>
-                    <p className="text-blue-700">Δηλώστε τις περιοχές που επιθυμείτε να μετατεθείτε για να βρούμε το ταίρι σας.</p>
-                    <Link href="/request/create">
-                        <Button size="lg" className="mt-4">Υποβολή Αίτησης</Button>
-                    </Link>
+                            {/* How it works */}
+                            <div className="glass-card rounded-2xl p-6 sm:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                                    <div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-900/20">
+                                        <Eye className="text-blue-600 dark:text-blue-400 w-5 h-5" />
+                                    </div>
+                                    Πώς λειτουργεί το metaThesi;
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="space-y-3">
+                                        <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white font-bold text-sm border border-slate-200 dark:border-slate-700">1</div>
+                                        <h4 className="font-semibold text-slate-900 dark:text-white">Δημιουργία Προφίλ</h4>
+                                        <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">Καταχωρήστε τα στοιχεία της οργανικής σας θέσης και τις περιοχές που σας ενδιαφέρουν.</p>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white font-bold text-sm border border-slate-200 dark:border-slate-700">2</div>
+                                        <h4 className="font-semibold text-slate-900 dark:text-white">Αυτόματη Αναζήτηση</h4>
+                                        <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">Ο αλγόριθμός μας αναζητά συνεχώς συμβατές αιτήσεις για αμοιβαία μετάθεση σε πραγματικό χρόνο.</p>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white font-bold text-sm border border-slate-200 dark:border-slate-700">3</div>
+                                        <h4 className="font-semibold text-slate-900 dark:text-white">Επικοινωνία & Ταυτοποίηση</h4>
+                                        <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">Μόλις βρεθεί ταίριασμα, ενημερώνεστε αμέσως για να ξεκινήσετε τη διαδικασία επικοινωνίας.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* RIGHT COLUMN */}
+                        <div className="lg:col-span-4 space-y-6">
+                            {/* Profile Summary */}
+                            <div className="glass-card rounded-2xl h-fit bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50 rounded-t-2xl">
+                                    <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">ΣΥΝΟΨΗ ΠΡΟΦΙΛ</h3>
+                                    <Link href="/profile">
+                                        <button className="text-slate-400 hover:text-blue-600 transition-colors p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                                            <FileEdit className="w-5 h-5" />
+                                        </button>
+                                    </Link>
+                                </div>
+                                <div className="p-5 space-y-5">
+                                    {/* Designation */}
+                                    <div className="flex items-center gap-4 group">
+                                        <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/40 transition-colors">
+                                            <BadgeCheck className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">ΒΑΘΜΙΔΑ</p>
+                                            <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{profile.division.name}</p>
+                                        </div>
+                                    </div>
+                                    {/* Department */}
+                                    <div className="flex items-center gap-4 group">
+                                        <div className="w-10 h-10 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-800 group-hover:bg-orange-100 dark:group-hover:bg-orange-900/40 transition-colors">
+                                            <Building2 className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">ΕΙΔΙΚΟΤΗΤΑ</p>
+                                            <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{profile.specialty.name}</p>
+                                        </div>
+                                    </div>
+                                    {/* Current Zone */}
+                                    <div className="flex items-center gap-4 group">
+                                        <div className="w-10 h-10 rounded-lg bg-teal-50 dark:bg-teal-900/20 flex items-center justify-center text-teal-600 dark:text-teal-400 border border-teal-100 dark:border-teal-800 group-hover:bg-teal-100 dark:group-hover:bg-teal-900/40 transition-colors">
+                                            <MapPin className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">ΤΡΕΧΟΥΣΑ ΘΕΣΗ</p>
+                                            <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{profile.currentZone.name}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="px-5 pb-5">
+                                    <Link href="/profile" className="flex items-center justify-center w-full py-2 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-medium text-slate-600 dark:text-slate-300 transition-colors border border-slate-200 dark:border-slate-700 cursor-pointer">
+                                        View Full Profile
+                                    </Link>
+                                </div>
+                            </div>
+
+                            {/* Help Box */}
+                            <div className="bg-blue-700 rounded-2xl p-6 text-white relative overflow-hidden shadow-xl shadow-blue-900/20">
+                                <div className="relative z-10">
+                                    <div className="mb-4 text-blue-200">
+                                        <Users className="w-6 h-6" />
+                                    </div>
+                                    <h4 className="font-bold mb-2">Χρειάζεστε βοήθεια;</h4>
+                                    <p className="text-sm text-blue-100 mb-4 opacity-90 leading-relaxed">
+                                        Δείτε τον οδηγό χρήσης ή επικοινωνήστε με την υποστήριξη για οποιαδήποτε απορία.
+                                    </p>
+                                    <Link href="#" className="inline-flex items-center text-sm font-semibold hover:underline cursor-pointer">
+                                        Κέντρο Βοήθειας
+                                    </Link>
+                                </div>
+                                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                {/* Reusing existing Mobile Nav at the bottom of the main Dashboard if needed, 
+                    but strictly following the user's provided HTML structure which had a simple footer.
+                    However, keeping consistent with the active dashboard's existing footer structure is safer.*/}
+                <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 pb-safe z-50">
+                    <div className="flex justify-around items-center h-16 px-2">
+                        <button className="flex flex-col items-center justify-center w-full h-full text-blue-600">
+                            <LayoutDashboard className="w-6 h-6" />
+                            <span className="text-[10px] font-medium mt-1">Home</span>
+                        </button>
+                        <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                            <Users className="w-6 h-6" />
+                            <span className="text-[10px] font-medium mt-1">Matches</span>
+                        </button>
+                        <div className="relative -top-5">
+                            <Link href="/request/create">
+                                <button className="w-12 h-12 rounded-full bg-blue-600 text-white shadow-lg shadow-blue-600/30 flex items-center justify-center transform transition-transform active:scale-95 border-2 border-white dark:border-slate-900">
+                                    <Plus className="w-6 h-6" />
+                                </button>
+                            </Link>
+                        </div>
+                        <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                            <Bell className="w-6 h-6" />
+                            <span className="text-[10px] font-medium mt-1">Alerts</span>
+                        </button>
+                        <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                            <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-800 ring-1 ring-slate-300 dark:ring-slate-700">
+                                <Avatar className="w-full h-full">
+                                    <AvatarImage src={user.image || undefined} />
+                                    <AvatarFallback className="text-[10px]">{user.name?.substring(0, 2).toUpperCase()}</AvatarFallback>
+                                </Avatar>
+                            </div>
+                            <span className="text-[10px] font-medium mt-1">Profile</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         )
