@@ -14,6 +14,7 @@ import {
     LayoutDashboard,
     Users,
     Bell,
+    SlidersHorizontal,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -113,22 +114,57 @@ export default async function Dashboard() {
                                         </div>
                                         <div className="flex-grow w-full">
                                             <div className="flex justify-between items-start mb-2">
-                                                <h3 className="text-base font-bold text-white">Scanning for Matches...</h3>
-                                                <span className="text-[10px] font-mono text-blue-300 bg-blue-900/60 px-1.5 py-0.5 rounded border border-blue-800">REALTIME</span>
+                                                <h3 className="text-base font-bold text-white">Σάρωση για Αμοιβαίες...</h3>
+                                                <span className="text-[10px] font-mono text-blue-300 bg-blue-900/60 px-1.5 py-0.5 rounded border border-blue-800">LIVE</span>
                                             </div>
                                             <p className="text-blue-100/80 text-xs mb-4 leading-relaxed">
-                                                Our algorithm is analyzing mutual transfer opportunities based on your target zones.
+                                                Ο αλγόριθμος αναζητά ευκαιρίες αμοιβαίας μετάθεσης στις Περιοχές Προτίμησής σας.
                                             </p>
                                             <div className="w-full bg-blue-950/50 rounded-full h-1.5 mb-3 overflow-hidden shadow-inner border border-blue-900/30">
                                                 <div className="bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 h-full rounded-full w-3/4 animate-shimmer relative overflow-hidden">
                                                     <div className="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full animate-shimmer"></div>
                                                 </div>
                                             </div>
-                                            <div className="flex justify-between items-center text-[10px] text-blue-300/80 font-mono">
-                                                <span>Phase 1: Zone Analysis</span>
-                                                <span className="text-blue-200 flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span> Live Connection</span>
-                                            </div>
+
                                         </div>
+                                    </div>
+                                </div>
+
+                                {/* "My Preferences" Block */}
+                                <div className="mb-8">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 tracking-wide flex items-center gap-2">
+                                            <SlidersHorizontal className="text-blue-600 dark:text-blue-400 w-5 h-5" />
+                                            Οι Προτιμήσεις μου
+                                        </h3>
+                                        <Link href="/request/create">
+                                            <button className="text-[10px] font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+                                                Διαχείριση
+                                            </button>
+                                        </Link>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        {request.targetZones.map((target, index) => (
+                                            <div key={target.id} className="group flex items-center p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-700 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all">
+                                                <div className="w-6 h-6 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center text-[10px] font-bold mr-3 shadow-sm group-hover:border-blue-200 dark:group-hover:border-blue-700 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                                                    {index + 1}
+                                                </div>
+                                                <div className="flex-grow">
+                                                    <div className="flex justify-between items-center">
+                                                        <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate max-w-[100px]">{target.zone.name}</h4>
+                                                        {index === 0 && (
+                                                            <span className="text-[9px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 px-1.5 py-0.5 rounded border border-red-100 dark:border-red-900/50">HIGH</span>
+                                                        )}
+                                                        {index === 1 && (
+                                                            <span className="text-[9px] font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 px-1.5 py-0.5 rounded border border-amber-100 dark:border-amber-900/50">MED</span>
+                                                        )}
+                                                        {index > 1 && (
+                                                            <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-1.5 py-0.5 rounded border border-blue-100 dark:border-blue-900/50">LOW</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
 
@@ -152,7 +188,7 @@ export default async function Dashboard() {
                         {/* Profile Summary */}
                         <div className="glass-card rounded-2xl h-fit">
                             <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50 rounded-t-2xl">
-                                <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">Profile Summary</h3>
+                                <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">ΣΥΝΟΨΗ ΠΡΟΦΙΛ</h3>
                                 <Link href="/profile">
                                     <button className="text-slate-400 hover:text-blue-600 transition-colors p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800">
                                         <FileEdit className="w-5 h-5" />
@@ -166,8 +202,8 @@ export default async function Dashboard() {
                                         <BadgeCheck className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">Designation</p>
-                                        <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{profile.specialty.name}</p>
+                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">ΒΑΘΜΙΔΑ</p>
+                                        <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{profile.division.name}</p>
                                     </div>
                                 </div>
                                 {/* Department */}
@@ -176,8 +212,8 @@ export default async function Dashboard() {
                                         <Building2 className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">Department</p>
-                                        <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{profile.division.name}</p>
+                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">ΕΙΔΙΚΟΤΗΤΑ</p>
+                                        <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{profile.specialty.name}</p>
                                     </div>
                                 </div>
                                 {/* Current Zone */}
@@ -186,7 +222,7 @@ export default async function Dashboard() {
                                         <MapPin className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">Current Zone</p>
+                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">ΤΡΕΧΟΥΣΑ ΘΕΣΗ</p>
                                         <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{profile.currentZone.name}</p>
                                     </div>
                                 </div>
