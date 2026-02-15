@@ -1,6 +1,6 @@
 "use server"
 
-import { DivisionType, Prisma } from "@prisma/client"
+import { DivisionType, Prisma, RequestStatus } from "@prisma/client"
 import { auth } from "@/auth"
 import { requestSchema, RequestValues } from "@/lib/schemas"
 import { prisma } from "@/lib/prisma"
@@ -71,25 +71,47 @@ export async function createTransferRequest(values: RequestValues) {
         where: { profileId: profile.id },
     })
 
-    if (existing) {
+    if (existing && existing.status === 'active') {
         return { error: "Υπάρχει ήδη ενεργή αίτηση. Πρέπει να τη διαγράψετε για να υποβάλετε νέα." }
     }
 
     try {
-        // Transaction to create request and target zones
+        // Transaction to create or update request and target zones
         await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-            const request = await tx.transferRequest.create({
-                data: {
-                    profileId: profile.id,
-                    status: "active",
-                }
-            })
+            let requestId: number;
+
+            if (existing) {
+                // Reactivate existing inactive request
+                const updated = await tx.transferRequest.update({
+                    where: { id: existing.id },
+                    data: {
+                        status: RequestStatus.active,
+                        createdAt: new Date(), // Reset creation date
+                        completedAt: null, // clear completion date
+                    }
+                })
+                requestId = updated.id
+
+                // Delete old target zones
+                await tx.targetZone.deleteMany({
+                    where: { requestId: existing.id }
+                })
+            } else {
+                // Create new request
+                const request = await tx.transferRequest.create({
+                    data: {
+                        profileId: profile.id,
+                        status: RequestStatus.active,
+                    }
+                })
+                requestId = request.id
+            }
 
             // Create target zones with priority (order in array)
             await Promise.all(targetZoneIds.map((zoneId, index) => {
                 return tx.targetZone.create({
                     data: {
-                        requestId: request.id,
+                        requestId,
                         zoneId,
                         priorityOrder: index + 1,
                     }
@@ -113,7 +135,7 @@ export async function getTransferRequest() {
     const profile = await prisma.profile.findUnique({ where: { userId } })
     if (!profile) return null
 
-    return await prisma.transferRequest.findUnique({
+    const request = await prisma.transferRequest.findUnique({
         where: { profileId: profile.id },
         include: {
             targetZones: {
@@ -126,6 +148,10 @@ export async function getTransferRequest() {
             }
         }
     })
+
+    if (request?.status !== 'active') return null
+
+    return request
 }
 
 export async function deleteTransferRequest() {
@@ -144,6 +170,8 @@ export async function deleteTransferRequest() {
         if (!existing) return { error: "Δεν βρέθηκε αίτηση." }
 
         await prisma.$transaction(async (tx) => {
+            const now = new Date()
+
             // 1. Invalidate active matches linked to this request
             await (tx as any).match.updateMany({
                 where: {
@@ -154,19 +182,24 @@ export async function deleteTransferRequest() {
                         }
                     }
                 },
-                data: { status: "inactive" }
+                data: {
+                    status: "inactive",
+                    completedAt: now
+                }
             })
 
-            // 2. Delete match participants (Clean up before deleting request)
-            await (tx as any).matchParticipant.deleteMany({
-                where: { requestId: existing.id }
+            // 2. Do NOT delete participants or target zones yet to keep history in DB?
+            // User requested "Delete" visually removes the frame.
+            // But we keep the record as inactive.
+
+            // 3. Mark request as inactive (Soft Delete)
+            await tx.transferRequest.update({
+                where: { id: existing.id },
+                data: {
+                    status: RequestStatus.inactive,
+                    completedAt: now
+                }
             })
-
-            // 3. Delete target zones
-            await tx.targetZone.deleteMany({ where: { requestId: existing.id } })
-
-            // 4. Delete request
-            await tx.transferRequest.delete({ where: { id: existing.id } })
         })
 
         return { success: true }
@@ -201,7 +234,9 @@ export async function updateTransferRequest(values: RequestValues) {
 
     try {
         await prisma.$transaction(async (tx) => {
-            // 1. Invalidate any existing active matches
+            const now = new Date()
+
+            // 1. Invalidate any existing active matches as the request criteria changed
             await (tx as any).match.updateMany({
                 where: {
                     status: "active",
@@ -211,7 +246,10 @@ export async function updateTransferRequest(values: RequestValues) {
                         }
                     }
                 },
-                data: { status: "inactive" }
+                data: {
+                    status: "inactive",
+                    completedAt: now
+                }
             })
 
             // 2. Delete existing target zones
@@ -230,10 +268,14 @@ export async function updateTransferRequest(values: RequestValues) {
                 })
             }))
 
-            // 4. Update request status/timestamp if needed (optional)
+            // 4. Update request status/timestamp if needed
+            // Ensure status is active in case it was inactive
             await tx.transferRequest.update({
                 where: { id: existing.id },
-                data: { status: "active" } // Ensure it's active
+                data: {
+                    status: RequestStatus.active,
+                    completedAt: null // clear completion if we are updating/reactivating
+                }
             })
         })
 

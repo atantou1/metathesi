@@ -17,6 +17,7 @@ import {
     SlidersHorizontal,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DeleteRequestButton } from "@/components/dashboard/delete-request-button";
 
 export default async function Dashboard() {
     const session = await auth();
@@ -170,13 +171,11 @@ export default async function Dashboard() {
 
                                 <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-200 dark:border-slate-800 pt-6">
                                     <Link href="/request/create" className="flex-1 sm:flex-none">
-                                        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg shadow-blue-900/10 active:scale-[0.98]">
+                                        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg shadow-blue-900/10 active:scale-[0.98] cursor-pointer">
                                             Επεξεργασία
                                         </button>
                                     </Link>
-                                    <button className="flex-1 sm:flex-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">
-                                        Διαγραφή
-                                    </button>
+                                    <DeleteRequestButton />
                                 </div>
                             </div>
                         </div>

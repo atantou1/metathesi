@@ -112,6 +112,7 @@ enum RequestStatus {
   active
   matched
   paused
+  inactive
 }
 
 model TransferRequest {
@@ -120,6 +121,7 @@ model TransferRequest {
   profile     Profile       @relation(fields: [profileId], references: [id])
   status      RequestStatus @default(active)
   createdAt   DateTime      @default(now()) @map("created_at")
+  completedAt DateTime?     @map("completed_at")
   targetZones TargetZone[]
   matchParticipations MatchParticipant[] // Relation to matches
 
