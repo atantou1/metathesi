@@ -9,7 +9,7 @@ export default async function CreateRequestPage() {
 
     // Construct Initial Data
     const initialData = {
-        fullName: profile?.fullName || "", // Or user name if we had it available in this query, but profile update handles it
+        fullName: (profile as any)?.fullName || "", // Or user name if we had it available in this query, but profile update handles it
         divisionId: profile?.divisionId,
         specialtyId: profile?.specialtyId,
         currentRegionId: profile?.currentZone?.regionId,
@@ -19,7 +19,7 @@ export default async function CreateRequestPage() {
 
     return (
         <div className="container mx-auto py-8 pt-24">
-            <WizardContainer initialData={initialData} />
+            <WizardContainer initialData={initialData} requestId={request?.id} />
         </div>
     )
 }

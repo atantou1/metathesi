@@ -16,6 +16,7 @@ export async function getUserProfile() {
             currentZone: true,
             division: true,
             specialty: true,
+            // We might want to include active transfer request here if needed
         }
     })
 }
@@ -66,46 +67,29 @@ export async function createTransferRequest(values: RequestValues) {
         return { error: "Η περιοχή οργανικής δεν μπορεί να είναι περιοχή μετάθεσης." }
     }
 
-    // Check for existing request
-    const existing = await prisma.transferRequest.findUnique({
-        where: { profileId: profile.id },
+    // Check for existing ACTIVE request
+    const existingActive = await prisma.transferRequest.findFirst({
+        where: {
+            profileId: profile.id,
+            status: 'active'
+        },
     })
 
-    if (existing && existing.status === 'active') {
+    if (existingActive) {
         return { error: "Υπάρχει ήδη ενεργή αίτηση. Πρέπει να τη διαγράψετε για να υποβάλετε νέα." }
     }
 
     try {
-        // Transaction to create or update request and target zones
+        // Transaction to create request and target zones
         await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-            let requestId: number;
-
-            if (existing) {
-                // Reactivate existing inactive request
-                const updated = await tx.transferRequest.update({
-                    where: { id: existing.id },
-                    data: {
-                        status: RequestStatus.active,
-                        createdAt: new Date(), // Reset creation date
-                        completedAt: null, // clear completion date
-                    }
-                })
-                requestId = updated.id
-
-                // Delete old target zones
-                await tx.targetZone.deleteMany({
-                    where: { requestId: existing.id }
-                })
-            } else {
-                // Create new request
-                const request = await tx.transferRequest.create({
-                    data: {
-                        profileId: profile.id,
-                        status: RequestStatus.active,
-                    }
-                })
-                requestId = request.id
-            }
+            // Create NEW request
+            const request = await tx.transferRequest.create({
+                data: {
+                    profileId: profile.id,
+                    status: RequestStatus.active,
+                }
+            })
+            const requestId = request.id
 
             // Create target zones with priority (order in array)
             await Promise.all(targetZoneIds.map((zoneId, index) => {
@@ -135,8 +119,11 @@ export async function getTransferRequest() {
     const profile = await prisma.profile.findUnique({ where: { userId } })
     if (!profile) return null
 
-    const request = await prisma.transferRequest.findUnique({
-        where: { profileId: profile.id },
+    const request = await prisma.transferRequest.findFirst({
+        where: {
+            profileId: profile.id,
+            status: 'active'
+        },
         include: {
             targetZones: {
                 include: {
@@ -149,7 +136,7 @@ export async function getTransferRequest() {
         }
     })
 
-    if (request?.status !== 'active') return null
+    if (!request) return null
 
     return request
 }
@@ -163,8 +150,11 @@ export async function deleteTransferRequest() {
     if (!profile) return { error: "Δεν βρέθηκε προφίλ." }
 
     try {
-        const existing = await prisma.transferRequest.findUnique({
-            where: { profileId: profile.id },
+        const existing = await prisma.transferRequest.findFirst({
+            where: {
+                profileId: profile.id,
+                status: 'active'
+            },
         })
 
         if (!existing) return { error: "Δεν βρέθηκε αίτηση." }
@@ -226,8 +216,11 @@ export async function updateTransferRequest(values: RequestValues) {
         return { error: "Η περιοχή οργανικής δεν μπορεί να είναι περιοχή μετάθεσης." }
     }
 
-    const existing = await prisma.transferRequest.findUnique({
-        where: { profileId: profile.id },
+    const existing = await prisma.transferRequest.findFirst({
+        where: {
+            profileId: profile.id,
+            status: 'active'
+        },
     })
 
     if (!existing) return { error: "Δεν βρέθηκε αίτηση προς επεξεργασία." }

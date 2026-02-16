@@ -7,12 +7,7 @@ import { z } from "zod"
 import { Step1Identity } from "./step1-identity"
 import { Step2Locations } from "./step2-locations"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, ArrowLeft } from "lucide-react"
-// imports removed
-// Actually, we can just call them in order. 
-// Or create a new server action `submitWizard(data)` to handle transaction.
-// For now, I'll assume we can use `createTransferRequest` but it takes `RequestValues`.
-// I need a schema that covers BOTH steps.
+import { ArrowRight } from "lucide-react"
 
 // Define Unified Schema
 const wizardSchema = z.object({
@@ -41,9 +36,10 @@ type InitialData = {
     targetZoneIds?: number[]
 }
 
-export function WizardContainer({ initialData }: { initialData?: InitialData }) {
+export function WizardContainer({ initialData, requestId }: { initialData?: InitialData, requestId?: number }) {
     const [step, setStep] = useState(1)
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const isEditing = !!requestId
 
     const methods = useForm<WizardValues>({
         resolver: zodResolver(wizardSchema),
@@ -58,7 +54,7 @@ export function WizardContainer({ initialData }: { initialData?: InitialData }) 
         mode: "onChange"
     })
 
-    const { trigger, handleSubmit, formState: { isValid } } = methods
+    const { trigger, handleSubmit } = methods
 
     const nextStep = async (e?: React.MouseEvent) => {
         e?.preventDefault()
@@ -74,7 +70,9 @@ export function WizardContainer({ initialData }: { initialData?: InitialData }) 
     const onSubmit = async (data: WizardValues) => {
         setIsSubmitting(true)
         try {
-            const result = await submitWizardRequest(data)
+            // Pass requestId along with data
+            const payload = { ...data, requestId }
+            const result = await submitWizardRequest(payload)
             if (result?.success) {
                 // Redirect or show success
                 window.location.href = "/dashboard"
@@ -91,52 +89,42 @@ export function WizardContainer({ initialData }: { initialData?: InitialData }) 
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">
-
-                <div className="flex-1">
-                    {step === 1 && <Step1Identity />}
+            <form onSubmit={handleSubmit(onSubmit)} className="h-[calc(100vh-64px)] flex flex-col bg-slate-50 dark:bg-slate-900/50">
+                {/* Scrollable Content Area */}
+                <div className="flex-1 overflow-y-auto p-4 pb-0 md:p-8">
+                    {step === 1 && <Step1Identity onNext={() => nextStep()} />}
                     {step === 2 && <Step2Locations />}
                 </div>
 
-                {/* Footer Controls */}
-                <div className="flex-none bg-white border-t border-slate-200 p-4 pb-8 shadow-[0_-4px_20px_-4px_rgba(0,0,0,0.1)] z-20 sticky bottom-0">
-                    <div className="max-w-xl mx-auto flex flex-col gap-3">
-                        <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-                            <span>Step {step} of 2</span>
-                            <span>{step === 1 ? "Profile Setup" : "Locations"}</span>
-                        </div>
-                        <div className="flex gap-3">
-                            {step === 2 && (
+                {/* Footer Controls - Hidden on Step 1 as it has its own button */}
+                {step !== 1 && (
+                    <div className="flex-none bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 p-4 pb-8 shadow-[0_-4px_20px_-4px_rgba(0,0,0,0.1)] z-20">
+                        <div className="max-w-xl mx-auto flex flex-col gap-3">
+                            <div className="flex items-center justify-between text-xs text-slate-400 px-1">
+                                <span>Step {step} of 2</span>
+                                <span>Locations</span>
+                            </div>
+                            <div className="flex gap-3">
                                 <Button
                                     type="button"
                                     onClick={prevStep}
                                     variant="outline"
-                                    className="flex-1 rounded-xl py-6"
+                                    className="flex-1 bg-white hover:bg-slate-50 text-slate-700 font-semibold py-6 px-6 rounded-xl border border-slate-200 active:scale-[0.98] transition-all"
                                 >
-                                    Back
+                                    Πίσω
                                 </Button>
-                            )}
 
-                            {step === 1 ? (
-                                <Button
-                                    type="button"
-                                    onClick={nextStep}
-                                    className="flex-[2] bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-6 shadow-lg shadow-blue-500/20"
-                                >
-                                    Continue <ArrowRight className="w-4 h-4 ml-2" />
-                                </Button>
-                            ) : (
                                 <Button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="flex-[2] bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-6 shadow-lg shadow-blue-500/20"
+                                    className="flex-[2] bg-blue-600 hover:bg-blue-700 text-white font-semibold py-6 px-6 rounded-xl shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
                                 >
-                                    {isSubmitting ? "Submitting..." : "Submit Request"} <ArrowRight className="w-4 h-4 ml-2" />
+                                    {isSubmitting ? "Processing..." : (isEditing ? "Αποθήκευση Αλλαγών" : "Υποβολή Αίτησης")} <ArrowRight className="w-4 h-4" />
                                 </Button>
-                            )}
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </form>
         </FormProvider>
     )

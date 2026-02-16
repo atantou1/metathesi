@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MainNav } from "@/components/layout/main-nav"
+import { UserNavLogout } from "@/components/layout/user-nav-logout"
 
 export async function Navbar() {
     const session = await auth()
@@ -110,20 +111,7 @@ export async function Navbar() {
                                         <div className="h-px bg-slate-100 my-1"></div>
 
                                         {/* Logout */}
-                                        <DropdownMenuItem asChild className="p-0 focus:bg-transparent">
-                                            <form
-                                                action={async () => {
-                                                    "use server"
-                                                    await signOut()
-                                                }}
-                                                className="w-full"
-                                            >
-                                                <button type="submit" className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 font-medium hover:bg-red-50 transition-colors cursor-pointer text-left">
-                                                    <LogOut className="w-5 h-5" />
-                                                    Αποσύνδεση
-                                                </button>
-                                            </form>
-                                        </DropdownMenuItem>
+                                        <UserNavLogout />
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </>

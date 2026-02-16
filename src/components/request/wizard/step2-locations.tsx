@@ -280,7 +280,7 @@ export function Step2Locations() {
                             </SelectContent>
                         </Select>
                     </div>
-                    {errors.targetZoneIds && <p className="text-red-500 text-sm mt-2">{errors.targetZoneIds.message as string}</p>}
+                    {errors.targetZoneIds && <p className="text-red-500 text-sm mt-2">{errors.targetZoneIds?.message as string}</p>}
                 </section>
             </div>
         </div>

@@ -17,6 +17,7 @@ export const loginSchema = z.object({
 
 export type SignUpValues = z.infer<typeof signUpSchema>
 export const profileSchema = z.object({
+    fullName: z.string().optional(),
     divisionId: z.number().min(1, "Επιλέξτε βαθμίδα"),
     specialtyId: z.number().min(1, "Επιλέξτε ειδικότητα"),
     currentZoneId: z.number().min(1, "Επιλέξτε περιοχή οργανικής"),

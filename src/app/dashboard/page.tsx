@@ -434,38 +434,7 @@ export default async function Dashboard() {
             </div>
 
             {/* MOBILE BOTTOM NAV */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 pb-safe z-50">
-                <div className="flex justify-around items-center h-16 px-2">
-                    <button className="flex flex-col items-center justify-center w-full h-full text-blue-600">
-                        <LayoutDashboard className="w-6 h-6" />
-                        <span className="text-[10px] font-medium mt-1">Home</span>
-                    </button>
-                    <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
-                        <Users className="w-6 h-6" />
-                        <span className="text-[10px] font-medium mt-1">Matches</span>
-                    </button>
-                    <div className="relative -top-5">
-                        <Link href="/request/create">
-                            <button className="w-12 h-12 rounded-full bg-blue-600 text-white shadow-lg shadow-blue-600/30 flex items-center justify-center transform transition-transform active:scale-95 border-2 border-white dark:border-slate-900">
-                                <Plus className="w-6 h-6" />
-                            </button>
-                        </Link>
-                    </div>
-                    <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
-                        <Bell className="w-6 h-6" />
-                        <span className="text-[10px] font-medium mt-1">Alerts</span>
-                    </button>
-                    <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
-                        <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-800 ring-1 ring-slate-300 dark:ring-slate-700">
-                            <Avatar className="w-full h-full">
-                                <AvatarImage src={user.image || undefined} />
-                                <AvatarFallback className="text-[10px]">{user.name?.substring(0, 2).toUpperCase()}</AvatarFallback>
-                            </Avatar>
-                        </div>
-                        <span className="text-[10px] font-medium mt-1">Profile</span>
-                    </button>
-                </div>
-            </div>
+
         </div>
     );
 }

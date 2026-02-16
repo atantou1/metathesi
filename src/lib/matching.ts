@@ -23,7 +23,8 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         include: {
             user: true,
             currentZone: true,
-            transferRequest: {
+            transferRequests: {
+                where: { status: 'active' },
                 include: {
                     targetZones: true
                 }
@@ -31,11 +32,13 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         }
     })
 
-    if (!userProfile || !userProfile.transferRequest) {
+    const activeRequest = userProfile?.transferRequests?.[0]
+
+    if (!userProfile || !activeRequest) {
         return []
     }
 
-    const userRequest = userProfile.transferRequest
+    const userRequest = activeRequest
     const userTargetZoneIds = userRequest.targetZones.map(tz => tz.zoneId)
 
     // 1. Check for ALL existing matches in DB (Active & Inactive)
@@ -119,11 +122,13 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
             specialtyId: userProfile.specialtyId,
             divisionId: userProfile.divisionId,
             currentZoneId: { in: userTargetZoneIds }, // They are in where we want to go
-            transferRequest: {
-                status: "active",
-                targetZones: {
-                    some: {
-                        zoneId: userProfile.currentZoneId // We are where they want to go
+            transferRequests: {
+                some: {
+                    status: "active",
+                    targetZones: {
+                        some: {
+                            zoneId: userProfile.currentZoneId // We are where they want to go
+                        }
                     }
                 }
             }
@@ -132,7 +137,8 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
             user: true,
             currentZone: true,
             specialty: true,
-            transferRequest: {
+            transferRequests: {
+                where: { status: 'active' },
                 include: {
                     targetZones: {
                         include: { zone: true }
@@ -145,14 +151,15 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
     const newMatches: MatchResult[] = []
 
     for (const matchProfile of potentialMatches) {
-        if (!matchProfile.transferRequest) continue
+        const matchRequest = matchProfile.transferRequests[0]
+        if (!matchRequest) continue
 
         // Check if we already matched with this request (in inactive history) - optional check?
         // For now, if it's new run of algorithm, we assume it's valid to match again if conditions are met?
         // Or should we avoid re-matching the same person if we have an inactive match?
         // Let's check `existingMatches` for this participant.
         const alreadyMatched = existingMatches.some((em: any) =>
-            em.participants.some((p: any) => p.requestId === matchProfile.transferRequest!.id)
+            em.participants.some((p: any) => p.requestId === matchRequest.id)
         )
 
         if (alreadyMatched) continue; // Skip if we already have a match record (even inactive)
@@ -174,7 +181,7 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
             await (tx as any).matchParticipant.createMany({
                 data: [
                     { matchId: newMatch.id, requestId: userRequest.id },
-                    { matchId: newMatch.id, requestId: matchProfile.transferRequest!.id }
+                    { matchId: newMatch.id, requestId: matchRequest.id }
                 ]
             })
         })
@@ -188,12 +195,12 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
                 specialty: { name: matchProfile.specialty.name },
                 currentZone: { name: matchProfile.currentZone.name }
             },
-            targetZones: matchProfile.transferRequest.targetZones.map(tz => ({ id: tz.zone.id, name: tz.zone.name })),
+            targetZones: matchRequest.targetZones.map((tz: any) => ({ id: tz.zone.id, name: tz.zone.name })),
             matchDate: createdAt,
             completedAt: null,
             status: "active",
             rank: (() => {
-                const target = matchProfile.transferRequest!.targetZones.find(t => t.zoneId === userProfile.currentZoneId)
+                const target = matchRequest.targetZones.find((t: any) => t.zoneId === userProfile.currentZoneId)
                 return target ? target.priorityOrder : 0
             })()
         })

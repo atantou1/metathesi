@@ -130,13 +130,18 @@ export async function updateProfile(values: ProfileValues) {
                     currentZoneId,
                 },
                 include: {
-                    transferRequest: true
+                    transferRequests: {
+                        where: { status: 'active' }
+                    }
                 }
             })
 
             // 2. If active request exists, invalidate matches and re-run algorithm
-            if (updatedProfile.transferRequest && updatedProfile.transferRequest.status === 'active') {
-                const requestId = updatedProfile.transferRequest.id
+            // We expect at most one active request
+            const activeRequest = updatedProfile.transferRequests[0]
+
+            if (activeRequest) {
+                const requestId = activeRequest.id
 
                 // Invalidate existing active matches
                 await (tx as any).match.updateMany({
