@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { auth, signOut } from "@/auth"
 import { Button } from "@/components/ui/button"
-import { MapPin, Bell, Menu, User as UserIcon } from "lucide-react"
+import { MapPin, Bell, Menu, User as UserIcon, Settings, FileText, Moon, LogOut } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -59,17 +59,56 @@ export async function Navbar() {
                                             </div>
                                         </div>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end" className="w-56">
-                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem asChild>
-                                            <Link href="/profile">Profile Settings</Link>
+                                    <DropdownMenuContent align="end" className="w-64 p-2 bg-white rounded-xl border border-slate-200 shadow-xl">
+
+                                        {/* My Account (Non-clickable) */}
+                                        <div className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition-colors cursor-default">
+                                            <UserIcon className="w-5 h-5" />
+                                            My Account
+                                        </div>
+
+                                        <div className="h-px bg-slate-100 my-1"></div>
+
+                                        {/* Settings (Non-clickable) */}
+                                        <div className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition-colors cursor-default opacity-70">
+                                            <Settings className="w-5 h-5" />
+                                            Ρυθμίσεις
+                                        </div>
+
+                                        {/* My Request (Clickable) */}
+                                        <DropdownMenuItem asChild className="p-0 focus:bg-transparent">
+                                            <Link href="/dashboard" className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition-colors cursor-pointer w-full">
+                                                <FileText className="w-5 h-5" />
+                                                Η Αίτησή μου
+                                            </Link>
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem asChild>
-                                            <Link href="/request/create">Manage Request</Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem>
+
+                                        <div className="h-px bg-slate-100 my-1"></div>
+
+                                        {/* Light/Dark Toggle (Visual Only) */}
+                                        <div className="flex items-center justify-between px-4 py-2.5 select-none hover:bg-slate-50 transition-colors rounded-sm">
+                                            <div className="flex items-center gap-3 text-sm text-slate-700">
+                                                <Moon className="w-5 h-5" />
+                                                Εναλλαγή Dark mode
+                                            </div>
+                                            <div className="relative inline-block w-10 mr-2 align-middle transition duration-200 ease-in">
+                                                <input
+                                                    type="checkbox"
+                                                    name="toggle"
+                                                    id="toggle"
+                                                    className="peer absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 right-5 checked:right-0 duration-200 ease-in checked:border-blue-700"
+                                                />
+                                                <label
+                                                    htmlFor="toggle"
+                                                    className="block overflow-hidden h-5 rounded-full bg-slate-300 cursor-pointer peer-checked:bg-blue-700 transition-colors"
+                                                ></label>
+                                            </div>
+                                        </div>
+
+                                        <div className="h-px bg-slate-100 my-1"></div>
+
+                                        {/* Logout */}
+                                        <DropdownMenuItem asChild className="p-0 focus:bg-transparent">
                                             <form
                                                 action={async () => {
                                                     "use server"
@@ -77,8 +116,9 @@ export async function Navbar() {
                                                 }}
                                                 className="w-full"
                                             >
-                                                <button type="submit" className="w-full text-left">
-                                                    Sign Out
+                                                <button type="submit" className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 font-medium hover:bg-red-50 transition-colors cursor-pointer text-left">
+                                                    <LogOut className="w-5 h-5" />
+                                                    Αποσύνδεση
                                                 </button>
                                             </form>
                                         </DropdownMenuItem>
