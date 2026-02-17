@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { auth, signOut } from "@/auth"
 import { Button } from "@/components/ui/button"
-import { MapPin, Bell, Menu, User as UserIcon, Settings, FileText, Moon, LogOut } from "lucide-react"
+import { MapPin, Bell, User as UserIcon, Settings, FileText, Moon, LogOut } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -14,6 +14,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MainNav } from "@/components/layout/main-nav"
 import { UserNavLogout } from "@/components/layout/user-nav-logout"
+import { MobileMenu } from "@/components/layout/mobile-menu"
 
 export async function Navbar() {
     const session = await auth()
@@ -127,9 +128,8 @@ export async function Navbar() {
                         )}
 
                         {/* Mobile Menu Button - simplified for now */}
-                        <button className="md:hidden p-2 text-slate-400">
-                            <Menu className="w-6 h-6" />
-                        </button>
+                        {/* Mobile Menu */}
+                        <MobileMenu session={session} />
                     </div>
                 </div>
             </div>
