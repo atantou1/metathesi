@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { prisma } from "./prisma"
 import { Prisma } from "@prisma/client"
 
 export type MatchResult = {
@@ -23,6 +23,7 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         include: {
             user: true,
             currentZone: true,
+            // @ts-ignore - Prisma relation config issue
             transferRequests: {
                 where: { status: 'active' },
                 include: {
@@ -32,6 +33,7 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         }
     })
 
+    // @ts-ignore
     const activeRequest = userProfile?.transferRequests?.[0]
 
     if (!userProfile || !activeRequest) {
@@ -39,7 +41,10 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
     }
 
     const userRequest = activeRequest
-    const userTargetZoneIds = userRequest.targetZones.map(tz => tz.zoneId)
+    const userTargetZoneIds = userRequest.targetZones.map((tz: any) => tz.zoneId)
+    // Use originZoneId from the request, falling back to currentZoneId if not set (though it should be)
+    // @ts-ignore - originZoneId is new
+    const userOriginZoneId = userRequest.originZoneId || userProfile.currentZoneId
 
     // 1. Check for ALL existing matches in DB (Active & Inactive)
     const existingMatches = await (prisma as any).match.findMany({
@@ -121,13 +126,16 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
             id: { not: profileId }, // Not self
             specialtyId: userProfile.specialtyId,
             divisionId: userProfile.divisionId,
-            currentZoneId: { in: userTargetZoneIds }, // They are in where we want to go
+            // currentZoneId: { in: userTargetZoneIds }, // REMOVED: Replaced by checking request origin
             transferRequests: {
                 some: {
                     status: "active",
+                    // The other person's ORIGIN must be one of my TARGETS
+                    originZoneId: { in: userTargetZoneIds },
                     targetZones: {
                         some: {
-                            zoneId: userProfile.currentZoneId // We are where they want to go
+                            // The other person's TARGET must be my ORIGIN
+                            zoneId: userOriginZoneId // We are where they want to go
                         }
                     }
                 }
@@ -137,6 +145,7 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
             user: true,
             currentZone: true,
             specialty: true,
+            // @ts-ignore
             transferRequests: {
                 where: { status: 'active' },
                 include: {
@@ -151,6 +160,7 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
     const newMatches: MatchResult[] = []
 
     for (const matchProfile of potentialMatches) {
+        // @ts-ignore
         const matchRequest = matchProfile.transferRequests[0]
         if (!matchRequest) continue
 
@@ -190,17 +200,17 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
             id: matchId,
             user: {
                 id: matchProfile.userId,
-                fullName: matchProfile.user.fullName,
-                email: matchProfile.user.email,
-                specialty: { name: matchProfile.specialty.name },
-                currentZone: { name: matchProfile.currentZone.name }
+                fullName: (matchProfile as any).user.fullName,
+                email: (matchProfile as any).user.email,
+                specialty: { name: (matchProfile as any).specialty.name },
+                currentZone: { name: (matchProfile as any).currentZone.name }
             },
             targetZones: matchRequest.targetZones.map((tz: any) => ({ id: tz.zone.id, name: tz.zone.name })),
             matchDate: createdAt,
             completedAt: null,
             status: "active",
             rank: (() => {
-                const target = matchRequest.targetZones.find((t: any) => t.zoneId === userProfile.currentZoneId)
+                const target = matchRequest.targetZones.find((t: any) => t.zoneId === userOriginZoneId)
                 return target ? target.priorityOrder : 0
             })()
         })

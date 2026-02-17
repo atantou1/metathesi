@@ -87,7 +87,7 @@ export function MatchCard({ match }: { match: MatchResult }) {
                         <p className={`text-[10px] font-bold uppercase tracking-wider mb-1 ${rankStyle.label}`}>Επιλογή</p>
                         <div className={`flex items-center gap-1 font-bold ${rankStyle.text}`}>
                             {rankStyle.icon}
-                            {match.rank}η Επιλογή
+                            {match.rank}η Επιλογή - {match.id}
                         </div>
                     </div>
                 </div>

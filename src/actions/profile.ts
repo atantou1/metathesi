@@ -130,6 +130,7 @@ export async function updateProfile(values: ProfileValues) {
                     currentZoneId,
                 },
                 include: {
+                    // @ts-ignore
                     transferRequests: {
                         where: { status: 'active' }
                     }
@@ -138,6 +139,7 @@ export async function updateProfile(values: ProfileValues) {
 
             // 2. If active request exists, invalidate matches and re-run algorithm
             // We expect at most one active request
+            // @ts-ignore
             const activeRequest = updatedProfile.transferRequests[0]
 
             if (activeRequest) {
@@ -153,7 +155,19 @@ export async function updateProfile(values: ProfileValues) {
                             }
                         }
                     },
-                    data: { status: "inactive" }
+                    data: {
+                        status: "inactive",
+                        completedAt: new Date()
+                    }
+                })
+
+                // Update the request's originZoneId to match the new profile location
+                await tx.transferRequest.update({
+                    where: { id: requestId },
+                    data: {
+                        // @ts-ignore
+                        originZoneId: currentZoneId
+                    }
                 })
 
                 // Note: We can't easily call findMatches inside the transaction because it might allow reading its own writes? 

@@ -63,6 +63,7 @@ model PostingZone {
   name           String
   region         Region       @relation(fields: [regionId], references: [id])
   currentProfiles Profile[]
+  originRequests TransferRequest[] @relation("OriginZone")
   targetRequests TargetZone[]
 
   @@map("posting_zones")
@@ -119,6 +120,8 @@ model TransferRequest {
   id          Int           @id @default(autoincrement())
   profileId   Int           @map("profile_id")
   profile     Profile       @relation(fields: [profileId], references: [id])
+  originZoneId Int          @map("origin_zone_id") // New field: Where the user IS when requesting
+  originZone   PostingZone  @relation("OriginZone", fields: [originZoneId], references: [id])
   status      RequestStatus @default(active)
   createdAt   DateTime      @default(now()) @map("created_at")
   completedAt DateTime?     @map("completed_at")

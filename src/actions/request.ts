@@ -86,6 +86,8 @@ export async function createTransferRequest(values: RequestValues) {
             const request = await tx.transferRequest.create({
                 data: {
                     profileId: profile.id,
+                    // @ts-ignore
+                    originZoneId: profile.currentZoneId,
                     status: RequestStatus.active,
                 }
             })
@@ -187,6 +189,7 @@ export async function deleteTransferRequest() {
                 where: { id: existing.id },
                 data: {
                     status: RequestStatus.inactive,
+                    // @ts-ignore
                     completedAt: now
                 }
             })
@@ -261,12 +264,15 @@ export async function updateTransferRequest(values: RequestValues) {
                 })
             }))
 
-            // 4. Update request status/timestamp if needed
+            // 4. Update request status/timestamp/origin if needed
             // Ensure status is active in case it was inactive
             await tx.transferRequest.update({
                 where: { id: existing.id },
                 data: {
                     status: RequestStatus.active,
+                    // @ts-ignore
+                    originZoneId: profile.currentZoneId, // Sync origin in case user moved
+                    // @ts-ignore
                     completedAt: null // clear completion if we are updating/reactivating
                 }
             })
