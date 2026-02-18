@@ -1,6 +1,68 @@
 import { prisma } from "./prisma"
 import { Prisma } from "@prisma/client"
 
+export async function validateActiveMatches(requestId: number, tx: Prisma.TransactionClient) {
+    // 1. Find all ACTIVE matches involving this request
+    const activeMatches = await (tx as any).match.findMany({
+        where: {
+            status: "active",
+            participants: {
+                some: {
+                    requestId: requestId
+                }
+            }
+        },
+        include: {
+            participants: {
+                include: {
+                    request: {
+                        include: {
+                            targetZones: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    const now = new Date()
+
+    for (const match of activeMatches) {
+        // Assume 2-way match for now
+        if (match.participants.length !== 2) {
+            console.warn(`Match ${match.id} has ${match.participants.length} participants. Skipping validation (only 2-way supported).`)
+            continue
+        }
+
+        const p1 = match.participants[0]
+        const p2 = match.participants[1]
+
+        const r1 = p1.request
+        const r2 = p2.request
+
+        // Check if R1 wants R2's origin
+        // @ts-ignore
+        const r1WantsR2 = r1.targetZones.some((tz: any) => tz.zoneId === r2.originZoneId)
+
+        // Check if R2 wants R1's origin
+        // @ts-ignore
+        const r2WantsR1 = r2.targetZones.some((tz: any) => tz.zoneId === r1.originZoneId)
+
+        const isValid = r1WantsR2 && r2WantsR1
+
+        if (!isValid) {
+            console.log(`Match ${match.id} is no longer valid. Invalidating...`)
+            await (tx as any).match.update({
+                where: { id: match.id },
+                data: {
+                    status: "inactive",
+                    completedAt: now
+                }
+            })
+        }
+    }
+}
+
 export type MatchResult = {
     id: number // Match ID
     user: {
@@ -25,7 +87,7 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
             currentZone: true,
             // @ts-ignore - Prisma relation config issue
             transferRequests: {
-                where: { status: 'active' },
+                // Fetch ALL requests to get full history, not just active
                 include: {
                     targetZones: true
                 }
@@ -33,26 +95,23 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         }
     })
 
-    // @ts-ignore
-    const activeRequest = userProfile?.transferRequests?.[0]
-
-    if (!userProfile || !activeRequest) {
+    if (!userProfile) {
         return []
     }
 
-    const userRequest = activeRequest
-    const userTargetZoneIds = userRequest.targetZones.map((tz: any) => tz.zoneId)
-    // Use originZoneId from the request, falling back to currentZoneId if not set (though it should be)
-    // @ts-ignore - originZoneId is new
-    const userOriginZoneId = userRequest.originZoneId || userProfile.currentZoneId
+    // @ts-ignore
+    const allRequests = userProfile.transferRequests || []
+    const allRequestIds = allRequests.map((r: any) => r.id)
 
-    // 1. Check for ALL existing matches in DB (Active & Inactive)
+    // @ts-ignore
+    const activeRequest = allRequests.find((r: any) => r.status === 'active')
+
+    // 1. Check for ALL existing matches in DB (Active & Inactive) for ANY of user's requests
     const existingMatches = await (prisma as any).match.findMany({
         where: {
-            // status: "active", // REMOVED: Fetch all to show history
             participants: {
                 some: {
-                    requestId: userRequest.id
+                    requestId: { in: allRequestIds }
                 }
             }
         },
@@ -83,7 +142,7 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
 
     const formattedExistingMatches = existingMatches.map((match: any) => {
         // Find the "other" participant
-        const otherParticipant = match.participants.find((p: any) => p.requestId !== userRequest.id)
+        const otherParticipant = match.participants.find((p: any) => !allRequestIds.includes(p.requestId))
         if (!otherParticipant) return null
 
         const otherProfile = otherParticipant.request.profile
@@ -96,16 +155,17 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
                 specialty: { name: otherProfile.specialty.name },
                 currentZone: { name: otherProfile.currentZone.name }
             },
-            // Calculate Rank: Where IS the current user in the OTHER person's target list?
-            // We know `otherParticipant.request.targetZones` contains the zones effectively.
-            // But wait, `targetZones` in the result is `otherParticipant.request.targetZones`.
-            // We need to find `userProfile.currentZoneId` in `otherParticipant.request.targetZones`.
             targetZones: otherParticipant.request.targetZones.map((tz: any) => ({ id: tz.zone.id, name: tz.zone.name })),
             matchDate: match.createdAt,
             completedAt: match.completedAt,
             status: match.status,
             rank: (() => {
-                const target = otherParticipant.request.targetZones.find((tz: any) => tz.zoneId === userProfile.currentZoneId)
+                // Find USER'S participant to get the origin they had AT THAT TIME (stored in request)
+                const userParticipant = match.participants.find((p: any) => allRequestIds.includes(p.requestId))
+                // Default to profile currentZone if request not found (shouldn't happen) or origin missing
+                const myOriginId = userParticipant?.request?.originZoneId || userProfile.currentZoneId
+
+                const target = otherParticipant.request.targetZones.find((tz: any) => tz.zoneId === myOriginId)
                 return target ? target.priorityOrder : 0
             })()
         }
@@ -116,17 +176,27 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
 
     if (hasActiveMatches) {
         // If we have active matches, we just return all matches (active + history)
-        // We do NOT run the algorithm to find new ones to avoid duplicate/spam matches for now.
         return formattedExistingMatches
     }
 
-    // 2. If no active matches, run algorithm to find NEW matches
+    // IF NO ACTIVE REQUEST, WE CANNOT FIND NEW MATCHES
+    if (!activeRequest) {
+        return formattedExistingMatches
+    }
+
+    const userRequest = activeRequest
+    const userTargetZoneIds = userRequest.targetZones.map((tz: any) => tz.zoneId)
+    // Use originZoneId from the request, falling back to currentZoneId if not set
+    // @ts-ignore
+    const userOriginZoneId = userRequest.originZoneId || userProfile.currentZoneId
+
+    // 2. If no active matches AND we have an active request, run algorithm to find NEW matches
     const potentialMatches = await prisma.profile.findMany({
         where: {
             id: { not: profileId }, // Not self
             specialtyId: userProfile.specialtyId,
             divisionId: userProfile.divisionId,
-            // currentZoneId: { in: userTargetZoneIds }, // REMOVED: Replaced by checking request origin
+            // @ts-ignore
             transferRequests: {
                 some: {
                     status: "active",
@@ -164,15 +234,13 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         const matchRequest = matchProfile.transferRequests[0]
         if (!matchRequest) continue
 
-        // Check if we already matched with this request (in inactive history) - optional check?
-        // For now, if it's new run of algorithm, we assume it's valid to match again if conditions are met?
-        // Or should we avoid re-matching the same person if we have an inactive match?
-        // Let's check `existingMatches` for this participant.
+        // Check if we already have an ACTIVE match with this request
         const alreadyMatched = existingMatches.some((em: any) =>
+            em.status === 'active' &&
             em.participants.some((p: any) => p.requestId === matchRequest.id)
         )
 
-        if (alreadyMatched) continue; // Skip if we already have a match record (even inactive)
+        if (alreadyMatched) continue; // Skip if we already have an ACTIVE match
 
         // Create the match in DB
         let matchId = 0;

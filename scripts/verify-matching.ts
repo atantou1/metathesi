@@ -61,6 +61,7 @@ async function main() {
     await prisma.transferRequest.create({
         data: {
             profileId: (userA as any).profile.id,
+            originZoneId: zoneA.id,
             targetZones: {
                 create: [
                     { zoneId: zoneB.id, priorityOrder: 1 }
@@ -94,6 +95,7 @@ async function main() {
     await prisma.transferRequest.create({
         data: {
             profileId: (userB as any).profile.id,
+            originZoneId: zoneB.id,
             targetZones: {
                 create: [
                     { zoneId: zoneC.id, priorityOrder: 1 },

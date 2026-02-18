@@ -4,6 +4,7 @@ import { DivisionType, Prisma, RequestStatus } from "@prisma/client"
 import { auth } from "@/auth"
 import { requestSchema, RequestValues } from "@/lib/schemas"
 import { prisma } from "@/lib/prisma"
+import { validateActiveMatches, findMatches } from "@/lib/matching"
 
 export async function getUserProfile() {
     const session = await auth()
@@ -233,20 +234,8 @@ export async function updateTransferRequest(values: RequestValues) {
             const now = new Date()
 
             // 1. Invalidate any existing active matches as the request criteria changed
-            await (tx as any).match.updateMany({
-                where: {
-                    status: "active",
-                    participants: {
-                        some: {
-                            requestId: existing.id
-                        }
-                    }
-                },
-                data: {
-                    status: "inactive",
-                    completedAt: now
-                }
-            })
+            // REMOVED: Blind invalidation
+            // Instead, we will validate matches AFTER updates.
 
             // 2. Delete existing target zones
             await tx.targetZone.deleteMany({
@@ -276,7 +265,13 @@ export async function updateTransferRequest(values: RequestValues) {
                     completedAt: null // clear completion if we are updating/reactivating
                 }
             })
+
+            // 5. Validate existing matches
+            await validateActiveMatches(existing.id, tx)
         })
+
+        // 6. Trigger Match Search
+        await findMatches(profile.id)
 
         return { success: true }
     } catch (error) {
