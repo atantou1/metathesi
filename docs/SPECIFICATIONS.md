@@ -8,21 +8,21 @@
 
 - # ΤΡΕΧΟΥΣΑ ΕΣΤΙΑΣΗ ΥΛΟΠΟΙΗΣΗΣ: ΦΑΣΗ 1 (Τα Θεμέλια)
 
-  **ΣΤΟΧΟΣ:** Δημιουργία μιας λειτουργικής CRUD εφαρμογής όπου οι χρήστες θα μπορούν να εγγράφονται, να ρυθμίζουν το επαγγελματικό τους προφίλ και να υποβάλλουν μια αίτηση μετάθεσης.
+ **ΣΤΟΧΟΣ:** Δημιουργία μιας λειτουργικής CRUD εφαρμογής όπου οι χρήστες θα μπορούν να εγγράφονται, να ρυθμίζουν το επαγγελματικό τους προφίλ και να υποβάλλουν μια αίτηση μετάθεσης.
 
-  **ΕΝΤΟΣ ΣΚΟΠΟΥ ΓΙΑ ΤΗ ΦΑΣΗ 1:**
+**ΕΝΤΟΣ ΣΚΟΠΟΥ ΓΙΑ ΤΗ ΦΑΣΗ 1:**
 
-  - **Αρχικοποίηση Βάσης Δεδομένων:** Δημιουργία όλων των πινάκων που ορίζονται στην Ενότητα 5.
-  - **Ταυτοποίηση Χρηστών:** Λειτουργίες Εγγραφής και Σύνδεσης (Login/Signup).
-  - **Ρύθμιση Επαγγελματικού Προφίλ:** Ροή επιλογής Τομέας -> Βαθμίδα -> Ειδικότητα.
-  - **Λογική Επιλογής Τοποθεσίας:** Δυναμική επιλογή Περιφέρεια -> Περιοχή Μετάθεσης.
-  - **Δημιουργία Αίτησης Μετάθεσης:** Καταχώρηση της Τρέχουσας Θέσης και των Θέσεων Επιθυμίας (Target Positions).
+- **Αρχικοποίηση Βάσης Δεδομένων:** Δημιουργία όλων των πινάκων που ορίζονται στην Ενότητα 5.
+- **Ταυτοποίηση Χρηστών:** Λειτουργίες Εγγραφής και Σύνδεσης (Login/Signup).
+- **Ρύθμιση Επαγγελματικού Προφίλ:** Ροή επιλογής Τομέας -> Βαθμίδα -> Ειδικότητα.
+- **Λογική Επιλογής Τοποθεσίας:** Δυναμική επιλογή Περιφέρεια -> Περιοχή Μετάθεσης.
+- **Δημιουργία Αίτησης Μετάθεσης:** Καταχώρηση της Τρέχουσας Θέσης και των Θέσεων Επιθυμίας (Target Positions).
+- **Μηχανή / Αλγόριθμος Matching:** ελέγχει εαν εχουμε match αναμεσα στους χρήστες.
 
-  **ΕΚΤΟΣ ΣΚΟΠΟΥ (ΝΑ ΜΗΝ ΥΛΟΠΟΙΗΘΟΥΝ ΑΚΟΜΑ):**
+**ΦΑΣΗ 2:**
 
-  - **Μηχανή / Αλγόριθμος Matching:** Καμία λειτουργία σύγκρισης αιτήσεων.
-  - **Σύστημα Chat:** Επικοινωνία μεταξύ χρηστών.
-  - **Ειδοποιήσεις:** Email ή Push Notifications.
+- **Σύστημα Chat:** Επικοινωνία μεταξύ χρηστών.
+- **Ειδοποιήσεις:** Email
 
 ---
 
@@ -95,9 +95,7 @@
 ### 5.1 Lookup Tables (Static Data)
 
 - **sectors**: `[id, name]`
-
 - **divisions**: `[id, sector_id, name]`
-
 - **specialties**:
   - `id` (PK)
   - `code` (π.χ. ΠΕ04.01)
@@ -107,12 +105,10 @@
   - `educational_category` (π.χ. ΠΕ, ΤΕ, ΔΕ)
   - `is_primary` (Boolean)
   - `is_secondary` (Boolean)
-  
 - **regions**: `[id, name]`
-
 - **posting_zones**:
   - `id` (PK)
-  - `region_id` (FK)
+  - `region_id` (FK -> regions)
   - `division_type` (Enum/String: 'Primary' ή 'Secondary')
   - `name` (String)
 
@@ -121,24 +117,52 @@
 - **users**: `[id, email, password_hash, full_name, created_at]`
 - **profiles**:
   - `id` (PK)
-  - `user_id` (FK)
-  - `specialty_id` (FK)
-  - `division_id` (FK)
+  - `user_id` (FK -> users)
+  - `specialty_id` (FK -> specialties)
+  - `division_id` (FK -> divisions)
   - `current_zone_id` (FK -> posting_zones)
-  - `bio` (Text, Optional)
+  - `full_name` (Text)
+  - `hire_date` (Timestamp)
+  - `service_years` (Integer)
+  - `service_months` (Integer)
+  - `service_days` (Integer)
 
 ### 5.3 Request Tables
 
 - **transfer_requests**:
   - `id` (PK)
-  - `profile_id` (FK, Unique)
-  - `status` (Enum: 'active', 'matched', 'paused')
+  - `profile_id` (FK -> profiles)
+  - `status` (USER-DEFINED/Enum)
+  - `origin_zone_id` (FK -> posting_zones)
   - `created_at` (Timestamp)
+  - `completed_at` (Timestamp, Optional)
 - **target_zones**:
   - `id` (PK)
-  - `request_id` (FK)
+  - `request_id` (FK -> transfer_requests)
   - `zone_id` (FK -> posting_zones)
   - `priority_order` (Integer)
+
+### 5.4 Matching Tables (Discovery Logic)
+
+- **matches**:
+  - `id` (PK)
+  - `type` (Text: π.χ. 'direct', 'circular')
+  - `status` (Text: π.χ. 'active', 'inactive')
+  - `created_at` (Timestamp)
+  - `completed_at` (Timestamp, Optional)
+- **match_participants**:
+  - `id` (PK)
+  - `match_id` (FK -> matches)
+  - `request_id` (FK -> transfer_requests)
+
+### 5.5 Chat & Communication (Match-Scoped)
+
+- **messages**:
+  - `id` (PK)
+  - `match_id` (FK -> matches) - Συνδέει το μήνυμα αυστηρά με ένα συγκεκριμένο match.
+  - `sender_profile_id` (FK -> profiles) - Ο χρήστης που έστειλε το μήνυμα.
+  - `content` (Text) - Το κείμενο του μηνύματος.
+  - `created_at` (Timestamp)
 
 ---
 
@@ -153,6 +177,12 @@
 **Unique Request:** Κάθε προφίλ μπορεί να έχει μόνο μία ενεργή αίτηση.
 
 **Validation:** Ο χρήστης δεν μπορεί να επιλέξει την τρέχουσα ζώνη του ως ζώνη επιθυμίας.
+
+**Multiple Matches:** Ένας χρήστης μπορεί να συμμετέχει σε πολλαπλά ενεργά matches ταυτόχρονα, εφόσον υπάρχουν πολλαπλοί συνδυασμοί που ικανοποιούν τα κριτήρια της αίτησής του. Το σύστημα λειτουργεί αυστηρά ενημερωτικά.
+
+**Isolated Match Chat:** - Η πρόσβαση στα μηνύματα ενός συγκεκριμένου `match_id` επιτρέπεται αυστηρά και μόνο στα `profile_id` που καταγράφονται στον πίνακα `match_participants` για το συγκεκριμένο match.
+
+- Αν ένα match ακυρωθεί ή ολοκληρωθεί (inactive), το αντίστοιχο chat κλειδώνει (read-only).
 
 ---
 
