@@ -103,6 +103,7 @@ model Profile {
   fullName        String?          @map("full_name")
 
   transferRequests TransferRequest[]
+  messages        Message[]
 
   @@map("profiles")
 }
@@ -151,6 +152,7 @@ model Match {
   completedAt DateTime? @map("completed_at")
 
   participants MatchParticipant[]
+  messages        Message[]
 
   @@map("matches")
 }
@@ -163,4 +165,16 @@ model MatchParticipant {
   request   TransferRequest @relation(fields: [requestId], references: [id])
 
   @@map("match_participants")
+}
+
+model Message {
+  id              Int      @id @default(autoincrement())
+  matchId         Int      @map("match_id")
+  match           Match    @relation(fields: [matchId], references: [id])
+  senderProfileId Int      @map("sender_profile_id")
+  senderProfile   Profile  @relation(fields: [senderProfileId], references: [id])
+  content         String
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@map("messages")
 }

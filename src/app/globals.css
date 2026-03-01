@@ -40,11 +40,24 @@
   --color-card: var(--card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  --color-primary: #0ea5e9;
+  --color-primary-soft: #e0f2fe;
+  --color-teal-accent: #14b8a6;
+  --color-accent-vibrant: #f43f5e;
+  --color-background-light: #f8fafc;
+  --color-background-gradient-start: #f0f9ff;
+  --color-background-gradient-end: #e0f2fe;
+  --color-neutral-surface: #ffffff;
+  --color-neutral-text-main: #334155;
+  --color-neutral-text-secondary: #64748b;
+  --color-neutral-border: #e2e8f0;
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --shadow-bubble: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 :root {
