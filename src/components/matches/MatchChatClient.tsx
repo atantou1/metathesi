@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { useSearchParams } from "next/navigation"
 import { MatchResult } from "@/lib/matching"
 import { getMatchMessages, sendMessage } from "@/actions/chat"
 import { format } from "date-fns"
@@ -314,6 +315,23 @@ export function MatchChatClient({
 }) {
     const [activeTab, setActiveTab] = useState<'active' | 'history'>('active')
     const [expandedMatchId, setExpandedMatchId] = useState<number | null>(null)
+    const searchParams = useSearchParams()
+
+    useEffect(() => {
+        const openChatMatchId = searchParams.get('openChat')
+        if (openChatMatchId) {
+            const id = parseInt(openChatMatchId)
+
+            // Check if it's in history to auto-switch tab
+            if (historyMatches.some(m => m.id === id)) {
+                setActiveTab('history')
+            } else if (activeMatches.some(m => m.id === id)) {
+                setActiveTab('active')
+            }
+
+            setExpandedMatchId(id)
+        }
+    }, [searchParams, activeMatches, historyMatches])
 
     const matchesList = activeTab === 'active' ? activeMatches : historyMatches
 

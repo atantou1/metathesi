@@ -104,6 +104,7 @@ model Profile {
 
   transferRequests TransferRequest[]
   messages        Message[]
+  notifications   Notification[]
 
   @@map("profiles")
 }
@@ -152,7 +153,8 @@ model Match {
   completedAt DateTime? @map("completed_at")
 
   participants MatchParticipant[]
-  messages        Message[]
+  messages     Message[]
+  notifications Notification[]
 
   @@map("matches")
 }
@@ -177,4 +179,17 @@ model Message {
   createdAt       DateTime @default(now()) @map("created_at")
 
   @@map("messages")
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  profileId Int      @map("profile_id")
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  type      String   // 'NEW_MATCH', 'NEW_MESSAGE'
+  matchId   Int      @map("match_id")
+  match     Match    @relation(fields: [matchId], references: [id])
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("notifications")
 }

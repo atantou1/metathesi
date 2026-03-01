@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
+import { createNotification } from "@/actions/notifications"
 
 export async function getMatchMessages(matchId: number) {
     const session = await auth()
@@ -130,6 +131,12 @@ export async function sendMessage(matchId: number, content: string) {
             }
         }
     })
+
+    // Notify the *other* participant of the match
+    const otherParticipant = match.participants.find((p: any) => p.request.profileId !== profile.id);
+    if (otherParticipant) {
+        await createNotification(otherParticipant.request.profileId, matchId, 'NEW_MESSAGE');
+    }
 
     return message
 }

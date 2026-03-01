@@ -1,4 +1,6 @@
 import { prisma } from "./prisma"
+import { createNotification } from "@/actions/notifications"
+import { sendMatchEmail } from "./emails"
 import { Prisma } from "@prisma/client"
 
 export async function validateActiveMatches(requestId: number, tx: Prisma.TransactionClient) {
@@ -262,7 +264,31 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
                     { matchId: newMatch.id, requestId: matchRequest.id }
                 ]
             })
+
+            // Trigger Notifications for both participants
+            await (tx as any).notification.createMany({
+                data: [
+                    { profileId: userProfile.id, matchId: newMatch.id, type: 'NEW_MATCH' },
+                    { profileId: matchProfile.id, matchId: newMatch.id, type: 'NEW_MATCH' }
+                ]
+            })
         })
+
+        // Dispatch Email Notifications outside the strict DB transaction
+        await Promise.allSettled([
+            sendMatchEmail({
+                email: userProfile.user.email,
+                userName: userProfile.user.fullName,
+                matchName: matchProfile.user.fullName,
+                matchZoneName: matchProfile.currentZone.name
+            }),
+            sendMatchEmail({
+                email: matchProfile.user.email,
+                userName: matchProfile.user.fullName,
+                matchName: userProfile.user.fullName,
+                matchZoneName: userProfile.currentZone.name
+            })
+        ])
 
         newMatches.push({
             id: matchId,

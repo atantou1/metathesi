@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { auth, signOut } from "@/auth"
 import { Button } from "@/components/ui/button"
-import { MapPin, Bell, User as UserIcon, Settings, FileText, Moon, LogOut } from "lucide-react"
+import { MapPin, User as UserIcon, Settings, FileText, Moon, LogOut } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,6 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MainNav } from "@/components/layout/main-nav"
 import { UserNavLogout } from "@/components/layout/user-nav-logout"
 import { MobileMenu } from "@/components/layout/mobile-menu"
+import { NotificationBellClient } from "@/components/layout/NotificationBellClient"
 
 export async function Navbar() {
     const session = await auth()
@@ -36,10 +37,7 @@ export async function Navbar() {
                     <div className="flex items-center gap-4">
                         {session ? (
                             <>
-                                <button className="relative p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
-                                    <Bell className="w-6 h-6" />
-                                    <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-slate-900"></span>
-                                </button>
+                                <NotificationBellClient />
                                 <div className="h-8 w-px bg-gray-200 dark:bg-slate-700 hidden sm:block"></div>
 
                                 <DropdownMenu>

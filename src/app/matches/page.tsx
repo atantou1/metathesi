@@ -2,6 +2,7 @@ import { getMatches } from "@/actions/matches"
 import { MatchChatClient } from "@/components/matches/MatchChatClient"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
+import { Suspense } from "react"
 
 export default async function MatchesPage() {
     const session = await auth()
@@ -12,5 +13,9 @@ export default async function MatchesPage() {
 
     const { active, history } = await getMatches()
 
-    return <MatchChatClient activeMatches={active} historyMatches={history} currentUserId={parseInt(session.user.id)} />
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center">Φόρτωση...</div>}>
+            <MatchChatClient activeMatches={active} historyMatches={history} currentUserId={parseInt(session.user.id)} />
+        </Suspense>
+    )
 }
