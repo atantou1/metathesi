@@ -89,7 +89,7 @@ export function WizardContainer({ initialData, requestId }: { initialData?: Init
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="h-[calc(100vh-64px)] flex flex-col bg-slate-50 dark:bg-slate-900/50">
+            <form onSubmit={handleSubmit(onSubmit)} className="h-[calc(100vh-64px)] flex flex-col">
                 {/* Scrollable Content Area */}
                 <div className="flex-1 overflow-y-auto p-4 pb-0 md:p-8">
                     {step === 1 && <Step1Identity onNext={() => nextStep()} />}

@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle, Smartphone, BarChart3, Shield, Settings, Zap, 
 
 export default function Home() {
   return (
-    <div className="font-display bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300">
+    <div className="font-display text-slate-800 dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300">
 
       <main className="relative pt-24 md:pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center">
 

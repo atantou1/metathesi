@@ -10,7 +10,7 @@ export default async function SettingsPage() {
     }
 
     return (
-        <div className="flex flex-col min-h-screen pt-20 bg-slate-50 dark:bg-slate-950">
+        <div className="flex flex-col min-h-screen pt-20">
             <SettingsLayout />
         </div>
     )

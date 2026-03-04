@@ -340,7 +340,7 @@ export function MatchChatClient({
     }
 
     return (
-        <div className="font-display text-neutral-text-main antialiased min-h-screen bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe]">
+        <div className="font-display text-neutral-text-main antialiased min-h-screen">
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
 
                 {/* Tabs */}

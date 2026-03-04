@@ -18,7 +18,7 @@ export async function getUnreadNotifications() {
     })
 
     if (!profile) {
-        throw new Error("Profile not found")
+        return []
     }
 
     // Since we've just added this to Prisma, use type assertion to bypass immediate type check errors

@@ -14,7 +14,7 @@ export default async function MatchesPage() {
     const { active, history } = await getMatches()
 
     return (
-        <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center">Φόρτωση...</div>}>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Φόρτωση...</div>}>
             <MatchChatClient activeMatches={active} historyMatches={history} currentUserId={parseInt(session.user.id)} />
         </Suspense>
     )

@@ -13,8 +13,8 @@ export function SettingsLayout() {
                     <button
                         onClick={() => setActiveTab("account")}
                         className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-lg transition-all group ${activeTab === "account"
-                                ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
-                                : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
+                            ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
+                            : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
                             }`}
                     >
                         <User className={`w-6 h-6 ${activeTab === "account" ? "" : "group-hover:scale-110 transition-transform"}`} />
@@ -27,8 +27,8 @@ export function SettingsLayout() {
                     <button
                         onClick={() => setActiveTab("security")}
                         className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-lg transition-all group relative ${activeTab === "security"
-                                ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
-                                : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
+                            ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
+                            : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
                             }`}
                     >
                         <Lock className={`w-6 h-6 ${activeTab === "security" ? "" : "group-hover:scale-110 transition-transform"}`} />
@@ -41,8 +41,8 @@ export function SettingsLayout() {
                     <button
                         onClick={() => setActiveTab("appearance")}
                         className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-lg transition-all group relative ${activeTab === "appearance"
-                                ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
-                                : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
+                            ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
+                            : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
                             }`}
                     >
                         <Palette className={`w-6 h-6 ${activeTab === "appearance" ? "" : "group-hover:scale-110 transition-transform"}`} />
@@ -56,8 +56,8 @@ export function SettingsLayout() {
                         <button
                             onClick={() => setActiveTab("data")}
                             className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-lg transition-all group relative ${activeTab === "data"
-                                    ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
-                                    : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
+                                ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
+                                : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
                                 }`}
                         >
                             <FolderOpen className={`w-6 h-6 ${activeTab === "data" ? "" : "group-hover:scale-110 transition-transform"}`} />
@@ -70,7 +70,7 @@ export function SettingsLayout() {
                 </nav>
             </aside>
 
-            <main className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 p-4 sm:p-8 scroll-smooth pb-20">
+            <main className="flex-1 overflow-y-auto p-4 sm:p-8 scroll-smooth pb-20">
                 <div className="max-w-xl mx-auto space-y-10">
 
                     {/* ACCOUNT TAB */}
@@ -112,7 +112,7 @@ export function SettingsLayout() {
                                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                                                 <Lock className="w-4 h-4" />
                                             </div>
-                                            <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
+                                            <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -122,7 +122,7 @@ export function SettingsLayout() {
                                                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                                                     <Lock className="w-4 h-4" />
                                                 </div>
-                                                <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
+                                                <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
                                             </div>
                                         </div>
                                         <div className="space-y-1.5">
@@ -131,7 +131,7 @@ export function SettingsLayout() {
                                                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                                                     <Lock className="w-4 h-4" />
                                                 </div>
-                                                <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
+                                                <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
                                             </div>
                                         </div>
                                     </div>
