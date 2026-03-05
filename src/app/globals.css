@@ -51,8 +51,8 @@
   --color-teal-accent: #14b8a6;
   --color-accent-vibrant: #f43f5e;
   --color-background-light: #f8fafc;
-  --color-background-gradient-start: #F0F9FF;
-  --color-background-gradient-end: #F0F9FF;
+  --color-background-gradient-start: #F8FAFC;
+  --color-background-gradient-end: #F8FAFC;
   --color-neutral-surface: #ffffff;
   --color-neutral-text-main: #334155;
   --color-neutral-text-secondary: #64748b;
@@ -63,7 +63,7 @@
 
 :root {
   --radius: 0.5rem;
-  --background: #F0F9FF;
+  --background: #F8FAFC;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);

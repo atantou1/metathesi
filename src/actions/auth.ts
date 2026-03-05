@@ -6,6 +6,10 @@ import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 import { signIn } from "@/auth"
 
+export async function loginWithProvider(provider: 'google' | 'microsoft-entra-id') {
+    await signIn(provider, { redirectTo: "/dashboard" })
+}
+
 export async function login(values: LoginValues) {
     const validatedFields = loginSchema.safeParse(values)
 

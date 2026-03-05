@@ -278,14 +278,14 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
         await Promise.allSettled([
             sendMatchEmail({
                 email: userProfile.user.email,
-                userName: userProfile.user.fullName,
-                matchName: matchProfile.user.fullName,
+                userName: userProfile.user.fullName || "",
+                matchName: matchProfile.user.fullName || "",
                 matchZoneName: matchProfile.currentZone.name
             }),
             sendMatchEmail({
                 email: matchProfile.user.email,
-                userName: matchProfile.user.fullName,
-                matchName: userProfile.user.fullName,
+                userName: matchProfile.user.fullName || "",
+                matchName: userProfile.user.fullName || "",
                 matchZoneName: userProfile.currentZone.name
             })
         ])
