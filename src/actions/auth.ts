@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 import { signIn } from "@/auth"
 
-export async function loginWithProvider(provider: 'google' | 'microsoft-entra-id') {
+export async function loginWithProvider(provider: 'google' | 'facebook') {
     await signIn(provider, { redirectTo: "/dashboard" })
 }
 

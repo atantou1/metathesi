@@ -17,7 +17,7 @@ async function getUser(email: string) {
 }
 
 import Google from "next-auth/providers/google"
-import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id"
+import Facebook from "next-auth/providers/facebook"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -111,9 +111,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
-        MicrosoftEntraID({
-            clientId: process.env.AUTH_MICROSOFT_ENTRA_ID_ID,
-            clientSecret: process.env.AUTH_MICROSOFT_ENTRA_ID_SECRET,
+        Facebook({
+            clientId: process.env.AUTH_FACEBOOK_ID,
+            clientSecret: process.env.AUTH_FACEBOOK_SECRET,
         }),
         Credentials({
             async authorize(credentials) {
