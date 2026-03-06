@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { auth, signOut } from "@/auth"
 import { Button } from "@/components/ui/button"
-import { MapPin, User as UserIcon, Settings, FileText, Moon, LogOut } from "lucide-react"
+import { User as UserIcon, Settings, FileText, Moon, LogOut } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -16,6 +16,7 @@ import { MainNav } from "@/components/layout/main-nav"
 import { UserNavLogout } from "@/components/layout/user-nav-logout"
 import { MobileMenu } from "@/components/layout/mobile-menu"
 import { NotificationBellClient } from "@/components/layout/NotificationBellClient"
+import { Logo } from "@/components/logo"
 
 export async function Navbar() {
     const session = await auth()
@@ -25,10 +26,11 @@ export async function Navbar() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
                     <Link href="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-sm">
-                            <MapPin className="w-5 h-5" />
-                        </div>
-                        <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">metaThesi</span>
+                        <Logo className="w-8 h-8 text-[#0369A1]" />
+                        <span className="text-xl font-bold tracking-tight">
+                            <span className="text-[#0F172A] dark:text-white">meta</span>
+                            <span className="text-[#0369A1]">Thesi</span>
+                        </span>
                     </Link>
 
                     {/* Desktop Navigation */}

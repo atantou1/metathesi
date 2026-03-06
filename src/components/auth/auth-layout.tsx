@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Droplets, Star, Shield } from "lucide-react"
+import { Star, Shield } from "lucide-react"
+import { Logo } from "@/components/logo"
 
 interface AuthLayoutProps {
     children: React.ReactNode
@@ -29,7 +30,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
 
                     <div className="relative z-20 text-center px-12 max-w-xl">
                         <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-sm text-white mb-8 border border-white/10 shadow-lg">
-                            <Droplets className="w-12 h-12" />
+                            <Logo className="w-12 h-12" />
                         </div>
                         <h2 className="text-4xl font-bold text-white mb-6 tracking-tight">metaThesi App</h2>
                         <p className="text-lg text-slate-200 leading-relaxed font-light">
@@ -55,7 +56,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
                     <div className="flex-1 flex flex-col justify-center px-8 py-10 sm:px-12 lg:px-20 xl:px-24 overflow-y-auto scrollbar-hide">
                         <div className="mb-10 text-center lg:text-left">
                             <div className="lg:hidden inline-flex items-center justify-center w-14 h-14 rounded-xl bg-[#0369A1]/10 text-[#0369A1] mb-6 shadow-sm">
-                                <Droplets className="w-8 h-8" />
+                                <Logo className="w-8 h-8" />
                             </div>
                             <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight mb-2">
                                 {title}
