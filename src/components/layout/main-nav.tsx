@@ -36,16 +36,16 @@ export function MainNav() {
     ]
 
     return (
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex items-center space-x-2">
             {links.map((link) => (
                 <Link
                     key={link.href}
                     href={link.href}
                     className={cn(
-                        "font-medium px-1 py-2 border-b-2 transition-colors",
+                        "px-5 py-2.5 text-sm font-medium rounded-2xl transition-colors",
                         link.active
-                            ? "text-slate-900 dark:text-slate-100 border-blue-600"
-                            : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border-transparent hover:border-slate-300"
+                            ? "text-sky-700 bg-sky-50/80 dark:text-sky-400 dark:bg-sky-900/40"
+                            : "text-slate-500 hover:text-slate-800 hover:bg-slate-50 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/50"
                     )}
                 >
                     {link.label}
