@@ -124,24 +124,30 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 if (parsedCredentials.success) {
                     const { email, password } = parsedCredentials.data
                     const user = await getUser(email)
-                    if (!user || (!user.passwordHash && !user.emailVerified)) return null
 
-                    if (user.passwordHash) {
-                        const passwordsMatch = await bcrypt.compare(password, user.passwordHash)
-                        if (passwordsMatch) {
-                            // Return a User object that conforms to next-auth's User type
-                            return {
-                                id: user.id.toString(),
-                                name: user.fullName || "",
-                                email: user.email,
-                                image: user.image || "",
-                            }
+                    if (!user || !user.passwordHash) {
+                        throw new Error("Invalid credentials");
+                    }
+
+                    if (!user.emailVerified) {
+                        console.log("Email not verified")
+                        throw new Error("Email not verified");
+                    }
+
+                    const passwordsMatch = await bcrypt.compare(password, user.passwordHash)
+                    if (passwordsMatch) {
+                        // Return a User object that conforms to next-auth's User type
+                        return {
+                            id: user.id.toString(),
+                            name: user.fullName || "",
+                            email: user.email,
+                            image: user.image || "",
                         }
                     }
                 }
 
                 console.log("Invalid credentials")
-                return null
+                throw new Error("Invalid credentials");
             },
         }),
     ],

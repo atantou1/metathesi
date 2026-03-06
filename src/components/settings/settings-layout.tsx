@@ -1,10 +1,34 @@
 "use client"
 
 import { useState } from "react"
-import { Shield, Smartphone, Palette, FolderOpen, User, Lock, Download, Trash2, Moon, Sun, Monitor } from "lucide-react"
+import { Shield, Smartphone, Palette, FolderOpen, User, Lock, Download, Trash2, Moon, Sun, Monitor, Loader2, AlertTriangle, X } from "lucide-react"
+import { deleteAccount } from "@/actions/settings"
+import { signOut } from "next-auth/react"
 
 export function SettingsLayout() {
     const [activeTab, setActiveTab] = useState("account") // Start with account despite being empty as per request
+    const [isDeleting, setIsDeleting] = useState(false)
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+    const [deleteError, setDeleteError] = useState<string | null>(null)
+
+    const handleDeleteAccount = async () => {
+        setIsDeleting(true);
+        setDeleteError(null);
+
+        try {
+            const result = await deleteAccount();
+            if (result?.error) {
+                setDeleteError(result.error);
+                setIsDeleting(false);
+            } else {
+                // Success! Sign out the user and redirect to login
+                await signOut({ callbackUrl: '/login' });
+            }
+        } catch (error) {
+            setDeleteError("Κάτι πήγε στραβά κατά τη διαγραφή.");
+            setIsDeleting(false);
+        }
+    }
 
     return (
         <div className="flex flex-1 overflow-hidden relative h-full">
@@ -233,7 +257,10 @@ export function SettingsLayout() {
                                             Αυτή η ενέργεια είναι <span className="font-bold text-slate-800 dark:text-slate-200">μη αναστρέψιμη</span>. Θα διαγραφούν όλα τα δεδομένα σας μόνιμα.
                                         </p>
                                     </div>
-                                    <button className="shrink-0 bg-white dark:bg-slate-800 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                                    <button
+                                        onClick={() => setShowDeleteConfirm(true)}
+                                        className="shrink-0 bg-white dark:bg-slate-800 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                                    >
                                         <Trash2 className="w-5 h-5" />
                                         Διαγραφή
                                     </button>
@@ -245,6 +272,63 @@ export function SettingsLayout() {
                     <div className="h-10"></div>
                 </div>
             </main>
+
+            {/* DELETE CONFIRMATION MODAL */}
+            {showDeleteConfirm && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-200">
+                        <div className="flex items-start justify-between mb-4">
+                            <div className="p-3 bg-red-100 dark:bg-red-900/20 text-red-600 rounded-full">
+                                <AlertTriangle className="w-6 h-6" />
+                            </div>
+                            <button
+                                onClick={() => !isDeleting && setShowDeleteConfirm(false)}
+                                disabled={isDeleting}
+                                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors disabled:opacity-50"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                            Είστε σίγουροι;
+                        </h3>
+                        <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm">
+                            Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Ο λογαριασμός σας και όλα τα σχετικά δεδομένα, μηνύματα και αιτήσεις θα διαγραφούν οριστικά από τους διακομιστές μας.
+                        </p>
+
+                        {deleteError && (
+                            <div className="mb-4 p-3 bg-red-50 text-red-600 border border-red-200 rounded-lg text-sm font-medium">
+                                {deleteError}
+                            </div>
+                        )}
+
+                        <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
+                            <button
+                                onClick={() => setShowDeleteConfirm(false)}
+                                disabled={isDeleting}
+                                className="px-5 py-2.5 rounded-xl font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
+                            >
+                                Ακύρωση
+                            </button>
+                            <button
+                                onClick={handleDeleteAccount}
+                                disabled={isDeleting}
+                                className="px-5 py-2.5 rounded-xl font-bold text-white bg-red-600 hover:bg-red-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 min-w-[140px]"
+                            >
+                                {isDeleting ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                        Διαγραφή...
+                                    </>
+                                ) : (
+                                    "Ναι, Διαγραφή"
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

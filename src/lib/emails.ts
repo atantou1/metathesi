@@ -64,3 +64,60 @@ export async function sendMatchEmail({
         return { success: false, error: err };
     }
 }
+
+/**
+ * Sends a verification email to a newly registered user.
+ * @param email - The destination email address
+ * @param token - The verification token
+ */
+export async function sendVerificationEmail(
+    email: string,
+    token: string
+) {
+    if (!resend) {
+        console.warn('RESEND_API_KEY is not defined. Skipping verification email for:', email);
+        return { success: false, error: 'API key missing' };
+    }
+
+    const confirmLink = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/new-verification?token=${token}`;
+
+    if (process.env.NODE_ENV !== 'production') {
+        console.log("-----------------------------------------");
+        console.log(`[DEV MODE] Verification Link for ${email}:`);
+        console.log(confirmLink);
+        console.log("-----------------------------------------");
+    }
+
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'metaThesi <onboarding@resend.dev>', // Update this to verified domain when going to prod
+            to: [email],
+            subject: '✅ Επιβεβαιώστε το email σας - metaThesi',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #334155;">
+                    <h2 style="color: #0ea5e9;">Καλώς ήρθατε στο metaThesi!</h2>
+                    <p>Παρακαλούμε επιβεβαιώστε το email σας κάνοντας κλικ στον παρακάτω σύνδεσμο:</p>
+                    
+                    <div style="text-align: center; margin-top: 32px; margin-bottom: 32px;">
+                        <a href="${confirmLink}" style="background-color: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                            Επιβεβαίωση Email
+                        </a>
+                    </div>
+                    
+                    <p>Αν δεν δημιουργήσατε εσείς αυτόν τον λογαριασμό, μπορείτε να αγνοήσετε αυτό το email.</p>
+                </div>
+            `,
+        });
+
+        if (error) {
+            console.error('Failed to send verification email with Resend:', error);
+            return { success: false, error: error.message };
+        }
+
+        console.log(`Verification email sent successfully to ${email}`);
+        return { success: true, data };
+    } catch (err: any) {
+        console.error('Unexpected error while sending verification email:', err);
+        return { success: false, error: err.message || 'Unknown error' };
+    }
+}
