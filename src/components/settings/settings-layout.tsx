@@ -1,15 +1,51 @@
 "use client"
 
-import { useState } from "react"
-import { Shield, Smartphone, Palette, FolderOpen, User, Lock, Download, Trash2, Moon, Sun, Monitor, Loader2, AlertTriangle, X } from "lucide-react"
-import { deleteAccount } from "@/actions/settings"
+import { useState, useTransition } from "react"
+import { Shield, Smartphone, Palette, FolderOpen, User, Lock, Download, Trash2, Moon, Sun, Monitor, Loader2, AlertTriangle, X, CheckCircle2 } from "lucide-react"
+import { deleteAccount, changePassword } from "@/actions/settings"
 import { signOut } from "next-auth/react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { changePasswordSchema, ChangePasswordValues } from "@/lib/schemas"
 
 export function SettingsLayout() {
     const [activeTab, setActiveTab] = useState("account") // Start with account despite being empty as per request
     const [isDeleting, setIsDeleting] = useState(false)
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
     const [deleteError, setDeleteError] = useState<string | null>(null)
+
+    // Password Change State
+    const [isPendingPassword, startTransitionPassword] = useTransition()
+    const [passwordError, setPasswordError] = useState<string | undefined>()
+    const [passwordSuccess, setPasswordSuccess] = useState<string | undefined>()
+
+    const passwordForm = useForm<ChangePasswordValues>({
+        resolver: zodResolver(changePasswordSchema),
+        defaultValues: {
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+        },
+    })
+
+    const onPasswordSubmit = (values: ChangePasswordValues) => {
+        setPasswordError(undefined);
+        setPasswordSuccess(undefined);
+
+        startTransitionPassword(async () => {
+            try {
+                const result = await changePassword(values);
+                if (result?.error) {
+                    setPasswordError(result.error);
+                } else if (result?.success) {
+                    setPasswordSuccess(result.success);
+                    passwordForm.reset();
+                }
+            } catch (error) {
+                setPasswordError("Προέκυψε κάποιο σφάλμα.");
+            }
+        });
+    }
 
     const handleDeleteAccount = async () => {
         setIsDeleting(true);
@@ -129,15 +165,38 @@ export function SettingsLayout() {
                                 </div>
                             </div>
                             <div className="bg-white dark:bg-slate-900 rounded-xl p-5 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-800">
-                                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                                <form className="space-y-5" onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
+
+                                    {passwordError && (
+                                        <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-lg text-sm font-medium flex items-center gap-2">
+                                            <AlertTriangle className="w-4 h-4" />
+                                            {passwordError}
+                                        </div>
+                                    )}
+
+                                    {passwordSuccess && (
+                                        <div className="p-3 bg-green-50 text-green-700 border border-green-200 rounded-lg text-sm font-medium flex items-center gap-2">
+                                            <CheckCircle2 className="w-4 h-4" />
+                                            {passwordSuccess}
+                                        </div>
+                                    )}
+
                                     <div className="space-y-1.5">
                                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Τρέχων Κωδικός</label>
                                         <div className="relative">
                                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                                                 <Lock className="w-4 h-4" />
                                             </div>
-                                            <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
+                                            <input
+                                                {...passwordForm.register("currentPassword")}
+                                                className={`w-full pl-10 pr-4 py-2.5 rounded-lg border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.currentPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                placeholder="••••••••"
+                                                type="password"
+                                            />
                                         </div>
+                                        {passwordForm.formState.errors.currentPassword && (
+                                            <p className="text-xs text-red-500 mt-1">{passwordForm.formState.errors.currentPassword.message}</p>
+                                        )}
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                         <div className="space-y-1.5">
@@ -146,8 +205,16 @@ export function SettingsLayout() {
                                                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                                                     <Lock className="w-4 h-4" />
                                                 </div>
-                                                <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
+                                                <input
+                                                    {...passwordForm.register("newPassword")}
+                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.newPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                    placeholder="••••••••"
+                                                    type="password"
+                                                />
                                             </div>
+                                            {passwordForm.formState.errors.newPassword && (
+                                                <p className="text-xs text-red-500 mt-1">{passwordForm.formState.errors.newPassword.message}</p>
+                                            )}
                                         </div>
                                         <div className="space-y-1.5">
                                             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Επιβεβαίωση</label>
@@ -155,13 +222,29 @@ export function SettingsLayout() {
                                                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                                                     <Lock className="w-4 h-4" />
                                                 </div>
-                                                <input className="w-full pl-10 pr-4 py-2.5 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm" placeholder="••••••••" type="password" />
+                                                <input
+                                                    {...passwordForm.register("confirmPassword")}
+                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.confirmPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                    placeholder="••••••••"
+                                                    type="password"
+                                                />
                                             </div>
+                                            {passwordForm.formState.errors.confirmPassword && (
+                                                <p className="text-xs text-red-500 mt-1">{passwordForm.formState.errors.confirmPassword.message}</p>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="pt-2 flex justify-end">
-                                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-600/20 flex items-center gap-2" type="submit">
-                                            <span>Αλλαγή Κωδικού</span>
+                                        <button
+                                            disabled={isPendingPassword}
+                                            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-600/20 flex items-center gap-2 disabled:opacity-50 min-w-[160px] justify-center"
+                                            type="submit"
+                                        >
+                                            {isPendingPassword ? (
+                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                            ) : (
+                                                <span>Αλλαγή Κωδικού</span>
+                                            )}
                                         </button>
                                     </div>
                                 </form>

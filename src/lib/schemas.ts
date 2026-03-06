@@ -15,6 +15,15 @@ export const loginSchema = z.object({
     password: z.string().min(1, "Απαιτείται κωδικός"),
 })
 
+export const changePasswordSchema = z.object({
+    currentPassword: z.string().min(1, "Απαιτείται ο τρέχων κωδικός"),
+    newPassword: z.string().min(6, "Ο νέος κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες"),
+    confirmPassword: z.string(),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Οι νέοι κωδικοί δεν ταιριάζουν",
+    path: ["confirmPassword"],
+})
+
 export type SignUpValues = z.infer<typeof signUpSchema>
 export const profileSchema = z.object({
     fullName: z.string().optional(),
@@ -35,3 +44,4 @@ export const requestSchema = z.object({
 export type RequestValues = z.infer<typeof requestSchema>
 export type ProfileValues = z.infer<typeof profileSchema>
 export type LoginValues = z.infer<typeof loginSchema>
+export type ChangePasswordValues = z.infer<typeof changePasswordSchema>
