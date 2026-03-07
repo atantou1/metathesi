@@ -79,14 +79,6 @@ export async function Navbar() {
                                             </Link>
                                         </DropdownMenuItem>
 
-                                        {/* My Request (Clickable) */}
-                                        <DropdownMenuItem asChild className="p-0 focus:bg-transparent">
-                                            <Link href="/dashboard" className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition-colors cursor-pointer w-full">
-                                                <FileText className="w-5 h-5" />
-                                                Η Αίτησή μου
-                                            </Link>
-                                        </DropdownMenuItem>
-
                                         <div className="h-px bg-slate-100 my-1"></div>
 
                                         {/* Light/Dark Toggle (Visual Only) */}

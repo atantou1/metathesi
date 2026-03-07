@@ -39,12 +39,6 @@ export function MobileMenu({ session }: MobileMenuProps) {
             icon: FileText
         },
         {
-            href: "/request/create",
-            label: "Η Αίτησή μου",
-            active: pathname?.startsWith("/request"),
-            icon: FileText
-        },
-        {
             href: "/matches",
             label: "Ταιριάσματα",
             active: pathname === "/matches",
