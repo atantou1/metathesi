@@ -20,25 +20,29 @@ model Sector {
 }
 
 model Division {
-  id       Int       @id @default(autoincrement())
-  sectorId Int       @map("sector_id")
-  name     String
-  sector   Sector    @relation(fields: [sectorId], references: [id])
-  profiles Profile[]
+  id                  Int                      @id @default(autoincrement())
+  sectorId            Int                      @map("sector_id")
+  name                String
+  sector              Sector                   @relation(fields: [sectorId], references: [id])
+  profiles            Profile[]
+  historicalTransfers HistoricalTransferData[]
+  zoneStatistics      ZoneStatisticsCache[]
 
   @@map("divisions")
 }
 
 model Specialty {
-  id                  Int       @id @default(autoincrement())
-  code                String    @unique
+  id                  Int                      @id @default(autoincrement())
+  code                String                   @unique
   name                String
-  branchCode          String    @map("branch_code")
-  branchName          String    @map("branch_name")
-  educationalCategory String    @map("educational_category")
-  isPrimary           Boolean   @map("is_primary")
-  isSecondary         Boolean   @map("is_secondary")
+  branchCode          String                   @map("branch_code")
+  branchName          String                   @map("branch_name")
+  educationalCategory String                   @map("educational_category")
+  isPrimary           Boolean                  @map("is_primary")
+  isSecondary         Boolean                  @map("is_secondary")
   profiles            Profile[]
+  historicalTransfers HistoricalTransferData[]
+  zoneStatistics      ZoneStatisticsCache[]
 
   @@map("specialties")
 }
@@ -57,14 +61,17 @@ enum DivisionType {
 }
 
 model PostingZone {
-  id             Int          @id @default(autoincrement())
-  regionId       Int          @map("region_id")
-  divisionType   DivisionType @map("division_type")
-  name           String
-  region         Region       @relation(fields: [regionId], references: [id])
-  currentProfiles Profile[]
-  originRequests TransferRequest[] @relation("OriginZone")
-  targetRequests TargetZone[]
+  id                        Int                      @id @default(autoincrement())
+  regionId                  Int                      @map("region_id")
+  divisionType              DivisionType             @map("division_type")
+  name                      String
+  region                    Region                   @relation(fields: [regionId], references: [id])
+  currentProfiles           Profile[]
+  originRequests            TransferRequest[]        @relation("OriginZone")
+  targetRequests            TargetZone[]
+  historicalOriginTransfers HistoricalTransferData[] @relation("HistoricalOriginZone")
+  historicalTargetTransfers HistoricalTransferData[] @relation("HistoricalTargetZone")
+  zoneStatistics            ZoneStatisticsCache[]
 
   @@map("posting_zones")
 }
@@ -117,28 +124,28 @@ model Session {
 }
 
 model Profile {
-  id              Int              @id @default(autoincrement())
-  userId          Int              @unique @map("user_id")
-  user            User             @relation(fields: [userId], references: [id])
-  specialtyId     Int              @map("specialty_id")
-  specialty       Specialty        @relation(fields: [specialtyId], references: [id])
-  divisionId      Int              @map("division_id")
-  division        Division         @relation(fields: [divisionId], references: [id])
-  currentZoneId   Int              @map("current_zone_id")
-  currentZone     PostingZone      @relation(fields: [currentZoneId], references: [id])
+  id            Int         @id @default(autoincrement())
+  userId        Int         @unique @map("user_id")
+  user          User        @relation(fields: [userId], references: [id])
+  specialtyId   Int         @map("specialty_id")
+  specialty     Specialty   @relation(fields: [specialtyId], references: [id])
+  divisionId    Int         @map("division_id")
+  division      Division    @relation(fields: [divisionId], references: [id])
+  currentZoneId Int         @map("current_zone_id")
+  currentZone   PostingZone @relation(fields: [currentZoneId], references: [id])
   // bio             String? // Removed
-  
+
   // New Fields
-  hireDate        DateTime         @default("2020-01-01T00:00:00Z") @map("hire_date")
-  serviceYears    Int              @default(10) @map("service_years")
-  serviceMonths   Int              @default(10) @map("service_months")
-  serviceDays     Int              @default(10) @map("service_days")
-  
-  fullName        String?          @map("full_name")
+  hireDate      DateTime @default("2020-01-01T00:00:00Z") @map("hire_date")
+  serviceYears  Int      @default(10) @map("service_years")
+  serviceMonths Int      @default(10) @map("service_months")
+  serviceDays   Int      @default(10) @map("service_days")
+
+  fullName String? @map("full_name")
 
   transferRequests TransferRequest[]
-  messages        Message[]
-  notifications   Notification[]
+  messages         Message[]
+  notifications    Notification[]
 
   @@map("profiles")
 }
@@ -163,15 +170,15 @@ enum RequestStatus {
 }
 
 model TransferRequest {
-  id          Int           @id @default(autoincrement())
-  profileId   Int           @map("profile_id")
-  profile     Profile       @relation(fields: [profileId], references: [id])
-  originZoneId Int          @map("origin_zone_id") // New field: Where the user IS when requesting
-  originZone   PostingZone  @relation("OriginZone", fields: [originZoneId], references: [id])
-  status      RequestStatus @default(active)
-  createdAt   DateTime      @default(now()) @map("created_at")
-  completedAt DateTime?     @map("completed_at")
-  targetZones TargetZone[]
+  id                  Int                @id @default(autoincrement())
+  profileId           Int                @map("profile_id")
+  profile             Profile            @relation(fields: [profileId], references: [id])
+  originZoneId        Int                @map("origin_zone_id") // New field: Where the user IS when requesting
+  originZone          PostingZone        @relation("OriginZone", fields: [originZoneId], references: [id])
+  status              RequestStatus      @default(active)
+  createdAt           DateTime           @default(now()) @map("created_at")
+  completedAt         DateTime?          @map("completed_at")
+  targetZones         TargetZone[]
   matchParticipations MatchParticipant[] // Relation to matches
 
   @@map("transfer_requests")
@@ -190,24 +197,24 @@ model TargetZone {
 }
 
 model Match {
-  id        Int      @id @default(autoincrement())
-  type      String   // 'direct', 'circular'
-  status    String   @default("active") // 'active', 'inactive'
-  createdAt   DateTime @default(now()) @map("created_at")
+  id          Int       @id @default(autoincrement())
+  type        String // 'direct', 'circular'
+  status      String    @default("active") // 'active', 'inactive'
+  createdAt   DateTime  @default(now()) @map("created_at")
   completedAt DateTime? @map("completed_at")
 
-  participants MatchParticipant[]
-  messages     Message[]
+  participants  MatchParticipant[]
+  messages      Message[]
   notifications Notification[]
 
   @@map("matches")
 }
 
 model MatchParticipant {
-  id        Int      @id @default(autoincrement())
-  matchId   Int      @map("match_id")
-  match     Match    @relation(fields: [matchId], references: [id])
-  requestId Int      @map("request_id")
+  id        Int             @id @default(autoincrement())
+  matchId   Int             @map("match_id")
+  match     Match           @relation(fields: [matchId], references: [id])
+  requestId Int             @map("request_id")
   request   TransferRequest @relation(fields: [requestId], references: [id])
 
   @@map("match_participants")
@@ -229,11 +236,46 @@ model Notification {
   id        Int      @id @default(autoincrement())
   profileId Int      @map("profile_id")
   profile   Profile  @relation(fields: [profileId], references: [id])
-  type      String   // 'NEW_MATCH', 'NEW_MESSAGE'
+  type      String // 'NEW_MATCH', 'NEW_MESSAGE'
   matchId   Int      @map("match_id")
   match     Match    @relation(fields: [matchId], references: [id])
   isRead    Boolean  @default(false) @map("is_read")
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("notifications")
+}
+
+// 5.4 Analytics Tables
+
+model HistoricalTransferData {
+  id                Int         @id @default(autoincrement())
+  specialtyId       Int         @map("specialty_id")
+  specialty         Specialty   @relation(fields: [specialtyId], references: [id])
+  divisionId        Int         @map("division_id")
+  division          Division    @relation(fields: [divisionId], references: [id])
+  originZoneId      Int         @map("origin_zone_id")
+  originZone        PostingZone @relation("HistoricalOriginZone", fields: [originZoneId], references: [id])
+  targetZoneId      Int         @map("target_zone_id")
+  targetZone        PostingZone @relation("HistoricalTargetZone", fields: [targetZoneId], references: [id])
+  points            Float
+  isSpecialCategory Boolean     @map("is_special_category")
+  year              Int
+
+  @@map("historical_transfer_data")
+}
+
+model ZoneStatisticsCache {
+  id               Int         @id @default(autoincrement())
+  zoneId           Int         @map("zone_id")
+  zone             PostingZone @relation(fields: [zoneId], references: [id])
+  specialtyId      Int         @map("specialty_id")
+  specialty        Specialty   @relation(fields: [specialtyId], references: [id])
+  divisionId       Int         @map("division_id")
+  division         Division    @relation(fields: [divisionId], references: [id])
+  avgPoints        Float       @map("avg_points")
+  lastCutOffPoints Float       @map("last_cut_off_points")
+  demandCount      Int         @map("demand_count")
+  supplyCount      Int         @map("supply_count")
+
+  @@map("zone_statistics_cache")
 }
