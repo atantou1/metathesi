@@ -31,23 +31,48 @@ function MapController({ selectedFeature, geoJsonLayerRef }: { selectedFeature: 
       }) as L.Path | undefined
       
       if (targetLayer && 'getBounds' in targetLayer && typeof targetLayer.getBounds === 'function') {
-        // Zoom and pan to the bounds of the selected feature
+        // Zoom and pan to the bounds of the selected feature (less intense zoom)
         map.flyToBounds(targetLayer.getBounds(), {
-          padding: [50, 50],
+          paddingBottomRight: [500, 50], // Add significant padding on bottom/right to avoid zooming in too much
+          paddingTopLeft: [50, 200], // Add padding on top/left
           duration: 1.5
         })
       }
     } else if (!selectedFeature) {
-      // Reset view to Greece bounds if nothing is selected
+      // Reset view to Greece bounds if nothing is selected (shift down slightly)
       const bounds: L.LatLngBoundsExpression = [
-        [34.8, 19.3], // South West
-        [41.8, 28.2]  // North East
+        [36.9, 20.5], // South West
+        [41.4, 26.5]  // North East
       ]
       map.flyToBounds(bounds, { duration: 1.5 })
     }
   }, [selectedFeature, map, geoJsonLayerRef])
 
   return null
+}
+
+// Custom Zoom Controls Component
+function CustomZoomControls() {
+  const map = useMap()
+
+  return (
+    <div className="absolute bottom-8 right-8 flex flex-col gap-2 pointer-events-auto hidden md:flex" style={{ zIndex: 1000 }}>
+      <button 
+        onClick={(e) => { e.stopPropagation(); map.zoomIn() }}
+        className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors"
+        title="Zoom In"
+      >
+        <span className="material-symbols-outlined">add</span>
+      </button>
+      <button 
+        onClick={(e) => { e.stopPropagation(); map.zoomOut() }}
+        className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors"
+        title="Zoom Out"
+      >
+        <span className="material-symbols-outlined">remove</span>
+      </button>
+    </div>
+  )
 }
 
 interface PostingZonesMapProps {
@@ -136,9 +161,10 @@ export default function PostingZonesMap({ onZoneClick, selectedZone }: PostingZo
     )
   }
 
+  // Initial bounds set tighter for more zoom (shift down slightly)
   const bounds: L.LatLngBoundsExpression = [
-    [34.8, 19.3], // South West
-    [41.8, 28.2]  // North East
+    [36.9, 20.5], // South West
+    [41.4, 26.5]  // North East
   ]
 
   return (
@@ -146,10 +172,12 @@ export default function PostingZonesMap({ onZoneClick, selectedZone }: PostingZo
       <MapContainer
         bounds={bounds}
         zoomControl={false} // Disable default zoom control as user wants custom ones
+        attributionControl={false} // Disable Leaflet attribution watermarks
         scrollWheelZoom={true}
         className="w-full h-full"
         style={{ background: 'transparent' }} // Transparent background to blend with container
       >
+        <CustomZoomControls />
         <MapController selectedFeature={selectedFeatureData} geoJsonLayerRef={geoJsonLayerRef} />
         {/* We omitted TileLayer purposely to only show the abstract GeoJSON overlay */}
         

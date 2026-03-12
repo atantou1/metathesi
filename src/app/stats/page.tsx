@@ -110,29 +110,6 @@ export default function StatsPage() {
             </div>
           )}
 
-          {/* Map Controls (Bottom Right) */}
-          <div className="absolute bottom-8 right-8 flex flex-col gap-2 pointer-events-auto hidden md:flex">
-            {/* Note: Leaflet requires custom JS wiring for external buttons, but visually here they are */}
-            <button 
-                className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors"
-                onClick={() => {
-                   // This is visual only for now. Actual Leaflet zoom logic requires context
-                   const event = new KeyboardEvent('keydown', {'key': '+'});
-                   document.dispatchEvent(event);
-                }}    
-            >
-              <span className="material-symbols-outlined">add</span>
-            </button>
-            <button className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors">
-              <span className="material-symbols-outlined">remove</span>
-            </button>
-            <button 
-              className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors mt-2"
-              onClick={() => setSelectedZone(undefined)}
-            >
-              <span className="material-symbols-outlined">my_location</span>
-            </button>
-          </div>
         </div>
       </main>
     </div>
