@@ -32,9 +32,16 @@ function MapController({ selectedFeature, geoJsonLayerRef }: { selectedFeature: 
       
       if (targetLayer && 'getBounds' in targetLayer && typeof targetLayer.getBounds === 'function') {
         // Zoom and pan to the bounds of the selected feature (less intense zoom)
+        
+        // Define a fixed maximum zoom level that looks good for any region.
+        // We use a fixed level (e.g., 8.5) so that clicking different 
+        // regions sequentially doesn't keep zooming in further and further.
+        const fixedMaxZoom = 8.5; 
+        
         map.flyToBounds(targetLayer.getBounds(), {
-          paddingBottomRight: [500, 50], // Add significant padding on bottom/right to avoid zooming in too much
-          paddingTopLeft: [50, 200], // Add padding on top/left
+          paddingBottomRight: [400, 50], // Shift left to make room for the info panel on the right
+          paddingTopLeft: [50, 50], 
+          maxZoom: fixedMaxZoom, // Fixed zoom level
           duration: 1.5
         })
       }
