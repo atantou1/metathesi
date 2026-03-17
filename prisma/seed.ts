@@ -80,7 +80,7 @@ async function main() {
     const regionMap = new Map<string, number>()
 
     for (const line of zonesLines) {
-        const [name, regionName, divisionTypeStr] = line.split(';')
+        const [name, regionName] = line.split(';')
 
         if (!name) continue
         const cleanRegionName = regionName.trim()
@@ -99,13 +99,10 @@ async function main() {
             regionMap.set(cleanRegionName, regionId!)
         }
 
-        const divisionType = divisionTypeStr.trim() === 'Primary' ? DivisionType.Primary : DivisionType.Secondary
-
         await prisma.postingZone.create({
             data: {
                 name: name.trim(),
                 regionId: regionId!,
-                divisionType: divisionType,
             },
         })
     }

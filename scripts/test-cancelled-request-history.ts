@@ -22,8 +22,8 @@ async function main() {
     })
     const region = await prisma.region.create({ data: { name: `Test Region ${uniqueId}` } })
 
-    const zoneA = await prisma.postingZone.create({ data: { name: `Zone A ${uniqueId}`, regionId: region.id, divisionType: 'Secondary' } })
-    const zoneB = await prisma.postingZone.create({ data: { name: `Zone B ${uniqueId}`, regionId: region.id, divisionType: 'Secondary' } })
+    const zoneA = await prisma.postingZone.create({ data: { name: `Zone A ${uniqueId}`, regionId: region.id } })
+    const zoneB = await prisma.postingZone.create({ data: { name: `Zone B ${uniqueId}`, regionId: region.id } })
 
     // User A
     const userA = await prisma.user.create({

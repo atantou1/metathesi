@@ -24,9 +24,9 @@ async function main() {
     const region = await prisma.region.create({ data: { name: `Test Region ${uniqueId}` } })
 
     // Create Zones
-    const zoneA = await prisma.postingZone.create({ data: { name: `Zone A ${uniqueId}`, regionId: region.id, divisionType: 'Secondary' } })
-    const zoneB = await prisma.postingZone.create({ data: { name: `Zone B ${uniqueId}`, regionId: region.id, divisionType: 'Secondary' } })
-    const zoneC = await prisma.postingZone.create({ data: { name: `Zone C ${uniqueId}`, regionId: region.id, divisionType: 'Secondary' } })
+    const zoneA = await prisma.postingZone.create({ data: { name: `Zone A ${uniqueId}`, regionId: region.id } })
+    const zoneB = await prisma.postingZone.create({ data: { name: `Zone B ${uniqueId}`, regionId: region.id } })
+    const zoneC = await prisma.postingZone.create({ data: { name: `Zone C ${uniqueId}`, regionId: region.id } })
 
     // Create User A (The Seeker) - In Zone A, Wants Zone B
     const userA = await prisma.user.create({

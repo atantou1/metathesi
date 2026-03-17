@@ -23,21 +23,9 @@ export async function getUserProfile() {
 }
 
 export async function getAvailableZones(regionId: number, divisionId: number) {
-    // Same as getZones but we can reuse logic or import it
-    // For now, duplicate for simplicity
-    const division = await prisma.division.findUnique({
-        where: { id: divisionId },
-    })
-
-    if (!division) return []
-
-    const isPrimary = division.name.includes("Πρωτοβάθμια");
-    const divisionType = isPrimary ? DivisionType.Primary : DivisionType.Secondary
-
     return await prisma.postingZone.findMany({
         where: {
             regionId,
-            divisionType,
         }
     })
 }

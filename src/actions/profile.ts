@@ -39,25 +39,9 @@ export async function getRegions() {
 }
 
 export async function getZones(regionId: number, divisionId: number) {
-    const division = await prisma.division.findUnique({
-        where: { id: divisionId },
-    })
-
-    if (!division) return []
-
-    const isPrimary = division.name.includes("Πρωτοβάθμια");
-    const divisionType = isPrimary ? DivisionType.Primary : DivisionType.Secondary
-
     return await prisma.postingZone.findMany({
         where: {
             regionId,
-            divisionType,
-        }
-    })
-    return await prisma.postingZone.findMany({
-        where: {
-            regionId,
-            divisionType,
         }
     })
 }
