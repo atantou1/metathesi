@@ -54,15 +54,24 @@ async function main() {
 
         if (!code) continue
 
-        await prisma.specialty.create({
-            data: {
+        await prisma.specialty.upsert({
+            where: { code: code.trim() },
+            update: {
+                name: name.trim(),
+                branchCode: branchCode.trim(),
+                branchName: branchName.trim(),
+                educationalCategory: educationalCategory.trim(),
+                isPrimary: isPrimaryStr.trim().toUpperCase() === 'TRUE',
+                isSecondary: isSecondaryStr.trim().toUpperCase() === 'TRUE',
+            },
+            create: {
                 code: code.trim(),
                 name: name.trim(),
                 branchCode: branchCode.trim(),
                 branchName: branchName.trim(),
                 educationalCategory: educationalCategory.trim(),
-                isPrimary: isPrimaryStr.trim() === 'TRUE',
-                isSecondary: isSecondaryStr.trim() === 'TRUE',
+                isPrimary: isPrimaryStr.trim().toUpperCase() === 'TRUE',
+                isSecondary: isSecondaryStr.trim().toUpperCase() === 'TRUE',
             },
         })
     }
