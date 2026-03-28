@@ -20,28 +20,26 @@ model Sector {
 }
 
 model Division {
-  id                  Int                      @id @default(autoincrement())
-  sectorId            Int                      @map("sector_id")
-  name                String
-  sector              Sector                   @relation(fields: [sectorId], references: [id])
-  profiles            Profile[]
-  historicalTransfers HistoricalTransferData[]
-  zoneStatistics      ZoneStatisticsCache[]
+  id             Int                  @id @default(autoincrement())
+  sectorId       Int                  @map("sector_id")
+  name           String
+  sector         Sector               @relation(fields: [sectorId], references: [id])
+  profiles       Profile[]
+  zoneStatistics ZoneStatisticsCache[]
 
   @@map("divisions")
 }
 
 model Specialty {
-  id                  Int                      @id @default(autoincrement())
-  code                String                   @unique
+  id                  Int                  @id @default(autoincrement())
+  code                String               @unique
   name                String
-  branchCode          String                   @map("branch_code")
-  branchName          String                   @map("branch_name")
-  educationalCategory String                   @map("educational_category")
-  isPrimary           Boolean                  @map("is_primary")
-  isSecondary         Boolean                  @map("is_secondary")
+  branchCode          String               @map("branch_code")
+  branchName          String               @map("branch_name")
+  educationalCategory String               @map("educational_category")
+  isPrimary           Boolean              @map("is_primary")
+  isSecondary         Boolean              @map("is_secondary")
   profiles            Profile[]
-  historicalTransfers HistoricalTransferData[]
   zoneStatistics      ZoneStatisticsCache[]
 
   @@map("specialties")
@@ -61,16 +59,14 @@ enum DivisionType {
 }
 
 model PostingZone {
-  id                        Int                      @id @default(autoincrement())
-  regionId                  Int                      @map("region_id")
-  name                      String
-  region                    Region                   @relation(fields: [regionId], references: [id])
-  currentProfiles           Profile[]
-  originRequests            TransferRequest[]        @relation("OriginZone")
-  targetRequests            TargetZone[]
-  historicalOriginTransfers HistoricalTransferData[] @relation("HistoricalOriginZone")
-  historicalTargetTransfers HistoricalTransferData[] @relation("HistoricalTargetZone")
-  zoneStatistics            ZoneStatisticsCache[]
+  id             Int                  @id @default(autoincrement())
+  regionId       Int                  @map("region_id")
+  name           String
+  region         Region               @relation(fields: [regionId], references: [id])
+  currentProfiles Profile[]
+  originRequests  TransferRequest[]   @relation("OriginZone")
+  targetRequests  TargetZone[]
+  zoneStatistics  ZoneStatisticsCache[]
 
   @@map("posting_zones")
 }
@@ -246,23 +242,6 @@ model Notification {
 
 // 5.4 Analytics Tables
 
-model HistoricalTransferData {
-  id                Int         @id @default(autoincrement())
-  specialtyId       Int         @map("specialty_id")
-  specialty         Specialty   @relation(fields: [specialtyId], references: [id])
-  divisionId        Int         @map("division_id")
-  division          Division    @relation(fields: [divisionId], references: [id])
-  originZoneId      Int         @map("origin_zone_id")
-  originZone        PostingZone @relation("HistoricalOriginZone", fields: [originZoneId], references: [id])
-  targetZoneId      Int         @map("target_zone_id")
-  targetZone        PostingZone @relation("HistoricalTargetZone", fields: [targetZoneId], references: [id])
-  points            Float
-  isSpecialCategory Boolean     @map("is_special_category")
-  year              Int
-
-  @@map("historical_transfer_data")
-}
-
 model ZoneStatisticsCache {
   id               Int         @id @default(autoincrement())
   zoneId           Int         @map("zone_id")
@@ -277,4 +256,55 @@ model ZoneStatisticsCache {
   supplyCount      Int         @map("supply_count")
 
   @@map("zone_statistics_cache")
+}
+
+// 5.5 Transfer Statistics (Read-Only — populated from analytics_dashboard.csv)
+// No FK constraints to posting_zones or specialties to avoid seeding conflicts.
+
+model TransferStatistics {
+  id   Int    @id @default(autoincrement())
+
+  // Identifiers (plain strings — decoupled from other tables)
+  region    String
+  division  String
+  specialty String
+
+  // Supply metrics
+  successCount            Int     @map("success_count")
+  successCountDiff        Int     @map("success_count_diff")
+  successCountHistory     Json    @map("success_count_history")     @db.JsonB
+
+  // Score metrics
+  baseScore               Float?  @map("base_score")
+  baseScoreDiff           Float?  @map("base_score_diff")
+  baseScoreHistory        Json    @map("base_score_history")        @db.JsonB
+
+  avgScore                Float?  @map("avg_score")
+  avgScoreDiff            Float?  @map("avg_score_diff")
+  avgScoreHistory         Json    @map("avg_score_history")         @db.JsonB
+
+  // Applicant score
+  avgScoreApplicants      Float?  @map("avg_score_applicants")
+  avgScoreAppDiff         Float?  @map("avg_score_app_diff")
+  avgScoreAppHistory      Json    @map("avg_score_app_history")     @db.JsonB
+
+  // Demand metrics
+  leavingCount            Int     @map("leaving_count")
+  leavingCountDiff        Int     @map("leaving_count_diff")
+  leavingCountHistory     Json    @map("leaving_count_history")     @db.JsonB
+
+  targeting1stCount       Int     @map("targeting_1st_count")
+  targeting1stCountDiff   Int     @map("targeting_1st_count_diff")
+  targeting1stCountHistory Json   @map("targeting_1st_count_history") @db.JsonB
+
+  // Flow JSON
+  inflowOriginsJson       Json    @map("inflow_origins_json")       @db.JsonB
+  outflowTargetsJson      Json    @map("outflow_targets_json")      @db.JsonB
+
+  // Difficulty
+  difficultyCategory        String  @map("difficulty_category")
+  difficultyCategoryHistory Json    @map("difficulty_category_history") @db.JsonB
+  difficultyCategoryTrend   String  @map("difficulty_category_trend")
+
+  @@map("transfer_statistics")
 }
