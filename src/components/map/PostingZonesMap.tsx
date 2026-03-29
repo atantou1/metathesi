@@ -85,9 +85,11 @@ function CustomZoomControls() {
 interface PostingZonesMapProps {
   onZoneClick?: (zoneName: string, featureData?: GeoJSON.Feature) => void
   selectedZone?: string
+  statistics?: any[]
+  indicator?: string
 }
 
-export default function PostingZonesMap({ onZoneClick, selectedZone }: PostingZonesMapProps) {
+export default function PostingZonesMap({ onZoneClick, selectedZone, statistics, indicator }: PostingZonesMapProps) {
   const [geoJsonData, setGeoJsonData] = useState<GeoJSON.FeatureCollection | null>(null)
   const geoJsonLayerRef = useRef<L.GeoJSON>(null)
 
@@ -112,44 +114,105 @@ export default function PostingZonesMap({ onZoneClick, selectedZone }: PostingZo
       })
   }, [])
 
+  const getZoneColor = (zoneName: string) => {
+    if (zoneName === 'ΑΓΙΟ ΟΡΟΣ') return '#e2e8f0' // Always gray for Agio Oros
+    if (!statistics || !indicator) return '#1e293b'
+    const stat = statistics.find(statItem => statItem.region === zoneName)
+    if (!stat) return '#e2e8f0' // No Data
+
+    if (indicator === 'Base_Score') {
+      const val = stat.baseScore
+      if (val === null || val === undefined) return '#e2e8f0'
+      if (val > 100) return '#0369a1'
+      if (val >= 70) return '#0ea5e9'
+      if (val >= 50) return '#38bdf8'
+      if (val >= 35) return '#7dd3fc'
+      return '#bae6fd'
+    }
+    
+    if (indicator === 'Difficulty_Category') {
+      const val = stat.difficultyCategory
+      if (val === 'Extreme') return '#ef4444' // Πολύ Δύσκολη
+      if (val === 'High') return '#f97316' // Δύσκολη
+      if (val === 'Moderate') return '#eab308' // Μεσαία
+      if (val === 'Accessible') return '#22c55e' // Εύκολη
+      return '#e2e8f0' // Unknown / Άγνωστο
+    }
+    
+    if (indicator === 'Success_Count') {
+      const val = stat.successCount ?? 0
+      if (val >= 31) return '#0f766e'
+      if (val >= 11) return '#14b8a6'
+      if (val >= 5) return '#2dd4bf'
+      if (val >= 2) return '#5eead4'
+      if (val === 1) return '#99f6e4'
+      return '#e2e8f0'
+    }
+    
+    if (indicator === 'Leaving_Count') {
+      const val = stat.leavingCount ?? 0
+      if (val >= 31) return '#9f1239'
+      if (val >= 11) return '#e11d48'
+      if (val >= 5) return '#f43f5e'
+      if (val >= 2) return '#fb7185'
+      if (val === 1) return '#fda4af'
+      return '#e2e8f0'
+    }
+    
+    if (indicator === 'Targeting_1st_Count') {
+      const val = stat.targeting1stCount ?? 0
+      if (val >= 31) return '#6d28d9'
+      if (val >= 11) return '#7c3aed'
+      if (val >= 5) return '#8b5cf6'
+      if (val >= 2) return '#a78bfa'
+      if (val === 1) return '#c4b5fd'
+      return '#e2e8f0'
+    }
+    
+    return '#1e293b'
+  }
+
   const styleFeature = (feature: GeoJSON.Feature<GeoJSON.Geometry, GeoJSON.GeoJsonProperties> | undefined) => {
     const zoneName = feature?.properties?.zone
     const isSelected = selectedZone === zoneName
+    const baseColor = zoneName ? getZoneColor(zoneName) : '#1e293b'
 
     return {
-      fillColor: isSelected ? '#0ea5e9' : '#1e293b', // Primary color vs dark slate
-      weight: 1,
+      fillColor: baseColor,
+      weight: isSelected ? 3 : 1,
       opacity: 1,
-      color: isSelected ? '#ffffff' : '#334155', // White border when selected, subtle dark border otherwise
-      fillOpacity: isSelected ? 0.8 : 0.4
+      color: isSelected ? '#64748b' : '#334155', // Slate-500 (gray) when selected, subtle dark border otherwise
+      fillOpacity: 0.85
     }
   }
 
   const onEachFeature = (feature: GeoJSON.Feature<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>, layer: L.Layer) => {
     const zoneName = feature.properties?.zone
+    if (zoneName === 'ΑΓΙΟ ΟΡΟΣ') {
+      // No interactive listeners for Agio Oros
+      return
+    }
 
     layer.on({
       mouseover: (e: L.LeafletMouseEvent) => {
-        if (selectedZone === zoneName) return // Don't change hover style if selected
-
         const targetLayer = e.target as L.Path
+        const isSelected = selectedZone === zoneName
+        
         targetLayer.setStyle({
-          weight: 2,
-          color: '#cbd5e1',
-          fillOpacity: 0.6,
-          fillColor: '#38bdf8' // Lighter primary on hover
+          weight: isSelected ? 3 : 2.5,
+          color: '#94a3b8', // Slate-400 for hover highlight
+          fillOpacity: 0.85
         })
         targetLayer.bringToFront()
       },
       mouseout: (e: L.LeafletMouseEvent) => {
-        if (selectedZone === zoneName) return // Don't revert style if selected
-
         const targetLayer = e.target as L.Path
+        const isSelected = selectedZone === zoneName
+        
         targetLayer.setStyle({
-          weight: 1,
-          color: '#334155',
-          fillOpacity: 0.4,
-          fillColor: '#1e293b'
+          weight: isSelected ? 3 : 1,
+          color: isSelected ? '#64748b' : '#334155',
+          fillOpacity: 0.85
         })
       },
       click: () => {
@@ -189,7 +252,7 @@ export default function PostingZonesMap({ onZoneClick, selectedZone }: PostingZo
         {/* We omitted TileLayer purposely to only show the abstract GeoJSON overlay */}
         
         <GeoJSON
-          key={`geojson-${selectedZone}`} // Re-render for style updates
+          key={`geojson-${selectedZone}-${indicator}-${statistics?.length}`} // Force re-render when colors/data change
           ref={geoJsonLayerRef}
           data={geoJsonData}
           style={styleFeature}

@@ -375,6 +375,211 @@ function LegendCard({ indicator }: { indicator: string }) {
   )
 }
 
+// ─── Panel Content (Exact HTML Design) ─────────────────────────────────────────────
+
+function PanelContent({ title, specialtyName, data, onClose }: { title: string; specialtyName: string; data: any; onClose: () => void }) {
+  if (!data) {
+    return (
+      <div className="w-full max-w-md bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
+        <div className="p-6 border-b border-slate-100 bg-white/50 shrink-0">
+          <div className="flex justify-between items-start mb-3">
+            <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{specialtyName}</p>
+              <h2 className="text-2xl font-bold text-slate-800 tracking-tight">{title}</h2>
+            </div>
+            <button onClick={onClose} className="text-slate-400 hover:text-sky-600 p-1.5 rounded-xl hover:bg-sky-50 transition-colors cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col items-center justify-center p-12 text-center">
+          <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-300 mb-4">
+            <span className="material-symbols-outlined text-4xl">database_off</span>
+          </div>
+          <h3 className="text-lg font-bold text-slate-800 mb-2">Δεν βρέθηκαν δεδομένα</h3>
+          <p className="text-sm text-slate-500 max-w-[240px]">Δεν υπάρχουν στατιστικά στοιχεία για αυτή την περιοχή με τα επιλεγμένα φίλτρα.</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Difficulty Mapping
+  const diffMap: Record<string, { label: string; color: string; icon: string }> = {
+    Extreme:   { label: 'Ακραία Δυσκολία', color: 'text-rose-600 bg-rose-50 border-rose-100', icon: '🔴' },
+    High:      { label: 'Υψηλή Δυσκολία',  color: 'text-orange-600 bg-orange-50 border-orange-100', icon: '🟠' },
+    Moderate:  { label: 'Μεσαία Δυσκολία', color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟡' },
+    Accessible: { label: 'Εύκολη Πρόσβαση', color: 'text-emerald-600 bg-emerald-50 border-emerald-100', icon: '🟢' },
+    Unknown:   { label: 'Άγνωστη Δυσκολία', color: 'text-slate-500 bg-slate-50 border-slate-100', icon: '⚪' },
+  }
+  const diff = diffMap[data.difficultyCategory] || diffMap.Unknown
+
+  // Trend Mapping
+  const trendMap: Record<string, string> = {
+    Increasing: 'Αυξητική ↗',
+    Stable:     'Σταθερή →',
+    Decreasing: 'Φθίνουσα ↘',
+  }
+  const trend = trendMap[data.difficultyCategoryTrend] || 'Σταθερή →'
+
+  // Flow Parsing
+  const parseFlows = (json: any) => {
+    if (!json) return []
+    try {
+      const obj = typeof json === 'string' ? JSON.parse(json) : json
+      return Object.entries(obj).map(([name, count]) => ({ name, count: Number(count) }))
+        .sort((a, b) => b.count - a.count)
+    } catch { return [] }
+  }
+  const inflow = parseFlows(data.inflowOriginsJson)
+  const outflow = parseFlows(data.outflowTargetsJson)
+
+  return (
+    <div className="w-full max-w-md bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
+        
+        <div className="p-6 border-b border-slate-100 bg-white/50 shrink-0">
+            <div className="flex justify-between items-start mb-3">
+                <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{specialtyName}</p>
+                    <h2 className="text-2xl font-bold text-slate-800 tracking-tight">{title}</h2>
+                </div>
+                <button onClick={onClose} className="text-slate-400 hover:text-sky-600 p-1.5 rounded-xl hover:bg-sky-50 transition-colors cursor-pointer">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div className="flex items-center gap-3">
+                <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide border shadow-sm ${diff.color}`}>
+                    {diff.icon} {diff.label}
+                </span>
+                <span className="text-[11px] font-semibold text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100">Τάση: {trend}</span>
+            </div>
+        </div>
+
+        <div className="p-6 overflow-y-auto flex-1 space-y-8 scrollbar-thin scrollbar-thumb-slate-300">
+            
+            <div className="grid grid-cols-2 gap-4">
+                
+                <div className="bg-white p-5 rounded-[1.25rem] border border-slate-100 shadow-sm hover:border-sky-100 hover:bg-sky-50/30 transition-colors group">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 group-hover:text-sky-600 transition-colors">Βαση Μοριων</p>
+                    <div className="flex items-baseline space-x-2">
+                        <span className="text-2xl font-bold text-slate-800">{data.baseScore?.toFixed(2) || '—'}</span>
+                        {data.baseScoreDiff !== null && data.baseScoreDiff !== 0 && (
+                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-md ${data.baseScoreDiff > 0 ? 'text-rose-600 bg-rose-50' : 'text-emerald-600 bg-emerald-50'}`}>
+                              <svg className={`w-3 h-3 mr-0.5 ${data.baseScoreDiff < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                              {Math.abs(data.baseScoreDiff).toFixed(1)}
+                          </span>
+                        )}
+                    </div>
+                </div>
+
+                <div className="bg-white p-5 rounded-[1.25rem] border border-slate-100 shadow-sm hover:border-indigo-50 transition-colors group">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 group-hover:text-indigo-500 transition-colors">Ζητηση (1η Προτ.)</p>
+                    <div className="flex items-baseline space-x-2">
+                        <span className="text-2xl font-bold text-slate-800">{data.targeting1stCount}</span>
+                        {data.targeting1stCountDiff !== 0 && (
+                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-md ${data.targeting1stCountDiff > 0 ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'}`}>
+                              <svg className={`w-3 h-3 mr-0.5 ${data.targeting1stCountDiff < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                              {Math.abs(data.targeting1stCountDiff)}
+                          </span>
+                        )}
+                    </div>
+                </div>
+
+                <div className="col-span-2 bg-sky-50 p-5 rounded-[1.25rem] border border-sky-100 flex justify-between items-center shadow-sm">
+                    <div>
+                        <p className="text-[10px] font-bold text-[#0369a1] uppercase tracking-widest mb-1">Αριθμος Μεταθεσεων</p>
+                        <div className="flex items-baseline space-x-2">
+                            <span className="text-3xl font-bold text-slate-800 tracking-tight">{data.successCount}</span>
+                            <span className="text-xs font-medium text-slate-500">άτομα πήραν μετάθεση</span>
+                        </div>
+                    </div>
+                    <div className="text-right">
+                        <span className="inline-flex px-2.5 py-1.5 bg-white text-sky-700 text-[10px] uppercase tracking-wider font-bold rounded-lg border border-sky-100 shadow-sm">Το 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr className="border-slate-100" />
+
+            <div>
+                <h3 className="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2 mb-5">
+                    <div className="p-1.5 rounded-lg bg-sky-50 text-[#0369A1]">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    Ποιότητα Ανταγωνισμού
+                </h3>
+                <div className="space-y-4">
+                    <div className="bg-white p-4 rounded-2xl border border-slate-50 shadow-sm">
+                        <div className="flex justify-between text-xs mb-2">
+                            <span className="text-slate-500 font-medium">Μ.Ο. Επιτυχόντων</span>
+                            <span className="font-bold text-slate-800">{data.avgScore?.toFixed(1) || '—'}</span>
+                        </div>
+                        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                            <div className="bg-gradient-to-r from-sky-400 to-[#0369a1] h-2 rounded-full shadow-inner" style={{width: `${Math.min(100, (data.avgScore || 0))}%`}}></div>
+                        </div>
+                    </div>
+                    <div className="bg-white p-4 rounded-2xl border border-slate-50 shadow-sm">
+                        <div className="flex justify-between text-xs mb-2">
+                            <span className="text-slate-500 font-medium">Μ.Ο. Αιτούντων</span>
+                            <span className="font-bold text-slate-800">{data.avgScoreApplicants?.toFixed(1) || '—'}</span>
+                        </div>
+                        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                            <div className="bg-slate-400 h-2 rounded-full shadow-inner" style={{width: `${Math.min(100, (data.avgScoreApplicants || 0))}%`}}></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr className="border-slate-100" />
+
+            <div>
+                <h3 className="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2 mb-5">
+                    <div className="p-1.5 rounded-lg bg-sky-50 text-[#0369A1]">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    </div>
+                    Ροές Μετακίνησης (Ιστορικά)
+                </h3>
+                <div className="grid grid-cols-2 gap-6 bg-slate-50 p-5 rounded-[1.25rem] border border-slate-100">
+                    <div>
+                        <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-3">Ηρθαν Απο:</p>
+                        {inflow.length > 0 ? (
+                          <ul className="space-y-3">
+                              {inflow.slice(0, 5).map(f => (
+                                <li key={f.name} className="flex items-center justify-between">
+                                    <span className="text-xs font-medium text-slate-600 truncate mr-1" title={f.name}>{f.name}</span> 
+                                    <span className="text-[10px] font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-md shadow-sm">{f.count}</span>
+                                </li>
+                              ))}
+                          </ul>
+                        ) : <p className="text-[10px] text-slate-400 italic">Κανένα στοιχείο</p>}
+                    </div>
+                    <div>
+                        <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-3">Θελουν να πανε:</p>
+                        {outflow.length > 0 ? (
+                          <ul className="space-y-3">
+                            {outflow.slice(0, 5).map(f => (
+                              <li key={f.name} className="flex items-center justify-between">
+                                  <span className="text-xs font-medium text-slate-600 truncate mr-1" title={f.name}>{f.name}</span> 
+                                  <span className="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-100 px-2 py-0.5 rounded-md shadow-sm">{f.count}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : <p className="text-[10px] text-slate-400 italic">Κανένα στοιχείο</p>}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div className="p-6 border-t border-slate-100 bg-white/80 backdrop-blur-sm shrink-0">
+            <button className="w-full bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] cursor-pointer">
+                Προβολή Αναλυτικών Στατιστικών
+            </button>
+        </div>
+    </div>
+  )
+}
+
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function StatsPage() {
@@ -382,6 +587,7 @@ export default function StatsPage() {
 
   // Map state
   const [selectedZone, setSelectedZone] = useState<string | undefined>(undefined)
+  const [lastSelectedZone, setLastSelectedZone] = useState<string>('')
 
   // Filter state
   const [division, setDivision]     = useState('Πρωτοβάθμια Γενικής')
@@ -394,6 +600,10 @@ export default function StatsPage() {
   const [allZones, setAllZones]             = useState<string[]>([])
   const [divisions, setDivisions]           = useState<Division[]>([])
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+  // Map statistics data
+  const [statistics, setStatistics] = useState<any[]>([])
+  const [loadingMapData, setLoadingMapData] = useState(false)
 
   // Fetch filter data once
   useEffect(() => {
@@ -437,6 +647,21 @@ export default function StatsPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [division, allSpecialties])
 
+  // Fetch actual statistics for map depending on division and specialty
+  useEffect(() => {
+    if (!division || !specialty) return
+    setLoadingMapData(true)
+    fetch(`/api/stats/map-data?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialty)}`)
+      .then(res => res.json())
+      .then(data => {
+        setStatistics(data.statistics ?? [])
+      })
+      .catch(console.error)
+      .finally(() => {
+        setLoadingMapData(false)
+      })
+  }, [division, specialty])
+
   // Division options (fallback if DB not loaded yet)
   const divisionOptions = divisions.length > 0
     ? divisions.map(d => ({ value: d.name, label: d.name }))
@@ -460,12 +685,14 @@ export default function StatsPage() {
   const handleZoneFilterChange = (v: string) => {
     setZone(v)
     setSelectedZone(v || undefined)
+    if (v) setLastSelectedZone(v)
   }
 
   const handleZoneClick = (zoneName: string) => {
     setSelectedZone(prev => {
       const next = prev === zoneName ? undefined : zoneName
       setZone(next ?? '')
+      if (next) setLastSelectedZone(next)
       return next
     })
   }
@@ -538,6 +765,8 @@ export default function StatsPage() {
             <PostingZonesMapClient
               selectedZone={selectedZone}
               onZoneClick={handleZoneClick}
+              statistics={statistics}
+              indicator={indicator}
             />
           </Suspense>
         </div>
@@ -601,62 +830,38 @@ export default function StatsPage() {
           {/* ── Legend card (bottom-left) ────────────────────────────────── */}
           <LegendCard indicator={indicator} />
 
-          {/* ── Regional Stats Card (right) — only when zone selected ────── */}
-          {selectedZone && (
-            <div
-              style={{
-                position: 'absolute',
-                top: isMobile ? '16px' : '32px',
-                right: isMobile ? '16px' : '32px',
-                width: isMobile ? '280px' : '320px',
-                pointerEvents: 'auto',
+        {/* ── Desktop Side Panel (Right) ─────────────────────────────────── */}
+          {!isMobile && (
+            <div 
+              className={`absolute top-0 right-0 h-full w-[448px] z-50 transform transition-transform duration-300 ease-out flex ${selectedZone ? 'translate-x-0' : 'translate-x-full'}`}
+              style={{ pointerEvents: selectedZone ? 'auto' : 'none' }}
+            >
+              <PanelContent 
+                title={selectedZone || lastSelectedZone} 
+                specialtyName={allSpecialties.find(s => s.code === specialty)?.code + ' - ' + allSpecialties.find(s => s.code === specialty)?.name}
+                data={statistics.find(s => s.region === (selectedZone || lastSelectedZone))}
+                onClose={() => { setSelectedZone(undefined); setZone('') }} 
+              />
+            </div>
+          )}
+
+          {/* ── Mobile Bottom Sheet (Bottom) ───────────────────────────────── */}
+          {isMobile && (
+            <div 
+              className={`fixed bottom-[16px] left-[16px] right-[16px] shadow-2xl z-50 transform transition-transform duration-300 ease-out flex flex-col ${selectedZone ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}
+              style={{ 
+                height: '40vh', 
+                pointerEvents: selectedZone ? 'auto' : 'none', 
+                borderRadius: '24px',
+                overflow: 'hidden'
               }}
             >
-              <div style={{ background: 'rgba(255,255,255,0.93)', backdropFilter: 'blur(20px)', border: '1px solid rgba(226,232,240,0.5)', borderRadius: '24px', boxShadow: '0 25px 50px rgba(0,0,0,0.15)', overflow: 'hidden' }}>
-                <div style={{ padding: '24px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', padding: '2px 10px', borderRadius: '9999px', fontSize: '12px', fontWeight: 500, background: 'rgba(14,165,233,0.1)', color: '#0ea5e9' }}>
-                      Επιλεγμένη Περιοχή
-                    </span>
-                    <button
-                      onClick={() => { setSelectedZone(undefined); setZone('') }}
-                      style={{ color: '#94a3b8', background: 'none', border: 'none', cursor: 'pointer', padding: '2px' }}
-                    >
-                      <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>close</span>
-                    </button>
-                  </div>
-
-                  <h2 style={{ fontSize: isMobile ? '22px' : '28px', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>{selectedZone}</h2>
-                  <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '24px' }}>Περιοχή Μετάθεσης</p>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '24px' }}>
-                    {[
-                      { label: 'Ζήτηση', note: 'Αναμονή δεδομένων' },
-                      { label: 'Προσφορά', note: 'Αναμονή δεδομένων' },
-                    ].map(item => (
-                      <div key={item.label} style={{ background: '#f8fafc', borderRadius: '16px', border: '1px solid #f1f5f9', padding: '16px' }}>
-                        <p style={{ fontSize: '11px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>{item.label}</p>
-                        <p style={{ fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>-</p>
-                        <p style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 700, marginTop: '4px' }}>{item.note}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '14px' }}>
-                    <span style={{ color: '#475569' }}>Εκτίμηση Βάσης Μορίων</span>
-                    <span style={{ fontWeight: 700, color: '#0ea5e9' }}>-</span>
-                  </div>
-                </div>
-
-                <button
-                  style={{ width: '100%', background: '#0ea5e9', color: '#fff', fontWeight: 700, padding: '16px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '14px' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#0284c7')}
-                  onMouseLeave={e => (e.currentTarget.style.background = '#0ea5e9')}
-                >
-                  Αναλυτικά Στατιστικά
-                  <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>arrow_forward</span>
-                </button>
-              </div>
+              <PanelContent 
+                title={selectedZone || lastSelectedZone} 
+                specialtyName={allSpecialties.find(s => s.code === specialty)?.code + ' - ' + allSpecialties.find(s => s.code === specialty)?.name}
+                data={statistics.find(s => s.region === (selectedZone || lastSelectedZone))}
+                onClose={() => { setSelectedZone(undefined); setZone('') }} 
+              />
             </div>
           )}
         </div>

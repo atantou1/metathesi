@@ -21,6 +21,8 @@ const PostingZonesMap = dynamic(() => import('@/components/map/PostingZonesMap')
 interface PostingZonesMapClientProps {
   onZoneClick?: (zoneName: string, featureData?: GeoJSON.Feature) => void
   selectedZone?: string
+  statistics?: any[]
+  indicator?: string
 }
 
 export default function PostingZonesMapClient(props: PostingZonesMapClientProps) {
