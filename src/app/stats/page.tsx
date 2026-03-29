@@ -299,7 +299,50 @@ function MobileFilterDrawer({
 
 function LegendCard({ indicator }: { indicator: string }) {
   const indicatorLabel = INDICATOR_OPTIONS.find(o => o.value === indicator)?.label ?? 'Βάση Μορίων'
-  const isCategory = indicator === 'Difficulty_Category'
+
+  let items: { color: string, label: string }[] = []
+
+  if (indicator === 'Base_Score') {
+    items = [
+      { color: '#0369a1', label: 'Πολύ Υψηλή (>100)' },
+      { color: '#0ea5e9', label: 'Υψηλή (70 - 100)' },
+      { color: '#38bdf8', label: 'Μέτρια (50 - 70)' },
+      { color: '#7dd3fc', label: 'Χαμηλή (35 - 50)' },
+      { color: '#bae6fd', label: 'Πολύ Χαμηλή (<35)' },
+      { color: '#e2e8f0', label: 'Χωρίς Δεδομένα' },
+    ]
+  } else if (indicator === 'Difficulty_Category') {
+    items = [
+      { color: '#ef4444', label: 'Πολύ Δύσκολη' },
+      { color: '#f97316', label: 'Δύσκολη' },
+      { color: '#eab308', label: 'Μεσαία' },
+      { color: '#22c55e', label: 'Εύκολη' },
+      { color: '#e2e8f0', label: 'Άγνωστο' },
+    ]
+  } else {
+    // Sequential scales for Success_Count, Leaving_Count, Targeting_1st_Count
+    const labels = [
+      '31+ άτομα',
+      '11 έως 30 άτομα',
+      '5 έως 10 άτομα',
+      '2 έως 4 άτομα',
+      '1 άτομο',
+      '0 άτομα',
+    ]
+
+    let colors: string[] = []
+    if (indicator === 'Success_Count') {
+      colors = ['#0f766e', '#14b8a6', '#2dd4bf', '#5eead4', '#99f6e4', '#e2e8f0']
+    } else if (indicator === 'Leaving_Count') {
+      colors = ['#9f1239', '#e11d48', '#f43f5e', '#fb7185', '#fda4af', '#e2e8f0']
+    } else if (indicator === 'Targeting_1st_Count') {
+      colors = ['#6d28d9', '#7c3aed', '#8b5cf6', '#a78bfa', '#c4b5fd', '#e2e8f0']
+    } else {
+      colors = ['#334155', '#475569', '#64748b', '#94a3b8', '#cbd5e1', '#e2e8f0']
+    }
+
+    items = labels.map((label, i) => ({ color: colors[i], label }))
+  }
 
   return (
     <div style={{ position: 'absolute', bottom: '40px', left: '40px', zIndex: 500, pointerEvents: 'auto' }}>
@@ -319,38 +362,14 @@ function LegendCard({ indicator }: { indicator: string }) {
           {indicatorLabel}
         </h3>
 
-        {isCategory ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {[
-              { color: '#ef4444', label: 'Πολύ Δύσκολη' },
-              { color: '#f97316', label: 'Δύσκολη' },
-              { color: '#eab308', label: 'Μεσαία' },
-              { color: '#22c55e', label: 'Εύκολη' },
-              { color: '#3b82f6', label: 'Πολύ Εύκολη' },
-            ].map(item => (
-              <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: item.color, flexShrink: 0 }} />
-                <span style={{ fontSize: '13px', fontWeight: 500, color: '#374151' }}>{item.label}</span>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {[
-              { color: '#0369a1', label: 'Πολύ Υψηλή' },
-              { color: '#0ea5e9', label: 'Υψηλή' },
-              { color: '#38bdf8', label: 'Μεσαία-Υψηλή' },
-              { color: '#7dd3fc', label: 'Μεσαία' },
-              { color: '#bae6fd', label: 'Χαμηλή' },
-              { color: '#e2e8f0', label: 'Πολύ Χαμηλή' },
-            ].map(item => (
-              <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: item.color, flexShrink: 0 }} />
-                <span style={{ fontSize: '13px', fontWeight: 500, color: '#374151' }}>{item.label}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {items.map(item => (
+            <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: item.color, flexShrink: 0 }} />
+              <span style={{ fontSize: '12px', fontWeight: 500, color: '#374151' }}>{item.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
