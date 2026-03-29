@@ -2,6 +2,7 @@
 
 import PostingZonesMapClient from './PostingZonesMapClient'
 import { Suspense, useState, useEffect, useRef } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 // ─── useIsMobile hook ─────────────────────────────────────────────────────────
 function useIsMobile() {
@@ -599,18 +600,48 @@ function PanelContent({ title, specialtyName, data, onClose }: { title: string; 
 
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 
-export default function StatsPage() {
+// ─── Main Page Content ────────────────────────────────────────────────────────
+
+function StatsMapContent() {
   const isMobile = useIsMobile()
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-  // Map state
-  const [selectedZone, setSelectedZone] = useState<string | undefined>(undefined)
-  const [lastSelectedZone, setLastSelectedZone] = useState<string>('')
+  // Filter state from URL
+  const division = searchParams.get('division') || 'Πρωτοβάθμια Γενικής'
+  const specialty = searchParams.get('specialty') || 'ΠΕ70'
+  const indicator = searchParams.get('indicator') || 'Base_Score'
+  const zone = searchParams.get('zone') || ''
 
-  // Filter state
-  const [division, setDivision]     = useState('Πρωτοβάθμια Γενικής')
-  const [specialty, setSpecialty]   = useState('ΠΕ70')
-  const [indicator, setIndicator]   = useState('Base_Score')
-  const [zone, setZone]             = useState('')
+  // Sync default values to URL if missing, so the URL is immediately shareable
+  useEffect(() => {
+    if (!searchParams.has('division') || !searchParams.has('specialty') || !searchParams.has('indicator')) {
+      const params = new URLSearchParams(searchParams.toString())
+      if (!params.has('division')) params.set('division', 'Πρωτοβάθμια Γενικής')
+      if (!params.has('specialty')) params.set('specialty', 'ΠΕ70')
+      if (!params.has('indicator')) params.set('indicator', 'Base_Score')
+      router.replace(`?${params.toString()}`, { scroll: false })
+    }
+  }, [searchParams, router])
+
+  // Derived zone states
+  const selectedZone = zone || undefined
+  const [lastSelectedZone, setLastSelectedZone] = useState<string>(zone || '')
+
+  // URL Update helper
+  const updateFilters = (newFilters: Partial<{division: string, specialty: string, indicator: string, zone: string}>) => {
+    const params = new URLSearchParams(searchParams.toString())
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (value) params.set(key, value)
+      else params.delete(key)
+    })
+    router.push(`?${params.toString()}`, { scroll: false })
+  }
+
+  const setDivision = (v: string) => updateFilters({ division: v })
+  const setSpecialty = (v: string) => updateFilters({ specialty: v })
+  const setIndicator = (v: string) => updateFilters({ indicator: v })
+  const setZone = (v: string) => updateFilters({ zone: v })
 
   // Filter data from DB
   const [allSpecialties, setAllSpecialties] = useState<Specialty[]>([])
@@ -701,17 +732,13 @@ export default function StatsPage() {
   // When zone filter changes → update map selected zone
   const handleZoneFilterChange = (v: string) => {
     setZone(v)
-    setSelectedZone(v || undefined)
     if (v) setLastSelectedZone(v)
   }
 
   const handleZoneClick = (zoneName: string) => {
-    setSelectedZone(prev => {
-      const next = prev === zoneName ? undefined : zoneName
-      setZone(next ?? '')
-      if (next) setLastSelectedZone(next)
-      return next
-    })
+    const next = zone === zoneName ? '' : zoneName
+    setZone(next)
+    if (next) setLastSelectedZone(next)
   }
 
   // ── Filter select components (shared between desktop & mobile)
@@ -857,7 +884,7 @@ export default function StatsPage() {
                 title={selectedZone || lastSelectedZone} 
                 specialtyName={allSpecialties.find(s => s.code === specialty)?.code + ' - ' + allSpecialties.find(s => s.code === specialty)?.name}
                 data={statistics.find(s => s.region === (selectedZone || lastSelectedZone))}
-                onClose={() => { setSelectedZone(undefined); setZone('') }} 
+                onClose={() => setZone('')} 
               />
             </div>
           )}
@@ -879,12 +906,22 @@ export default function StatsPage() {
                 title={selectedZone || lastSelectedZone} 
                 specialtyName={allSpecialties.find(s => s.code === specialty)?.code + ' - ' + allSpecialties.find(s => s.code === specialty)?.name}
                 data={statistics.find(s => s.region === (selectedZone || lastSelectedZone))}
-                onClose={() => { setSelectedZone(undefined); setZone('') }} 
+                onClose={() => setZone('')} 
               />
             </div>
           )}
         </div>
       </main>
     </div>
+  )
+}
+
+// ─── Exported Page wrapper with Suspense ──────────────────────────────────────
+
+export default function StatsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-4"><p className="text-slate-500 font-medium">Φόρτωση χάρτη...</p></div>}>
+      <StatsMapContent />
+    </Suspense>
   )
 }
