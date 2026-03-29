@@ -3,6 +3,7 @@
 import PostingZonesMapClient from './PostingZonesMapClient'
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 
 // ─── useIsMobile hook ─────────────────────────────────────────────────────────
 function useIsMobile() {
@@ -378,7 +379,7 @@ function LegendCard({ indicator }: { indicator: string }) {
 
 // ─── Panel Content (Exact HTML Design) ─────────────────────────────────────────────
 
-function PanelContent({ title, specialtyName, data, onClose }: { title: string; specialtyName: string; data: any; onClose: () => void }) {
+function PanelContent({ title, specialtyName, data, division, specialty, onClose }: { title: string; specialtyName: string; division: string; specialty: string; data: any; onClose: () => void }) {
   if (!data) {
     return (
       <div className="w-full bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
@@ -590,9 +591,12 @@ function PanelContent({ title, specialtyName, data, onClose }: { title: string; 
         </div>
 
         <div className="p-6 border-t border-slate-100 bg-white/80 backdrop-blur-sm shrink-0">
-            <button className="w-full bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] cursor-pointer">
+            <Link 
+                href={`/stats/zones/${encodeURIComponent(title)}?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialty)}`}
+                className="w-full flex items-center justify-center bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] cursor-pointer"
+            >
                 Προβολή Αναλυτικών Στατιστικών
-            </button>
+            </Link>
         </div>
     </div>
   )
@@ -883,6 +887,8 @@ function StatsMapContent() {
               <PanelContent 
                 title={selectedZone || lastSelectedZone} 
                 specialtyName={allSpecialties.find(s => s.code === specialty)?.code + ' - ' + allSpecialties.find(s => s.code === specialty)?.name}
+                division={division}
+                specialty={specialty}
                 data={statistics.find(s => s.region === (selectedZone || lastSelectedZone))}
                 onClose={() => setZone('')} 
               />
@@ -905,6 +911,8 @@ function StatsMapContent() {
               <PanelContent 
                 title={selectedZone || lastSelectedZone} 
                 specialtyName={allSpecialties.find(s => s.code === specialty)?.code + ' - ' + allSpecialties.find(s => s.code === specialty)?.name}
+                division={division}
+                specialty={specialty}
                 data={statistics.find(s => s.region === (selectedZone || lastSelectedZone))}
                 onClose={() => setZone('')} 
               />
