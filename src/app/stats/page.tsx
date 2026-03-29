@@ -380,7 +380,7 @@ function LegendCard({ indicator }: { indicator: string }) {
 function PanelContent({ title, specialtyName, data, onClose }: { title: string; specialtyName: string; data: any; onClose: () => void }) {
   if (!data) {
     return (
-      <div className="w-full max-w-md bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
+      <div className="w-full bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
         <div className="p-6 border-b border-slate-100 bg-white/50 shrink-0">
           <div className="flex justify-between items-start mb-3">
             <div>
@@ -433,8 +433,21 @@ function PanelContent({ title, specialtyName, data, onClose }: { title: string; 
   const inflow = parseFlows(data.inflowOriginsJson)
   const outflow = parseFlows(data.outflowTargetsJson)
 
+  // Year extraction helpers
+  const getLatestYear = (historyJson: any) => {
+    if (!historyJson) return null
+    try {
+      const history = typeof historyJson === 'string' ? JSON.parse(historyJson) : historyJson
+      const years = Object.keys(history).filter(y => history[y] !== null && history[y] !== undefined).map(Number)
+      return years.length > 0 ? Math.max(...years) : null
+    } catch { return null }
+  }
+
+  const baseYear = getLatestYear(data.baseScoreHistory)
+  const successYear = getLatestYear(data.successCountHistory)
+
   return (
-    <div className="w-full max-w-md bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
+    <div className="w-full bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
         
         <div className="p-6 border-b border-slate-100 bg-white/50 shrink-0">
             <div className="flex justify-between items-start mb-3">
@@ -460,7 +473,9 @@ function PanelContent({ title, specialtyName, data, onClose }: { title: string; 
             <div className="grid grid-cols-2 gap-4">
                 
                 <div className="bg-white p-5 rounded-[1.25rem] border border-slate-100 shadow-sm hover:border-sky-100 hover:bg-sky-50/30 transition-colors group">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 group-hover:text-sky-600 transition-colors">Βαση Μοριων</p>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 group-hover:text-sky-600 transition-colors">
+                      Βαση Μοριων {baseYear ? `(${baseYear})` : ''}
+                    </p>
                     <div className="flex items-baseline space-x-2">
                         <span className="text-2xl font-bold text-slate-800">{data.baseScore?.toFixed(2) || '—'}</span>
                         {data.baseScoreDiff !== null && data.baseScoreDiff !== 0 && (
@@ -494,7 +509,9 @@ function PanelContent({ title, specialtyName, data, onClose }: { title: string; 
                         </div>
                     </div>
                     <div className="text-right">
-                        <span className="inline-flex px-2.5 py-1.5 bg-white text-sky-700 text-[10px] uppercase tracking-wider font-bold rounded-lg border border-sky-100 shadow-sm">Το 2024</span>
+                        <span className="inline-flex px-2.5 py-1.5 bg-white text-sky-700 text-[10px] uppercase tracking-wider font-bold rounded-lg border border-sky-100 shadow-sm">
+                          Το {successYear || 2024}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -828,7 +845,7 @@ export default function StatsPage() {
           )}
 
           {/* ── Legend card (bottom-left) ────────────────────────────────── */}
-          <LegendCard indicator={indicator} />
+          {(!isMobile || !selectedZone) && <LegendCard indicator={indicator} />}
 
         {/* ── Desktop Side Panel (Right) ─────────────────────────────────── */}
           {!isMobile && (
@@ -848,11 +865,13 @@ export default function StatsPage() {
           {/* ── Mobile Bottom Sheet (Bottom) ───────────────────────────────── */}
           {isMobile && (
             <div 
-              className={`fixed bottom-[16px] left-[16px] right-[16px] shadow-2xl z-50 transform transition-transform duration-300 ease-out flex flex-col ${selectedZone ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}
+              className={`fixed bottom-0 left-0 right-0 shadow-[0_-8px_30px_-4px_rgba(0,0,0,0.1)] z-[9999] transform transition-transform duration-300 ease-out flex flex-col ${selectedZone ? 'translate-y-0' : 'translate-y-full'}`}
               style={{ 
-                height: '40vh', 
+                height: '50vh', 
                 pointerEvents: selectedZone ? 'auto' : 'none', 
-                borderRadius: '24px',
+                backgroundColor: 'white',
+                borderTopLeftRadius: '24px',
+                borderTopRightRadius: '24px',
                 overflow: 'hidden'
               }}
             >
