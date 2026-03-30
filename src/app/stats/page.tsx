@@ -379,7 +379,7 @@ function LegendCard({ indicator }: { indicator: string }) {
 
 // ─── Panel Content (Exact HTML Design) ─────────────────────────────────────────────
 
-function PanelContent({ title, specialtyName, data, division, specialty, onClose }: { title: string; specialtyName: string; division: string; specialty: string; data: any; onClose: () => void }) {
+function PanelContent({ title, specialtyName, data, division, specialty, onClose, isMobile }: { title: string; specialtyName: string; division: string; specialty: string; data: any; onClose: () => void; isMobile: boolean }) {
   if (!data) {
     return (
       <div className="w-full bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
@@ -462,12 +462,14 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                 </button>
             </div>
             
-            <div className="flex items-center gap-3">
-                <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide border shadow-sm ${diff.color}`}>
-                    {diff.icon} {diff.label}
-                </span>
-                <span className="text-[11px] font-semibold text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100">Τάση: {trend}</span>
-            </div>
+            {!isMobile && (
+              <div className="flex items-center gap-3">
+                  <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide border shadow-sm ${diff.color}`}>
+                      {diff.icon} {diff.label}
+                  </span>
+                  <span className="text-[11px] font-semibold text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100">Τάση: {trend}</span>
+              </div>
+            )}
         </div>
 
         <div className="p-6 overflow-y-auto flex-1 space-y-8 scrollbar-thin scrollbar-thumb-slate-300">
@@ -634,11 +636,18 @@ function StatsMapContent() {
 
   // URL Update helper
   const updateFilters = (newFilters: Partial<{division: string, specialty: string, indicator: string, zone: string}>) => {
-    const params = new URLSearchParams(searchParams.toString())
-    Object.entries(newFilters).forEach(([key, value]) => {
-      if (value) params.set(key, value)
-      else params.delete(key)
-    })
+    // Collect all current filters as a base, then override with new ones
+    const currentDivision = newFilters.division || division
+    const currentSpecialty = newFilters.specialty || specialty
+    const currentIndicator = newFilters.indicator || indicator
+    const currentZone = newFilters.zone !== undefined ? newFilters.zone : zone
+
+    const params = new URLSearchParams()
+    if (currentDivision) params.set('division', currentDivision)
+    if (currentSpecialty) params.set('specialty', currentSpecialty)
+    if (currentIndicator) params.set('indicator', currentIndicator)
+    if (currentZone) params.set('zone', currentZone)
+
     router.push(`?${params.toString()}`, { scroll: false })
   }
 
@@ -815,6 +824,8 @@ function StatsMapContent() {
               onZoneClick={handleZoneClick}
               statistics={statistics}
               indicator={indicator}
+              division={division}
+              specialty={specialty}
             />
           </Suspense>
         </div>
@@ -891,6 +902,7 @@ function StatsMapContent() {
                 specialty={specialty}
                 data={statistics.find(s => s.region === (selectedZone || lastSelectedZone))}
                 onClose={() => setZone('')} 
+                isMobile={isMobile}
               />
             </div>
           )}
@@ -915,6 +927,7 @@ function StatsMapContent() {
                 specialty={specialty}
                 data={statistics.find(s => s.region === (selectedZone || lastSelectedZone))}
                 onClose={() => setZone('')} 
+                isMobile={isMobile}
               />
             </div>
           )}

@@ -87,9 +87,11 @@ interface PostingZonesMapProps {
   selectedZone?: string
   statistics?: any[]
   indicator?: string
+  division?: string
+  specialty?: string
 }
 
-export default function PostingZonesMap({ onZoneClick, selectedZone, statistics, indicator }: PostingZonesMapProps) {
+export default function PostingZonesMap({ onZoneClick, selectedZone, statistics, indicator, division, specialty }: PostingZonesMapProps) {
   const [geoJsonData, setGeoJsonData] = useState<GeoJSON.FeatureCollection | null>(null)
   const geoJsonLayerRef = useRef<L.GeoJSON>(null)
 
@@ -252,7 +254,7 @@ export default function PostingZonesMap({ onZoneClick, selectedZone, statistics,
         {/* We omitted TileLayer purposely to only show the abstract GeoJSON overlay */}
         
         <GeoJSON
-          key={`geojson-${selectedZone}-${indicator}-${statistics?.length}`} // Force re-render when colors/data change
+          key={`geojson-${selectedZone}-${indicator}-${division}-${specialty}-${statistics?.length}`} // Force re-render when filters/data change to update click handlers
           ref={geoJsonLayerRef}
           data={geoJsonData}
           style={styleFeature}

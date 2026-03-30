@@ -23,6 +23,8 @@ interface PostingZonesMapClientProps {
   selectedZone?: string
   statistics?: any[]
   indicator?: string
+  division?: string
+  specialty?: string
 }
 
 export default function PostingZonesMapClient(props: PostingZonesMapClientProps) {
