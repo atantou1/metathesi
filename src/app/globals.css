@@ -197,11 +197,19 @@
   animation: pulse-border 3s ease-out infinite;
 }
 
-.glass-card {
-  background: var(--color-neutral-surface);
-  border: 1px solid var(--color-primary-soft);
-  border-radius: 2rem;
-  box-shadow: var(--shadow-soft);
+@layer components {
+  .glass-card {
+    @apply bg-white border border-slate-100 rounded-[2rem] shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)];
+  }
+
+  .form-input {
+    @apply w-full bg-slate-50 border border-slate-200 rounded-[1rem] text-sm transition-all text-slate-900;
+    padding: 0.875rem 1rem;
+  }
+
+  .form-input:focus {
+    @apply outline-none border-sky-700 bg-white ring-[3px] ring-sky-500/15;
+  }
 }
 
 @keyframes shimmer {

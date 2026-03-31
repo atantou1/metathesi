@@ -18,8 +18,8 @@ export default async function CreateRequestPage() {
     }
 
     return (
-        <div className="container mx-auto py-8 pt-24">
+        <main className="min-h-screen bg-slate-50">
             <WizardContainer initialData={initialData} requestId={request?.id} />
-        </div>
+        </main>
     )
 }

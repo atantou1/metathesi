@@ -7,7 +7,7 @@ import { z } from "zod"
 import { Step1Identity } from "./step1-identity"
 import { Step2Locations } from "./step2-locations"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ArrowLeft } from "lucide-react"
 
 // Define Unified Schema
 const wizardSchema = z.object({
@@ -37,7 +37,6 @@ type InitialData = {
 }
 
 export function WizardContainer({ initialData, requestId }: { initialData?: InitialData, requestId?: number }) {
-    const [step, setStep] = useState(1)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const isEditing = !!requestId
 
@@ -54,27 +53,14 @@ export function WizardContainer({ initialData, requestId }: { initialData?: Init
         mode: "onChange"
     })
 
-    const { trigger, handleSubmit } = methods
-
-    const nextStep = async (e?: React.MouseEvent) => {
-        e?.preventDefault()
-        // Validate Step 1 fields
-        const valid = await trigger(["fullName", "divisionId", "specialtyId"])
-        if (valid) {
-            setStep(2)
-        }
-    }
-
-    const prevStep = () => setStep(1)
+    const { handleSubmit } = methods
 
     const onSubmit = async (data: WizardValues) => {
         setIsSubmitting(true)
         try {
-            // Pass requestId along with data
             const payload = { ...data, requestId }
             const result = await submitWizardRequest(payload)
             if (result?.success) {
-                // Redirect or show success
                 window.location.href = "/dashboard"
             } else {
                 alert(result?.error || "Error submitting request")
@@ -89,42 +75,59 @@ export function WizardContainer({ initialData, requestId }: { initialData?: Init
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="h-[calc(100vh-64px)] flex flex-col">
-                {/* Scrollable Content Area */}
-                <div className="flex-1 overflow-y-auto p-4 pb-0 md:p-8">
-                    {step === 1 && <Step1Identity onNext={() => nextStep()} />}
-                    {step === 2 && <Step2Locations />}
-                </div>
-
-                {/* Footer Controls - Hidden on Step 1 as it has its own button */}
-                {step !== 1 && (
-                    <div className="flex-none bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 p-4 pb-8 shadow-[0_-4px_20px_-4px_rgba(0,0,0,0.1)] z-20">
-                        <div className="max-w-xl mx-auto flex flex-col gap-3">
-                            <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-                                <span>Step {step} of 2</span>
-                                <span>Locations</span>
-                            </div>
-                            <div className="flex gap-3">
-                                <Button
+            <form onSubmit={handleSubmit(onSubmit)} className="text-slate-900 antialiased min-h-screen pb-20">
+                {/* Sticky Navbar */}
+                <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-md">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between items-center h-20">
+                            <div className="flex items-center gap-4">
+                                <button 
                                     type="button"
-                                    onClick={prevStep}
-                                    variant="outline"
-                                    className="flex-1 bg-white hover:bg-slate-50 text-slate-700 font-semibold py-6 px-6 rounded-xl border border-slate-200 active:scale-[0.98] transition-all"
+                                    onClick={() => window.location.href = "/dashboard"}
+                                    className="p-2 rounded-xl text-slate-400 hover:text-[#0369a1] hover:bg-sky-50 transition-colors cursor-pointer"
                                 >
-                                    Πίσω
-                                </Button>
-
-                                <Button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="flex-[2] bg-blue-600 hover:bg-blue-700 text-white font-semibold py-6 px-6 rounded-xl shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-                                >
-                                    {isSubmitting ? "Processing..." : (isEditing ? "Αποθήκευση Αλλαγών" : "Υποβολή Αίτησης")} <ArrowRight className="w-4 h-4" />
-                                </Button>
+                                    <ArrowLeft className="w-5 h-5" />
+                                </button>
+                                <div>
+                                    <h1 className="text-xl font-bold tracking-tight text-slate-800">
+                                        {isEditing ? "Επεξεργασία Αίτησης" : "Δημιουργία Αίτησης"}
+                                    </h1>
+                                    <p className="text-[11px] font-medium text-slate-500">Επιβεβαίωση στοιχείων και επιλογή περιοχών</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                )}
+                </nav>
+
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8">
+                    {/* Identity Section */}
+                    <Step1Identity />
+
+                    {/* Locations Section */}
+                    <Step2Locations />
+
+                    {/* Footer Actions */}
+                    <div className="flex flex-col sm:flex-row gap-4 items-center justify-end pt-4">
+                        <span className="text-[11px] text-slate-400 font-medium mr-auto hidden sm:block">
+                            Τα δεδομένα επεξεργάζονται με ασφάλεια βάσει GDPR.
+                        </span>
+                        <button 
+                            type="button" 
+                            onClick={() => window.location.href = "/dashboard"}
+                            className="w-full sm:w-auto bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-colors cursor-pointer"
+                        >
+                            Ακύρωση
+                        </button>
+                        <button 
+                            type="submit" 
+                            disabled={isSubmitting}
+                            className="w-full sm:w-auto bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isSubmitting ? "Επεξεργασία..." : (isEditing ? "Αποθήκευση Αλλαγών" : "Υποβολή Αίτησης")}
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </div>
+                </div>
             </form>
         </FormProvider>
     )
