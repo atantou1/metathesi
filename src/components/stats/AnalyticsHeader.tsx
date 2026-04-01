@@ -9,6 +9,8 @@ interface AnalyticsHeaderProps {
   difficultyCategory: string
   difficultyTrend: string
   division?: string
+  satisfactionRate: number
+  satisfactionTrend: number
 }
 
 export function AnalyticsHeader({
@@ -17,16 +19,18 @@ export function AnalyticsHeader({
   specialtyName,
   difficultyCategory,
   difficultyTrend,
-  division
+  division,
+  satisfactionRate,
+  satisfactionTrend
 }: AnalyticsHeaderProps) {
   
   // Difficulty Mapping
   const diffMap: Record<string, { label: string; color: string; icon: string }> = {
-    Extreme:   { label: 'Ακραία Δυσκολία', color: 'text-rose-600 bg-rose-50 border-rose-100', icon: '🔴' },
-    High:      { label: 'Υψηλή Δυσκολία',  color: 'text-orange-600 bg-orange-50 border-orange-100', icon: '🟠' },
-    Moderate:  { label: 'Μεσαία Δυσκολία', color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟡' },
-    Accessible: { label: 'Εύκολη Πρόσβαση', color: 'text-emerald-600 bg-emerald-50 border-emerald-100', icon: '🟢' },
-    Unknown:   { label: 'Άγνωστη Δυσκολία', color: 'text-slate-500 bg-slate-50 border-slate-100', icon: '⚪' },
+    Extreme:   { label: 'Υψηλός Ανταγωνισμός', color: 'text-rose-600 bg-rose-50 border-rose-100', icon: '🔴' },
+    High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟠' },
+    Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-sky-600 bg-sky-50 border-sky-100', icon: '🔵' },
+    Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-teal-600 bg-teal-50 border-teal-100', icon: '🟢' },
+    Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-slate-500 bg-slate-50 border-slate-200', icon: '⚪' },
   }
   
   const diff = diffMap[difficultyCategory] || diffMap.Unknown
@@ -52,10 +56,13 @@ export function AnalyticsHeader({
         
         <div className="flex items-center gap-2 mt-4">
           <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Ικανοποιηση Κλαδου:</span>
-          <span className="text-base font-black text-[#0369a1]">12.5%</span> {/* TODO: Change based on data if available */}
-          <span className="text-[10px] font-bold text-teal-600 bg-teal-50 px-1.5 py-0.5 rounded-md flex items-center border border-teal-100 shadow-sm">
-            +1.2% <svg className="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-          </span>
+          <span className="text-base font-black text-[#0369a1]">{satisfactionRate.toFixed(1)}%</span>
+          {satisfactionTrend !== 0 && (
+            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md flex items-center border shadow-sm ${satisfactionTrend >= 0 ? 'text-teal-600 bg-teal-50 border-teal-100' : 'text-rose-600 bg-rose-50 border-rose-100'}`}>
+              {satisfactionTrend >= 0 ? '+' : ''}{satisfactionTrend.toFixed(1)}% 
+              <svg className={`w-3 h-3 ml-0.5 ${satisfactionTrend < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+            </span>
+          )}
         </div>
       </div>
       
@@ -64,7 +71,6 @@ export function AnalyticsHeader({
           <span className={`h-2 w-2 rounded-full mr-2.5 animate-pulse shadow-[0_0_5px_rgba(244,63,94,0.5)] bg-current`}></span>
           {diff.label}
         </span>
-        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2 px-1">Δείκτης: Ζήτηση / Προσφορά</span>
       </div>
     </div>
   )

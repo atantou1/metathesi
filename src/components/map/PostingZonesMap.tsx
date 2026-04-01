@@ -134,11 +134,11 @@ export default function PostingZonesMap({ onZoneClick, selectedZone, statistics,
     
     if (indicator === 'Difficulty_Category') {
       const val = stat.difficultyCategory
-      if (val === 'Extreme') return '#ef4444' // Πολύ Δύσκολη
-      if (val === 'High') return '#f97316' // Δύσκολη
-      if (val === 'Moderate') return '#eab308' // Μεσαία
-      if (val === 'Accessible') return '#22c55e' // Εύκολη
-      return '#e2e8f0' // Unknown / Άγνωστο
+      if (val === 'Extreme') return '#e11d48' // Ακραίο
+      if (val === 'High') return '#d97706' // Αυξημένο
+      if (val === 'Moderate') return '#0284c7' // Υπολογίσιμο
+      if (val === 'Accessible') return '#0d9488' // Ήπιο
+      return '#64748b' // Χωρίς Δεδομένα
     }
     
     if (indicator === 'Success_Count') {

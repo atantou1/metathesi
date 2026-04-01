@@ -39,7 +39,7 @@ const INDICATOR_OPTIONS = [
   { value: 'Success_Count',       label: 'Αριθμός Μεταθέσεων' },
   { value: 'Leaving_Count',       label: 'Αιτήσεις Αποχώρησης' },
   { value: 'Targeting_1st_Count', label: 'Ζήτηση 1ης Προτίμησης' },
-  { value: 'Difficulty_Category', label: 'Βαθμός Δυσκολίας' },
+  { value: 'Difficulty_Category', label: 'Επίπεδο Ανταγωνισμού' },
 ]
 
 // ─── Custom Select ─────────────────────────────────────────────────────────────
@@ -315,11 +315,11 @@ function LegendCard({ indicator }: { indicator: string }) {
     ]
   } else if (indicator === 'Difficulty_Category') {
     items = [
-      { color: '#ef4444', label: 'Πολύ Δύσκολη' },
-      { color: '#f97316', label: 'Δύσκολη' },
-      { color: '#eab308', label: 'Μεσαία' },
-      { color: '#22c55e', label: 'Εύκολη' },
-      { color: '#e2e8f0', label: 'Άγνωστο' },
+      { color: '#e11d48', label: 'Υψηλός' },
+      { color: '#d97706', label: 'Αυξημένος' },
+      { color: '#0284c7', label: 'Υπολογίσιμος' },
+      { color: '#0d9488', label: 'Ήπιος' },
+      { color: '#64748b', label: 'Χωρίς Δεδομένα' },
     ]
   } else {
     // Sequential scales for Success_Count, Leaving_Count, Targeting_1st_Count
@@ -407,11 +407,11 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
 
   // Difficulty Mapping
   const diffMap: Record<string, { label: string; color: string; icon: string }> = {
-    Extreme:   { label: 'Ακραία Δυσκολία', color: 'text-rose-600 bg-rose-50 border-rose-100', icon: '🔴' },
-    High:      { label: 'Υψηλή Δυσκολία',  color: 'text-orange-600 bg-orange-50 border-orange-100', icon: '🟠' },
-    Moderate:  { label: 'Μεσαία Δυσκολία', color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟡' },
-    Accessible: { label: 'Εύκολη Πρόσβαση', color: 'text-emerald-600 bg-emerald-50 border-emerald-100', icon: '🟢' },
-    Unknown:   { label: 'Άγνωστη Δυσκολία', color: 'text-slate-500 bg-slate-50 border-slate-100', icon: '⚪' },
+    Extreme:   { label: 'Υψηλός Ανταγωνισμός', color: 'text-rose-600 bg-rose-50 border-rose-100', icon: '🔴' },
+    High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟠' },
+    Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-sky-600 bg-sky-50 border-sky-100', icon: '🔵' },
+    Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-teal-600 bg-teal-50 border-teal-100', icon: '🟢' },
+    Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-slate-500 bg-slate-50 border-slate-200', icon: '⚪' },
   }
   const diff = diffMap[data.difficultyCategory] || diffMap.Unknown
 

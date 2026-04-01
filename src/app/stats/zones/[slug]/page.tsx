@@ -22,7 +22,7 @@ export default async function ZoneDetailedStatsPage({
   const zoneName = decodeURIComponent(slug)
 
   // Fetch data
-  const stats = await prisma.transferStatistics.findFirst({
+  const stats = await (prisma as any).transferStatistics.findFirst({
     where: {
       region: zoneName,
       division: division,
@@ -85,6 +85,42 @@ export default async function ZoneDetailedStatsPage({
     val2: successHistory[year]
   }))
 
+  // Calculate Branch Satisfaction across all regions
+  const allRegionsStats = await (prisma as any).transferStatistics.findMany({
+    where: { specialty, division },
+    select: { successCountHistory: true, leavingCountHistory: true }
+  })
+
+  // Identify years (dynamic approach)
+  const years = ['2024', '2025', '2026'] // Based on hardcoded years in UI
+  const currentYear = '2026'
+  const previousYear = '2025'
+
+  let totalSuccessCurrent = 0
+  let totalLeavingCurrent = 0
+  let totalSuccessPrev = 0
+  let totalLeavingPrev = 0
+
+  allRegionsStats.forEach((item: { successCountHistory: any; leavingCountHistory: any }) => {
+    const sHist = parseHistory(item.successCountHistory)
+    const lHist = parseHistory(item.leavingCountHistory)
+    
+    totalSuccessCurrent += (Number(sHist[currentYear]) || 0)
+    totalLeavingCurrent += (Number(lHist[currentYear]) || 0)
+    totalSuccessPrev += (Number(sHist[previousYear]) || 0)
+    totalLeavingPrev += (Number(lHist[previousYear]) || 0)
+  })
+
+  const satisfactionRate = totalLeavingCurrent > 0 
+    ? (totalSuccessCurrent / totalLeavingCurrent) * 100 
+    : 0
+
+  const prevSatisfactionRate = totalLeavingPrev > 0
+    ? (totalSuccessPrev / totalLeavingPrev) * 100
+    : 0
+
+  const satisfactionTrend = satisfactionRate - prevSatisfactionRate
+
   return (
     <div className="p-4 md:p-8 text-slate-900 antialiased min-h-screen bg-[#f8fafc] font-sans pt-24 md:pt-28">
       <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8">
@@ -96,6 +132,8 @@ export default async function ZoneDetailedStatsPage({
           difficultyCategory={stats.difficultyCategory}
           difficultyTrend={stats.difficultyCategoryTrend}
           division={division}
+          satisfactionRate={satisfactionRate}
+          satisfactionTrend={satisfactionTrend}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
