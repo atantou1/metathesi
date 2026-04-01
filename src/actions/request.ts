@@ -123,6 +123,16 @@ export async function getTransferRequest() {
                 orderBy: {
                     priorityOrder: 'asc'
                 }
+            },
+            matchParticipations: {
+                where: {
+                    match: {
+                        status: 'active'
+                    }
+                },
+                include: {
+                    match: true
+                }
             }
         }
     })

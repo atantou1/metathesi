@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Mockup - metaThesi</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#0369a1',
+                            dark: '#075985',
+                            soft: '#e0f2fe',
+                        }
+                    },
+                    borderRadius: {
+                        'lg': '1rem',      /* 16px */
+                        'xl': '1.5rem',    /* 24px */
+                        '2xl': '2rem',     /* 32px */
+                        '3xl': '2.5rem',   /* 40px */
+                    },
+                    boxShadow: {
+                        'soft': '0 8px 30px -4px rgba(3, 105, 161, 0.05)',
+                        'input': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .glass-card {
+            background: #ffffff;
+            border: 1px solid #e0f2fe;
+            box-shadow: 0 8px 30px -4px rgba(3, 105, 161, 0.05);
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        @keyframes scanning-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(3, 105, 161, 0.3); }
+            70% { box-shadow: 0 0 0 8px rgba(3, 105, 161, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(3, 105, 161, 0); }
+        }
+        .scanning-pulse {
+            animation: scanning-pulse 3s ease-out infinite;
+        }
+        .animate-shimmer {
+            animation: shimmer 2s infinite;
+        }
+        .animate-ping-slow {
+            animation: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-display antialiased">
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-200 bg-white/90 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 text-primary flex items-center justify-center font-bold text-2xl">m</div>
+                    <span class="text-xl font-bold tracking-tight">
+                        <span class="text-[#0F172A]">meta</span><span class="text-primary">Thesi</span>
+                    </span>
+                </div>
+
+                <!-- Desktop Nav Icons -->
+                <div class="flex items-center gap-4">
+                    <button class="p-2 text-slate-400 hover:text-primary transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                    </button>
+                    <div class="h-8 w-px bg-gray-200 hidden sm:block"></div>
+                    <div class="flex items-center gap-3 pl-2 group cursor-pointer">
+                        <div class="hidden sm:flex flex-col items-end">
+                            <span class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">Katerina P.</span>
+                            <span class="text-[10px] text-slate-500 font-medium bg-slate-100 px-2 py-0.5 rounded-full mt-0.5">PE02 - Φιλόλογος</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-slate-200 border-2 border-transparent group-hover:border-primary transition-all flex items-center justify-center overflow-hidden">
+                            <div class="bg-blue-100 text-primary font-bold">KP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="pt-20 flex flex-col flex-grow">
+        <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+                
+                <!-- LEFT COLUMN: ACTIVE REQUEST -->
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    <div class="relative overflow-hidden rounded-2xl glass-card border-none shadow-xl">
+                        <div class="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-100/40 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <div class="p-6 sm:p-8 relative z-10">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                                <div>
+                                    <h2 class="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-3">
+                                        Αίτηση Αμοιβαίας
+                                        <span class="px-2.5 py-1 rounded-lg text-[10px] bg-slate-50 border border-slate-200 text-slate-500 font-mono tracking-wider">
+                                            #TR-1402
+                                        </span>
+                                    </h2>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <span class="text-sm text-slate-500">Υποβλήθηκε στις <span class="text-slate-700 font-medium">Apr 01, 2026</span></span>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-100 shadow-sm">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500 mr-2.5 animate-pulse"></span>
+                                    Ενεργή
+                                </span>
+                            </div>
+
+                            <!-- Scanning Block -->
+                            <div class="scanning-pulse relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 to-blue-900 border border-blue-800/50 shadow-xl mb-8">
+                                <div class="absolute inset-0 bg-white/5 opacity-10 mix-blend-overlay"></div>
+                                <div class="relative p-8 flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
+                                    <div class="flex-shrink-0 relative">
+                                        <div class="w-20 h-20 relative flex items-center justify-center">
+                                            <span class="absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-20 animate-ping-slow"></span>
+                                            <div class="relative w-16 h-16 rounded-full bg-slate-950 border border-sky-700/50 flex items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400 animate-pulse"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.4"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.4"/><path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow w-full pt-1">
+                                        <div class="flex justify-between items-start mb-3">
+                                            <h3 class="text-lg font-semibold text-white tracking-wide">Σάρωση για Αμοιβαίες...</h3>
+                                            <span class="text-[10px] font-mono text-sky-300 bg-sky-900/40 px-2 py-1 rounded-lg border border-sky-800/50 tracking-wider">REALTIME</span>
+                                        </div>
+                                        <p class="text-slate-300 text-sm mb-5 leading-relaxed font-light">
+                                            Ο αλγόριθμος αναζητά ευκαιρίες αμοιβαίας μετάθεσης στις Περιοχές Προτίμησής σας.
+                                        </p>
+                                        <div class="w-full bg-slate-800/80 rounded-full h-2 mb-4 overflow-hidden border border-slate-700/50">
+                                            <div class="bg-gradient-to-r from-sky-600 via-sky-400 to-blue-500 h-full rounded-full w-3/4 animate-shimmer relative overflow-hidden">
+                                                <div class="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full"></div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center text-[11px] text-slate-400 font-medium">
+                                            <span>Φάση 2: Αντιστοίχιση Δεδομένων</span>
+                                            <span class="text-sky-300 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span> Live Connection</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- "My Preferences" Block -->
+                            <div class="mb-8">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2">
+                                        Οι Προτιμήσεις μου
+                                    </h3>
+                                    <button class="text-[10px] font-semibold text-primary bg-primary/5 px-2.5 py-1.5 rounded-lg hover:bg-primary/10 transition-colors">Διαχείριση</button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div class="group flex items-center p-3 rounded-xl bg-white border border-slate-100 hover:border-primary/20 hover:bg-sky-50 transition-all shadow-sm">
+                                        <div class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold mr-3 group-hover:bg-primary/10 group-hover:text-primary transition-colors">1</div>
+                                        <div class="flex-grow min-w-0">
+                                            <div class="flex justify-between items-center text-sm font-medium text-slate-700">
+                                                <h4 class="truncate">Β' Αθήνας</h4>
+                                                <span class="inline-flex px-2 py-0.5 rounded-md text-[9px] font-bold bg-rose-50 text-rose-600 border border-rose-100">HIGH</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group flex items-center p-3 rounded-xl bg-white border border-slate-100 hover:border-primary/20 hover:bg-sky-50 transition-all shadow-sm">
+                                        <div class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold mr-3 group-hover:bg-primary/10 group-hover:text-primary transition-colors">2</div>
+                                        <div class="flex-grow min-w-0">
+                                            <div class="flex justify-between items-center text-sm font-medium text-slate-700">
+                                                <h4 class="truncate">Ανατολική Αττική</h4>
+                                                <span class="inline-flex px-2 py-0.5 rounded-md text-[9px] font-bold bg-amber-50 text-amber-600 border border-amber-100">MED</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group flex items-center p-3 rounded-xl bg-white border border-slate-100 hover:border-primary/20 hover:bg-sky-50 transition-all shadow-sm">
+                                        <div class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold mr-3 group-hover:bg-primary/10 group-hover:text-primary transition-colors">3</div>
+                                        <div class="flex-grow min-w-0">
+                                            <div class="flex justify-between items-center text-sm font-medium text-slate-700">
+                                                <h4 class="truncate">Πειραιάς</h4>
+                                                <span class="inline-flex px-2 py-0.5 rounded-md text-[9px] font-bold bg-sky-50 text-primary border border-sky-100">LOW</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-4 border-t border-slate-50 pt-6">
+                                <button class="flex-1 bg-primary hover:bg-primary-dark text-white px-8 py-3.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98]">Επεξεργασία</button>
+                                <button class="flex-1 bg-rose-50 text-rose-600 border border-rose-100 hover:bg-rose-100 px-8 py-3.5 rounded-xl text-sm font-semibold transition-all">Διαγραφή</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- History / Stats Placeholder -->
+                    <div class="rounded-2xl glass-card p-8">
+                        <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-3">
+                            <div class="p-2 rounded-xl bg-primary/5 text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </div>
+                            Πληροφορίες & Στατιστικά
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 opacity-60">
+                            <div class="h-32 rounded-xl bg-slate-50 border border-dashed border-slate-200"></div>
+                            <div class="h-32 rounded-xl bg-slate-50 border border-dashed border-slate-200"></div>
+                            <div class="h-32 rounded-xl bg-slate-50 border border-dashed border-slate-200"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: PROFILE & SIDEBARS -->
+                <div class="lg:col-span-4 space-y-6">
+                    
+                    <!-- Profile Summary -->
+                    <div class="glass-card rounded-[1.5rem] overflow-hidden">
+                        <div class="p-6 border-b border-sky-50 bg-white/50 flex justify-between items-center">
+                            <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Σύνοψη Προφίλ</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+                        </div>
+                        <div class="p-6 space-y-6">
+                            <div class="flex items-center gap-5 group">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100 group-hover:bg-indigo-100 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΒΑΘΜΙΔΑ</p>
+                                    <p className="text-sm font-medium text-slate-700">Δευτεροβάθμια Εκπαίδευση</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-5 group">
+                                <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 border border-orange-100 group-hover:bg-orange-100 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M8 14h.01"/><path d="M16 14h.01"/></svg>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΕΙΔΙΚΟΤΗΤΑ</p>
+                                    <p className="text-sm font-medium text-slate-700">ΠΕ02 - Φιλόλογος</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-5 group">
+                                <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center text-teal-600 border border-teal-100 group-hover:bg-teal-100 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 12 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΤΡΕΧΟΥΣΑ ΘΕΣΗ</p>
+                                    <p className="text-sm font-medium text-slate-700">A' Αθήνας - 1ο ΓΕΛ</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Help Card -->
+                    <div class="bg-primary rounded-[1.5rem] p-6 text-white relative overflow-hidden shadow-xl shadow-sky-900/10">
+                        <div class="relative z-10">
+                            <div class="mb-4 text-sky-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <h4 class="font-bold mb-2 tracking-tight">Χρειάζεστε βοήθεια;</h4>
+                            <p class="text-sm text-sky-100 mb-4 opacity-90 leading-relaxed font-light">
+                                Δείτε τον οδηγό χρήσης ή επικοινωνήστε με την υποστήριξη για οποιαδήποτε απορία.
+                            </p>
+                            <a href="#" class="inline-flex items-center text-sm font-semibold hover:text-sky-200 transition-colors">Κέντρο Βοήθειας &rarr;</a>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 pb-safe z-50">
+        <div class="flex justify-around items-center h-16 px-2">
+            <button class="flex flex-col items-center justify-center w-full h-full text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                <span class="text-[10px] font-medium mt-1">Home</span>
+            </button>
+            <button class="flex flex-col items-center justify-center w-full h-full text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                <span class="text-[10px] font-medium mt-1">Matches</span>
+            </button>
+            <div class="relative -top-5">
+                <button class="w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-sky-900/30 flex items-center justify-center border-2 border-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+            </div>
+            <button class="flex flex-col items-center justify-center w-full h-full text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                <span class="text-[10px] font-medium mt-1">Alerts</span>
+            </button>
+            <button class="flex flex-col items-center justify-center w-full h-full text-slate-400">
+                <div class="w-6 h-6 rounded-full bg-slate-200 border border-slate-300"></div>
+                <span class="text-[10px] font-medium mt-1">Profile</span>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

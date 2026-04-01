@@ -71,7 +71,7 @@ export function DeleteRequestButton() {
                             <button
                                 onClick={handleDelete}
                                 disabled={isPending}
-                                className="flex-1 px-6 py-3 rounded-2xl bg-rose-600 text-white font-semibold text-sm hover:bg-rose-700 transition-colors shadow-lg shadow-rose-200 flex items-center justify-center"
+                                className="flex-1 px-6 py-3 rounded-2xl bg-rose-600 text-white font-semibold text-sm hover:bg-rose-700 transition-colors shadow-lg shadow-rose-200 flex items-center justify-center cursor-pointer"
                             >
                                 {isPending ? "Διαγραφή..." : "Ναι, Διαγραφή"}
                             </button>

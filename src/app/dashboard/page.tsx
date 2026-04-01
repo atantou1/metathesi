@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DeleteRequestButton } from "@/components/dashboard/delete-request-button";
+import { MatchBanner } from "@/components/dashboard/match-banner";
 
 export default async function Dashboard() {
     const session = await auth();
@@ -59,7 +60,7 @@ export default async function Dashboard() {
                                         Ξεκινήστε τώρα τη διαδικασία για να βρείτε την ιδανική αμοιβαία μετάθεση. Η διαδικασία είναι απλή και γρήγορη.
                                     </p>
                                     <Link href="/request/create">
-                                        <button className="w-full sm:w-auto bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer">
+                                        <button className="w-full sm:w-auto bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] flex items-center justify-center gap-2">
                                             <Plus className="w-5 h-5" />
                                             Δημιουργία Νέας Αίτησης
                                         </button>
@@ -148,7 +149,7 @@ export default async function Dashboard() {
                                     <p className="text-sm text-sky-100 mb-4 opacity-90 leading-relaxed font-light">
                                         Δείτε τον οδηγό χρήσης ή επικοινωνήστε με την υποστήριξη για οποιαδήποτε απορία.
                                     </p>
-                                    <Link href="#" className="inline-flex items-center text-sm font-semibold hover:text-sky-200 transition-colors cursor-pointer">
+                                    <Link href="#" className="inline-flex items-center text-sm font-semibold hover:text-sky-200 transition-colors">
                                         Κέντρο Βοήθειας
                                     </Link>
                                 </div>
@@ -202,8 +203,11 @@ export default async function Dashboard() {
     // but we need to assure TS of this.
     if (!profile) return null;
 
+    const hasActiveMatch = request.matchParticipations && request.matchParticipations.length > 0;
+
     return (
         <div className="min-h-screen pt-20 flex flex-col">
+            {hasActiveMatch && <MatchBanner />}
             <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-grow">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
 
@@ -275,14 +279,14 @@ export default async function Dashboard() {
                                             Οι Προτιμήσεις μου
                                         </h3>
                                         <Link href="/request/create">
-                                            <button className="text-[10px] font-semibold text-sky-600 hover:text-sky-800 transition-colors bg-sky-50 px-2.5 py-1.5 rounded-lg hover:bg-sky-100">
+                                            <button className="text-[10px] font-semibold text-sky-600 hover:text-sky-800 transition-colors bg-sky-50 px-2.5 py-1.5 rounded-lg hover:bg-sky-100 cursor-pointer">
                                                 Διαχείριση
                                             </button>
                                         </Link>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                         {request.targetZones.map((target, index) => (
-                                            <div key={target.id} className="group flex items-center p-3 rounded-[1.25rem] bg-white border border-slate-100 hover:border-sky-200 hover:bg-sky-50 transition-all cursor-pointer shadow-sm">
+                                            <div key={target.id} className="group flex items-center p-3 rounded-[1.25rem] bg-white border border-slate-100 hover:border-sky-200 hover:bg-sky-50 transition-all shadow-sm">
                                                 <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold mr-3 group-hover:border-sky-200 group-hover:text-sky-600 group-hover:bg-sky-50 transition-colors">
                                                     {index + 1}
                                                 </div>
@@ -307,7 +311,7 @@ export default async function Dashboard() {
 
                                 <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-100 pt-6">
                                     <Link href="/request/create" className="flex-1 sm:flex-none">
-                                        <button className="w-full bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98]">
+                                        <button className="w-full bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] cursor-pointer">
                                             Επεξεργασία
                                         </button>
                                     </Link>
@@ -368,7 +372,7 @@ export default async function Dashboard() {
                             </div>
                             <div className="p-4 space-y-3">
                                 {request.targetZones.map((target, index) => (
-                                    <div key={target.id} className="group flex items-center p-3 rounded-[1.25rem] hover:bg-sky-50 border border-transparent hover:border-sky-100 transition-all cursor-pointer">
+                                    <div key={target.id} className="group flex items-center p-3 rounded-[1.25rem] hover:bg-sky-50 border border-transparent hover:border-sky-100 transition-all">
                                         <div className="flex-shrink-0 mr-4">
                                             <div className="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:text-sky-600 transition-colors border border-slate-100 group-hover:border-sky-200 group-hover:bg-sky-50">
                                                 {index + 1}
