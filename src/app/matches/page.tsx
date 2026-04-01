@@ -1,21 +1,16 @@
-import { getMatches } from "@/actions/matches"
-import { MatchChatClient } from "@/components/matches/MatchChatClient"
-import { auth } from "@/auth"
-import { redirect } from "next/navigation"
-import { Suspense } from "react"
+import React from "react"
+import { Satellite } from "lucide-react"
 
-export default async function MatchesPage() {
-    const session = await auth()
-
-    if (!session?.user?.id) {
-        redirect("/login")
-    }
-
-    const { active, history } = await getMatches()
-
+export default function MatchesPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Φόρτωση...</div>}>
-            <MatchChatClient activeMatches={active} historyMatches={history} currentUserId={parseInt(session.user.id)} />
-        </Suspense>
+        <div className="flex flex-col items-center justify-center h-full p-6 text-center opacity-80 w-full">
+            <div className="w-16 h-16 bg-white border border-slate-100 shadow-sm rounded-full flex items-center justify-center text-[#0369a1] mb-4">
+                <Satellite className="w-8 h-8" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-700 mb-2">Καμία επιλεγμένη συνομιλία</h3>
+            <p className="text-xs text-slate-500 leading-relaxed max-w-[250px]">
+                Επιλέξτε ένα ενεργό match σας ή μια παλαιότερη συνομιλία από τα αριστερά για να δείτε τα μηνύματα ή την κατάσταση της αντιστοίχισης.
+            </p>
+        </div>
     )
 }
