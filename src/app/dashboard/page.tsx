@@ -123,10 +123,10 @@ export default async function Dashboard() {
                             {/* Profile Summary - Only show if profile exists */}
                             {profile && (
                                 <div className="glass-card rounded-[2rem] h-fit overflow-hidden">
-                                        <div className="p-6 border-b border-sky-50 flex justify-between items-center bg-white/50">
-                                            <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Σύνοψη Προφίλ</h3>
-                                        </div>
-                                        <div className="p-6 space-y-6">
+                                    <div className="p-6 border-b border-sky-50 flex justify-between items-center bg-white/50">
+                                        <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Σύνοψη Προφίλ</h3>
+                                    </div>
+                                    <div className="p-6 space-y-6">
                                         {/* Designation */}
                                         <div className="flex items-center gap-5 group">
                                             <div className="w-12 h-12 rounded-[1.25rem] bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100/50 group-hover:bg-indigo-100/80 transition-colors">
@@ -249,7 +249,7 @@ export default async function Dashboard() {
                                             </span>
                                         </h2>
                                         <div className="flex items-center gap-2 mt-2">
-                                            <span className="text-sm text-slate-500">Υποβλήθηκε στις <span className="text-slate-700 font-medium">{request.createdAt.toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>
+                                            <span className="text-sm text-slate-500">Υποβλήθηκε στις <span className="text-slate-700 font-medium">{request.createdAt.toLocaleDateString("el-GR", { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>
                                         </div>
                                     </div>
                                     <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-100 shadow-sm shadow-sky-900/5">
@@ -287,8 +287,8 @@ export default async function Dashboard() {
                                                 </div>
                                             </div>
                                             <div className="flex justify-between items-center text-[11px] text-slate-400 font-medium">
-                                                <span>Φάση 1: Ανάλυση Περιοχών</span>
-                                                <span className="text-sky-300 flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse shadow-[0_0_5px_rgba(56,189,248,0.5)]"></span> Live Connection</span>
+                                                <span>Φάση : Ανάλυση Περιοχών</span>
+                                                <span className="text-sky-300 flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse shadow-[0_0_5px_rgba(56,189,248,0.5)]"></span> Ενεργή Σύνδεση</span>
                                             </div>
                                         </div>
                                     </div>
@@ -300,11 +300,6 @@ export default async function Dashboard() {
                                         <h3 className="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2">
                                             Οι Προτιμήσεις μου
                                         </h3>
-                                        <Link href="/request/create">
-                                            <button className="text-[10px] font-semibold text-sky-600 hover:text-sky-800 transition-colors bg-sky-50 px-2.5 py-1.5 rounded-lg hover:bg-sky-100 cursor-pointer">
-                                                Διαχείριση
-                                            </button>
-                                        </Link>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                         {request.targetZones.map((target, index) => (
@@ -329,7 +324,7 @@ export default async function Dashboard() {
                                             Επεξεργασία
                                         </button>
                                     </Link>
-                                        <DeleteRequestButton />
+                                    <DeleteRequestButton />
                                 </div>
                             </div>
                         </div>
@@ -381,7 +376,7 @@ export default async function Dashboard() {
                         <div className="glass-card rounded-[2rem] flex flex-col overflow-hidden h-fit">
                             <div className="p-6 border-b border-sky-50 bg-white/50">
                                 <div className="flex justify-between items-center">
-                                    <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">ΔΗΜΟΦΙΛΕΙΣ ΠΕΡΙΟΧΕΣ</h3>
+                                    <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">ΖΗΤΗΣΗ ΠΕΡΙΟΧΩΝ</h3>
                                 </div>
                             </div>
                             <div className="p-4 space-y-3">

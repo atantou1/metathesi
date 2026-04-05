@@ -15,7 +15,7 @@ export function MainNav() {
         },
         {
             href: "/matches",
-            label: "Ταιριάσματα",
+            label: "Αμοιβαίες",
             active: pathname === "/matches"
         },
         {

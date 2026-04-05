@@ -101,7 +101,7 @@ export function Step1Identity() {
                         name="fullName"
                         render={({ field }) => (
                             <FormItem className="space-y-2">
-                                <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Ονοματεπωνυμο</FormLabel>
+                                <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Ονομα</FormLabel>
                                 <div className="relative">
                                     <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                                     <FormControl>
