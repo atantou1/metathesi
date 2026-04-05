@@ -182,6 +182,8 @@ async function main() {
         targeting_1st_count_history,
         inflow_origins_json,
         outflow_targets_json,
+        popularity,
+        popularity_history,
         difficulty_category,
         difficulty_category_history,
         difficulty_category_trend
@@ -229,6 +231,9 @@ async function main() {
         const inflowOriginsJson       = safeParseJson(get('inflow_origins_json'))
         const outflowTargetsJson      = safeParseJson(get('outflow_targets_json'))
 
+        const popularity              = parseFloat_(get('popularity'))
+        const popularityHistory       = safeParseJson(get('popularity_history'))
+
         const difficultyCategory        = get('difficulty_category')        || 'Unknown'
         const difficultyCategoryHistory = safeParseJson(get('difficulty_category_history'))
         const difficultyCategoryTrend   = get('difficulty_category_trend')  || 'Unknown'
@@ -242,6 +247,7 @@ async function main() {
           leavingCount, leavingCountDiff, JSON.stringify(leavingCountHistory),
           targeting1stCount, targeting1stCountDiff, JSON.stringify(targeting1stCountHistory),
           JSON.stringify(inflowOriginsJson), JSON.stringify(outflowTargetsJson),
+          popularity, JSON.stringify(popularityHistory),
           difficultyCategory, JSON.stringify(difficultyCategoryHistory), difficultyCategoryTrend,
         ]
 

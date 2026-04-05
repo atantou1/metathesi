@@ -107,10 +107,16 @@ export async function getTransferRequest() {
     if (!session?.user?.id) return null
 
     const userId = parseInt(session.user.id)
-    const profile = await prisma.profile.findUnique({ where: { userId } })
+    const profile = await prisma.profile.findUnique({
+        where: { userId },
+        include: {
+            division: true,
+            specialty: true
+        }
+    })
     if (!profile) return null
 
-    const request = await prisma.transferRequest.findFirst({
+    const requestData = await prisma.transferRequest.findFirst({
         where: {
             profileId: profile.id,
             status: 'active'
@@ -118,7 +124,11 @@ export async function getTransferRequest() {
         include: {
             targetZones: {
                 include: {
-                    zone: true
+                    zone: {
+                        include: {
+                            region: true
+                        }
+                    }
                 },
                 orderBy: {
                     priorityOrder: 'asc'
@@ -137,7 +147,48 @@ export async function getTransferRequest() {
         }
     })
 
-    if (!request) return null
+    if (!requestData) return null
+
+    // Fetch popularity for each target zone using region name, division, and specialty
+    // Division and Specialty names from profile
+    const divisionName = profile.division.name
+    const specialtyCode = profile.specialty.code
+
+    const targetZonePopularities = await Promise.all(
+        requestData.targetZones.map(async (tz) => {
+            // @ts-ignore
+            const stats = await prisma.transferStatistics.findFirst({
+                where: {
+                    region: {
+                        equals: tz.zone.name.trim(),
+                        mode: 'insensitive'
+                    },
+                    division: {
+                        equals: divisionName.trim(),
+                        mode: 'insensitive'
+                    },
+                    specialty: {
+                        equals: specialtyCode.trim(),
+                        mode: 'insensitive'
+                    }
+                }
+            })
+            return {
+                id: tz.id,
+                // @ts-ignore
+                popularity: stats?.popularity || 0
+            }
+        })
+    )
+
+    // Merge popularity back into targetZones
+    const request = {
+        ...requestData,
+        targetZones: requestData.targetZones.map(tz => ({
+            ...tz,
+            popularity: targetZonePopularities.find(p => p.id === tz.id)?.popularity || 0
+        }))
+    }
 
     return request
 }

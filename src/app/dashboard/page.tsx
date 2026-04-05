@@ -20,6 +20,28 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DeleteRequestButton } from "@/components/dashboard/delete-request-button";
 import { MatchBanner } from "@/components/dashboard/match-banner";
 
+const PopularityBadge = ({ popularity }: { popularity: number }) => {
+    let label = "ΧΑΜΗΛΗ";
+    let colorClass = "bg-teal-50 text-teal-600 border-teal-100";
+
+    if (popularity >= 2.0) {
+        label = "ΜΕΓΙΣΤΗ";
+        colorClass = "bg-rose-50 text-rose-600 border-rose-100";
+    } else if (popularity >= 1.2) {
+        label = "ΥΨΗΛΗ";
+        colorClass = "bg-amber-50 text-amber-600 border-amber-100";
+    } else if (popularity >= 0.5) {
+        label = "ΜΕΣΗ";
+        colorClass = "bg-sky-50 text-sky-600 border-sky-100";
+    }
+
+    return (
+        <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase ${colorClass} border`}>
+            {label}
+        </span>
+    );
+};
+
 export default async function Dashboard() {
     const session = await auth();
     const user = session?.user;
@@ -293,15 +315,7 @@ export default async function Dashboard() {
                                                 <div className="flex-grow">
                                                     <div className="flex justify-between items-center">
                                                         <h4 className="text-sm font-medium text-slate-700 truncate max-w-[100px]">{target.zone.name}</h4>
-                                                        {index === 0 && (
-                                                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase bg-rose-50 text-rose-600 border border-rose-100">HIGH</span>
-                                                        )}
-                                                        {index === 1 && (
-                                                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase bg-amber-50 text-amber-600 border border-amber-100">MED</span>
-                                                        )}
-                                                        {index > 1 && (
-                                                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase bg-sky-50 text-sky-600 border border-sky-100">LOW</span>
-                                                        )}
+                                                        <PopularityBadge popularity={(target as any).popularity || 0} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -381,21 +395,7 @@ export default async function Dashboard() {
                                         <div className="flex-grow min-w-0">
                                             <div className="flex justify-between items-center mb-0.5">
                                                 <h4 className="text-sm font-medium text-slate-700 truncate">{target.zone.name}</h4>
-                                                {index === 0 && (
-                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase bg-rose-50 text-rose-600 border border-rose-100">
-                                                        High
-                                                    </span>
-                                                )}
-                                                {index === 1 && (
-                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase bg-amber-50 text-amber-600 border border-amber-100">
-                                                        Med
-                                                    </span>
-                                                )}
-                                                {index > 1 && (
-                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase bg-sky-50 text-sky-600 border border-sky-100">
-                                                        Low
-                                                    </span>
-                                                )}
+                                                <PopularityBadge popularity={(target as any).popularity || 0} />
                                             </div>
                                         </div>
                                     </div>

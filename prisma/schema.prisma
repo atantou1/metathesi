@@ -253,6 +253,8 @@ model TransferStatistics {
   targeting1stCountHistory  Json   @map("targeting_1st_count_history")
   inflowOriginsJson         Json   @map("inflow_origins_json")
   outflowTargetsJson        Json   @map("outflow_targets_json")
+  popularity                Float? @map("popularity")
+  popularityHistory         Json?  @map("popularity_history")
   difficultyCategory        String @map("difficulty_category")
   difficultyCategoryHistory Json   @map("difficulty_category_history")
   difficultyCategoryTrend   String @map("difficulty_category_trend")
