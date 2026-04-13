@@ -288,7 +288,6 @@ export default async function Dashboard() {
                                             </div>
                                             <div className="flex justify-between items-center text-[11px] text-slate-400 font-medium">
                                                 <span>Φάση : Ανάλυση Περιοχών</span>
-                                                <span className="text-sky-300 flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse shadow-[0_0_5px_rgba(56,189,248,0.5)]"></span> Ενεργή Σύνδεση</span>
                                             </div>
                                         </div>
                                     </div>
