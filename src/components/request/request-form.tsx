@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { requestSchema, RequestValues } from "@/lib/schemas"
 import { createTransferRequest, getUserProfile, getAvailableZones, deleteTransferRequest, updateTransferRequest } from "@/actions/request"
+import { getRegions } from "@/actions/profile"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -50,42 +51,15 @@ export function RequestForm({ initialRequest }: Props) {
     const [isPending, startTransition] = useTransition()
     const [isDeleting, startDeleteTransition] = useTransition()
 
-    const [currentZone, setCurrentZone] = useState<Option | null>(null)
-
+    const [userProfile, setUserProfile] = useState<any>(null)
     const [selectedZones, setSelectedZones] = useState<Option[]>([])
     const [loadingProfile, setLoadingProfile] = useState(true)
     const [success, setSuccess] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
 
-    // Initialize state from initialRequest if available
-    useEffect(() => {
-        if (initialRequest) {
-            const zones = initialRequest.targetZones
-                .sort((a, b) => a.priorityOrder - b.priorityOrder)
-                .map(tz => ({ id: tz.zone.id, name: tz.zone.name } as Option)) // Map to Option type
-            // Note: tz.zone has only name in type definition above? 
-            // We need to make sure we have IDs. 
-            // The type TransferRequestWithZones says targetZones[].zone.name. 
-            // But targetZones[].id is the ID of the join table, NOT the zoneId.
-            // Wait, getTransferRequest include: targetZones: { include: { zone: true } }
-            // So targetZones[i].zone has ID and Name.
-            // Let's check type definition.
-
-            // Fix: The type definition in this file might be incomplete for `zone`. 
-            // See line 37: zone: { name: string }. It probably has id too from Prisma include.
-
-            // I will cast to any to be safe or update type.
-            // Actually, the server action returns full zone object.
-
-            // Let's assume we can map it.
-            // We need to map `targetZones` to `selectedZones`.
-        }
-    }, [initialRequest])
-
     const form = useForm<RequestValues>({
         resolver: zodResolver(requestSchema),
         defaultValues: {
-            // If editing, we set this dynamically later or in useEffect
             targetZoneIds: [],
         },
     })
@@ -96,7 +70,7 @@ export function RequestForm({ initialRequest }: Props) {
             try {
                 const profile = await getUserProfile()
                 if (profile) {
-                    setCurrentZone(profile.currentZone)
+                    setUserProfile(profile)
                 }
             } catch (error) {
                 console.error(error)
@@ -108,43 +82,32 @@ export function RequestForm({ initialRequest }: Props) {
     }, [])
 
     // Region state for adding new target
-    const [regions, setRegions] = useState<Option[]>([]) // Need to fetch regions
+    const [regions, setRegions] = useState<Option[]>([])
     const [selectedRegionId, setSelectedRegionId] = useState<string>("")
     const [zoneOptions, setZoneOptions] = useState<Option[]>([])
 
-    // Fetch regions on mount (could import getRegions from profile actions)
+    // Fetch regions on mount
     useEffect(() => {
-        // We can reuse getRegions from actions/profile. 
-        // Just implicit import would work if I export it? 
-        // I'll import it.
-        import("@/actions/profile").then(({ getRegions }) => {
-            getRegions().then(setRegions)
-        })
+        getRegions().then(setRegions)
     }, [])
 
     // Fetch zones when region changes
     useEffect(() => {
-        if (selectedRegionId) {
-            // We need division ID to filter zones correctly?
-            // `getUserProfile` returns division.
-            // We should store divisionId from profile.
+        if (selectedRegionId && userProfile) {
             const fetchZones = async () => {
-                const profile = await getUserProfile() // This is redundant call, optimized later
-                if (profile) {
-                    const z = await getAvailableZones(Number(selectedRegionId), profile.divisionId)
-                    // Filter out current zone and already selected zones
-                    const filtered = z.filter((zone: Option) =>
-                        zone.id !== profile.currentZoneId &&
-                        !selectedZones.some((sz: Option) => sz.id === zone.id)
-                    )
-                    setZoneOptions(filtered)
-                }
+                const z = await getAvailableZones(Number(selectedRegionId), userProfile.divisionId)
+                // Filter out current zone and already selected zones
+                const filtered = z.filter((zone: Option) =>
+                    zone.id !== userProfile.currentZoneId &&
+                    !selectedZones.some((sz: Option) => sz.id === zone.id)
+                )
+                setZoneOptions(filtered)
             }
             fetchZones()
         } else {
             setZoneOptions([])
         }
-    }, [selectedRegionId, selectedZones])
+    }, [selectedRegionId, selectedZones, userProfile])
 
     const addZone = (zoneIdStr: string) => {
         const zoneId = Number(zoneIdStr)
@@ -176,10 +139,6 @@ export function RequestForm({ initialRequest }: Props) {
             form.setValue("targetZoneIds", zones.map(z => z.id))
         }
     }, [initialRequest, form])
-
-    // ... (loadData effect stays same) ...
-
-    // ... (regions effect stays same) ...
 
     function onSubmit(values: RequestValues) {
         if (selectedZones.length === 0) {
@@ -299,7 +258,7 @@ export function RequestForm({ initialRequest }: Props) {
             <CardHeader>
                 <CardTitle>{isEditing ? "Επεξεργασία Αίτησης" : "Αίτηση Μετάθεσης"}</CardTitle>
                 <CardDescription>
-                    Τρέχουσα Οργανική: <span className="font-semibold">{currentZone?.name || "-"}</span>
+                    Τρέχουσα Οργανική: <span className="font-semibold">{userProfile?.currentZone?.name || "-"}</span>
                 </CardDescription>
             </CardHeader>
             <CardContent>
