@@ -250,7 +250,7 @@ function MobileFilterDrawer({
         <div style={{ marginBottom: '24px' }}>
           <button
             onClick={() => {
-              console.log("National Summary clicked");
+              window.location.href = `/stats/summary?division=${encodeURIComponent(pDiv)}&specialty=${encodeURIComponent(pSpec)}`;
               onClose();
             }}
             style={{
@@ -891,6 +891,7 @@ function StatsMapContent() {
               
               <button
                 type="button"
+                onClick={() => router.push(`/stats/summary?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialty)}`)}
                 onMouseEnter={e => {
                   e.currentTarget.style.background = '#075985'
                   e.currentTarget.style.transform = 'translateY(-1px)'
