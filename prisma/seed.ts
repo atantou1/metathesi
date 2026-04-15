@@ -116,6 +116,181 @@ async function main() {
         })
     }
     console.log('Imported Regions & Posting Zones')
+
+    // 5. Import Specialty Analytics
+    const analyticsPath = path.join(__dirname, '../docs/specialty_analytics.csv')
+    if (fs.existsSync(analyticsPath)) {
+        const analyticsContent = fs.readFileSync(analyticsPath, 'utf-8')
+        const analyticsLines = analyticsContent.split('\n').filter(line => line.trim() !== '')
+        const analyticsHeader = analyticsLines.shift()
+
+        function parseCSVLine(line: string): string[] {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    if (inQuotes && line[i + 1] === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current);
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current);
+            return result;
+        }
+
+        for (const line of analyticsLines) {
+            const row = parseCSVLine(line)
+            if (row.length < 40) continue
+
+            const [
+                specialty,
+                division,
+                successCount,
+                successCountHistory,
+                successCountDiff,
+                baseScore,
+                baseScoreHistory,
+                baseScoreDiff,
+                avgScore,
+                avgScoreHistory,
+                avgScoreDiff,
+                top5DestinationRegions,
+                top5CompetitiveRegions,
+                nationalPointsRange,
+                nationalPointsRangeHistory,
+                nationalPointsRangeDiff,
+                specialCategoryRate,
+                specialCategoryRateHistory,
+                specialCategoryRateDiff,
+                activeRegionsRate,
+                activeRegionsRateHistory,
+                activeRegionsRateDiff,
+                leavingCount,
+                leavingCountHistory,
+                leavingCountDiff,
+                top5Targeting1st,
+                avgScoreApplicants,
+                avgScoreApplicantsHistory,
+                avgScoreApplicantsDiff,
+                averagePreferenceCount,
+                averagePreferenceCountHistory,
+                averagePreferenceCountDiff,
+                pointsEntranceGap,
+                pointsEntranceGapHistory,
+                pointsEntranceGapDiff,
+                oddsOfTransfer,
+                oddsOfTransferHistory,
+                oddsOfTransferDiff,
+                waitingListAbsolute,
+                waitingListAbsoluteHistory,
+                waitingListAbsoluteDiff
+            ] = row
+
+            await prisma.specialtyAnalytics.upsert({
+                where: {
+                    specialty_division: {
+                        specialty: specialty.trim(),
+                        division: division.trim(),
+                    }
+                },
+                update: {
+                    successCount: parseInt(successCount) || 0,
+                    successCountHistory: JSON.parse(successCountHistory || '{}'),
+                    successCountDiff: parseInt(successCountDiff) || 0,
+                    baseScore: parseFloat(baseScore) || 0,
+                    baseScoreHistory: JSON.parse(baseScoreHistory || '{}'),
+                    baseScoreDiff: parseFloat(baseScoreDiff) || 0,
+                    avgScore: parseFloat(avgScore) || 0,
+                    avgScoreHistory: JSON.parse(avgScoreHistory || '{}'),
+                    avgScoreDiff: parseFloat(avgScoreDiff) || 0,
+                    top5DestinationRegions: JSON.parse(top5DestinationRegions || '{}'),
+                    top5CompetitiveRegions: JSON.parse(top5CompetitiveRegions || '{}'),
+                    nationalPointsRange: parseFloat(nationalPointsRange) || 0,
+                    nationalPointsRangeHistory: JSON.parse(nationalPointsRangeHistory || '{}'),
+                    nationalPointsRangeDiff: parseFloat(nationalPointsRangeDiff) || 0,
+                    specialCategoryRate: parseFloat(specialCategoryRate) || 0,
+                    specialCategoryRateHistory: JSON.parse(specialCategoryRateHistory || '{}'),
+                    specialCategoryRateDiff: parseFloat(specialCategoryRateDiff) || 0,
+                    activeRegionsRate: parseFloat(activeRegionsRate) || 0,
+                    activeRegionsRateHistory: JSON.parse(activeRegionsRateHistory || '{}'),
+                    activeRegionsRateDiff: parseFloat(activeRegionsRateDiff) || 0,
+                    leavingCount: parseInt(leavingCount) || 0,
+                    leavingCountHistory: JSON.parse(leavingCountHistory || '{}'),
+                    leavingCountDiff: parseInt(leavingCountDiff) || 0,
+                    top5Targeting1st: JSON.parse(top5Targeting1st || '{}'),
+                    avgScoreApplicants: parseFloat(avgScoreApplicants) || 0,
+                    avgScoreApplicantsHistory: JSON.parse(avgScoreApplicantsHistory || '{}'),
+                    avgScoreApplicantsDiff: parseFloat(avgScoreApplicantsDiff) || 0,
+                    averagePreferenceCount: parseFloat(averagePreferenceCount) || 0,
+                    averagePreferenceCountHistory: JSON.parse(averagePreferenceCountHistory || '{}'),
+                    averagePreferenceCountDiff: parseFloat(averagePreferenceCountDiff) || 0,
+                    pointsEntranceGap: parseFloat(pointsEntranceGap) || 0,
+                    pointsEntranceGapHistory: JSON.parse(pointsEntranceGapHistory || '{}'),
+                    pointsEntranceGapDiff: parseFloat(pointsEntranceGapDiff) || 0,
+                    oddsOfTransfer: parseFloat(oddsOfTransfer) || 0,
+                    oddsOfTransferHistory: JSON.parse(oddsOfTransferHistory || '{}'),
+                    oddsOfTransferDiff: parseFloat(oddsOfTransferDiff) || 0,
+                    waitingListAbsolute: parseInt(waitingListAbsolute) || 0,
+                    waitingListAbsoluteHistory: JSON.parse(waitingListAbsoluteHistory || '{}'),
+                    waitingListAbsoluteDiff: parseInt(waitingListAbsoluteDiff) || 0,
+                },
+                create: {
+                    specialty: specialty.trim(),
+                    division: division.trim(),
+                    successCount: parseInt(successCount) || 0,
+                    successCountHistory: JSON.parse(successCountHistory || '{}'),
+                    successCountDiff: parseInt(successCountDiff) || 0,
+                    baseScore: parseFloat(baseScore) || 0,
+                    baseScoreHistory: JSON.parse(baseScoreHistory || '{}'),
+                    baseScoreDiff: parseFloat(baseScoreDiff) || 0,
+                    avgScore: parseFloat(avgScore) || 0,
+                    avgScoreHistory: JSON.parse(avgScoreHistory || '{}'),
+                    avgScoreDiff: parseFloat(avgScoreDiff) || 0,
+                    top5DestinationRegions: JSON.parse(top5DestinationRegions || '{}'),
+                    top5CompetitiveRegions: JSON.parse(top5CompetitiveRegions || '{}'),
+                    nationalPointsRange: parseFloat(nationalPointsRange) || 0,
+                    nationalPointsRangeHistory: JSON.parse(nationalPointsRangeHistory || '{}'),
+                    nationalPointsRangeDiff: parseFloat(nationalPointsRangeDiff) || 0,
+                    specialCategoryRate: parseFloat(specialCategoryRate) || 0,
+                    specialCategoryRateHistory: JSON.parse(specialCategoryRateHistory || '{}'),
+                    specialCategoryRateDiff: parseFloat(specialCategoryRateDiff) || 0,
+                    activeRegionsRate: parseFloat(activeRegionsRate) || 0,
+                    activeRegionsRateHistory: JSON.parse(activeRegionsRateHistory || '{}'),
+                    activeRegionsRateDiff: parseFloat(activeRegionsRateDiff) || 0,
+                    leavingCount: parseInt(leavingCount) || 0,
+                    leavingCountHistory: JSON.parse(leavingCountHistory || '{}'),
+                    leavingCountDiff: parseInt(leavingCountDiff) || 0,
+                    top5Targeting1st: JSON.parse(top5Targeting1st || '{}'),
+                    avgScoreApplicants: parseFloat(avgScoreApplicants) || 0,
+                    avgScoreApplicantsHistory: JSON.parse(avgScoreApplicantsHistory || '{}'),
+                    avgScoreApplicantsDiff: parseFloat(avgScoreApplicantsDiff) || 0,
+                    averagePreferenceCount: parseFloat(averagePreferenceCount) || 0,
+                    averagePreferenceCountHistory: JSON.parse(averagePreferenceCountHistory || '{}'),
+                    averagePreferenceCountDiff: parseFloat(averagePreferenceCountDiff) || 0,
+                    pointsEntranceGap: parseFloat(pointsEntranceGap) || 0,
+                    pointsEntranceGapHistory: JSON.parse(pointsEntranceGapHistory || '{}'),
+                    pointsEntranceGapDiff: parseFloat(pointsEntranceGapDiff) || 0,
+                    oddsOfTransfer: parseFloat(oddsOfTransfer) || 0,
+                    oddsOfTransferHistory: JSON.parse(oddsOfTransferHistory || '{}'),
+                    oddsOfTransferDiff: parseFloat(oddsOfTransferDiff) || 0,
+                    waitingListAbsolute: parseInt(waitingListAbsolute) || 0,
+                    waitingListAbsoluteHistory: JSON.parse(waitingListAbsoluteHistory || '{}'),
+                    waitingListAbsoluteDiff: parseInt(waitingListAbsoluteDiff) || 0,
+                },
+            })
+        }
+    console.log('Imported Specialty Analytics')
+    }
 }
 
 main()
