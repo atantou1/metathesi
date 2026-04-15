@@ -246,6 +246,37 @@ function MobileFilterDrawer({
           </button>
         </div>
 
+        {/* National Summary — Full width at top */}
+        <div style={{ marginBottom: '24px' }}>
+          <button
+            onClick={() => {
+              console.log("National Summary clicked");
+              onClose();
+            }}
+            style={{
+              padding: '12px 32px',
+              background: '#0369a1',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: '14px',
+              border: 'none',
+              borderRadius: '9999px',
+              cursor: 'pointer',
+              boxShadow: '0 4px 12px rgba(3,105,161,0.25)',
+              transition: 'all 0.2s',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px'
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = '#0284c7')}
+            onMouseLeave={e => (e.currentTarget.style.background = '#0369a1')}
+          >
+            Πανελλαδική Σύνοψη
+          </button>
+        </div>
+
         {/* 2×2 grid */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
           {/* Row 1 ─ Βαθμίδα */}
@@ -270,24 +301,25 @@ function MobileFilterDrawer({
           </div>
         </div>
 
-        {/* Apply button — centered, compact */}
+        {/* Apply button — centered at bottom */}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <button
             onClick={handleApply}
             style={{
               padding: '10px 32px',
-              background: '#0ea5e9',
+              background: '#0369a1',
               color: '#fff',
               fontWeight: 700,
               fontSize: '14px',
               border: 'none',
               borderRadius: '9999px',
               cursor: 'pointer',
-              boxShadow: '0 4px 12px rgba(14,165,233,0.35)',
+              boxShadow: '0 4px 12px rgba(3,105,161,0.25)',
               transition: 'background 0.2s',
+              width: '200px',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#0284c7')}
-            onMouseLeave={e => (e.currentTarget.style.background = '#0ea5e9')}
+            onMouseLeave={e => (e.currentTarget.style.background = '#0369a1')}
           >
             Εφαρμογή
           </button>
@@ -841,12 +873,53 @@ function StatsMapContent() {
               left: '50%',
               transform: 'translateX(-50%)',
               display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
               alignItems: 'center',
               gap: '8px',
+              rowGap: '12px',
               pointerEvents: 'auto',
               zIndex: 50,
+              width: '100%',
+              maxWidth: selectedZone ? 'calc(100vw - 480px)' : 'calc(100vw - 40px)',
+              padding: '0 20px',
+              transition: 'all 0.3s ease-in-out',
             }}>
               {filterSelects}
+              
+              <div style={{ height: '32px', width: '1px', background: 'rgba(203,213,225,0.5)', margin: '0 4px' }} />
+              
+              <button
+                type="button"
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = '#075985'
+                  e.currentTarget.style.transform = 'translateY(-1px)'
+                  e.currentTarget.style.boxShadow = '0 10px 20px rgba(3,105,161,0.2)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = '#0369a1'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(3,105,161,0.15)'
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '10px 24px',
+                  background: '#0369a1',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '9999px',
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(3,105,161,0.15)',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span>Πανελλαδική Σύνοψη</span>
+              </button>
             </div>
           )}
 
