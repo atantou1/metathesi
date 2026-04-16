@@ -1,9 +1,7 @@
 import { prisma } from '@/lib/prisma'
-import { AnalyticsHeader } from '@/components/stats/AnalyticsHeader'
-import { StatCardBarChart } from '@/components/stats/StatCardBarChart'
-import { GroupedCSSBarChart } from '@/components/stats/GroupedCSSBarChart'
-import { MigrationFlows } from '@/components/stats/MigrationFlows'
 import { notFound } from 'next/navigation'
+import ZoneDetailedStatsClient from './ZoneDetailedStatsClient'
+import { MigrationFlows } from '@/components/stats/MigrationFlows'
 
 export default async function ZoneDetailedStatsPage({
   params,
@@ -72,27 +70,13 @@ export default async function ZoneDetailedStatsPage({
   const inflow = parseFlows(stats.inflowOriginsJson)
   const outflow = parseFlows(stats.outflowTargetsJson)
 
-  // Comparative data for large charts
-  const comparisonBaseAvg = ['2024', '2025', '2026'].map(year => ({
-    year,
-    val1: baseHistory[year],
-    val2: avgAppHistory[year]
-  }))
-
-  const comparisonDemandSupply = ['2024', '2025', '2026'].map(year => ({
-    year,
-    val1: targetingHistory[year],
-    val2: successHistory[year]
-  }))
-
   // Calculate Branch Satisfaction across all regions
   const allRegionsStats = await (prisma as any).transferStatistics.findMany({
     where: { specialty, division },
     select: { successCountHistory: true, leavingCountHistory: true }
   })
 
-  // Identify years (dynamic approach)
-  const years = ['2024', '2025', '2026'] // Based on hardcoded years in UI
+  // Identify years
   const currentYear = '2026'
   const previousYear = '2025'
 
@@ -122,104 +106,24 @@ export default async function ZoneDetailedStatsPage({
   const satisfactionTrend = satisfactionRate - prevSatisfactionRate
 
   return (
-    <div className="p-4 md:p-8 text-slate-900 antialiased min-h-screen bg-[#f8fafc] font-sans pt-24 md:pt-28">
-      <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8">
-        
-        <AnalyticsHeader 
-          zoneName={zoneName}
-          specialtyCode={specialty}
-          specialtyName={specialtyInfo?.name}
-          difficultyCategory={stats.difficultyCategory}
-          difficultyTrend={stats.difficultyCategoryTrend}
-          division={division}
-          satisfactionRate={satisfactionRate}
-          satisfactionTrend={satisfactionTrend}
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-          <StatCardBarChart 
-            title="Μεταθεσεις (Πραγμ.)"
-            currentValue={stats.successCount}
-            history={successHistory}
-            color="sky"
-            diffLabel={`${stats.successCountDiff > 0 ? '+' : ''}${stats.successCountDiff}%`}
-            diffDirection={stats.successCountDiff >= 0 ? 'up' : 'down'}
-            diffColor={stats.successCountDiff >= 0 ? 'teal' : 'rose'}
-          />
-
-          <StatCardBarChart 
-            title="Βαση Μοριων"
-            currentValue={stats.baseScore?.toFixed(2) || '-'}
-            history={baseHistory}
-            color="rose"
-            diffLabel={`${stats.baseScoreDiff && stats.baseScoreDiff > 0 ? '+' : ''}${stats.baseScoreDiff?.toFixed(1) || '0'}%`}
-            diffDirection={(stats.baseScoreDiff || 0) >= 0 ? 'up' : 'down'}
-            diffColor={(stats.baseScoreDiff || 0) >= 0 ? 'teal' : 'rose'}
-          />
-
-          <StatCardBarChart 
-            title="Ζητηση (1η Προτ.)"
-            currentValue={stats.targeting1stCount}
-            history={targetingHistory}
-            color="indigo"
-            diffLabel={`${stats.targeting1stCountDiff > 0 ? '+' : ''}${stats.targeting1stCountDiff}%`}
-            diffDirection={stats.targeting1stCountDiff >= 0 ? 'up' : 'down'}
-            diffColor={stats.targeting1stCountDiff >= 0 ? 'teal' : 'rose'}
-          />
-
-          <StatCardBarChart 
-            title="Αιτησεις Αποχωρησης"
-            currentValue={stats.leavingCount}
-            history={leavingHistory}
-            color="orange"
-            diffLabel={`${stats.leavingCountDiff > 0 ? '+' : ''}${stats.leavingCountDiff}%`}
-            diffDirection={stats.leavingCountDiff >= 0 ? 'up' : 'down'}
-            diffColor={stats.leavingCountDiff >= 0 ? 'teal' : 'rose'}
-          />
-
-          <StatCardBarChart 
-            title="Μ.Ο. Μοριων Επιτυχοντων"
-            currentValue={stats.avgScore?.toFixed(2) || '-'}
-            history={avgHistory}
-            color="slate"
-          />
-
-          <StatCardBarChart 
-            title="Μ.Ο. Μοριων Αιτουντων"
-            currentValue={stats.avgScoreApplicants?.toFixed(2) || '-'}
-            history={avgAppHistory}
-            color="slate"
-            diffLabel={`${stats.avgScoreAppDiff && stats.avgScoreAppDiff > 0 ? '+' : ''}${stats.avgScoreAppDiff?.toFixed(1) || '0'}%`}
-            diffDirection={(stats.avgScoreAppDiff || 0) >= 0 ? 'up' : 'down'}
-            diffColor={(stats.avgScoreAppDiff || 0) >= 0 ? 'teal' : 'rose'}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          <GroupedCSSBarChart 
-            title="Σύγκριση Μορίων & Βάσεων"
-            subtitle="Πώς κινήθηκε η βάση σε σχέση με τους αιτούντες"
-            data={comparisonBaseAvg}
-            label1="Βαση"
-            label2="Μ.Ο. Αιτουντων"
-            color1="rose"
-            color2="slate"
-          />
-
-          <GroupedCSSBarChart 
-            title="Ισοζύγιο Προσφοράς & Ζήτησης"
-            subtitle="Σύγκριση αιτήσεων (1η επιλογή) με πραγματικές θέσεις"
-            data={comparisonDemandSupply}
-            label1="Ζητηση"
-            label2="Μεταθεσεις"
-            color1="indigo"
-            color2="sky"
-          />
-        </div>
-
-        <MigrationFlows inflow={inflow} outflow={outflow} />
-
-      </div>
-    </div>
+    <>
+      <ZoneDetailedStatsClient 
+        zoneName={zoneName}
+        specialtyCode={specialty}
+        specialtyName={specialtyInfo?.name}
+        division={division}
+        stats={stats}
+        successHistory={successHistory}
+        baseHistory={baseHistory}
+        targetingHistory={targetingHistory}
+        leavingHistory={leavingHistory}
+        avgHistory={avgHistory}
+        avgAppHistory={avgAppHistory}
+        satisfactionRate={satisfactionRate}
+        satisfactionTrend={satisfactionTrend}
+        inflow={inflow}
+        outflow={outflow}
+      />
+    </>
   )
 }

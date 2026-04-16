@@ -756,8 +756,9 @@ function StatsMapContent() {
   }, [division, specialty])
 
   // Division options (fallback if DB not loaded yet)
-  const divisionOptions = divisions.length > 0
-    ? divisions.map(d => ({ value: d.name, label: d.name }))
+  const uniqueDivisionNames = Array.from(new Set(divisions.map(d => d.name)))
+  const divisionOptions = uniqueDivisionNames.length > 0
+    ? uniqueDivisionNames.map(name => ({ value: name, label: name }))
     : [
         { value: 'Πρωτοβάθμια Γενικής', label: 'Πρωτοβάθμια Γενικής' },
         { value: 'Πρωτοβάθμια Ειδικής', label: 'Πρωτοβάθμια Ειδικής' },
@@ -772,7 +773,8 @@ function StatsMapContent() {
   }))
 
   // Zone options
-  const zoneOptions = allZones.map(z => ({ value: z, label: z }))
+  const uniqueZones = Array.from(new Set(allZones))
+  const zoneOptions = uniqueZones.map(z => ({ value: z, label: z }))
 
   // When zone filter changes → update map selected zone
   const handleZoneFilterChange = (v: string) => {
