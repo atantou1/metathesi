@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { HeroMap } from "@/components/home/hero-map";
+import { FeaturesSection } from "@/components/home/features-section";
+
 
 export default function Home() {
   return (
@@ -81,41 +83,9 @@ export default function Home() {
 
 
       {/* How it Works Section */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-16 text-center">
-            <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-primary">Πώς λειτουργεί</h4>
-            <h2 className="text-3xl font-black text-slate-900 md:text-4xl text-balance">Απλοποιήστε τη διαδικασία μετάθεσής σας</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-slate-600">Τρία απλά βήματα για να βρείτε την επόμενη επαγγελματική σας στέγη χωρίς περιττές καθυστερήσεις.</p>
-          </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {/* Step 1 */}
-            <div className="group flex flex-col items-center rounded-3xl border border-slate-100 bg-slate-50 p-10 text-center transition-all hover:bg-white hover:shadow-xl">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                <span className="material-symbols-outlined text-3xl">account_circle</span>
-              </div>
-              <h3 className="mb-3 text-xl font-bold text-slate-900">1. Δημιούργησε το Προφίλ σου</h3>
-              <p className="text-slate-600">Εισάγετε τα στοιχεία της τρέχουσας θέσης σας και την ειδικότητά σας εύκολα και γρήγορα.</p>
-            </div>
-            {/* Step 2 */}
-            <div className="group flex flex-col items-center rounded-3xl border border-slate-100 bg-slate-50 p-10 text-center transition-all hover:bg-white hover:shadow-xl">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                <span className="material-symbols-outlined text-3xl">map</span>
-              </div>
-              <h3 className="mb-3 text-xl font-bold text-slate-900">2. Δήλωσε Επιθυμία</h3>
-              <p className="text-slate-600">Επιλέξτε τις περιοχές ή τους φορείς που σας ενδιαφέρουν για την αμοιβαία μετάθεση.</p>
-            </div>
-            {/* Step 3 */}
-            <div className="group flex flex-col items-center rounded-3xl border border-slate-100 bg-slate-50 p-10 text-center transition-all hover:bg-white hover:shadow-xl">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                <span className="material-symbols-outlined text-3xl">notifications_active</span>
-              </div>
-              <h3 className="mb-3 text-xl font-bold text-slate-900">3. Λάβε Ειδοποίηση</h3>
-              <p className="text-slate-600">Μόλις βρεθεί συμβατότητα με άλλον χρήστη, θα ενημερωθείτε αμέσως στο κινητό σας.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div id="how-it-works">
+        <FeaturesSection />
+      </div>
 
       {/* Connectivity CTA */}
       <section className="py-24">
