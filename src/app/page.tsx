@@ -3,6 +3,7 @@ import { HeroMap } from "@/components/home/hero-map";
 import { FeaturesSection } from "@/components/home/features-section";
 import { StatsBentoSection } from "@/components/home/stats-bento-section";
 import { FaqSection } from "@/components/home/faq-section";
+import { CtaSection } from "@/components/home/cta-section";
 
 
 export default function Home() {
@@ -82,50 +83,8 @@ export default function Home() {
       {/* FAQ Section */}
       <FaqSection />
 
-      {/* Connectivity CTA */}
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="relative overflow-hidden rounded-3xl bg-primary px-8 py-16 md:px-20 md:py-24">
-            {/* Abstract Pattern Background */}
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }}></div>
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <h2 className="mb-6 text-3xl font-black text-white md:text-5xl">Έτοιμοι για το επόμενο βήμα;</h2>
-              <p className="mb-10 max-w-2xl text-lg text-primary-100 text-white/90">
-                Γίνετε μέλος της μεγαλύτερης κοινότητας αμοιβαίων μεταθέσεων στην Ελλάδα και βρείτε τη λύση που ψάχνετε σήμερα.
-              </p>
-              <Link href="/signup">
-                <button className="rounded-2xl bg-white px-10 py-4 text-lg font-bold text-primary shadow-xl hover:bg-slate-50 hover:scale-105 transition-all">
-                  Ξεκίνα Δωρεάν
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats/Trust Section */}
-      <section className="py-12 bg-background-light">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            <div className="text-center">
-              <div className="text-3xl font-black text-primary">1.200+</div>
-              <div className="text-sm font-medium text-slate-500 uppercase tracking-wide">Εγγεγραμμένοι</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-black text-primary">850+</div>
-              <div className="text-sm font-medium text-slate-500 uppercase tracking-wide">Ενεργές Αιτήσεις</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-black text-primary">420</div>
-              <div className="text-sm font-medium text-slate-500 uppercase tracking-wide">Επιτυχή Matches</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-black text-primary">100%</div>
-              <div className="text-sm font-medium text-slate-500 uppercase tracking-wide">Εχεμύθεια</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Final CTA Section */}
+      <CtaSection />
     </>
   );
 }
