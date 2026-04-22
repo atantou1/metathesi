@@ -2,6 +2,7 @@ import Link from "next/link";
 import { HeroMap } from "@/components/home/hero-map";
 import { FeaturesSection } from "@/components/home/features-section";
 import { StatsBentoSection } from "@/components/home/stats-bento-section";
+import { FaqSection } from "@/components/home/faq-section";
 
 
 export default function Home() {
@@ -77,6 +78,9 @@ export default function Home() {
 
       {/* Stats Bento Section */}
       <StatsBentoSection />
+
+      {/* FAQ Section */}
+      <FaqSection />
 
       {/* Connectivity CTA */}
       <section className="py-24">

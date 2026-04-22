@@ -9,10 +9,10 @@ export function StatsBentoSection() {
         {/* Επικεφαλίδα (Solution Section) */}
         <div className="mb-16 flex flex-col items-center text-center">
           <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-[#0369a1]">Στατιστικά & Αναλύσεις</h4>
-          <h2 className="mb-6 text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl dark:text-white">
+          <h2 className="mb-6 text-[48px] font-semibold tracking-tight text-neutral-900 leading-[48px] dark:text-white">
             Όλα τα δεδομένα για την Ειδικότητά σας
           </h2>
-          <p className="max-w-[600px] text-lg text-slate-500 dark:text-neutral-400 leading-6">
+          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-slate-500 dark:text-neutral-400 px-[104.5px]">
             Η πλατφόρμα μας σας παρέχει ολοκληρωμένη πρόσβαση σε διαδραστικά
             στατιστικά, αναλύσεις ζήτησης και ιστορικά δεδομένα μεταθέσεων.
           </p>
