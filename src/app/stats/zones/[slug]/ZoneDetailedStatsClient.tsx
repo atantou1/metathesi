@@ -211,8 +211,8 @@ export default function ZoneDetailedStatsClient({
   }));
 
   return (
-    <div className="p-4 md:p-8 text-slate-900 antialiased min-h-screen bg-[#f8fafc] font-sans mt-[80px]">
-      <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8">
+    <div className="p-4 md:p-8 text-slate-900 antialiased min-h-screen bg-[#f8fafc] font-sans">
+      <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8 pt-20 md:pt-24">
         
         {/* --- Premium Header --- */}
         <div className="flex flex-col md:flex-row md:items-start justify-between bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem]">
@@ -232,7 +232,7 @@ export default function ZoneDetailedStatsClient({
                 fontSize="11px"
                 fontWeight="700"
                 padding="6px 14px"
-                background="#f8fafc"
+                background="rgba(255, 255, 255, 0.35)"
               />
 
               <FilterSelect 
@@ -242,7 +242,7 @@ export default function ZoneDetailedStatsClient({
                 fontSize="11px"
                 fontWeight="700"
                 padding="6px 14px"
-                background="rgba(14,165,233,0.05)"
+                background="rgba(255, 255, 255, 0.35)"
                 className="!text-sky-700"
               />
             </div>

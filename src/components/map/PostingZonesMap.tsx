@@ -66,14 +66,14 @@ function CustomZoomControls() {
     <div className="absolute bottom-8 right-8 flex flex-col gap-2 pointer-events-auto hidden md:flex" style={{ zIndex: 1000 }}>
       <button 
         onClick={(e) => { e.stopPropagation(); map.zoomIn() }}
-        className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors"
+        className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors rounded-full"
         title="Zoom In"
       >
         <span className="material-symbols-outlined">add</span>
       </button>
       <button 
         onClick={(e) => { e.stopPropagation(); map.zoomOut() }}
-        className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors"
+        className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors rounded-full"
         title="Zoom Out"
       >
         <span className="material-symbols-outlined">remove</span>

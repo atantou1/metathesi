@@ -642,6 +642,15 @@ function WizardStep1() {
 }
 
 function WizardStep2Updated() {
+  const [showBanner, setShowBanner] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowBanner(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -649,24 +658,33 @@ function WizardStep2Updated() {
       className="text-[#334155] antialiased flex flex-col min-h-full font-sans"
     >
       {/* MATCH BANNER */}
-      <div className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 shadow-sm shadow-teal-900/10 shrink-0">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between py-2.5 gap-3">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-2 w-2 relative flex-shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-              </span>
-              <p className="text-[12px] font-semibold text-white tracking-wide">
-                Βρέθηκε ενεργό match! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.
-              </p>
+      <AnimatePresence>
+        {showBanner && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 shadow-sm shadow-teal-900/10 shrink-0 overflow-hidden"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col sm:flex-row items-center justify-between py-2.5 gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-2 w-2 relative flex-shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                  </span>
+                  <p className="text-[12px] font-semibold text-white tracking-wide">
+                    Βρέθηκε ενεργό match! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.
+                  </p>
+                </div>
+                <button className="w-full sm:w-auto text-[11px] font-bold text-teal-700 bg-white hover:bg-teal-50 px-4 py-1.5 rounded-full transition-all shadow-sm active:scale-95">
+                  Προβολή →
+                </button>
+              </div>
             </div>
-            <button className="w-full sm:w-auto text-[11px] font-bold text-teal-700 bg-white hover:bg-teal-50 px-4 py-1.5 rounded-full transition-all shadow-sm active:scale-95">
-              Προβολή →
-            </button>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* MAIN AREA */}
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex-grow">

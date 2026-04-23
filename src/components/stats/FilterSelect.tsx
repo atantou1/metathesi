@@ -25,7 +25,7 @@ export function FilterSelect({
   fontSize,
   fontWeight,
   padding = "8px 16px",
-  background = "rgba(255,255,255,0.9)",
+  background = "rgba(255,255,255,0.35)",
   className = "",
 }: FilterSelectProps) {
   const [open, setOpen] = useState(false);
@@ -57,8 +57,8 @@ export function FilterSelect({
           background: background,
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
-          border: "1px solid rgba(226,232,240,0.8)",
-          borderRadius: "12px",
+          border: "1px solid rgba(255,255,255,0.25)",
+          borderRadius: "9999px",
           fontSize: fontSize,
           fontWeight: fontWeight,
           color: "#0f172a",
@@ -69,8 +69,8 @@ export function FilterSelect({
           ...(fullWidth ? { width: "100%", justifyContent: "space-between" } : {}),
         }}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.background = "#fff";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
+          (e.currentTarget as HTMLButtonElement).style.background = "rgba(255, 255, 255, 0.5)";
+          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)";
         }}
         onMouseLeave={(e) => {
           (e.currentTarget as HTMLButtonElement).style.background = background;

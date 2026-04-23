@@ -424,8 +424,8 @@ export default function SummaryPageClient() {
 
 
   return (
-    <div className="p-4 md:p-8 text-slate-900 antialiased min-h-screen bg-[#f8fafc] font-inter mt-[80px]">
-      <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8">
+    <div className="p-4 md:p-8 text-slate-900 antialiased min-h-screen bg-[#f8fafc] font-inter">
+      <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8 pt-20 md:pt-24">
         {/* --- Header with Seamless Dropdowns --- */}
         <div className="flex flex-col md:flex-row md:items-start justify-between bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem]">
           <div>
@@ -462,7 +462,7 @@ export default function SummaryPageClient() {
                 }}
                 options={divisionOptions}
                 padding="4px 12px"
-                background="#f1f5f9"
+                background="rgba(255, 255, 255, 0.35)"
                 className="text-[10px] font-bold uppercase tracking-wider"
               />
             </div>

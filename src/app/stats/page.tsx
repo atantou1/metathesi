@@ -78,10 +78,10 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
           alignItems: 'center',
           gap: '8px',
           padding: '9px 16px',
-          background: 'rgba(255,255,255,0.82)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          border: '1px solid rgba(255,255,255,0.5)',
+          background: 'rgba(255,255,255,0.35)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.25)',
           borderRadius: '9999px',
           fontSize: '13px',
           fontWeight: 600,
@@ -92,8 +92,8 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
           transition: 'background 0.2s, box-shadow 0.2s',
           ...(fullWidth ? { width: '100%', justifyContent: 'space-between' } : {}),
         }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.95)' }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.82)' }}
+        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.5)' }}
+        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.35)' }}
       >
         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '160px' }}>{label}</span>
         <span
@@ -382,9 +382,9 @@ function LegendCard({ indicator }: { indicator: string }) {
     <div style={{ position: 'absolute', bottom: '40px', left: '40px', zIndex: 500, pointerEvents: 'auto' }}>
       <div
         style={{
-          background: 'rgba(255,255,255,0.85)',
-          backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(255,255,255,0.3)',
+          background: 'rgba(255,255,255,0.35)',
+          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255,255,255,0.25)',
           borderRadius: '16px',
           boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
           padding: '16px 20px',
@@ -822,7 +822,7 @@ function StatsMapContent() {
   return (
     <div
       className="text-slate-900 dark:text-slate-100 antialiased font-display"
-      style={{ marginTop: '80px', height: 'calc(100vh - 80px)', position: 'relative', background: '#f1f5f9' }}
+      style={{ height: '100vh', position: 'relative', background: '#f1f5f9' }}
     >
       {/* Mobile filter drawer */}
       <MobileFilterDrawer
@@ -871,7 +871,7 @@ function StatsMapContent() {
           {!isMobile && (
             <div style={{
               position: 'absolute',
-              top: '20px',
+              top: '100px',
               left: '50%',
               transform: 'translateX(-50%)',
               display: 'flex',
@@ -895,28 +895,30 @@ function StatsMapContent() {
                 type="button"
                 onClick={() => router.push(`/stats/summary?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialty)}`)}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = '#075985'
+                  e.currentTarget.style.background = 'rgba(3, 105, 161, 0.95)'
                   e.currentTarget.style.transform = 'translateY(-1px)'
-                  e.currentTarget.style.boxShadow = '0 10px 20px rgba(3,105,161,0.2)'
+                  e.currentTarget.style.boxShadow = '0 10px 20px rgba(3,105,161,0.25)'
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background = '#0369a1'
+                  e.currentTarget.style.background = 'rgba(3, 105, 161, 0.8)'
                   e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(3,105,161,0.15)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(3,105,161,0.2)'
                 }}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
                   padding: '10px 24px',
-                  background: '#0369a1',
+                  background: 'rgba(3, 105, 161, 0.8)',
                   color: '#ffffff',
-                  border: 'none',
+                  border: '1px solid rgba(255,255,255,0.1)',
                   borderRadius: '9999px',
                   fontSize: '13px',
                   fontWeight: 700,
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(3,105,161,0.15)',
+                  boxShadow: '0 4px 12px rgba(3,105,161,0.2)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                   whiteSpace: 'nowrap',
                 }}
@@ -930,7 +932,7 @@ function StatsMapContent() {
           {isMobile && (
             <div style={{
               position: 'absolute',
-              top: '16px',
+              top: '96px',
               left: '50%',
               transform: 'translateX(-50%)',
               pointerEvents: 'auto',
@@ -943,10 +945,10 @@ function StatsMapContent() {
                   alignItems: 'center',
                   gap: '6px',
                   padding: '10px 20px',
-                  background: 'rgba(255,255,255,0.85)',
+                  background: 'rgba(255,255,255,0.4)',
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(255,255,255,0.5)',
+                  border: '1px solid rgba(255,255,255,0.3)',
                   borderRadius: '9999px',
                   fontSize: '13px',
                   fontWeight: 600,
@@ -968,7 +970,7 @@ function StatsMapContent() {
         {/* ── Desktop Side Panel (Right) ─────────────────────────────────── */}
           {!isMobile && (
             <div 
-              className={`absolute top-0 right-0 h-full w-[448px] z-50 transform transition-transform duration-300 ease-out flex ${selectedZone ? 'translate-x-0' : 'translate-x-full'}`}
+              className={`absolute top-0 right-0 h-full w-[448px] z-50 pt-20 transform transition-transform duration-300 ease-out flex ${selectedZone ? 'translate-x-0' : 'translate-x-full'}`}
               style={{ pointerEvents: selectedZone ? 'auto' : 'none' }}
             >
               <PanelContent 

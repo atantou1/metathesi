@@ -17,14 +17,15 @@ import { UserNavLogout } from "@/components/layout/user-nav-logout"
 import { MobileMenu } from "@/components/layout/mobile-menu"
 import { NotificationBellClient } from "@/components/layout/NotificationBellClient"
 import { Logo } from "@/components/logo"
+import { FloatingNavWrapper } from "@/components/layout/floating-nav-wrapper"
 
 export async function Navbar() {
     const session = await auth()
 
     return (
-        <nav className="fixed w-full z-50 top-0 start-0 border-b border-gray-200 bg-white dark:bg-slate-900">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-20">
+        <FloatingNavWrapper>
+            <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-14">
                     <Link href="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
                         <Logo className="w-8 h-8 text-[#0369A1]" />
                         <span className="text-xl font-bold tracking-tight">
@@ -125,6 +126,6 @@ export async function Navbar() {
                     </div>
                 </div>
             </div>
-        </nav>
+        </FloatingNavWrapper>
     )
 }

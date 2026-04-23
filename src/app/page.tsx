@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { HeroMap } from "@/components/home/hero-map";
 import { FeaturesSection } from "@/components/home/features-section";
@@ -5,8 +7,19 @@ import { StatsBentoSection } from "@/components/home/stats-bento-section";
 import { FaqSection } from "@/components/home/faq-section";
 import { CtaSection } from "@/components/home/cta-section";
 
-
 export default function Home() {
+  const scrollToHowItWorks = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById("how-it-works");
+    if (element) {
+      const top = element.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({
+        top: top,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -32,11 +45,7 @@ export default function Home() {
             <div className="mx-auto max-w-2xl lg:mx-0">
               <div className="hidden sm:mb-8 sm:flex sm:justify-start">
                 <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                  Νέα ψηφιακή πλατφόρμα.{" "}
-                  <Link href="/signup" className="font-semibold text-indigo-600">
-                    <span aria-hidden="true" className="absolute inset-0" />
-                    Read more <span aria-hidden="true">&rarr;</span>
-                  </Link>
+                  Νέα ψηφιακή πλατφόρμα.
                 </div>
               </div>
               <div className="text-center lg:text-left">
@@ -51,12 +60,16 @@ export default function Home() {
                 <div className="mt-10 flex items-center justify-center lg:justify-start gap-x-6">
                   <Link
                     href="/signup"
-                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-md bg-[#0369a1] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#075985] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    Get started
+                    Ξεκίνα τώρα
                   </Link>
-                  <a href="#how-it-works" className="text-sm/6 font-semibold text-gray-900">
-                    Learn more <span aria-hidden="true">→</span>
+                  <a
+                    href="#how-it-works"
+                    onClick={scrollToHowItWorks}
+                    className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+                  >
+                    Περισσότερα <span aria-hidden="true">→</span>
                   </a>
                 </div>
               </div>
@@ -73,9 +86,9 @@ export default function Home() {
 
 
       {/* How it Works Section */}
-      <div id="how-it-works">
+      <section id="how-it-works" className="scroll-mt-20">
         <FeaturesSection />
-      </div>
+      </section>
 
       {/* Stats Bento Section */}
       <StatsBentoSection />
