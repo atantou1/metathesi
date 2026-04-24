@@ -1,10 +1,11 @@
-import { LoginForm } from "@/components/auth/login-form"
-import { Suspense } from "react"
+import { LoginForm } from "@/components/login-form"
 
 export default function LoginPage() {
-    return (
-        <Suspense fallback={<div className="flex h-screen w-full items-center justify-center p-4"><div className="w-8 h-8 rounded-full border-4 border-slate-200 border-t-[#0369A1] animate-spin"></div></div>}>
-            <LoginForm />
-        </Suspense>
-    )
+  return (
+    <div className="flex min-h-screen flex-col items-center bg-muted px-6 pt-20 md:pt-32 pb-20">
+      <div className="w-full max-w-sm md:max-w-4xl">
+        <LoginForm />
+      </div>
+    </div>
+  )
 }

@@ -112,10 +112,10 @@ export async function Navbar() {
                         ) : (
                             <div className="flex items-center gap-3">
                                 <Link href="/login">
-                                    <Button variant="ghost">Log In</Button>
+                                    <Button variant="ghost">Σύνδεση</Button>
                                 </Link>
                                 <Link href="/signup">
-                                    <Button className="bg-blue-600 hover:bg-blue-700 text-white">Get Started</Button>
+                                    <Button className="bg-[#0369a1] hover:bg-[#0c4a6e] text-white rounded-lg">Εγγραφή</Button>
                                 </Link>
                             </div>
                         )}

@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const signUpSchema = z.object({
-    fullName: z.string().min(2, "Το ονοματεπώνυμο πρέπει να έχει τουλάχιστον 2 χαρακτήρες"),
+    fullName: z.string().optional(),
     email: z.string().email("Μη έγκυρο email"),
     password: z.string().min(6, "Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες"),
     confirmPassword: z.string(),

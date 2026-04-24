@@ -57,6 +57,9 @@ export async function signUp(values: SignUpValues) {
     }
 
     const { fullName, email, password } = validatedFields.data
+    
+    // Use the part before @ as a default name if none provided
+    const userFullName = fullName || email.split('@')[0]
 
     const existingUser = await prisma.user.findUnique({
         where: { email },
@@ -70,7 +73,7 @@ export async function signUp(values: SignUpValues) {
 
     await prisma.user.create({
         data: {
-            fullName,
+            fullName: userFullName,
             email,
             passwordHash: hashedPassword,
         },
