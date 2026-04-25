@@ -21,11 +21,20 @@ export async function login(values: LoginValues) {
 
     const { email, password } = validatedFields.data
 
+    const user = await prisma.user.findUnique({
+        where: { email },
+        select: { role: true }
+    });
+
+    const redirectTo = (user?.role === "ADMIN" || user?.role === "SUPERADMIN") 
+        ? "/admin" 
+        : "/dashboard";
+
     try {
         await signIn("credentials", {
             email,
             password,
-            redirectTo: "/dashboard",
+            redirectTo,
         })
     } catch (error) {
         if (error instanceof AuthError) {

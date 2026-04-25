@@ -51,6 +51,11 @@ export default async function Dashboard() {
         redirect("/login");
     }
 
+    // 2. ADMIN REDIRECT - Send admins to their dedicated panel
+    if (user.role === "ADMIN" || user.role === "SUPERADMIN") {
+        redirect("/admin");
+    }
+
     // 2. FETCH DATA
     // 2. FETCH DATA
     const profile = await getUserProfile();

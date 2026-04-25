@@ -69,11 +69,31 @@ model User {
   createdAt     DateTime  @default(now()) @map("created_at")
   emailVerified DateTime? @map("email_verified")
   image         String?
+  role          Role      @default(USER)
+  status        UserStatus @default(ACTIVE)
+  banReason     String?   @map("ban_reason")
+  bannedAt      DateTime? @map("banned_at")
   accounts      Account[]
   profile       Profile?
   sessions      Session[]
+  auditLogs     AdminAuditLog[] @relation("AdminLogs")
+  receivedLogs  AdminAuditLog[] @relation("TargetUserLogs")
 
   @@map("users")
+}
+
+model AdminAuditLog {
+  id           Int      @id @default(autoincrement())
+  adminId      Int      @map("admin_id")
+  targetUserId Int?     @map("target_user_id")
+  action       String
+  details      Json?
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  admin        User     @relation("AdminLogs", fields: [adminId], references: [id])
+  targetUser   User?    @relation("TargetUserLogs", fields: [targetUserId], references: [id])
+
+  @@map("admin_audit_logs")
 }
 
 model Account {
@@ -321,4 +341,16 @@ enum RequestStatus {
   matched
   paused
   inactive
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BANNED
+  SUSPENDED
 }

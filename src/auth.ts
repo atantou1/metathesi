@@ -36,7 +36,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 ...createdUser,
                 name: createdUser.fullName,
                 id: createdUser.id.toString(), // Keep as string for NextAuth compatibility
-                emailVerified: createdUser.emailVerified
+                emailVerified: createdUser.emailVerified,
+                role: createdUser.role,
+                status: createdUser.status
             } as any;
         },
         getUser: async (id) => {
@@ -48,7 +50,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 ...user,
                 name: user.fullName,
                 id: user.id.toString(),
-                emailVerified: user.emailVerified
+                emailVerified: user.emailVerified,
+                role: user.role,
+                status: user.status
             } as any;
         },
         getUserByEmail: async (email) => {
@@ -58,7 +62,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 ...user,
                 name: user.fullName,
                 id: user.id.toString(),
-                emailVerified: user.emailVerified
+                emailVerified: user.emailVerified,
+                role: user.role,
+                status: user.status
             } as any;
         },
         getUserByAccount: async ({ providerAccountId, provider }) => {
@@ -71,7 +77,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 ...account.user,
                 name: account.user.fullName,
                 id: account.user.id.toString(),
-                emailVerified: account.user.emailVerified
+                emailVerified: account.user.emailVerified,
+                role: account.user.role,
+                status: account.user.status
             } as any;
         },
         updateUser: async (user) => {
@@ -86,7 +94,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 ...updatedUser,
                 name: updatedUser.fullName,
                 id: updatedUser.id.toString(),
-                emailVerified: updatedUser.emailVerified
+                emailVerified: updatedUser.emailVerified,
+                role: updatedUser.role,
+                status: updatedUser.status
             } as any;
         },
         linkAccount: async (account) => {
@@ -129,6 +139,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                         throw new Error("Invalid credentials");
                     }
 
+                    if (user.status === "BANNED") {
+                        throw new Error(`Ο λογαριασμός έχει αποκλειστεί. ${user.banReason ? "Αιτιολογία: " + user.banReason : ""}`);
+                    }
+
                     if (!user.emailVerified) {
                         console.log("Email not verified")
                         throw new Error("Email not verified");
@@ -142,6 +156,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                             name: user.fullName || "",
                             email: user.email,
                             image: user.image || "",
+                            role: user.role,
+                            status: user.status
                         }
                     }
                 }
@@ -155,20 +171,43 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         signIn: "/login",
     },
     callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            // For OAuth users, the user object will come from either the db lookup or provider
+            // We check the status to block banned users
+            if ((user as any).status === "BANNED") {
+                return false; /****/
+            }
+            return true;
+        },
         async session({ session, token, user }) {
-            // Include user.id if using database sessions, or token.sub if JWT
-            if (user?.id) {
-                session.user.id = user.id?.toString() ?? "";
-            } else if (token?.sub && session.user) {
-                session.user.id = token.sub
+            if (token?.sub) {
+                session.user.id = token.sub;
+            }
+            if (token?.role) {
+                session.user.role = token.role as any;
+            }
+            if (token?.status) {
+                session.user.status = token.status as any;
             }
             return session
         },
         async jwt({ token, user, account }) {
-            if (account && user?.id) {
-                token.sub = user.id.toString();
-            } else if (user?.id) {
-                token.sub = user.id.toString()
+            if (user) {
+                token.sub = user.id ? user.id.toString() : '';
+                
+                // For OAuth users, the 'user' object might be the provider profile initially.
+                // We ensure role and status are fetched from the database.
+                if (!(user as any).role) {
+                    const dbUser = await prisma.user.findUnique({
+                        where: { id: parseInt(user.id as string, 10) },
+                        select: { role: true, status: true }
+                    });
+                    token.role = dbUser?.role || "USER";
+                    token.status = dbUser?.status || "ACTIVE";
+                } else {
+                    token.role = (user as any).role;
+                    token.status = (user as any).status;
+                }
             }
             return token
         }
