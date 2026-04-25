@@ -1,18 +1,26 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState, useTransition, useEffect } from "react"
 import { Shield, Smartphone, Palette, FolderOpen, User, Lock, Download, Trash2, Moon, Sun, Monitor, Loader2, AlertTriangle, X, CheckCircle2 } from "lucide-react"
 import { deleteAccount, changePassword } from "@/actions/settings"
 import { signOut } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { changePasswordSchema, ChangePasswordValues } from "@/lib/schemas"
+import { useTheme } from "next-themes"
 
 export function SettingsLayout() {
     const [activeTab, setActiveTab] = useState("account") // Start with account despite being empty as per request
     const [isDeleting, setIsDeleting] = useState(false)
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
     const [deleteError, setDeleteError] = useState<string | null>(null)
+
+    const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     // Password Change State
     const [isPendingPassword, startTransitionPassword] = useTransition()
@@ -266,7 +274,13 @@ export function SettingsLayout() {
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <label className="cursor-pointer group">
-                                    <input defaultChecked className="peer sr-only" name="theme" type="radio" />
+                                    <input 
+                                        className="peer sr-only" 
+                                        name="theme" 
+                                        type="radio" 
+                                        checked={mounted ? theme === "light" : false}
+                                        onChange={() => setTheme("light")}
+                                    />
                                     <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
                                         <div className="h-20 bg-slate-100 rounded-lg mb-3 flex items-center justify-center border border-slate-200">
                                             <Sun className="w-8 h-8 text-amber-500" />
@@ -278,7 +292,13 @@ export function SettingsLayout() {
                                     </div>
                                 </label>
                                 <label className="cursor-pointer group">
-                                    <input className="peer sr-only" name="theme" type="radio" />
+                                    <input 
+                                        className="peer sr-only" 
+                                        name="theme" 
+                                        type="radio" 
+                                        checked={mounted ? theme === "dark" : false}
+                                        onChange={() => setTheme("dark")}
+                                    />
                                     <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
                                         <div className="h-20 bg-slate-800 rounded-lg mb-3 flex items-center justify-center border border-slate-700">
                                             <Moon className="w-8 h-8 text-purple-400" />
@@ -290,7 +310,13 @@ export function SettingsLayout() {
                                     </div>
                                 </label>
                                 <label className="cursor-pointer group">
-                                    <input className="peer sr-only" name="theme" type="radio" />
+                                    <input 
+                                        className="peer sr-only" 
+                                        name="theme" 
+                                        type="radio" 
+                                        checked={mounted ? theme === "system" : true}
+                                        onChange={() => setTheme("system")}
+                                    />
                                     <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
                                         <div className="h-20 bg-gradient-to-br from-slate-100 to-slate-800 rounded-lg mb-3 flex items-center justify-center border border-slate-200 dark:border-slate-700">
                                             <Monitor className="w-8 h-8 text-slate-500 dark:text-slate-300" />

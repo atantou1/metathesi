@@ -67,7 +67,7 @@ export function FeaturesSection() {
 
   return (
     <section
-      className="py-16 lg:py-24 bg-white overflow-hidden min-h-screen flex items-center"
+      className="py-16 lg:py-24 bg-white dark:bg-background overflow-hidden min-h-screen flex items-center"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
       <style
@@ -102,8 +102,8 @@ export function FeaturesSection() {
       <div className="max-w-[1280px] w-full mx-auto px-6">
         <div className="mb-16 text-center">
           <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">Πώς λειτουργεί</h4>
-          <h2 className="text-[48px] font-semibold text-slate-900 leading-[48px] text-balance">Απλοποιήστε τη διαδικασία μετάθεσής σας</h2>
-          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-slate-600 px-0 md:px-[104.5px]">Τρία απλά βήματα για να βρείτε την επόμενη επαγγελματική σας στέγη χωρίς περιττές καθυστερήσεις.</p>
+          <h2 className="text-[48px] font-semibold text-slate-900 dark:text-white leading-[48px] text-balance">Απλοποιήστε τη διαδικασία μετάθεσής σας</h2>
+          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-slate-600 dark:text-slate-400 px-0 md:px-[104.5px]">Τρία απλά βήματα για να βρείτε την επόμενη επαγγελματική σας στέγη χωρίς περιττές καθυστερήσεις.</p>
         </div>
         <div className="flex flex-col-reverse lg:flex-row gap-10 lg:gap-16 items-center">
           {/* ================= ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ: Δυναμικά Κείμενα ================= */}
@@ -128,8 +128,8 @@ export function FeaturesSection() {
                     <h3
                       className={`text-[26px] leading-[1.2] font-bold transition-colors duration-200 ${
                         isActive
-                          ? "text-[#1d1c1d]"
-                          : "text-[#616061] group-hover:text-[#1d1c1d]"
+                          ? "text-[#1d1c1d] dark:text-white"
+                          : "text-[#616061] dark:text-slate-500 group-hover:text-[#1d1c1d] dark:group-hover:text-slate-300"
                       }`}
                     >
                       {feature.title}
@@ -144,7 +144,7 @@ export function FeaturesSection() {
                           className="overflow-hidden"
                         >
                           <div className="pt-4 pb-2">
-                            <p className="text-[18px] leading-relaxed text-[#454245]">
+                            <p className="text-[18px] leading-relaxed text-[#454245] dark:text-slate-400">
                               {feature.description}
                             </p>
                           </div>
@@ -191,7 +191,7 @@ export function FeaturesSection() {
                     </div>
                     <h3
                       className={`text-[22px] leading-[1.2] font-bold transition-colors duration-200 mb-3 ${
-                        isActive ? "text-[#1d1c1d]" : "text-[#616061]"
+                        isActive ? "text-[#1d1c1d] dark:text-white" : "text-[#616061] dark:text-slate-500"
                       }`}
                     >
                       {feature.title}
@@ -199,8 +199,8 @@ export function FeaturesSection() {
                     <p
                       className={`text-[16px] leading-relaxed transition-opacity duration-300 ${
                         isActive
-                          ? "text-[#454245] opacity-100"
-                          : "text-[#454245] opacity-50"
+                          ? "text-[#454245] dark:text-slate-300 opacity-100"
+                          : "text-[#454245] dark:text-slate-300 opacity-50"
                       }`}
                     >
                       {feature.description}
@@ -214,16 +214,16 @@ export function FeaturesSection() {
           {/* ================= ΔΕΞΙΑ ΣΤΗΛΗ: Animated Mac Screen & Placeholders ================= */}
           <div className="w-full lg:w-[55%] h-[500px] lg:h-[480px]">
             {activeIndex === 0 ? (
-              <div className="w-full rounded-[2rem] shadow-2xl border border-gray-200/80 overflow-hidden bg-white flex flex-col h-full">
+              <div className="w-full rounded-[2rem] shadow-2xl border border-gray-200/80 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-950 flex flex-col h-full">
                 {/* Mac Header */}
-                <div className="bg-[#f3f3f3] px-3 py-2 flex items-center justify-between border-b border-gray-200/80 flex-shrink-0">
+                <div className="bg-[#f3f3f3] dark:bg-slate-900 px-3 py-2 flex items-center justify-between border-b border-gray-200/80 dark:border-slate-800 flex-shrink-0">
                   <div className="flex space-x-1.5 w-16">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
                   </div>
                   <div className="flex-1 flex justify-center">
-                    <div className="bg-white/80 border border-gray-200/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 font-medium">
+                    <div className="bg-white/80 dark:bg-slate-800/80 border border-gray-200/50 dark:border-slate-700/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 dark:text-slate-500 font-medium">
                       metathesi.gr
                     </div>
                   </div>
@@ -236,16 +236,16 @@ export function FeaturesSection() {
                 </div>
               </div>
             ) : activeIndex === 1 ? (
-              <div className="w-full rounded-[2rem] shadow-2xl border border-gray-200/80 overflow-hidden bg-white flex flex-col h-full">
+              <div className="w-full rounded-[2rem] shadow-2xl border border-gray-200/80 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-950 flex flex-col h-full">
                 {/* Mac Header */}
-                <div className="bg-[#f3f3f3] px-3 py-2 flex items-center justify-between border-b border-gray-200/80 flex-shrink-0 z-50 relative">
+                <div className="bg-[#f3f3f3] dark:bg-slate-900 px-3 py-2 flex items-center justify-between border-b border-gray-200/80 dark:border-slate-800 flex-shrink-0 z-50 relative">
                   <div className="flex space-x-1.5 w-16">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
                   </div>
                   <div className="flex-1 flex justify-center">
-                    <div className="bg-white/80 border border-gray-200/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 font-medium">
+                    <div className="bg-white/80 dark:bg-slate-800/80 border border-gray-200/50 dark:border-slate-700/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 dark:text-slate-500 font-medium">
                       metathesi.gr/dashboard
                     </div>
                   </div>
@@ -258,16 +258,16 @@ export function FeaturesSection() {
                 </div>
               </div>
             ) : activeIndex === 2 ? (
-              <div className="w-full rounded-[2rem] shadow-2xl border border-gray-200/80 overflow-hidden bg-white flex flex-col h-full">
+              <div className="w-full rounded-[2rem] shadow-2xl border border-gray-200/80 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-950 flex flex-col h-full">
                 {/* Mac Header */}
-                <div className="bg-[#f3f3f3] px-3 py-2 flex items-center justify-between border-b border-gray-200/80 flex-shrink-0 z-50 relative">
+                <div className="bg-[#f3f3f3] dark:bg-slate-900 px-3 py-2 flex items-center justify-between border-b border-gray-200/80 dark:border-slate-800 flex-shrink-0 z-50 relative">
                   <div className="flex space-x-1.5 w-16">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
                   </div>
                   <div className="flex-1 flex justify-center">
-                    <div className="bg-white/80 border border-gray-200/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 font-medium">
+                    <div className="bg-white/80 dark:bg-slate-800/80 border border-gray-200/50 dark:border-slate-700/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 dark:text-slate-500 font-medium">
                       metathesi.gr/messages
                     </div>
                   </div>
@@ -280,8 +280,8 @@ export function FeaturesSection() {
                 </div>
               </div>
             ) : (
-              <div className="w-full h-full rounded-[2rem] bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center">
-                <span className="text-gray-400 font-medium text-lg">
+              <div className="w-full h-full rounded-[2rem] bg-gray-100 dark:bg-slate-800 border-2 border-dashed border-gray-300 dark:border-slate-700 flex items-center justify-center">
+                <span className="text-gray-400 dark:text-slate-500 font-medium text-lg">
                   UI Placeholder - Βήμα {activeIndex + 1}
                 </span>
               </div>
@@ -862,7 +862,7 @@ function WizardStep3Updated() {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { type: "spring", stiffness: 260, damping: 20 },
+      transition: { type: "spring" as const, stiffness: 260, damping: 20 },
     },
   }
 

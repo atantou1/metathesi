@@ -44,15 +44,15 @@ export default function Home() {
           <div className="w-full lg:w-2/3 relative z-10">
             <div className="mx-auto max-w-2xl lg:mx-0">
               <div className="hidden sm:mb-8 sm:flex sm:justify-start">
-                <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 dark:text-gray-300 ring-1 ring-gray-900/10 dark:ring-white/10 hover:ring-gray-900/20 dark:hover:ring-white/20">
                   Νέα ψηφιακή πλατφόρμα.
                 </div>
               </div>
               <div className="text-center lg:text-left">
-                <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
+                <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-7xl">
                   Βάλε την αναζήτηση στον αυτόματο πιλότο
                 </h1>
-                <p className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
+                <p className="mt-8 text-pretty text-lg font-medium text-gray-500 dark:text-gray-400 sm:text-xl/8">
                   Το Ψηφιακό Κέντρο Αμοιβαίων Μεταθέσεων. Ξέχνα το χάος των
                   ομάδων στο Viber και το Facebook. Βρες τη μετάθεση που
                   ψάχνεις, έξυπνα και γρήγορα.
@@ -67,7 +67,7 @@ export default function Home() {
                   <a
                     href="#how-it-works"
                     onClick={scrollToHowItWorks}
-                    className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+                    className="text-sm/6 font-semibold text-gray-900 dark:text-white cursor-pointer"
                   >
                     Περισσότερα <span aria-hidden="true">→</span>
                   </a>

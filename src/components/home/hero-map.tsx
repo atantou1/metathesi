@@ -12,7 +12,7 @@ export function HeroMap() {
     <div className="relative w-full max-w-lg lg:min-w-[500px] mx-auto aspect-square lg:scale-110 lg:origin-top-right">
       <svg
         viewBox="0 0 918.79 792.428"
-        className="w-full h-full"
+        className="w-full h-full text-[#c6c6c6] dark:text-slate-800"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -24,7 +24,7 @@ export function HeroMap() {
             height="6"
             patternUnits="userSpaceOnUse"
           >
-            <circle cx="2" cy="2" r="1.5" fill="#c6c6c6" />
+            <circle cx="2" cy="2" r="1.5" fill="currentColor" />
           </pattern>
 
           <mask id="greece-mask">
