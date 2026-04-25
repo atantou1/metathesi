@@ -15,13 +15,15 @@ export default async function MatchesLayout({ children }: { children: React.Reac
 
     return (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Φόρτωση...</div>}>
-            <MatchesLayoutClient 
-                activeMatches={active} 
-                historyMatches={history} 
-                currentUserId={parseInt(session.user.id)}
-            >
-                {children}
-            </MatchesLayoutClient>
+            <div className="min-h-screen pt-20 flex flex-col px-4 sm:px-6 lg:px-8">
+                <MatchesLayoutClient 
+                    activeMatches={active} 
+                    historyMatches={history} 
+                    currentUserId={parseInt(session.user.id)}
+                >
+                    {children}
+                </MatchesLayoutClient>
+            </div>
         </Suspense>
     )
 }

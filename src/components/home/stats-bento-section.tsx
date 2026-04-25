@@ -12,7 +12,7 @@ export function StatsBentoSection() {
           <h2 className="mb-6 text-[48px] font-semibold tracking-tight text-neutral-900 leading-[48px] dark:text-white">
             Όλα τα δεδομένα για την Ειδικότητά σας
           </h2>
-          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-slate-500 dark:text-neutral-400 px-[104.5px]">
+          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-slate-500 dark:text-neutral-400 px-0 md:px-[104.5px]">
             Η πλατφόρμα μας σας παρέχει ολοκληρωμένη πρόσβαση σε διαδραστικά
             στατιστικά, αναλύσεις ζήτησης και ιστορικά δεδομένα μεταθέσεων.
           </p>

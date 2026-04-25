@@ -28,7 +28,7 @@ export async function Navbar() {
                 <div className="flex justify-between items-center h-14">
                     <Link href="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
                         <Logo className="w-8 h-8 text-[#0369A1]" />
-                        <span className="text-xl font-bold tracking-tight">
+                        <span className="text-xl font-bold tracking-tight hidden sm:block">
                             <span className="text-[#0F172A] dark:text-white">meta</span>
                             <span className="text-[#0369A1]">Thesi</span>
                         </span>

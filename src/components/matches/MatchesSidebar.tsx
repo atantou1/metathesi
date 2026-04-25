@@ -21,7 +21,7 @@ export function MatchesSidebar() {
 
     return (
         <>
-            <div className="p-4 border-b border-slate-100 bg-slate-50/50">
+            <div className="p-4 border-b border-slate-100/50 bg-slate-50/50">
                 <div className="relative flex justify-center mx-auto p-1 bg-slate-200/50 backdrop-blur-sm rounded-full w-full max-w-sm">
                     <div className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-full shadow-sm z-0 transition-transform duration-300 ease-out ${activeTab === 'active' ? 'left-1 translate-x-0' : 'left-1 translate-x-[100%]'}`}></div>
                     <button 
