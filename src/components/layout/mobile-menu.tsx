@@ -151,10 +151,10 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                     ) : (
                                         <div className="grid gap-2">
                                             <Link href="/login" onClick={() => setIsOpen(false)}>
-                                                <Button variant="outline" className="w-full justify-center">Σύνδεση</Button>
+                                                <Button variant="outline" className="w-full justify-center cursor-pointer">Σύνδεση</Button>
                                             </Link>
                                             <Link href="/signup" onClick={() => setIsOpen(false)}>
-                                                <Button className="w-full justify-center bg-[#0369a1] hover:bg-[#0c4a6e] text-white rounded-lg">Εγγραφή</Button>
+                                                <Button className="w-full justify-center bg-[#0369a1] hover:bg-[#0c4a6e] text-white rounded-lg cursor-pointer">Εγγραφή</Button>
                                             </Link>
                                         </div>
                                     )}

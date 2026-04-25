@@ -117,7 +117,7 @@ export function LoginForm({
                           <div className="relative group">
                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
                             <Input
-                              placeholder="m@example.com"
+                              placeholder="teacher@gmail.com"
                               {...field}
                               required
                               className="pl-10 h-11 bg-slate-50/50 border-slate-200 focus:bg-white transition-all rounded-lg"
