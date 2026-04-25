@@ -67,8 +67,8 @@ export default async function Dashboard() {
 
     if (!request) {
         return (
-            <div className="min-h-screen pt-20 flex flex-col">
-                <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+            <div className="min-h-screen pt-20 flex flex-col items-center">
+                <main className="w-full max-w-7xl px-4 lg:px-0 py-8 flex-grow">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
                         {/* LEFT COLUMN */}
                         <div className="lg:col-span-8 space-y-6">
@@ -233,9 +233,8 @@ export default async function Dashboard() {
     const hasActiveMatch = request.matchParticipations && request.matchParticipations.length > 0;
 
     return (
-        <div className="min-h-screen pt-20 flex flex-col">
-            {hasActiveMatch && <MatchBanner />}
-            <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+        <div className="min-h-screen pt-20 flex flex-col items-center">
+            <div className="w-full max-w-7xl px-4 lg:px-0 py-8 flex-grow">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
 
                     {/* LEFT COLUMN */}
@@ -243,6 +242,7 @@ export default async function Dashboard() {
 
                         {/* Active Request Card with Embedded Scanning Block */}
                         <div className="relative overflow-hidden rounded-[2rem] glass-card">
+                            {hasActiveMatch && <MatchBanner />}
                             <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-100/40 rounded-full blur-3xl pointer-events-none"></div>
                             <div className="p-6 sm:p-8 relative z-10">
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">

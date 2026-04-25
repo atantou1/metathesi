@@ -15,7 +15,8 @@ export default async function MatchesLayout({ children }: { children: React.Reac
 
     return (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Φόρτωση...</div>}>
-            <div className="min-h-screen pt-20 flex flex-col px-4 sm:px-6 lg:px-8">
+            <div className="min-h-screen pt-20 flex flex-col items-center">
+                <div className="w-full max-w-7xl px-4 lg:px-0">
                 <MatchesLayoutClient 
                     activeMatches={active} 
                     historyMatches={history} 
@@ -23,6 +24,7 @@ export default async function MatchesLayout({ children }: { children: React.Reac
                 >
                     {children}
                 </MatchesLayoutClient>
+                </div>
             </div>
         </Suspense>
     )
