@@ -77,14 +77,14 @@ export function MobileMenu({ session }: MobileMenuProps) {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed right-0 top-0 h-full w-[280px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-l border-white/40 dark:border-slate-800/50 z-50 shadow-2xl overflow-y-auto"
+                        className="fixed right-0 top-0 h-full w-[280px] bg-card/80 dark:bg-card/80 backdrop-blur-xl border-l border-border/40 dark:border-border/50 z-50 shadow-2xl overflow-y-auto"
                     >
                         <div className="flex flex-col h-full">
-                            <div className="p-4 border-b border-slate-200/50 dark:border-slate-800/50 flex justify-between items-center">
-                                <span className="font-semibold text-lg text-slate-900 dark:text-white">Menu</span>
+                            <div className="p-4 border-b border-border/50 dark:border-border/50 flex justify-between items-center">
+                                <span className="font-semibold text-lg text-foreground dark:text-white">Menu</span>
                                 <button
                                     onClick={() => setIsOpen(false)}
-                                    className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors rounded-full hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer"
+                                    className="p-2 text-text-quaternary hover:text-text-secondary dark:hover:text-foreground transition-colors rounded-full hover:bg-muted/50 dark:hover:bg-muted/50 cursor-pointer"
                                 >
                                     <X className="w-5 h-5" />
                                 </button>
@@ -99,8 +99,8 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                         className={cn(
                                             "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-2xl transition-colors",
                                             link.active
-                                                ? "bg-blue-50/80 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                                                : "text-slate-700 dark:text-slate-300 hover:bg-slate-50/50 dark:hover:bg-slate-800/50"
+                                                ? "bg-primary-soft text-primary dark:bg-primary-soft dark:text-primary"
+                                                : "text-text-secondary dark:text-foreground hover:bg-muted/50 dark:hover:bg-muted/50"
                                         )}
                                     >
                                         {/* We could add icons to the links array if implemented */}
@@ -109,19 +109,19 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                 ))}
                             </div>
 
-                            <div className="p-4 border-t border-slate-200/50 dark:border-slate-800/50 bg-white/30 dark:bg-slate-900/30">
+                            <div className="p-4 border-t border-border/50 dark:border-border/50 bg-card/30 dark:bg-card/30">
                                 {session ? (
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3 px-2">
-                                            <Avatar className="h-10 w-10 border-2 border-white/50 dark:border-slate-700 shadow-sm bg-white/50 dark:bg-slate-800">
+                                            <Avatar className="h-10 w-10 border-2 border-card/50 dark:border-border shadow-ambient bg-card/50 dark:bg-muted">
                                                 <AvatarImage src={session.user?.image || undefined} />
                                                 <AvatarFallback>{session.user?.name?.substring(0, 2).toUpperCase() || "US"}</AvatarFallback>
                                             </Avatar>
                                             <div className="flex flex-col">
-                                                <span className="text-sm font-semibold text-slate-900 dark:text-white">
+                                                <span className="text-sm font-semibold text-foreground dark:text-white">
                                                     {session.user?.name || "User"}
                                                 </span>
-                                                <span className="text-xs text-slate-500 truncate max-w-[150px]">
+                                                <span className="text-xs text-text-tertiary truncate max-w-[150px]">
                                                     {session.user?.email}
                                                 </span>
                                             </div>
@@ -131,7 +131,7 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                             <Link
                                                 href="/settings"
                                                 onClick={() => setIsOpen(false)}
-                                                className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100/50 dark:text-slate-300 dark:hover:bg-slate-800/50 rounded-2xl transition-colors"
+                                                className="flex items-center gap-3 px-4 py-2.5 text-sm text-text-secondary hover:bg-muted/50 dark:text-foreground dark:hover:bg-muted/50 rounded-2xl transition-colors"
                                             >
                                                 <Settings className="w-4 h-4" />
                                                 Ρυθμίσεις
@@ -148,7 +148,7 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                 ) : (
                                     <div className="grid gap-2">
                                         <Link href="/login" onClick={() => setIsOpen(false)}>
-                                            <Button variant="outline" className="w-full justify-center cursor-pointer bg-white/50 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50">Σύνδεση</Button>
+                                            <Button variant="outline" className="w-full justify-center cursor-pointer bg-card/50 dark:bg-muted/50 border-border/50 dark:border-border/50">Σύνδεση</Button>
                                         </Link>
                                         <Link href="/signup" onClick={() => setIsOpen(false)}>
                                             <Button className="w-full justify-center bg-primary hover:bg-primary-hover text-white rounded-2xl cursor-pointer">Εγγραφή</Button>
@@ -167,7 +167,7 @@ export function MobileMenu({ session }: MobileMenuProps) {
         <div className="md:hidden">
             <button
                 onClick={() => setIsOpen(true)}
-                className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+                className="p-2 text-text-quaternary hover:text-text-secondary dark:hover:text-foreground transition-colors cursor-pointer"
                 aria-label="Open menu"
             >
                 <Menu className="w-6 h-6" />

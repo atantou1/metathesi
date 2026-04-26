@@ -24,8 +24,8 @@ export function FloatingNavWrapper({ children }: { children: ReactNode }) {
                 className={cn(
                     "w-full max-w-7xl pointer-events-auto rounded-4xl transition-all duration-300",
                     scrolled
-                        ? "bg-white/40 dark:bg-slate-900/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-800/50"
-                        : "bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm shadow-sm border border-white/10 dark:border-slate-800/30"
+                        ? "bg-white/40 dark:bg-card/40 backdrop-blur-md shadow-soft border border-white/20 dark:border-border/50"
+                        : "bg-white/30 dark:bg-card/30 backdrop-blur-sm shadow-ambient border border-white/10 dark:border-border/30"
                 )}
             >
                 {children}

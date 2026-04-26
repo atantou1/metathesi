@@ -30,7 +30,7 @@ export function AnalyticsHeader({
     High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟠' },
     Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-sky-600 bg-sky-50 border-sky-100', icon: '🔵' },
     Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-teal-600 bg-teal-50 border-teal-100', icon: '🟢' },
-    Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-slate-500 bg-slate-50 border-slate-200', icon: '⚪' },
+    Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-text-tertiary bg-surface-dim border-border', icon: '⚪' },
   }
   
   const diff = diffMap[difficultyCategory] || diffMap.Unknown

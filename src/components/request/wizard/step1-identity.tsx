@@ -126,7 +126,7 @@ export function Step1Identity() {
                         name="divisionId"
                         render={({ field }) => (
                             <FormItem className="space-y-2">
-                                <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Βαθμιδα</FormLabel>
+                                <FormLabel className="block text-[10px] font-bold text-text-quaternary uppercase tracking-widest pl-1">Βαθμιδα</FormLabel>
                                 <div className="relative">
                                     <Layers className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                                     <FormControl>
@@ -158,7 +158,7 @@ export function Step1Identity() {
                         name="specialtyId"
                         render={({ field }) => (
                             <FormItem className="space-y-2">
-                                <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Ειδικοτητα</FormLabel>
+                                <FormLabel className="block text-[10px] font-bold text-text-quaternary uppercase tracking-widest pl-1">Ειδικοτητα</FormLabel>
                                 <div className="flex rounded-2xl bg-muted border border-border focus-within:border-primary focus-within:ring-[3px] focus-within:ring-primary/15 transition-all overflow-hidden focus-within:bg-card">
                                     <div className="relative w-24 flex-shrink-0 border-r border-border bg-muted">
                                         <select
@@ -188,7 +188,7 @@ export function Step1Identity() {
                                                 ))}
                                             </select>
                                         </FormControl>
-                                        <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                                        <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary pointer-events-none" />
                                     </div>
                                 </div>
                                 <FormMessage />
@@ -206,7 +206,7 @@ export function Step1Identity() {
                         name="currentRegionId"
                         render={({ field }) => (
                             <FormItem className="space-y-2">
-                                <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Περιφερεια</FormLabel>
+                                <FormLabel className="block text-[10px] font-bold text-text-quaternary uppercase tracking-widest pl-1">Περιφερεια</FormLabel>
                                 <div className="relative">
                                     <FormControl>
                                         <select
@@ -222,7 +222,7 @@ export function Step1Identity() {
                                             ))}
                                         </select>
                                     </FormControl>
-                                    <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                                    <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary pointer-events-none" />
                                 </div>
                                 <FormMessage />
                             </FormItem>
@@ -237,12 +237,12 @@ export function Step1Identity() {
                         name="currentZoneId"
                         render={({ field }) => (
                             <FormItem className="space-y-2">
-                                <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Περιοχη</FormLabel>
+                                <FormLabel className="block text-[10px] font-bold text-text-quaternary uppercase tracking-widest pl-1">Περιοχη</FormLabel>
                                 <div className="relative">
                                     <FormControl>
                                         <select
                                             disabled={!currentRegionId}
-                                            className="form-input appearance-none cursor-pointer bg-slate-50 border-slate-200"
+                                            className="form-input appearance-none cursor-pointer bg-surface-dim border-border"
                                             value={field.value ? String(field.value) : ""}
                                             onChange={(e) => field.onChange(Number(e.target.value))}
                                         >
@@ -254,7 +254,7 @@ export function Step1Identity() {
                                             ))}
                                         </select>
                                     </FormControl>
-                                    <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                                    <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary pointer-events-none" />
                                 </div>
                                 <FormMessage />
                             </FormItem>

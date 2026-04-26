@@ -432,7 +432,7 @@ export default function SummaryPageClient() {
             <div className="flex items-center space-x-3 mb-3">
               <Link
                 href={`/stats?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialty)}`}
-                className="text-slate-500 hover:text-sky-700 hover:bg-sky-50 transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-xl border border-transparent hover:border-sky-100 cursor-pointer"
+                className="text-text-tertiary hover:text-sky-700 hover:bg-sky-50 transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-xl border border-transparent hover:border-sky-100 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4 mr-1.5" /> Επιστροφή στον Χάρτη
               </Link>
@@ -476,7 +476,7 @@ export default function SummaryPageClient() {
                 padding="6px 16px"
                 className="text-2xl sm:text-3xl font-extrabold"
               />
-              <span className="text-2xl sm:text-3xl font-bold text-slate-400 tracking-tight">
+              <span className="text-2xl sm:text-3xl font-bold text-text-quaternary tracking-tight">
                 {activeSpecialtyNameOnly}
               </span>
             </div>
@@ -485,20 +485,20 @@ export default function SummaryPageClient() {
 
         {/* --- 12 KPI Cards Grid (Clean Layout) --- */}
         {!analytics && !loading ? (
-             <div className="bg-white border border-slate-200/60 shadow-sm p-12 rounded-4xl text-center">
+             <div className="bg-white border border-border/60 shadow-sm p-12 rounded-4xl text-center">
                 <Search className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Δεν βρέθηκαν στατιστικά</h3>
-                <p className="text-sm text-slate-500 max-w-sm mx-auto">
+                <h3 className="text-xl font-bold text-foreground mb-2">Δεν βρέθηκαν στατιστικά</h3>
+                <p className="text-sm text-text-tertiary max-w-sm mx-auto">
                     Δοκιμάστε να αλλάξετε την ειδικότητα ή τη βαθμίδα για να δείτε τα πανελλαδικά δεδομένα.
                 </p>
              </div>
         ) : loading ? (
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
                 {[...Array(12)].map((_, i) => (
-                    <div key={i} className="bg-white p-5 rounded-3xl border border-slate-200/60 shadow-sm h-56 animate-pulse">
-                        <div className="h-4 bg-slate-100 rounded w-1/2 mb-4"></div>
-                        <div className="h-8 bg-slate-100 rounded w-3/4 mb-4"></div>
-                        <div className="h-20 bg-slate-50 rounded mt-auto"></div>
+                    <div key={i} className="bg-white p-5 rounded-3xl border border-border/60 shadow-sm h-56 animate-pulse">
+                        <div className="h-4 bg-muted rounded w-1/2 mb-4"></div>
+                        <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
+                        <div className="h-20 bg-surface-dim rounded mt-auto"></div>
                     </div>
                 ))}
              </div>
@@ -512,7 +512,7 @@ export default function SummaryPageClient() {
 
                 const badgeClasses =
                   kpi.diff === 0
-                    ? "text-slate-500 bg-slate-100"
+                    ? "text-text-tertiary bg-muted"
                     : isGood
                     ? "text-emerald-700 bg-emerald-50 border border-emerald-100/50"
                     : "text-rose-700 bg-rose-50 border border-rose-100/50";
@@ -526,10 +526,10 @@ export default function SummaryPageClient() {
                       <div className="flex justify-between items-start mb-1 h-8">
                         {/* Header with Title and Tooltip */}
                         <div className="flex items-center gap-1.5 relative group/tooltip">
-                          <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest leading-tight">
+                          <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
                             {removeGreekAccents(kpi.title).toUpperCase()}
                           </div>
-                          <Info className="w-3.5 h-3.5 text-slate-400 hover:text-slate-600 cursor-help transition-colors" />
+                          <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
 
                           {/* Tooltip Content */}
                           <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-slate-800 text-left p-3.5 rounded-xl shadow-xl z-50 pointer-events-none">
@@ -542,7 +542,7 @@ export default function SummaryPageClient() {
                               </span>
                             </div>
                             <div>
-                              <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-1">
+                              <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">
                                 ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ
                               </span>
                               <span className="text-xs text-slate-200 leading-snug">
@@ -601,7 +601,7 @@ export default function SummaryPageClient() {
                             <LabelList
                               dataKey="val"
                               position="top"
-                              formatter={(value: number) =>
+                              formatter={(value: any) =>
                                 `${value}${kpi.isPercent ? "%" : ""}`
                               }
                               content={(props: any) => {
@@ -651,21 +651,21 @@ export default function SummaryPageClient() {
               <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl flex flex-col">
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <h3 className="text-lg font-bold text-slate-800 tracking-tight mb-1">
+                    <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">
                       Σύγκριση Μορίων & Βάσεων
                     </h3>
-                    <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+                    <p className="text-[11px] font-medium text-text-tertiary uppercase tracking-wider">
                       {removeGreekAccents(
                         "Πού κυμαίνεται η βάση σε σχέση με τη μάζα"
                       ).toUpperCase()}
                     </p>
                   </div>
-                  <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                  <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-sm bg-sky-700"></div> ΒΑΣΗ
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <div className="w-3 h-3 rounded-sm bg-slate-200"></div>{" "}
+                      <div className="w-3 h-3 rounded-sm bg-muted"></div>{" "}
                       ΑΙΤΟΥΝΤΕΣ
                     </div>
                   </div>
@@ -718,28 +718,28 @@ export default function SummaryPageClient() {
                 </div>
               </div>
 
-              <div className="bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+              <div className="bg-white border border-border/60 shadow-sm p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 text-slate-600">
+                    <div className="p-2 rounded-xl bg-surface-dim border border-border-dim text-text-tertiary">
                         <Activity className="w-5 h-5" />
                     </div>
-                    <h3 className="text-lg font-bold text-slate-800">
+                    <h3 className="text-lg font-bold text-foreground">
                     Στρατηγική Ανάλυση
                     </h3>
                 </div>
                 <div className="w-full space-y-4">
-                    <p className="text-xs text-slate-500 mb-2 uppercase tracking-widest font-bold">ΠΕΡΙΟΧΕΣ ΜΕ ΤΗ ΜΕΓΑΛΥΤΕΡΗ ΖΗΤΗΣΗ (1η ΠΡΟΤΙΜΗΣΗ)</p>
+                    <p className="text-xs text-text-tertiary mb-2 uppercase tracking-widest font-bold">ΠΕΡΙΟΧΕΣ ΜΕ ΤΗ ΜΕΓΑΛΥΤΕΡΗ ΖΗΤΗΣΗ (1η ΠΡΟΤΙΜΗΣΗ)</p>
                     {dashboardData?.topTargeting.map((item, idx) => (
                         <div key={idx} className="group">
                              <div className="flex justify-between items-end mb-2">
-                                <span className="text-sm font-semibold text-slate-700 group-hover:text-sky-700 transition-colors">
+                                <span className="text-sm font-semibold text-text-secondary group-hover:text-sky-700 transition-colors">
                                     {item.name}
                                 </span>
-                                <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-2xl shadow-sm">
+                                <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
                                     {item.val} άτομα
                                 </span>
                              </div>
-                             <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                             <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
                                 <div
                                     className="bg-primary h-1.5 rounded-full transition-all duration-500"
                                     style={{ width: `${(item.val / item.max) * 100}%` }}
@@ -748,7 +748,7 @@ export default function SummaryPageClient() {
                         </div>
                     ))}
                     {dashboardData?.topTargeting.length === 0 && (
-                        <p className="text-sm text-slate-400 italic">Δεν υπάρχουν διαθέσιμα δεδομένα ζήτησης.</p>
+                        <p className="text-sm text-text-quaternary italic">Δεν υπάρχουν διαθέσιμα δεδομένα ζήτησης.</p>
                     )}
                 </div>
               </div>
@@ -756,15 +756,15 @@ export default function SummaryPageClient() {
 
             {/* --- Rankings Area (Top 5) --- */}
             <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-slate-100 pb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-border-dim pb-6">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 text-slate-600">
+                  <h3 className="text-xl font-bold text-foreground tracking-tight flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-surface-dim border border-border-dim text-text-tertiary">
                       <Map className="w-5 h-5" />
                     </div>
                     Γεωγραφική Ανάλυση Ειδικότητας
                   </h3>
-                  <p className="text-xs font-medium text-slate-500 mt-2 pl-12">
+                  <p className="text-xs font-medium text-text-tertiary mt-2 pl-12">
                     Ποιες περιοχές απορρόφησαν τον κόσμο & ποιες απαιτούν τα
                     περισσότερα μόρια.
                   </p>
@@ -774,21 +774,21 @@ export default function SummaryPageClient() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
                 {/* List 1: Top Destinations */}
                 <div>
-                  <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 pb-2 border-b border-slate-100">
+                  <h4 className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-6 pb-2 border-b border-border-dim">
                     13. ΚΟΡΥΦΑΙΟΙ ΠΡΟΟΡΙΣΜΟΙ ΑΠΟΡΡΟΦΗΣΗΣ
                   </h4>
                   <div className="space-y-6">
                     {dashboardData?.topDestinations.map((item, idx) => (
                       <div key={idx} className="group cursor-pointer">
                         <div className="flex justify-between items-end mb-2">
-                          <span className="text-sm font-semibold text-slate-700 group-hover:text-sky-700 transition-colors">
+                          <span className="text-sm font-semibold text-text-secondary group-hover:text-sky-700 transition-colors">
                             {item.name}
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-2xl shadow-sm">
+                          <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
                             {item.val} θέσεις
                           </span>
                         </div>
-                        <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
                           <div
                             className="bg-primary h-1.5 rounded-full transition-all duration-500"
                             style={{ width: `${(item.val / item.max) * 100}%` }}
@@ -801,21 +801,21 @@ export default function SummaryPageClient() {
 
                 {/* List 2: Top Competitive */}
                 <div>
-                  <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 pb-2 border-b border-slate-100">
+                  <h4 className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-6 pb-2 border-b border-border-dim">
                     14. ΠΕΡΙΟΧΕΣ ΜΕ ΤΙΣ ΥΨΗΛΟΤΕΡΕΣ ΒΑΣΕΙΣ
                   </h4>
                   <div className="space-y-6">
                     {dashboardData?.topCompetitive.map((item, idx) => (
                       <div key={idx} className="group cursor-pointer">
                         <div className="flex justify-between items-end mb-2">
-                          <span className="text-sm font-semibold text-slate-700 group-hover:text-sky-700 transition-colors">
+                          <span className="text-sm font-semibold text-text-secondary group-hover:text-sky-700 transition-colors">
                             {item.name}
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-2xl shadow-sm">
+                          <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
                             {item.val} μόρια
                           </span>
                         </div>
-                        <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
                           <div
                             className="bg-primary h-1.5 rounded-full transition-all duration-500"
                             style={{ width: `${(item.val / item.max) * 100}%` }}

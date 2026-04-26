@@ -29,15 +29,15 @@ export function StatCardBarChart({
   // If no data at all
   if (nonNullValues.length === 0) {
     return (
-      <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:border-slate-200 transition-all group flex flex-col justify-between h-48">
+      <div className="bg-white p-6 rounded-3xl border border-border-dim shadow-sm hover:border-border transition-all group flex flex-col justify-between h-48">
         <div>
           <div className="flex justify-between items-start mb-1">
-            <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest group-hover:text-slate-500 transition-colors">{title}</div>
+            <div className="text-text-quaternary text-[10px] font-bold uppercase tracking-widest group-hover:text-text-tertiary transition-colors">{title}</div>
           </div>
-          <div className="text-3xl font-black text-slate-300 tracking-tight">-</div>
+          <div className="text-3xl font-black text-text-quaternary tracking-tight">-</div>
         </div>
-        <div className="flex items-center justify-center h-16 w-full mt-2 border-2 border-dashed border-slate-100 rounded-2xl bg-slate-50/50">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Μη Διαθέσιμο</span>
+        <div className="flex items-center justify-center h-16 w-full mt-2 border-2 border-dashed border-border-dim rounded-2xl bg-surface-dim/50">
+          <span className="text-[10px] font-semibold text-text-quaternary uppercase tracking-widest">Μη Διαθέσιμο</span>
         </div>
       </div>
     )
@@ -49,17 +49,17 @@ export function StatCardBarChart({
     rose:   { text: 'text-rose-500',   bg: 'bg-rose-50',   borderHover: 'hover:border-rose-200',   bar: 'bg-rose-500' },
     indigo: { text: 'text-indigo-600', bg: 'bg-indigo-50', borderHover: 'hover:border-indigo-200', bar: 'bg-indigo-500' },
     orange: { text: 'text-orange-500', bg: 'bg-orange-50', borderHover: 'hover:border-orange-200', bar: 'bg-orange-500' },
-    slate:  { text: 'text-slate-600',  bg: 'bg-slate-50',  borderHover: 'hover:border-slate-300',  bar: 'bg-slate-500' },
+    slate:  { text: 'text-text-tertiary',  bg: 'bg-surface-dim',  borderHover: 'hover:border-border-strong',  bar: 'bg-surface-dim0' },
   }
   
   const c = colorMap[color] || colorMap.slate
-  const diffClasses = diffColor === 'teal' ? 'text-teal-600 bg-teal-50' : diffColor === 'rose' ? 'text-rose-500 bg-rose-50' : 'text-slate-500 bg-slate-50'
+  const diffClasses = diffColor === 'teal' ? 'text-teal-600 bg-teal-50' : diffColor === 'rose' ? 'text-rose-500 bg-rose-50' : 'text-text-tertiary bg-surface-dim'
 
   return (
-    <div className={`bg-white p-6 rounded-3xl border border-slate-100 shadow-sm ${c.borderHover} hover:shadow-md transition-all group flex flex-col justify-between h-48`}>
+    <div className={`bg-white p-6 rounded-3xl border border-border-dim shadow-sm ${c.borderHover} hover:shadow-md transition-all group flex flex-col justify-between h-48`}>
       <div>
         <div className="flex justify-between items-start mb-1">
-          <div className={`text-slate-400 text-[10px] font-bold uppercase tracking-widest transition-colors group-hover:${c.text}`}>{title}</div>
+          <div className={`text-text-quaternary text-[10px] font-bold uppercase tracking-widest transition-colors group-hover:${c.text}`}>{title}</div>
           {diffLabel && (
             <div className={`text-[10px] font-bold px-2 py-0.5 rounded-2xl flex items-center ${diffClasses}`}>
               {diffLabel}
@@ -69,7 +69,7 @@ export function StatCardBarChart({
             </div>
           )}
         </div>
-        <div className={`text-3xl font-black tracking-tight ${color === 'slate' ? 'text-slate-800' : c.text}`}>{currentValue}</div>
+        <div className={`text-3xl font-black tracking-tight ${color === 'slate' ? 'text-foreground' : c.text}`}>{currentValue}</div>
       </div>
       
       <div className="flex items-end justify-between h-16 w-full gap-2 mt-2">
@@ -81,9 +81,9 @@ export function StatCardBarChart({
           if (val === null || val === undefined) {
             return (
               <div key={year} className="flex flex-col items-center flex-1 h-full justify-end relative group/bar">
-                <div className="bg-slate-200 h-1 w-full rounded-sm"></div>
-                <span className="absolute -top-5 text-[9px] font-bold text-slate-400 opacity-0 group-hover/bar:opacity-100 w-max bg-slate-100 px-1 rounded">No Data</span>
-                <span className="text-[9px] font-semibold text-slate-300 mt-1">{shortYear}</span>
+                <div className="bg-muted h-1 w-full rounded-sm"></div>
+                <span className="absolute -top-5 text-[9px] font-bold text-text-quaternary opacity-0 group-hover/bar:opacity-100 w-max bg-muted px-1 rounded">No Data</span>
+                <span className="text-[9px] font-semibold text-text-quaternary mt-1">{shortYear}</span>
               </div>
             )
           }
@@ -104,8 +104,8 @@ export function StatCardBarChart({
                 className={`w-full ${c.bar} rounded-sm transition-all duration-300 hover:opacity-100 ${barColors[idx]}`} 
                 style={{ height: `${Math.max(4, heightPercent)}%` }}
               ></div>
-              <span className="absolute -top-5 text-[9px] font-bold text-slate-500 opacity-0 group-hover/bar:opacity-100">{val}</span>
-              <span className={`text-[9px] font-semibold mt-1 ${isLast ? 'text-slate-700 font-bold' : 'text-slate-400'}`}>{shortYear}</span>
+              <span className="absolute -top-5 text-[9px] font-bold text-text-tertiary opacity-0 group-hover/bar:opacity-100">{val}</span>
+              <span className={`text-[9px] font-semibold mt-1 ${isLast ? 'text-text-secondary font-bold' : 'text-text-quaternary'}`}>{shortYear}</span>
             </div>
           )
         })}

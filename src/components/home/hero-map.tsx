@@ -12,7 +12,7 @@ export function HeroMap() {
     <div className="relative w-full max-w-lg lg:min-w-[500px] mx-auto aspect-square lg:scale-110 lg:origin-top-right">
       <svg
         viewBox="0 0 918.79 792.428"
-        className="w-full h-full text-[#c6c6c6] dark:text-slate-800"
+        className="w-full h-full text-[#c6c6c6] dark:text-foreground"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>

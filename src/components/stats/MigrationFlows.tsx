@@ -53,7 +53,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
                     <span className="text-sm font-bold text-foreground group-hover:text-primary transition-colors uppercase tracking-tight">{f.name}</span>
                     <span className="text-[10px] font-extrabold text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-2xl">{f.count} μεταθέσεις</span>
                   </div>
-                  <div className="w-full bg-slate-100/80 rounded-full h-1.5 overflow-hidden">
+                  <div className="w-full bg-muted/80 rounded-full h-1.5 overflow-hidden">
                     <div 
                       className="bg-primary h-full rounded-full transition-all duration-700 ease-out" 
                       style={{ width: `${maxInflow > 0 ? (f.count / maxInflow) * 100 : 0}%` }}
@@ -69,7 +69,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
 
         {/* Outflow */}
         <div className="font-sans">
-          <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-8 pb-2 border-b border-slate-100 flex items-center gap-2">
+          <h4 className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-8 pb-2 border-b border-border-dim flex items-center gap-2">
             <TrendingDown className="w-3 h-3 text-rose-500" /> Που θελουν να πανε
           </h4>
           <div className="space-y-6">
@@ -77,10 +77,10 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
               visibleOutflow.map((f) => (
                 <div key={f.name} className="group cursor-pointer">
                   <div className="flex justify-between items-end mb-2.5">
-                    <span className="text-sm font-bold text-slate-700 group-hover:text-sky-700 transition-colors uppercase tracking-tight">{f.name}</span>
+                    <span className="text-sm font-bold text-text-secondary group-hover:text-sky-700 transition-colors uppercase tracking-tight">{f.name}</span>
                     <span className="text-[10px] font-extrabold text-primary bg-primary-soft border border-primary/20 px-2.5 py-1 rounded-2xl">{f.count} αιτήσεις</span>
                   </div>
-                  <div className="w-full bg-slate-100/80 rounded-full h-1.5 overflow-hidden">
+                  <div className="w-full bg-muted/80 rounded-full h-1.5 overflow-hidden">
                     <div 
                       className="bg-primary h-full rounded-full transition-all duration-700 ease-out" 
                       style={{ width: `${maxOutflow > 0 ? (f.count / maxOutflow) * 100 : 0}%` }}
@@ -97,7 +97,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
 
       {/* Unified Show All Button */}
       {hasMore && (
-        <div className="mt-12 flex justify-center border-t border-slate-50 pt-10">
+        <div className="mt-12 flex justify-center border-t border-border-dim pt-10">
           <button 
             onClick={() => setShowAll(!showAll)}
             className="group relative flex items-center gap-3 px-10 py-3.5 bg-card hover:bg-primary-soft border border-border hover:border-primary/20 rounded-2xl shadow-soft hover:shadow-floating transition-all duration-300 cursor-pointer overflow-hidden"

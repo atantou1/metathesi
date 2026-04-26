@@ -47,8 +47,8 @@ export function NewVerificationForm() {
         >
             <div className="flex flex-col items-center justify-center space-y-6 w-full py-8">
                 {!success && !error && (
-                    <div className="flex flex-col items-center justify-center space-y-4 text-slate-500">
-                        <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+                    <div className="flex flex-col items-center justify-center space-y-4 text-text-tertiary">
+                        <Loader2 className="w-12 h-12 animate-spin text-primary" />
                         <p>Παρακαλώ περιμένετε...</p>
                     </div>
                 )}
@@ -62,7 +62,7 @@ export function NewVerificationForm() {
                         <p className="font-medium text-sm">{success}</p>
 
                         <div className="pt-4">
-                            <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-12 rounded-xl shadow-md transition-all active:scale-[0.98]">
+                            <Button asChild className="w-full bg-primary hover:bg-primary-hover text-white font-bold h-12 rounded-xl shadow-md transition-all active:scale-[0.98]">
                                 <Link href="/login">
                                     Σύνδεση τώρα
                                 </Link>
@@ -80,7 +80,7 @@ export function NewVerificationForm() {
                         <p className="font-medium text-sm">{error}</p>
 
                         <div className="pt-4">
-                            <Button asChild variant="outline" className="w-full h-12 rounded-xl text-slate-700 border-slate-200 hover:bg-slate-50 font-bold transition-all">
+                            <Button asChild variant="outline" className="w-full h-12 rounded-xl text-text-secondary border-border hover:bg-surface-dim font-bold transition-all">
                                 <Link href="/login">
                                     Επιστροφή στη σύνδεση
                                 </Link>

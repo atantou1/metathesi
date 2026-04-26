@@ -34,8 +34,8 @@ export function MainNav() {
                     className={cn(
                         "px-5 py-2.5 text-sm font-medium rounded-2xl transition-colors",
                         link.active
-                            ? "text-sky-700 bg-sky-50/80 dark:text-sky-400 dark:bg-sky-900/40"
-                            : "text-slate-500 hover:text-slate-800 hover:bg-slate-50 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/50"
+                            ? "text-primary bg-primary-soft dark:text-primary dark:bg-primary-soft"
+                            : "text-text-tertiary hover:text-foreground hover:bg-muted dark:text-text-quaternary dark:hover:text-foreground dark:hover:bg-muted"
                     )}
                 >
                     {link.label}

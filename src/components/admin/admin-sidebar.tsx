@@ -40,7 +40,7 @@ export function AdminSidebar() {
         <motion.aside
             initial={false}
             animate={{ width: isOpen ? 260 : 64 }}
-            className="flex flex-col bg-card dark:bg-slate-950 border-r border-border h-screen sticky top-0 transition-all duration-300 ease-in-out z-50 shadow-soft overflow-hidden"
+            className="flex flex-col bg-card dark:bg-card border-r border-border h-screen sticky top-0 transition-all duration-300 ease-in-out z-50 shadow-soft overflow-hidden"
         >
             {/* Sidebar Header */}
             <div className="h-14 flex items-center px-4 shrink-0">
@@ -71,8 +71,8 @@ export function AdminSidebar() {
                             className={cn(
                                 "flex items-center gap-3 px-3 py-2 rounded-2xl transition-all group relative",
                                 isActive 
-                                    ? "bg-muted dark:bg-slate-800 text-primary font-semibold" 
-                                    : "text-muted-foreground dark:text-slate-400 hover:bg-muted dark:hover:bg-slate-900 hover:text-foreground dark:hover:text-slate-200"
+                                    ? "bg-muted dark:bg-muted text-primary font-semibold" 
+                                    : "text-muted-foreground dark:text-text-quaternary hover:bg-muted dark:hover:bg-muted hover:text-foreground dark:hover:text-foreground"
                             )}
                         >
                             <item.icon className={cn(
@@ -97,11 +97,11 @@ export function AdminSidebar() {
             </div>
 
             {/* Sidebar Footer with User Info */}
-            <div className="p-2 border-t border-border dark:border-slate-800">
+            <div className="p-2 border-t border-border dark:border-border">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <button className={cn(
-                            "w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-muted dark:hover:bg-slate-800 transition-all outline-none",
+                            "w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-muted dark:hover:bg-muted transition-all outline-none",
                             !isOpen && "justify-center"
                         )}>
                             <Avatar className="w-8 h-8 rounded-2xl shadow-sm">

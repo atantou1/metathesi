@@ -167,7 +167,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                 </div>
             </div>
 
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6 bg-slate-50/50">
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6 bg-surface-dim/50">
                 <div className="flex justify-center mb-6 mt-2">
                     <div className="bg-primary-soft border border-primary/20 text-primary text-[11px] sm:text-xs font-semibold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-soft text-center">
                         <Sparkles className="w-4 h-4 flex-shrink-0" />

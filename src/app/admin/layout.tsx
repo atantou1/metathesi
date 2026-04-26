@@ -28,7 +28,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
                         <header className="h-14 flex items-center px-4 gap-4 shrink-0 transition-all border-b border-border bg-background">
                             <SidebarTrigger />
                             
-                            <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
+                            <div className="h-4 w-px bg-muted dark:bg-muted" />
                             
                             {/* Breadcrumbs */}
                             <nav className="flex items-center gap-2 text-sm">

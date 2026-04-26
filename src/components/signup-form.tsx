@@ -90,9 +90,9 @@ export function SignUpForm({
                                 </div>
                                 <div>
                                         <h1 className="text-2xl font-bold tracking-tight text-foreground">Εγγραφή</h1>
-                                    <p className="text-slate-600 font-medium">Στείλαμε έναν σύνδεσμο επιβεβαίωσης στο email σας.</p>
+                                    <p className="text-text-tertiary font-medium">Στείλαμε έναν σύνδεσμο επιβεβαίωσης στο email σας.</p>
                                 </div>
-                                <div className="bg-white/50 p-4 rounded-2xl border border-white/20 text-sm text-slate-500 max-w-xs">
+                                <div className="bg-white/50 p-4 rounded-2xl border border-white/20 text-sm text-text-tertiary max-w-xs">
                                     Παρακαλούμε ελέγξτε και τον φάκελο ανεπιθύμητων (spam) αν δεν το βρείτε στα εισερχόμενά σας.
                                 </div>
                                 <Button variant="outline" asChild className="mt-4">
@@ -103,7 +103,7 @@ export function SignUpForm({
                             <Form {...form}>
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
                                     <div className="flex flex-col items-center text-center">
-                                        <h1 className="text-2xl font-bold tracking-tight text-slate-900">Εγγραφή</h1>
+                                        <h1 className="text-2xl font-bold tracking-tight text-foreground">Εγγραφή</h1>
                                         <p className="text-sm text-balance text-muted-foreground mt-2">
                                             Δημιουργήστε έναν λογαριασμό για να ξεκινήσετε
                                         </p>
@@ -118,7 +118,7 @@ export function SignUpForm({
                                                     <FormLabel className="text-sm font-medium text-foreground">Email Address</FormLabel>
                                                     <FormControl>
                                                         <div className="relative group">
-                                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
+                                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary group-focus-within:text-primary transition-colors" />
                                                             <Input
                                                                 placeholder="teacher@school.gov"
                                                                 {...field}
@@ -140,18 +140,18 @@ export function SignUpForm({
                                                     <FormLabel className="text-sm font-medium text-foreground">Κωδικός Πρόσβασης</FormLabel>
                                                     <FormControl>
                                                         <div className="relative group">
-                                                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
+                                                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary group-focus-within:text-primary transition-colors" />
                                                             <Input
                                                                 type={showPassword ? "text" : "password"}
                                                                 required
                                                                 {...field}
                                                                 placeholder="******"
-                                                                className="pl-10 pr-10 h-11 bg-slate-50/50 border-slate-200 focus:bg-white transition-all rounded-2xl"
+                                                                className="pl-10 pr-10 h-11 bg-surface-dim/50 border-border focus:bg-white transition-all rounded-2xl"
                                                             />
                                                             <button
                                                                 type="button"
                                                                 onClick={() => setShowPassword(!showPassword)}
-                                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-quaternary hover:text-text-tertiary transition-colors cursor-pointer"
                                                             >
                                                                 {showPassword ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                                                             </button>
@@ -170,13 +170,13 @@ export function SignUpForm({
                                                     <FormLabel className="text-sm font-medium text-foreground">Επιβεβαίωση Κωδικού</FormLabel>
                                                     <FormControl>
                                                         <div className="relative group">
-                                                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
+                                                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary group-focus-within:text-primary transition-colors" />
                                                             <Input
                                                                 type={showPassword ? "text" : "password"}
                                                                 required
                                                                 {...field}
                                                                 placeholder="******"
-                                                                className="pl-10 pr-10 h-11 bg-slate-50/50 border-slate-200 focus:bg-white transition-all rounded-2xl"
+                                                                className="pl-10 pr-10 h-11 bg-surface-dim/50 border-border focus:bg-white transition-all rounded-2xl"
                                                             />
                                                         </div>
                                                     </FormControl>

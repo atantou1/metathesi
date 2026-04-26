@@ -155,7 +155,7 @@ export function Step2Locations() {
                             <option value="">Προσθήκη Περιοχής...</option>
                             {targetZoneOptions.map(z => <option key={z.id} value={String(z.id)}>{z.name}</option>)}
                         </select>
-                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary pointer-events-none" />
                     </div>
                 </div>
                 {errors.targetZoneIds && (

@@ -105,19 +105,19 @@ export default async function Dashboard() {
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="space-y-3">
-                                        <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">1</div>
-                                        <h4 className="font-semibold text-slate-800 text-sm">Δημιουργία Προφίλ</h4>
-                                        <p className="text-xs leading-relaxed text-slate-500 font-medium">Καταχωρήστε τα στοιχεία της οργανικής σας θέσης και τις περιοχές που σας ενδιαφέρουν.</p>
+                                        <div className="w-10 h-10 rounded-2xl bg-muted flex items-center justify-center text-text-secondary font-bold text-sm border border-border-dim">1</div>
+                                        <h4 className="font-semibold text-foreground text-sm">Δημιουργία Προφίλ</h4>
+                                        <p className="text-xs leading-relaxed text-text-tertiary font-medium">Καταχωρήστε τα στοιχεία της οργανικής σας θέσης και τις περιοχές που σας ενδιαφέρουν.</p>
                                     </div>
                                     <div className="space-y-3">
-                                        <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">2</div>
-                                        <h4 className="font-semibold text-slate-800 text-sm">Αυτόματη Αναζήτηση</h4>
-                                        <p className="text-xs leading-relaxed text-slate-500 font-medium">Ο αλγόριθμός μας αναζητά συνεχώς συμβατές αιτήσεις σε πραγματικό χρόνο.</p>
+                                        <div className="w-10 h-10 rounded-2xl bg-surface-dim flex items-center justify-center text-text-secondary font-bold text-sm border border-border-dim">2</div>
+                                        <h4 className="font-semibold text-foreground text-sm">Αυτόματη Αναζήτηση</h4>
+                                        <p className="text-xs leading-relaxed text-text-tertiary font-medium">Ο αλγόριθμός μας αναζητά συνεχώς συμβατές αιτήσεις σε πραγματικό χρόνο.</p>
                                     </div>
                                     <div className="space-y-3">
-                                        <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">3</div>
-                                        <h4 className="font-semibold text-slate-800 text-sm">Επικοινωνία & Ταυτοποίηση</h4>
-                                        <p className="text-xs leading-relaxed text-slate-500 font-medium">Μόλις βρεθεί ταίριασμα, ενημερώνεστε αμέσως για να ξεκινήσετε τη διαδικασία.</p>
+                                        <div className="w-10 h-10 rounded-2xl bg-surface-dim flex items-center justify-center text-text-secondary font-bold text-sm border border-border-dim">3</div>
+                                        <h4 className="font-semibold text-foreground text-sm">Επικοινωνία & Ταυτοποίηση</h4>
+                                        <p className="text-xs leading-relaxed text-text-tertiary font-medium">Μόλις βρεθεί ταίριασμα, ενημερώνεστε αμέσως για να ξεκινήσετε τη διαδικασία.</p>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@ export default async function Dashboard() {
                             {profile && (
                                 <div className="glass-card rounded-4xl h-fit overflow-hidden">
                                     <div className="p-6 border-b border-sky-50 flex justify-between items-center bg-white/50">
-                                        <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Σύνοψη Προφίλ</h3>
+                                        <h3 className="text-xs font-bold text-text-secondary uppercase tracking-widest">Σύνοψη Προφίλ</h3>
                                     </div>
                                     <div className="p-6 space-y-6">
                                         {/* Designation */}
@@ -138,7 +138,7 @@ export default async function Dashboard() {
                                                 <BadgeCheck className="w-5 h-5" />
                                             </div>
                                             <div>
-                                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">ΒΑΘΜΙΔΑ</p>
+                                                <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-wider mb-1">ΒΑΘΜΙΔΑ</p>
                                                 <p className="text-sm font-medium text-foreground">{profile.division.name}</p>
                                             </div>
                                         </div>
@@ -148,8 +148,8 @@ export default async function Dashboard() {
                                                 <Building2 className="w-5 h-5" />
                                             </div>
                                             <div>
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΕΙΔΙΚΟΤΗΤΑ</p>
-                                                <p className="text-sm font-medium text-slate-700">{profile.specialty.name}</p>
+                                                <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-wider mb-1">ΕΙΔΙΚΟΤΗΤΑ</p>
+                                                <p className="text-sm font-medium text-text-secondary">{profile.specialty.name}</p>
                                             </div>
                                         </div>
                                         {/* Current Zone */}
@@ -158,8 +158,8 @@ export default async function Dashboard() {
                                                 <MapPin className="w-5 h-5" />
                                             </div>
                                             <div>
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΤΡΕΧΟΥΣΑ ΘΕΣΗ</p>
-                                                <p className="text-sm font-medium text-slate-700">{profile.currentZone.name}</p>
+                                                <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-wider mb-1">ΤΡΕΧΟΥΣΑ ΘΕΣΗ</p>
+                                                <p className="text-sm font-medium text-text-secondary">{profile.currentZone.name}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -189,29 +189,29 @@ export default async function Dashboard() {
                 {/* Reusing existing Mobile Nav at the bottom of the main Dashboard if needed, 
                     but strictly following the user's provided HTML structure which had a simple footer.
                     However, keeping consistent with the active dashboard's existing footer structure is safer.*/}
-                <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 pb-safe z-50">
+                <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-card/90 dark:bg-card/90 backdrop-blur-md border-t border-border dark:border-border pb-safe z-50">
                     <div className="flex justify-around items-center h-16 px-2">
-                        <button className="flex flex-col items-center justify-center w-full h-full text-blue-600">
+                        <button className="flex flex-col items-center justify-center w-full h-full text-primary">
                             <LayoutDashboard className="w-6 h-6" />
                             <span className="text-[10px] font-medium mt-1">Home</span>
                         </button>
-                        <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                        <button className="flex flex-col items-center justify-center w-full h-full text-text-quaternary hover:text-foreground dark:hover:text-foreground transition-colors">
                             <Users className="w-6 h-6" />
                             <span className="text-[10px] font-medium mt-1">Matches</span>
                         </button>
                         <div className="relative -top-5">
                             <Link href="/request/create">
-                                <button className="w-12 h-12 rounded-full bg-blue-600 text-white shadow-lg shadow-blue-600/30 flex items-center justify-center transform transition-transform active:scale-95 border-2 border-white dark:border-slate-900">
+                                <button className="w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center transform transition-transform active:scale-95 border-2 border-white dark:border-card">
                                     <Plus className="w-6 h-6" />
                                 </button>
                             </Link>
                         </div>
-                        <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                        <button className="flex flex-col items-center justify-center w-full h-full text-text-quaternary hover:text-foreground dark:hover:text-foreground transition-colors">
                             <Bell className="w-6 h-6" />
                             <span className="text-[10px] font-medium mt-1">Alerts</span>
                         </button>
-                        <button className="flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
-                            <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-800 ring-1 ring-slate-300 dark:ring-slate-700">
+                        <button className="flex flex-col items-center justify-center w-full h-full text-text-quaternary hover:text-foreground dark:hover:text-foreground transition-colors">
+                            <div className="w-6 h-6 rounded-full overflow-hidden bg-muted dark:bg-muted ring-1 ring-border-strong dark:ring-border">
                                 <Avatar className="w-full h-full">
                                     <AvatarImage src={user.image || undefined} />
                                     <AvatarFallback className="text-[10px]">{user.name?.substring(0, 2).toUpperCase()}</AvatarFallback>
@@ -247,14 +247,14 @@ export default async function Dashboard() {
                             <div className="p-6 sm:p-8 relative z-10">
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                                     <div>
-                                        <h2 className="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-3">
+                                        <h2 className="text-xl font-bold text-foreground tracking-tight flex items-center gap-3">
                                             Αίτηση Αμοιβαίας
                                             <span className="px-2.5 py-1 rounded-2xl bg-muted border border-border text-muted-foreground font-mono tracking-wider">
                                                 #TR-{request.id}
                                             </span>
                                         </h2>
                                         <div className="flex items-center gap-2 mt-2">
-                                            <span className="text-sm text-slate-500">Υποβλήθηκε στις <span className="text-slate-700 font-medium">{request.createdAt.toLocaleDateString("el-GR", { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>
+                                            <span className="text-sm text-text-tertiary">Υποβλήθηκε στις <span className="text-text-secondary font-medium">{request.createdAt.toLocaleDateString("el-GR", { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>
                                         </div>
                                     </div>
                                     <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-100 shadow-sm shadow-sky-900/5">
@@ -283,15 +283,15 @@ export default async function Dashboard() {
                                                 <h3 className="text-lg font-semibold text-white tracking-wide">Σάρωση για Αμοιβαίες...</h3>
                                                 <span className="text-[10px] font-mono text-sky-300 bg-sky-900/40 px-2 py-1 rounded-2xl border border-sky-800/50 tracking-wider">REALTIME</span>
                                             </div>
-                                            <p className="text-slate-300 text-sm mb-5 leading-relaxed font-light">
+                                            <p className="text-text-quaternary text-sm mb-5 leading-relaxed font-light">
                                                 Ο αλγόριθμος αναζητά ευκαιρίες αμοιβαίας μετάθεσης στις Περιοχές Προτίμησής σας.
                                             </p>
-                                            <div className="w-full bg-slate-800/80 rounded-full h-2 mb-4 overflow-hidden shadow-inner border border-slate-700/50">
+                                            <div className="w-full bg-slate-800/80 rounded-full h-2 mb-4 overflow-hidden shadow-inner border border-border/50">
                                                 <div className="bg-gradient-to-r from-sky-600 via-sky-400 to-blue-500 h-full rounded-full w-3/4 animate-[shimmer_3s_infinite] relative overflow-hidden">
                                                     <div className="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]"></div>
                                                 </div>
                                             </div>
-                                            <div className="flex justify-between items-center text-[11px] text-slate-400 font-medium">
+                                            <div className="flex justify-between items-center text-[11px] text-text-quaternary font-medium">
                                                 <span>Φάση : Ανάλυση Περιοχών</span>
                                             </div>
                                         </div>
@@ -301,19 +301,19 @@ export default async function Dashboard() {
                                 {/* "My Preferences" Block */}
                                 <div className="mb-8">
                                     <div className="flex items-center justify-between mb-4">
-                                        <h3 className="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2">
+                                        <h3 className="text-sm font-bold text-foreground tracking-wide flex items-center gap-2">
                                             Οι Προτιμήσεις μου
                                         </h3>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                         {request.targetZones.map((target, index) => (
-                                            <div key={target.id} className="group flex items-center p-3 rounded-2xl bg-white border border-slate-100 hover:border-sky-200 hover:bg-sky-50 transition-all shadow-sm">
-                                                <div className="w-8 h-8 rounded-2xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold mr-3 group-hover:border-sky-200 group-hover:text-sky-600 group-hover:bg-sky-50 transition-colors">
+                                            <div key={target.id} className="group flex items-center p-3 rounded-2xl bg-card border border-border-dim hover:border-primary/30 hover:bg-primary-soft transition-all shadow-ambient">
+                                                <div className="w-8 h-8 rounded-2xl bg-muted border border-border-dim text-text-quaternary flex items-center justify-center text-xs font-bold mr-3 group-hover:border-primary/30 group-hover:text-primary group-hover:bg-primary-soft transition-colors">
                                                     {index + 1}
                                                 </div>
                                                 <div className="flex-grow">
                                                     <div className="flex justify-between items-center">
-                                                        <h4 className="text-sm font-medium text-slate-700 truncate max-w-[100px]">{target.zone.name}</h4>
+                                                        <h4 className="text-sm font-medium text-text-secondary truncate max-w-[100px]">{target.zone.name}</h4>
                                                         <PopularityBadge popularity={(target as any).popularity || 0} />
                                                     </div>
                                                 </div>
@@ -322,7 +322,7 @@ export default async function Dashboard() {
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-100 pt-6">
+                                <div className="flex flex-col sm:flex-row gap-4 border-t border-border-dim pt-6">
                                     <Link href="/request/create" className="flex-1 sm:flex-none">
                                         <button className="w-full bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl text-sm font-semibold transition-all shadow-soft active:scale-[0.98] cursor-pointer">
                                             Επεξεργασία
@@ -339,8 +339,8 @@ export default async function Dashboard() {
 
                         {/* Profile Summary */}
                         <div className="glass-card rounded-4xl h-fit overflow-hidden">
-                            <div className="p-6 border-b border-sky-50 flex justify-between items-center bg-white/50">
-                                <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Σύνοψη Προφίλ</h3>
+                            <div className="p-6 border-b border-border-dim flex justify-between items-center bg-card/50">
+                                <h3 className="text-xs font-bold text-text-secondary uppercase tracking-widest">Σύνοψη Προφίλ</h3>
                             </div>
                             <div className="p-6 space-y-6">
                                 {/* Designation */}
@@ -349,8 +349,8 @@ export default async function Dashboard() {
                                         <BadgeCheck className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΒΑΘΜΙΔΑ</p>
-                                        <p className="text-sm font-medium text-slate-700">{profile.division.name}</p>
+                                        <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-wider mb-1">ΒΑΘΜΙΔΑ</p>
+                                        <p className="text-sm font-medium text-text-secondary">{profile.division.name}</p>
                                     </div>
                                 </div>
                                 {/* Department */}
@@ -359,8 +359,8 @@ export default async function Dashboard() {
                                         <Building2 className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΕΙΔΙΚΟΤΗΤΑ</p>
-                                        <p className="text-sm font-medium text-slate-700">{profile.specialty.name}</p>
+                                        <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-wider mb-1">ΕΙΔΙΚΟΤΗΤΑ</p>
+                                        <p className="text-sm font-medium text-text-secondary">{profile.specialty.name}</p>
                                     </div>
                                 </div>
                                 {/* Current Zone */}
@@ -369,8 +369,8 @@ export default async function Dashboard() {
                                         <MapPin className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΤΡΕΧΟΥΣΑ ΘΕΣΗ</p>
-                                        <p className="text-sm font-medium text-slate-700">{profile.currentZone.name}</p>
+                                        <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-wider mb-1">ΤΡΕΧΟΥΣΑ ΘΕΣΗ</p>
+                                        <p className="text-sm font-medium text-text-secondary">{profile.currentZone.name}</p>
                                     </div>
                                 </div>
                             </div>
@@ -378,22 +378,22 @@ export default async function Dashboard() {
 
                         {/* Target Zones */}
                         <div className="glass-card rounded-4xl flex flex-col overflow-hidden h-fit">
-                            <div className="p-6 border-b border-sky-50 bg-white/50">
+                            <div className="p-6 border-b border-border-dim bg-card/50">
                                 <div className="flex justify-between items-center">
-                                    <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">ΖΗΤΗΣΗ ΠΕΡΙΟΧΩΝ</h3>
+                                    <h3 className="text-xs font-bold text-text-secondary uppercase tracking-widest">ΖΗΤΗΣΗ ΠΕΡΙΟΧΩΝ</h3>
                                 </div>
                             </div>
                             <div className="p-4 space-y-3">
                                 {request.targetZones.map((target, index) => (
-                                    <div key={target.id} className="group flex items-center p-3 rounded-2xl hover:bg-sky-50 border border-transparent hover:border-sky-100 transition-all">
+                                    <div key={target.id} className="group flex items-center p-3 rounded-2xl hover:bg-primary-soft border border-transparent hover:border-primary/20 transition-all">
                                         <div className="flex-shrink-0 mr-4">
-                                            <div className="w-8 h-8 rounded-2xl bg-slate-50 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:text-sky-600 transition-colors border border-slate-100 group-hover:border-sky-200 group-hover:bg-sky-50">
+                                            <div className="w-8 h-8 rounded-2xl bg-muted flex items-center justify-center text-xs font-bold text-text-quaternary group-hover:text-primary transition-colors border border-border-dim group-hover:border-primary/30 group-hover:bg-primary-soft">
                                                 {index + 1}
                                             </div>
                                         </div>
                                         <div className="flex-grow min-w-0">
                                             <div className="flex justify-between items-center mb-0.5">
-                                                <h4 className="text-sm font-medium text-slate-700 truncate">{target.zone.name}</h4>
+                                                <h4 className="text-sm font-medium text-text-secondary truncate">{target.zone.name}</h4>
                                                 <PopularityBadge popularity={(target as any).popularity || 0} />
                                             </div>
                                         </div>

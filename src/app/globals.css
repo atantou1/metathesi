@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Colors */
+  /* Colors — Core */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
@@ -30,6 +30,26 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: #ffffff;
 
+  /* Colors — Extended Semantic Tokens */
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-quaternary: var(--text-quaternary);
+  --color-text-inverted: var(--text-inverted);
+  
+  --color-border-dim: var(--border-dim);
+  --color-border-strong: var(--border-strong);
+  
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+
   /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -39,6 +59,7 @@
   --radius-4xl: 2rem;       /* 32px */
 
   /* Shadows */
+  --shadow-ambient: 0 2px 8px rgba(0, 0, 0, 0.04);
   --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
   --shadow-floating: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
@@ -72,6 +93,29 @@
   --destructive: #ef4444;
   
   --radius: 0.5rem;
+
+  /* Extended: Surfaces */
+  --surface-dim: #f1f5f9;
+  --surface-bright: #ffffff;
+
+  /* Extended: Text hierarchy */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-quaternary: #94a3b8;
+  --text-inverted: #ffffff;
+
+  /* Extended: Borders */
+  --border-dim: #f1f5f9;
+  --border-strong: #cbd5e1;
+
+  /* Extended: Status */
+  --success: #0d9488;
+  --success-soft: rgba(13, 148, 136, 0.1);
+  --warning: #d97706;
+  --warning-soft: rgba(217, 119, 6, 0.1);
+  --info: #0ea5e9;
+  --info-soft: rgba(14, 165, 233, 0.1);
 }
 
 .dark {
@@ -100,6 +144,29 @@
   --ring: #0ea5e9;
   
   --destructive: #f43f5e;
+
+  /* Extended: Surfaces */
+  --surface-dim: #0f172a;
+  --surface-bright: #1e293b;
+
+  /* Extended: Text hierarchy */
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-tertiary: #94a3b8;
+  --text-quaternary: #64748b;
+  --text-inverted: #0F172A;
+
+  /* Extended: Borders */
+  --border-dim: #1e293b;
+  --border-strong: #475569;
+
+  /* Extended: Status */
+  --success: #2dd4bf;
+  --success-soft: rgba(45, 212, 191, 0.15);
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.15);
+  --info: #38bdf8;
+  --info-soft: rgba(56, 189, 248, 0.15);
 }
 
 @layer base {
@@ -174,16 +241,29 @@
 
 @layer components {
   .glass-card {
-    @apply bg-white border border-slate-100 rounded-4xl shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)];
+    @apply bg-card border border-border-dim rounded-4xl shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)];
   }
 
   .form-input {
-    @apply w-full bg-slate-50 border border-slate-200 rounded-2xl text-sm transition-all text-slate-900;
+    @apply w-full bg-surface-dim border border-border rounded-2xl text-sm transition-all text-foreground;
     padding: 0.875rem 1rem;
   }
 
   .form-input:focus {
-    @apply outline-none border-sky-700 bg-white ring-[3px] ring-sky-500/15;
+    @apply outline-none border-primary bg-card ring-[3px] ring-primary/15;
+  }
+
+  /* Typography utility classes */
+  .text-label {
+    @apply text-[10px] font-bold uppercase tracking-widest text-text-quaternary;
+  }
+
+  .text-caption {
+    @apply text-[11px] font-medium text-text-tertiary;
+  }
+
+  .text-micro {
+    @apply text-[9px] font-semibold text-text-quaternary;
   }
 }
 

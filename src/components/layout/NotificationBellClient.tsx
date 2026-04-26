@@ -68,13 +68,13 @@ export function NotificationBellClient() {
         <button
             onClick={handleBellClick}
             className={`relative p-2 transition-colors ${hasUnread
-                    ? "text-slate-800 dark:text-white cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full"
-                    : "text-slate-400 dark:text-slate-500 cursor-default"
+                    ? "text-foreground dark:text-white cursor-pointer hover:bg-muted dark:hover:bg-muted rounded-full"
+                    : "text-text-quaternary dark:text-text-quaternary cursor-default"
                 }`}
         >
             <Bell className="w-6 h-6" />
             {hasUnread && (
-                <span className="absolute top-2 right-2 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-slate-900 animate-pulse"></span>
+                <span className="absolute top-2 right-2 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-card animate-pulse"></span>
             )}
         </button>
     )

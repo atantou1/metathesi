@@ -76,62 +76,62 @@ export function SettingsLayout() {
 
     return (
         <div className="flex flex-1 overflow-hidden relative h-full">
-            <aside className="w-20 sm:w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col py-6 shrink-0 z-10 transition-all duration-300 h-full">
+            <aside className="w-20 sm:w-64 bg-card dark:bg-card border-r border-border dark:border-border flex flex-col py-6 shrink-0 z-10 transition-all duration-300 h-full">
                 <nav className="space-y-1 px-2 sm:px-4 flex-1">
                     <button
                         onClick={() => setActiveTab("account")}
                         className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-2xl transition-all group ${activeTab === "account"
-                            ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
-                            : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
+                            ? "bg-primary/10 text-primary dark:bg-primary/20"
+                            : "text-text-tertiary hover:text-primary hover:bg-primary/5 dark:text-text-quaternary dark:hover:text-primary"
                             }`}
                     >
                         <User className={`w-6 h-6 ${activeTab === "account" ? "" : "group-hover:scale-110 transition-transform"}`} />
                         <span className="hidden sm:block font-medium text-sm">Λογαριασμός</span>
                         {activeTab === "account" && (
-                            <div className="absolute left-0 w-1 h-8 bg-blue-600 rounded-r-full hidden sm:block"></div>
+                            <div className="absolute left-0 w-1 h-8 bg-primary rounded-r-full hidden sm:block"></div>
                         )}
                     </button>
 
                     <button
                         onClick={() => setActiveTab("security")}
                         className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-2xl transition-all group relative ${activeTab === "security"
-                            ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
-                            : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
+                            ? "bg-primary/10 text-primary dark:bg-primary/20"
+                            : "text-text-tertiary hover:text-primary hover:bg-primary/5 dark:text-text-quaternary dark:hover:text-primary"
                             }`}
                     >
                         <Lock className={`w-6 h-6 ${activeTab === "security" ? "" : "group-hover:scale-110 transition-transform"}`} />
                         <span className="hidden sm:block font-medium text-sm">Ασφάλεια</span>
                         {activeTab === "security" && (
-                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-600 rounded-r-full hidden sm:block"></div>
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full hidden sm:block"></div>
                         )}
                     </button>
 
                     <button
                         onClick={() => setActiveTab("appearance")}
                         className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-2xl transition-all group relative ${activeTab === "appearance"
-                            ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
-                            : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
+                            ? "bg-primary/10 text-primary dark:bg-primary/20"
+                            : "text-text-tertiary hover:text-primary hover:bg-primary/5 dark:text-text-quaternary dark:hover:text-primary"
                             }`}
                     >
                         <Palette className={`w-6 h-6 ${activeTab === "appearance" ? "" : "group-hover:scale-110 transition-transform"}`} />
                         <span className="hidden sm:block font-medium text-sm">Εμφάνιση</span>
                         {activeTab === "appearance" && (
-                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-600 rounded-r-full hidden sm:block"></div>
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full hidden sm:block"></div>
                         )}
                     </button>
 
-                    <div className="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div className="pt-4 mt-2 border-t border-border-dim dark:border-border">
                         <button
                             onClick={() => setActiveTab("data")}
                             className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-2xl transition-all group relative ${activeTab === "data"
-                                ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
-                                : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
+                                ? "bg-primary/10 text-primary dark:bg-primary/20"
+                                : "text-text-tertiary hover:text-primary hover:bg-primary/5 dark:text-text-quaternary dark:hover:text-primary"
                                 }`}
                         >
                             <FolderOpen className={`w-6 h-6 ${activeTab === "data" ? "" : "group-hover:scale-110 transition-transform"}`} />
                             <span className="hidden sm:block font-medium text-sm">Δεδομένα</span>
                             {activeTab === "data" && (
-                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-600 rounded-r-full hidden sm:block"></div>
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full hidden sm:block"></div>
                             )}
                         </button>
                     </div>
@@ -145,17 +145,17 @@ export function SettingsLayout() {
                     {activeTab === "account" && (
                         <div className="animate-in fade-in zoom-in duration-300">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 bg-blue-600/10 rounded-2xl text-blue-600">
+                                <div className="p-2 bg-primary/10 rounded-2xl text-primary">
                                     <User className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Λογαριασμός</h2>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400">Διαχειριστείτε τις πληροφορίες του λογαριασμού σας.</p>
+                                    <h2 className="text-xl font-bold text-foreground dark:text-white">Λογαριασμός</h2>
+                                    <p className="text-sm text-text-tertiary dark:text-text-quaternary">Διαχειριστείτε τις πληροφορίες του λογαριασμού σας.</p>
                                 </div>
                             </div>
 
-                            <div className="bg-white dark:bg-slate-900 rounded-xl p-8 text-center border border-slate-200 dark:border-slate-800 shadow-sm">
-                                <p className="text-slate-500 dark:text-slate-400">Δεν υπάρχουν διαθέσιμες ρυθμίσεις προς το παρόν.</p>
+                            <div className="bg-card dark:bg-card rounded-xl p-8 text-center border border-border dark:border-border shadow-ambient">
+                                <p className="text-text-tertiary dark:text-text-quaternary">Δεν υπάρχουν διαθέσιμες ρυθμίσεις προς το παρόν.</p>
                             </div>
                         </div>
                     )}
@@ -164,15 +164,15 @@ export function SettingsLayout() {
                     {activeTab === "security" && (
                         <section className="animate-in fade-in zoom-in duration-300">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 bg-blue-600/10 rounded-2xl text-blue-600">
+                                <div className="p-2 bg-primary/10 rounded-2xl text-primary">
                                     <Lock className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Ασφάλεια</h2>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400">Διαχειριστείτε τον κωδικό πρόσβασης σας.</p>
+                                    <h2 className="text-xl font-bold text-foreground dark:text-white">Ασφάλεια</h2>
+                                    <p className="text-sm text-text-tertiary dark:text-text-quaternary">Διαχειριστείτε τον κωδικό πρόσβασης σας.</p>
                                 </div>
                             </div>
-                            <div className="bg-white dark:bg-slate-900 rounded-xl p-5 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+                            <div className="bg-card dark:bg-card rounded-xl p-5 sm:p-6 shadow-ambient border border-border dark:border-border">
                                 <form className="space-y-5" onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
 
                                     {passwordError && (
@@ -190,14 +190,14 @@ export function SettingsLayout() {
                                     )}
 
                                     <div className="space-y-1.5">
-                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Τρέχων Κωδικός</label>
+                                        <label className="block text-sm font-medium text-text-secondary dark:text-foreground">Τρέχων Κωδικός</label>
                                         <div className="relative">
-                                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-quaternary">
                                                 <Lock className="w-4 h-4" />
                                             </div>
                                             <input
                                                 {...passwordForm.register("currentPassword")}
-                                                className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.currentPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-card dark:bg-muted text-foreground dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-shadow sm:text-sm ${passwordForm.formState.errors.currentPassword ? 'border-red-500' : 'border-border dark:border-border'}`}
                                                 placeholder="••••••••"
                                                 type="password"
                                             />
@@ -208,14 +208,14 @@ export function SettingsLayout() {
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                         <div className="space-y-1.5">
-                                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Νέος Κωδικός</label>
+                                            <label className="block text-sm font-medium text-text-secondary dark:text-foreground">Νέος Κωδικός</label>
                                             <div className="relative">
-                                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-quaternary">
                                                     <Lock className="w-4 h-4" />
                                                 </div>
                                                 <input
                                                     {...passwordForm.register("newPassword")}
-                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.newPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-card dark:bg-muted text-foreground dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-shadow sm:text-sm ${passwordForm.formState.errors.newPassword ? 'border-red-500' : 'border-border dark:border-border'}`}
                                                     placeholder="••••••••"
                                                     type="password"
                                                 />
@@ -225,14 +225,14 @@ export function SettingsLayout() {
                                             )}
                                         </div>
                                         <div className="space-y-1.5">
-                                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Επιβεβαίωση</label>
+                                            <label className="block text-sm font-medium text-text-secondary dark:text-foreground">Επιβεβαίωση</label>
                                             <div className="relative">
-                                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-quaternary">
                                                     <Lock className="w-4 h-4" />
                                                 </div>
                                                 <input
                                                     {...passwordForm.register("confirmPassword")}
-                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.confirmPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-card dark:bg-muted text-foreground dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-shadow sm:text-sm ${passwordForm.formState.errors.confirmPassword ? 'border-red-500' : 'border-border dark:border-border'}`}
                                                     placeholder="••••••••"
                                                     type="password"
                                                 />
@@ -245,7 +245,7 @@ export function SettingsLayout() {
                                     <div className="pt-2 flex justify-end">
                                         <button
                                             disabled={isPendingPassword}
-                                            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-2xl text-sm font-medium transition-colors shadow-lg shadow-blue-600/20 flex items-center gap-2 disabled:opacity-50 min-w-[160px] justify-center"
+                                            className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-2xl text-sm font-medium transition-colors shadow-soft shadow-primary/20 flex items-center gap-2 disabled:opacity-50 min-w-[160px] justify-center"
                                             type="submit"
                                         >
                                             {isPendingPassword ? (
@@ -268,8 +268,8 @@ export function SettingsLayout() {
                                     <Palette className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Εμφάνιση</h2>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400">Προσαρμόστε την εμπειρία προβολής.</p>
+                                    <h2 className="text-xl font-bold text-foreground dark:text-white">Εμφάνιση</h2>
+                                    <p className="text-sm text-text-tertiary dark:text-text-quaternary">Προσαρμόστε την εμπειρία προβολής.</p>
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -281,13 +281,13 @@ export function SettingsLayout() {
                                         checked={mounted ? theme === "light" : false}
                                         onChange={() => setTheme("light")}
                                     />
-                                    <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
-                                        <div className="h-20 bg-slate-100 rounded-2xl mb-3 flex items-center justify-center border border-slate-200">
+                                    <div className="relative overflow-hidden rounded-xl border-2 border-border dark:border-border bg-card dark:bg-card p-4 transition-all hover:border-primary/50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary">
+                                        <div className="h-20 bg-muted rounded-2xl mb-3 flex items-center justify-center border border-border">
                                             <Sun className="w-8 h-8 text-amber-500" />
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="font-medium text-sm text-slate-900 dark:text-white">Φωτεινό</span>
-                                            <span className="w-4 h-4 rounded-full border border-slate-300 peer-checked:border-blue-600 peer-checked:bg-blue-600"></span>
+                                            <span className="font-medium text-sm text-foreground dark:text-white">Φωτεινό</span>
+                                            <span className="w-4 h-4 rounded-full border border-border-strong peer-checked:border-primary peer-checked:bg-primary"></span>
                                         </div>
                                     </div>
                                 </label>
@@ -299,13 +299,13 @@ export function SettingsLayout() {
                                         checked={mounted ? theme === "dark" : false}
                                         onChange={() => setTheme("dark")}
                                     />
-                                    <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
-                                        <div className="h-20 bg-slate-800 rounded-2xl mb-3 flex items-center justify-center border border-slate-700">
+                                    <div className="relative overflow-hidden rounded-xl border-2 border-border dark:border-border bg-card dark:bg-card p-4 transition-all hover:border-primary/50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary">
+                                        <div className="h-20 bg-surface-bright dark:bg-muted rounded-2xl mb-3 flex items-center justify-center border border-border dark:border-border">
                                             <Moon className="w-8 h-8 text-purple-400" />
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="font-medium text-sm text-slate-900 dark:text-white">Σκοτεινό</span>
-                                            <span className="w-4 h-4 rounded-full border border-slate-300 peer-checked:border-blue-600 peer-checked:bg-blue-600"></span>
+                                            <span className="font-medium text-sm text-foreground dark:text-white">Σκοτεινό</span>
+                                            <span className="w-4 h-4 rounded-full border border-border-strong peer-checked:border-primary peer-checked:bg-primary"></span>
                                         </div>
                                     </div>
                                 </label>
@@ -317,13 +317,13 @@ export function SettingsLayout() {
                                         checked={mounted ? theme === "system" : true}
                                         onChange={() => setTheme("system")}
                                     />
-                                    <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
-                                        <div className="h-20 bg-gradient-to-br from-slate-100 to-slate-800 rounded-2xl mb-3 flex items-center justify-center border border-slate-200 dark:border-slate-700">
-                                            <Monitor className="w-8 h-8 text-slate-500 dark:text-slate-300" />
+                                    <div className="relative overflow-hidden rounded-xl border-2 border-border dark:border-border bg-card dark:bg-card p-4 transition-all hover:border-primary/50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary">
+                                        <div className="h-20 bg-gradient-to-br from-muted to-foreground rounded-2xl mb-3 flex items-center justify-center border border-border dark:border-border">
+                                            <Monitor className="w-8 h-8 text-text-tertiary dark:text-foreground" />
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="font-medium text-sm text-slate-900 dark:text-white">Σύστημα</span>
-                                            <span className="w-4 h-4 rounded-full border border-slate-300 peer-checked:border-blue-600 peer-checked:bg-blue-600"></span>
+                                            <span className="font-medium text-sm text-foreground dark:text-white">Σύστημα</span>
+                                            <span className="w-4 h-4 rounded-full border border-border-strong peer-checked:border-primary peer-checked:bg-primary"></span>
                                         </div>
                                     </div>
                                 </label>
@@ -335,40 +335,40 @@ export function SettingsLayout() {
                     {activeTab === "data" && (
                         <section className="animate-in fade-in zoom-in duration-300">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-2xl">
+                                <div className="p-2 bg-primary-soft dark:bg-blue-900/20 text-primary dark:text-primary rounded-2xl">
                                     <FolderOpen className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Δεδομένα</h2>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400">Διαχειριστείτε τα προσωπικά σας δεδομένα.</p>
+                                    <h2 className="text-xl font-bold text-foreground dark:text-white">Δεδομένα</h2>
+                                    <p className="text-sm text-text-tertiary dark:text-text-quaternary">Διαχειριστείτε τα προσωπικά σας δεδομένα.</p>
                                 </div>
                             </div>
-                            <div className="bg-white dark:bg-slate-900 rounded-xl p-5 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-800 mb-6">
+                            <div className="bg-card dark:bg-card rounded-xl p-5 sm:p-6 shadow-ambient border border-border dark:border-border mb-6">
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                     <div>
-                                        <h3 className="font-bold text-slate-900 dark:text-white text-base mb-1">Εξαγωγή Δεδομένων</h3>
-                                        <p className="text-sm text-slate-500 dark:text-slate-400">
+                                        <h3 className="font-bold text-foreground dark:text-white text-base mb-1">Εξαγωγή Δεδομένων</h3>
+                                        <p className="text-sm text-text-tertiary dark:text-text-quaternary">
                                             Κατεβάστε ένα αντίγραφο των δεδομένων σας (GDPR).
                                         </p>
                                     </div>
-                                    <button className="shrink-0 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2.5 rounded-2xl text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                                    <button className="shrink-0 bg-card dark:bg-muted border border-border dark:border-border text-text-secondary dark:text-foreground px-4 py-2.5 rounded-2xl text-sm font-medium hover:bg-muted dark:hover:bg-border transition-colors flex items-center justify-center gap-2 cursor-pointer">
                                         <Download className="w-5 h-5" />
                                         Λήψη αρχείου
                                     </button>
                                 </div>
                             </div>
-                            <div className="bg-white dark:bg-slate-900 rounded-xl p-5 sm:p-6 border border-red-200 dark:border-red-900/50 relative overflow-hidden group">
+                            <div className="bg-card dark:bg-card rounded-xl p-5 sm:p-6 border border-red-200 dark:border-red-900/50 relative overflow-hidden group">
                                 <div className="absolute -right-10 -top-10 w-32 h-32 bg-red-50 dark:bg-red-900/10 rounded-full blur-3xl pointer-events-none"></div>
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
                                     <div>
                                         <h3 className="font-bold text-red-600 dark:text-red-400 text-lg mb-1">Διαγραφή Λογαριασμού</h3>
-                                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                                            Αυτή η ενέργεια είναι <span className="font-bold text-slate-800 dark:text-slate-200">μη αναστρέψιμη</span>. Θα διαγραφούν όλα τα δεδομένα σας μόνιμα.
+                                        <p className="text-sm text-text-secondary dark:text-text-quaternary">
+                                            Αυτή η ενέργεια είναι <span className="font-bold text-foreground dark:text-foreground">μη αναστρέψιμη</span>. Θα διαγραφούν όλα τα δεδομένα σας μόνιμα.
                                         </p>
                                     </div>
                                     <button
                                         onClick={() => setShowDeleteConfirm(true)}
-                                        className="shrink-0 bg-white dark:bg-slate-800 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 px-4 py-2.5 rounded-2xl text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                                        className="shrink-0 bg-card dark:bg-muted border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 px-4 py-2.5 rounded-2xl text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2 cursor-pointer"
                                     >
                                         <Trash2 className="w-5 h-5" />
                                         Διαγραφή
@@ -384,8 +384,8 @@ export function SettingsLayout() {
 
             {/* DELETE CONFIRMATION MODAL */}
             {showDeleteConfirm && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-200">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/50 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-card dark:bg-card rounded-2xl p-6 max-w-md w-full shadow-floating border border-border dark:border-border animate-in zoom-in-95 duration-200">
                         <div className="flex items-start justify-between mb-4">
                             <div className="p-3 bg-red-100 dark:bg-red-900/20 text-red-600 rounded-full">
                                 <AlertTriangle className="w-6 h-6" />
@@ -393,16 +393,16 @@ export function SettingsLayout() {
                             <button
                                 onClick={() => !isDeleting && setShowDeleteConfirm(false)}
                                 disabled={isDeleting}
-                                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors disabled:opacity-50"
+                                className="p-2 text-text-quaternary hover:text-text-secondary hover:bg-muted dark:hover:bg-muted rounded-full transition-colors disabled:opacity-50"
                             >
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
 
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                        <h3 className="text-xl font-bold text-foreground dark:text-white mb-2">
                             Είστε σίγουροι;
                         </h3>
-                        <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm">
+                        <p className="text-text-secondary dark:text-text-quaternary mb-6 text-sm">
                             Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Ο λογαριασμός σας και όλα τα σχετικά δεδομένα, μηνύματα και αιτήσεις θα διαγραφούν οριστικά από τους διακομιστές μας.
                         </p>
 
@@ -416,7 +416,7 @@ export function SettingsLayout() {
                             <button
                                 onClick={() => setShowDeleteConfirm(false)}
                                 disabled={isDeleting}
-                                className="px-5 py-2.5 rounded-xl font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
+                                className="px-5 py-2.5 rounded-xl font-medium text-text-secondary bg-card border border-border hover:bg-muted dark:bg-muted dark:border-border dark:text-foreground dark:hover:bg-border transition-colors disabled:opacity-50"
                             >
                                 Ακύρωση
                             </button>

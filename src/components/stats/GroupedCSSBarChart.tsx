@@ -42,13 +42,13 @@ export function GroupedCSSBarChart({
   }
 
   return (
-    <div className="glass-card p-6 sm:p-8 rounded-4xl flex flex-col h-full bg-white border border-slate-100 shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)]">
+    <div className="glass-card p-6 sm:p-8 rounded-4xl flex flex-col h-full bg-white border border-border-dim shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)]">
       <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6">
         <div>
-          <h3 className="text-lg font-bold text-slate-800 tracking-tight mb-1">{title}</h3>
-          <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">{subtitle}</p>
+          <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">{title}</h3>
+          <p className="text-[11px] font-medium text-text-tertiary uppercase tracking-wider">{subtitle}</p>
         </div>
-        <div className="flex items-center gap-4 mt-3 sm:mt-0 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+        <div className="flex items-center gap-4 mt-3 sm:mt-0 text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
           <div className="flex items-center gap-1.5"><div className={`w-3 h-3 rounded-sm ${colorMap[`${color1}_light`] || colorMap[color1]}`}></div> {label1}</div>
           <div className="flex items-center gap-1.5"><div className={`w-3 h-3 rounded-sm ${colorMap[`${color2}_light`] || colorMap[color2]}`}></div> {label2}</div>
         </div>
@@ -57,10 +57,10 @@ export function GroupedCSSBarChart({
       <div className="relative flex-1 min-h-[220px] w-full mt-4 flex items-end justify-between px-2 sm:px-8">
         {/* Grid lines */}
         <div className="absolute inset-0 flex flex-col justify-between pb-8 pointer-events-none z-0">
-          <div className="w-full border-b border-dashed border-slate-200 h-0"></div>
-          <div className="w-full border-b border-dashed border-slate-200 h-0"></div>
-          <div className="w-full border-b border-dashed border-slate-200 h-0"></div>
-          <div className="w-full border-b border-solid border-slate-200 h-0"></div> 
+          <div className="w-full border-b border-dashed border-border h-0"></div>
+          <div className="w-full border-b border-dashed border-border h-0"></div>
+          <div className="w-full border-b border-dashed border-border h-0"></div>
+          <div className="w-full border-b border-solid border-border h-0"></div> 
         </div>
 
         {data.map((d, index) => {
@@ -74,31 +74,31 @@ export function GroupedCSSBarChart({
                 {/* Bar 1 */}
                 <div className="w-8 sm:w-12 flex items-end h-full">
                   {d.val1 === null || d.val1 === undefined ? (
-                    <div className="bg-slate-200 h-1 w-full rounded-sm mb-0.5"></div>
+                    <div className="bg-muted h-1 w-full rounded-sm mb-0.5"></div>
                   ) : (
                     <div 
                       className={`${colorMap[color1]} rounded-t-md hover:opacity-80 transition-all relative group w-full`} 
                       style={{ height: `${Math.max(4, h1)}%` }}
                     >
-                      <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 px-1 rounded shadow-sm border border-slate-100 z-20">{d.val1}</span>
+                      <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 px-1 rounded shadow-sm border border-border-dim z-20">{d.val1}</span>
                     </div>
                   )}
                 </div>
                 {/* Bar 2 */}
                 <div className="w-8 sm:w-12 flex items-end h-full">
                   {d.val2 === null || d.val2 === undefined ? (
-                    <div className="bg-slate-200 h-1 w-full rounded-sm mb-0.5"></div>
+                    <div className="bg-muted h-1 w-full rounded-sm mb-0.5"></div>
                   ) : (
                     <div 
                       className={`${colorMap[`${color2}_light`] || colorMap[color2]} rounded-t-md hover:opacity-80 transition-all relative group w-full`} 
                       style={{ height: `${Math.max(4, h2)}%` }}
                     >
-                      <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 px-1 rounded shadow-sm border border-slate-100 z-20">{d.val2}</span>
+                      <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 px-1 rounded shadow-sm border border-border-dim z-20">{d.val2}</span>
                     </div>
                   )}
                 </div>
               </div>
-              <span className={`absolute bottom-0 text-xs font-bold ${isLatest ? 'text-slate-800 scale-110' : 'text-slate-500'}`}>{d.year}</span>
+              <span className={`absolute bottom-0 text-xs font-bold ${isLatest ? 'text-foreground scale-110' : 'text-text-tertiary'}`}>{d.year}</span>
             </div>
           )
         })}

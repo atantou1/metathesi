@@ -188,7 +188,7 @@ export function LoginForm({
                   <Button
                     variant="outline"
                     type="button"
-                    className="h-11 font-medium border-slate-200 transition-all active:scale-[0.98] rounded-2xl"
+                    className="h-11 font-medium border-border transition-all active:scale-[0.98] rounded-2xl"
                     onClick={() => startTransition(() => loginWithProvider('google'))}
                     disabled={isPending}
                   >
@@ -203,7 +203,7 @@ export function LoginForm({
                   <Button
                     variant="outline"
                     type="button"
-                    className="h-11 font-medium border-slate-200 transition-all active:scale-[0.98] rounded-2xl"
+                    className="h-11 font-medium border-border transition-all active:scale-[0.98] rounded-2xl"
                     onClick={() => startTransition(() => loginWithProvider('facebook'))}
                     disabled={isPending}
                   >

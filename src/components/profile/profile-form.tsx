@@ -256,7 +256,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
                         />
 
                         {/* Current Position Group */}
-                        <div className="space-y-4 border p-4 rounded-2xl bg-slate-50">
+                        <div className="space-y-4 border p-4 rounded-2xl bg-surface-dim">
                             <h3 className="font-medium">Τρέχουσα Θέση</h3>
 
                             {/* Region Selection (UI Only) */}

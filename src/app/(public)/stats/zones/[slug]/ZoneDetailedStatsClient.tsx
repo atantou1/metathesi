@@ -127,7 +127,7 @@ export default function ZoneDetailedStatsClient({
     High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-amber-600 bg-amber-50 border-amber-100' },
     Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-sky-600 bg-sky-50 border-sky-100' },
     Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-teal-600 bg-teal-50 border-teal-100' },
-    Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-slate-500 bg-slate-50 border-slate-200' },
+    Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-text-tertiary bg-surface-dim border-border' },
   }
   const diff = diffMap[stats.difficultyCategory] || diffMap.Unknown;
 
@@ -256,7 +256,7 @@ export default function ZoneDetailedStatsClient({
                  fontWeight="800"
                  padding="0"
                  background="transparent"
-                 className="!border-none !shadow-none !p-0 -ml-1 hover:bg-slate-50/50 rounded-xl px-1"
+                 className="!border-none !shadow-none !p-0 -ml-1 hover:bg-surface-dim/50 rounded-xl px-1"
                />
             </div>
           </div>
@@ -284,17 +284,17 @@ export default function ZoneDetailedStatsClient({
                 <div>
                   <div className="flex justify-between items-start mb-1 h-8">
                     <div className="flex items-center gap-1.5 relative group/tooltip">
-                      <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest leading-tight">
+                      <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
                         {removeGreekAccents(kpi.title).toUpperCase()}
                       </div>
-                      <Info className="w-3.5 h-3.5 text-slate-400 hover:text-slate-600 cursor-help transition-colors" />
+                      <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
                       <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-slate-800 text-left p-3.5 rounded-xl shadow-xl z-50 pointer-events-none">
                         <div className="mb-2">
                           <span className="text-[10px] font-extrabold text-sky-400 uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
                           <span className="text-xs text-slate-200 leading-snug">{kpi.infoWhat}</span>
                         </div>
                         <div>
-                          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+                          <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
                           <span className="text-xs text-slate-200 leading-snug">{kpi.infoWhy}</span>
                         </div>
                         <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-slate-800 transform rotate-45"></div>
@@ -303,7 +303,7 @@ export default function ZoneDetailedStatsClient({
 
                     {kpi.diff !== 0 && (
                       <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${
-                        kpi.diff === 0 ? "text-slate-500 bg-slate-100" : isGood ? "text-emerald-700 bg-emerald-50 border border-emerald-100/50" : "text-rose-700 bg-rose-50 border border-rose-100/50"
+                        kpi.diff === 0 ? "text-text-tertiary bg-muted" : isGood ? "text-emerald-700 bg-emerald-50 border border-emerald-100/50" : "text-rose-700 bg-rose-50 border border-rose-100/50"
                       }`}>
                         {isPositive ? "+" : ""}{kpi.diff}% <DiffIcon className="w-3 h-3 ml-0.5" strokeWidth={2.5} />
                       </div>

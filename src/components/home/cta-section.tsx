@@ -24,7 +24,7 @@ export function CtaSection() {
         </h2>
 
         {/* Επεξηγηματικό Κείμενο */}
-        <p className="mb-10 mx-auto text-[18px] leading-[32px] text-slate-600 dark:text-neutral-400 px-0 md:px-[104.5px] max-w-[800px]">
+        <p className="mb-10 mx-auto text-[18px] leading-[32px] text-text-tertiary dark:text-neutral-400 px-0 md:px-[104.5px] max-w-[800px]">
           Βρείτε άμεσα τη μετάθεση που ψάχνετε, ρυθμίστε τις προτιμήσεις σας και αφήστε τον αλγόριθμό μας να κάνει τη δουλειά για εσάς. Εντελώς δωρεάν για όλους τους εκπαιδευτικούς.
         </p>
 

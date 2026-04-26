@@ -22,7 +22,7 @@ export function MatchesSidebar() {
     return (
         <>
             <div className="p-4 border-b border-border/50 bg-muted/50">
-                <div className="relative flex justify-center mx-auto p-1 bg-slate-200/50 backdrop-blur-sm rounded-full w-full max-w-sm">
+                <div className="relative flex justify-center mx-auto p-1 bg-muted/50 backdrop-blur-sm rounded-full w-full max-w-sm">
                     <div className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-full shadow-sm z-0 transition-transform duration-300 ease-out ${activeTab === 'active' ? 'left-1 translate-x-0' : 'left-1 translate-x-[100%]'}`}></div>
                     <button 
                         onClick={() => setActiveTab('active')}
@@ -39,7 +39,7 @@ export function MatchesSidebar() {
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-slate-50/30">
+            <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-surface-dim/30">
                 {matchesList.length > 0 ? (
                     matchesList.map((match) => {
                         const isOnline = match.status === 'active'

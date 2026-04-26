@@ -73,7 +73,7 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
       <button
         type="button"
         onClick={() => setOpen(p => !p)}
-        className="flex items-center gap-[8px] px-4 py-[9px] bg-white/35 backdrop-blur-md border border-white/25 rounded-full text-[13px] font-semibold text-foreground cursor-pointer shadow-soft transition-all hover:bg-white/50"
+        className="flex items-center gap-[8px] px-4 py-[9px] bg-white/35 backdrop-blur-md border border-white/25 rounded-full text-[13px] font-semibold text-foreground cursor-pointer shadow-soft transition-all hover:bg-card/50"
         style={{
           ...(fullWidth ? { width: '100%', justifyContent: 'space-between' } : {}),
         }}
@@ -185,7 +185,7 @@ function MobileFilterDrawer({
       />
       {/* Drawer — slides in from the TOP */}
       <div
-        className={`fixed top-0 left-0 right-0 z-[9999] bg-white dark:bg-slate-900 rounded-b-3xl shadow-2xl transition-transform duration-300 ease-out ${open ? 'translate-y-0' : '-translate-y-full'}`}
+        className={`fixed top-0 left-0 right-0 z-[9999] bg-white dark:bg-card rounded-b-3xl shadow-2xl transition-transform duration-300 ease-out ${open ? 'translate-y-0' : '-translate-y-full'}`}
         style={{ padding: '20px 20px 28px' }}
       >
         {/* Header */}
@@ -356,7 +356,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
     High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟠' },
     Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-sky-600 bg-sky-50 border-sky-100', icon: '🔵' },
     Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-teal-600 bg-teal-50 border-teal-100', icon: '🟢' },
-    Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-slate-500 bg-slate-50 border-slate-200', icon: '⚪' },
+    Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-text-tertiary bg-surface-dim border-border', icon: '⚪' },
   }
   const diff = diffMap[data.difficultyCategory] || diffMap.Unknown
 
@@ -394,15 +394,15 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
   const successYear = getLatestYear(data.successCountHistory)
 
   return (
-    <div className="w-full bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
+    <div className="w-full bg-card h-full shadow-soft flex flex-col border-l border-border">
         
-        <div className="p-6 border-b border-slate-100 bg-white/50 shrink-0">
+        <div className="p-6 border-b border-border-dim bg-card/50 shrink-0">
             <div className="flex justify-between items-start mb-3">
                 <div>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{specialtyName}</p>
-                    <h2 className="text-2xl font-bold text-slate-800 tracking-tight">{title}</h2>
+                    <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">{specialtyName}</p>
+                    <h2 className="text-2xl font-bold text-foreground tracking-tight">{title}</h2>
                 </div>
-                <button onClick={onClose} className="text-slate-400 hover:text-sky-600 p-1.5 rounded-xl hover:bg-sky-50 transition-colors cursor-pointer">
+                <button onClick={onClose} className="text-text-quaternary hover:text-sky-600 p-1.5 rounded-xl hover:bg-sky-50 transition-colors cursor-pointer">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -412,7 +412,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                   <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide border shadow-sm ${diff.color}`}>
                       {diff.icon} {diff.label}
                   </span>
-                  <span className="text-[11px] font-semibold text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-2xl border border-slate-100">Τάση: {trend}</span>
+                  <span className="text-[11px] font-semibold text-text-tertiary bg-surface-dim px-2.5 py-1.5 rounded-2xl border border-border-dim">Τάση: {trend}</span>
               </div>
             )}
         </div>
@@ -436,10 +436,10 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                     </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:border-indigo-50 transition-colors group">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 group-hover:text-indigo-500 transition-colors">Ζητηση (1η Προτ.)</p>
+                <div className="bg-card p-5 rounded-2xl border border-border-dim shadow-sm hover:border-indigo-50 transition-colors group">
+                    <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-2 group-hover:text-indigo-500 transition-colors">Ζητηση (1η Προτ.)</p>
                     <div className="flex items-baseline space-x-2">
-                        <span className="text-2xl font-bold text-slate-800">{data.targeting1stCount}</span>
+                        <span className="text-2xl font-bold text-foreground">{data.targeting1stCount}</span>
                         {data.targeting1stCountDiff !== 0 && (
                           <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-2xl ${data.targeting1stCountDiff > 0 ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'}`}>
                               <svg className={`w-3 h-3 mr-0.5 ${data.targeting1stCountDiff < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
@@ -465,79 +465,79 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                 </div>
             </div>
 
-            <hr className="border-slate-100" />
+            <hr className="border-border-dim" />
 
             <div>
-                <h3 className="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2 mb-5">
+                <h3 className="text-sm font-bold text-foreground tracking-wide flex items-center gap-2 mb-5">
                     <div className="p-1.5 rounded-2xl bg-primary-soft text-primary">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     </div>
                     Ποιότητα Ανταγωνισμού
                 </h3>
                 <div className="space-y-4">
-                    <div className="bg-white p-4 rounded-2xl border border-slate-50 shadow-sm">
+                    <div className="bg-card p-4 rounded-2xl border border-border-dim shadow-sm">
                         <div className="flex justify-between text-xs mb-2">
-                            <span className="text-slate-500 font-medium">Μ.Ο. Επιτυχόντων</span>
-                            <span className="font-bold text-slate-800">{data.avgScore?.toFixed(1) || '—'}</span>
+                            <span className="text-text-tertiary font-medium">Μ.Ο. Επιτυχόντων</span>
+                            <span className="font-bold text-foreground">{data.avgScore?.toFixed(1) || '—'}</span>
                         </div>
-                        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
                             <div className="bg-gradient-to-r from-sky-400 to-primary h-2 rounded-full shadow-inner" style={{width: `${Math.min(100, (data.avgScore || 0))}%`}}></div>
                         </div>
                     </div>
-                    <div className="bg-white p-4 rounded-2xl border border-slate-50 shadow-sm">
+                    <div className="bg-card p-4 rounded-2xl border border-border-dim shadow-sm">
                         <div className="flex justify-between text-xs mb-2">
-                            <span className="text-slate-500 font-medium">Μ.Ο. Αιτούντων</span>
-                            <span className="font-bold text-slate-800">{data.avgScoreApplicants?.toFixed(1) || '—'}</span>
+                            <span className="text-text-tertiary font-medium">Μ.Ο. Αιτούντων</span>
+                            <span className="font-bold text-foreground">{data.avgScoreApplicants?.toFixed(1) || '—'}</span>
                         </div>
-                        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
                             <div className="bg-slate-400 h-2 rounded-full shadow-inner" style={{width: `${Math.min(100, (data.avgScoreApplicants || 0))}%`}}></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <hr className="border-slate-100" />
+            <hr className="border-border-dim" />
 
             <div>
-                <h3 className="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2 mb-5">
+                <h3 className="text-sm font-bold text-foreground tracking-wide flex items-center gap-2 mb-5">
                     <div className="p-1.5 rounded-2xl bg-primary-soft text-primary">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                     </div>
                     Ροές Μετακίνησης (Ιστορικά)
                 </h3>
-                <div className="grid grid-cols-2 gap-6 bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                <div className="grid grid-cols-2 gap-6 bg-surface-dim p-5 rounded-2xl border border-border-dim">
                     <div>
-                        <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-3">Ηρθαν Απο:</p>
+                        <p className="text-[10px] text-text-quaternary uppercase font-bold tracking-widest mb-3">Ηρθαν Απο:</p>
                         {inflow.length > 0 ? (
                           <ul className="space-y-3">
                               {inflow.slice(0, 5).map(f => (
                                 <li key={f.name} className="flex items-center justify-between">
-                                    <span className="text-xs font-medium text-slate-600 truncate mr-1" title={f.name}>{f.name}</span> 
-                                    <span className="text-[10px] font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
+                                    <span className="text-xs font-medium text-text-tertiary truncate mr-1" title={f.name}>{f.name}</span> 
+                                    <span className="text-[10px] font-bold text-text-secondary bg-white border border-border px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
                                 </li>
                               ))}
                           </ul>
-                        ) : <p className="text-[10px] text-slate-400 italic">Κανένα στοιχείο</p>}
+                        ) : <p className="text-[10px] text-text-quaternary italic">Κανένα στοιχείο</p>}
                     </div>
                     <div>
-                        <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-3">Θελουν να πανε:</p>
+                        <p className="text-[10px] text-text-quaternary uppercase font-bold tracking-widest mb-3">Θελουν να πανε:</p>
                         {outflow.length > 0 ? (
                           <ul className="space-y-3">
                             {outflow.slice(0, 5).map(f => (
                               <li key={f.name} className="flex items-center justify-between">
-                                  <span className="text-xs font-medium text-slate-600 truncate mr-1" title={f.name}>{f.name}</span> 
+                                  <span className="text-xs font-medium text-text-tertiary truncate mr-1" title={f.name}>{f.name}</span> 
                                   <span className="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-100 px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
                               </li>
                             ))}
                           </ul>
-                        ) : <p className="text-[10px] text-slate-400 italic">Κανένα στοιχείο</p>}
+                        ) : <p className="text-[10px] text-text-quaternary italic">Κανένα στοιχείο</p>}
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <div className="p-6 border-t border-slate-100 bg-white/80 backdrop-blur-sm shrink-0">
+        <div className="p-6 border-t border-border-dim bg-card/80 backdrop-blur-sm shrink-0">
             <Link 
                 href={`/stats/zones/${encodeURIComponent(title)}?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialty)}`}
                 className="w-full flex items-center justify-center bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl text-sm font-semibold transition-all shadow-floating active:scale-[0.98] cursor-pointer"
@@ -734,7 +734,7 @@ function StatsMapContent() {
 
   return (
     <div
-      className="text-slate-900 dark:text-slate-100 antialiased font-display"
+      className="text-foreground dark:text-foreground antialiased font-display"
       style={{ height: '100vh', position: 'relative', background: '#f1f5f9' }}
     >
       {/* Mobile filter drawer */}
@@ -932,7 +932,7 @@ function StatsMapContent() {
 
 export default function StatsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-4"><p className="text-slate-500 font-medium">Φόρτωση χάρτη...</p></div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-4"><p className="text-text-tertiary font-medium">Φόρτωση χάρτη...</p></div>}>
       <StatsMapContent />
     </Suspense>
   )

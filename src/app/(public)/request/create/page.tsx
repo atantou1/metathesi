@@ -18,7 +18,7 @@ export default async function CreateRequestPage() {
     }
 
     return (
-        <main className="min-h-screen bg-slate-50">
+        <main className="min-h-screen bg-surface-dim">
             <WizardContainer initialData={initialData} requestId={request?.id} />
         </main>
     )
