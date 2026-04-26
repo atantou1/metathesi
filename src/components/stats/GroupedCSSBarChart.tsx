@@ -12,8 +12,8 @@ interface GroupedCSSBarChartProps {
   data: ChartDataPoint[]
   label1: string
   label2: string
-  color1: 'rose' | 'sky' | 'indigo' | 'slate'
-  color2: 'rose' | 'sky' | 'indigo' | 'slate'
+  color1: 'danger' | 'primary' | 'info' | 'slate'
+  color2: 'danger' | 'primary' | 'info' | 'slate'
 }
 
 export function GroupedCSSBarChart({
@@ -31,13 +31,13 @@ export function GroupedCSSBarChart({
   const maxValue = allValues.length > 0 ? Math.max(...allValues) : 100
   
   const colorMap: Record<string, string> = {
-    rose:   'bg-rose-500',
-    sky:    'bg-sky-500',
-    indigo: 'bg-indigo-500',
+    danger:   'bg-danger',
+    primary:    'bg-primary',
+    info: 'bg-info',
     slate:  'bg-slate-400',
-    rose_light: 'bg-rose-400',
-    sky_light:  'bg-sky-400',
-    indigo_light: 'bg-indigo-400',
+    danger_light: 'bg-danger/80',
+    primary_light:  'bg-primary/80',
+    info_light: 'bg-info/80',
     slate_light:  'bg-slate-300'
   }
 

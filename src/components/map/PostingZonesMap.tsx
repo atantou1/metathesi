@@ -66,14 +66,14 @@ function CustomZoomControls() {
     <div className="absolute bottom-8 right-8 flex flex-col gap-2 pointer-events-auto hidden md:flex" style={{ zIndex: 1000 }}>
       <button 
         onClick={(e) => { e.stopPropagation(); map.zoomIn() }}
-        className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors rounded-full"
+        className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#0369a1] transition-colors rounded-full"
         title="Zoom In"
       >
         <span className="material-symbols-outlined">add</span>
       </button>
       <button 
         onClick={(e) => { e.stopPropagation(); map.zoomOut() }}
-        className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors rounded-full"
+        className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#0369a1] transition-colors rounded-full"
         title="Zoom Out"
       >
         <span className="material-symbols-outlined">remove</span>
@@ -126,9 +126,9 @@ export default function PostingZonesMap({ onZoneClick, selectedZone, statistics,
       const val = stat.baseScore
       if (val === null || val === undefined) return '#e2e8f0'
       if (val > 100) return '#0369a1'
-      if (val >= 70) return '#0ea5e9'
-      if (val >= 50) return '#38bdf8'
-      if (val >= 35) return '#7dd3fc'
+      if (val >= 70) return '#0284c7'
+      if (val >= 50) return '#0ea5e9'
+      if (val >= 35) return '#38bdf8'
       return '#bae6fd'
     }
     

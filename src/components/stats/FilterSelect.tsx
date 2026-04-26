@@ -123,8 +123,8 @@ export function FilterSelect({
                 padding: "10px 14px",
                 fontSize: "13px",
                 fontWeight: 500,
-                background: value === opt.value ? "rgba(14,165,233,0.08)" : "transparent",
-                color: value === opt.value ? "#0ea5e9" : "#334155",
+                background: value === opt.value ? "rgba(3, 105, 161, 0.08)" : "transparent",
+                color: value === opt.value ? "#0369a1" : "#334155",
                 border: "none",
                 borderRadius: "10px",
                 cursor: "pointer",
@@ -135,7 +135,7 @@ export function FilterSelect({
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.background =
-                  value === opt.value ? "rgba(14,165,233,0.08)" : "transparent";
+                  value === opt.value ? "rgba(3, 105, 161, 0.08)" : "transparent";
               }}
             >
               {opt.label}

@@ -260,19 +260,19 @@ function LegendCard({ indicator }: { indicator: string }) {
   if (indicator === 'Base_Score') {
     items = [
       { color: '#0369a1', label: 'Πολύ Υψηλή (>100)' },
-      { color: '#0ea5e9', label: 'Υψηλή (70 - 100)' },
-      { color: '#38bdf8', label: 'Μέτρια (50 - 70)' },
-      { color: '#7dd3fc', label: 'Χαμηλή (35 - 50)' },
+      { color: '#0284c7', label: 'Υψηλή (70 - 100)' },
+      { color: '#0ea5e9', label: 'Μέτρια (50 - 70)' },
+      { color: '#38bdf8', label: 'Χαμηλή (35 - 50)' },
       { color: '#bae6fd', label: 'Πολύ Χαμηλή (<35)' },
       { color: '#e2e8f0', label: 'Χωρίς Δεδομένα' },
     ]
   } else if (indicator === 'Difficulty_Category') {
     items = [
-      { color: '#e11d48', label: 'Υψηλός' },
-      { color: '#d97706', label: 'Αυξημένος' },
-      { color: '#0284c7', label: 'Υπολογίσιμος' },
-      { color: '#0d9488', label: 'Ήπιος' },
-      { color: '#64748b', label: 'Χωρίς Δεδομένα' },
+      { color: 'var(--danger)', label: 'Υψηλός' },
+      { color: 'var(--warning)', label: 'Αυξημένος' },
+      { color: 'var(--info)', label: 'Υπολογίσιμος' },
+      { color: 'var(--success)', label: 'Ήπιος' },
+      { color: 'var(--text-tertiary)', label: 'Χωρίς Δεδομένα' },
     ]
   } else {
     // Sequential scales for Success_Count, Leaving_Count, Targeting_1st_Count
@@ -352,10 +352,10 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
 
   // Difficulty Mapping
   const diffMap: Record<string, { label: string; color: string; icon: string }> = {
-    Extreme:   { label: 'Υψηλός Ανταγωνισμός', color: 'text-rose-600 bg-rose-50 border-rose-100', icon: '🔴' },
-    High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟠' },
-    Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-sky-600 bg-sky-50 border-sky-100', icon: '🔵' },
-    Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-teal-600 bg-teal-50 border-teal-100', icon: '🟢' },
+    Extreme:   { label: 'Υψηλός Ανταγωνισμός', color: 'text-danger bg-danger-soft border-danger/20', icon: '🔴' },
+    High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-warning bg-warning-soft border-warning/20', icon: '🟠' },
+    Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-info bg-info-soft border-info/20', icon: '🔵' },
+    Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-success bg-success-soft border-success/20', icon: '🟢' },
     Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-text-tertiary bg-surface-dim border-border', icon: '⚪' },
   }
   const diff = diffMap[data.difficultyCategory] || diffMap.Unknown
@@ -402,7 +402,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                     <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">{specialtyName}</p>
                     <h2 className="text-2xl font-bold text-foreground tracking-tight">{title}</h2>
                 </div>
-                <button onClick={onClose} className="text-text-quaternary hover:text-sky-600 p-1.5 rounded-xl hover:bg-sky-50 transition-colors cursor-pointer">
+                <button onClick={onClose} className="text-text-quaternary hover:text-info p-1.5 rounded-xl hover:bg-info-soft transition-colors cursor-pointer">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -428,7 +428,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                     <div className="flex items-baseline space-x-2">
                         <span className="text-2xl font-bold text-foreground">{data.baseScore?.toFixed(2) || '—'}</span>
                         {data.baseScoreDiff !== null && data.baseScoreDiff !== 0 && (
-                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-2xl ${data.baseScoreDiff > 0 ? 'text-rose-600 bg-rose-50' : 'text-emerald-600 bg-emerald-50'}`}>
+                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-2xl ${data.baseScoreDiff > 0 ? 'text-danger bg-danger-soft' : 'text-success bg-success-soft'}`}>
                               <svg className={`w-3 h-3 mr-0.5 ${data.baseScoreDiff < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
                               {Math.abs(data.baseScoreDiff).toFixed(1)}
                           </span>
@@ -441,7 +441,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                     <div className="flex items-baseline space-x-2">
                         <span className="text-2xl font-bold text-foreground">{data.targeting1stCount}</span>
                         {data.targeting1stCountDiff !== 0 && (
-                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-2xl ${data.targeting1stCountDiff > 0 ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'}`}>
+                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-2xl ${data.targeting1stCountDiff > 0 ? 'text-success bg-success-soft' : 'text-danger bg-danger-soft'}`}>
                               <svg className={`w-3 h-3 mr-0.5 ${data.targeting1stCountDiff < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
                               {Math.abs(data.targeting1stCountDiff)}
                           </span>
@@ -526,7 +526,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                             {outflow.slice(0, 5).map(f => (
                               <li key={f.name} className="flex items-center justify-between">
                                   <span className="text-xs font-medium text-text-tertiary truncate mr-1" title={f.name}>{f.name}</span> 
-                                  <span className="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-100 px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
+                                  <span className="text-[10px] font-bold text-info bg-info-soft border border-info/20 px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
                               </li>
                             ))}
                           </ul>
@@ -871,7 +871,7 @@ function StatsMapContent() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#0ea5e9' }}>tune</span>
+                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#0369a1' }}>tune</span>
                 Φίλτρα
               </button>
             </div>

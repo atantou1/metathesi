@@ -67,7 +67,7 @@ export function FeaturesSection() {
 
   return (
     <section
-      className="py-16 lg:py-24 bg-white dark:bg-background overflow-hidden min-h-screen flex items-center"
+      className="py-16 lg:py-24 bg-surface overflow-hidden min-h-screen flex items-center"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
       <style
@@ -92,8 +92,8 @@ export function FeaturesSection() {
               animation: shimmer 2s infinite;
             }
             .glass-card {
-              background: #ffffff;
-              border: 1px solid #e2e8f0;
+              background: var(--card);
+              border: 1px solid var(--border);
               box-shadow: 0 8px 30px -4px rgba(3, 105, 161, 0.05);
             }
           `,
@@ -160,11 +160,11 @@ export function FeaturesSection() {
           {/* ================= Mobile Carousel ================= */}
           <div className="relative flex lg:hidden w-full flex-col overflow-hidden pb-4">
             <div
-              className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 bg-gradient-to-r from-white to-transparent"
+              className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 bg-gradient-to-r from-surface to-transparent"
               style={{ width: sideFadeWidth }}
             />
             <div
-              className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 bg-gradient-to-l from-white to-transparent"
+              className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 bg-gradient-to-l from-surface to-transparent"
               style={{ width: sideFadeWidth }}
             />
             <motion.div
@@ -378,14 +378,14 @@ function WizardStep1() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       // Βάλαμε το overflow και την κρυφή μπάρα κύλισης απευθείας σε αυτό το div
-      className="h-full overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] text-slate-900 antialiased pb-6 pt-4 relative"
+      className="h-full overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] antialiased pb-6 pt-4 relative"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         {/* SECTION 1: IDENTITY */}
-        <div className="bg-white border border-slate-100 rounded-3xl shadow-[0_4px_20px_-4px_rgba(3,105,161,0.05)] p-4 sm:p-5 relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-50 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="bg-card border border-border rounded-3xl shadow-[0_4px_20px_-4px_rgba(3,105,161,0.05)] p-4 sm:p-5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-primary-soft rounded-full blur-3xl pointer-events-none"></div>
 
-          <h2 className="text-[13px] sm:text-[14px] font-bold text-slate-800 tracking-tight flex items-center gap-2 mb-4 sm:mb-5 relative z-10">
+          <h2 className="text-[13px] sm:text-[14px] font-bold text-foreground tracking-tight flex items-center gap-2 mb-4 sm:mb-5 relative z-10">
             <div className="p-1.5 rounded-2xl bg-primary-soft text-primary">
               <span className="material-symbols-outlined text-[16px]">
                 account_circle
@@ -397,7 +397,7 @@ function WizardStep1() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 relative z-10">
             {/* ΟΝΟΜΑ */}
             <div className="md:col-span-2">
-              <label className="block text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-1.5">
+              <label className="block text-[8px] sm:text-[9px] font-bold text-text-quaternary uppercase tracking-widest pl-1 mb-1.5">
                 ΟΝΟΜΑ
               </label>
               <div className={getFieldClasses(0)}>
@@ -438,7 +438,7 @@ function WizardStep1() {
                 <select
                   tabIndex={-1}
                   className={`w-full pl-9 pr-3 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${
-                    sequenceStep >= 1 ? "text-slate-900" : "text-slate-400"
+                    sequenceStep >= 1 ? "text-foreground" : "text-text-quaternary"
                   }`}
                 >
                   <option>
@@ -560,7 +560,7 @@ function WizardStep1() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 sm:mb-5">
             <div>
               <h2 className="text-[13px] sm:text-[14px] font-bold text-slate-800 tracking-tight flex items-center gap-2">
-                <div className="p-1.5 rounded-2xl bg-teal-50 text-teal-600">
+                <div className="p-1.5 rounded-2xl bg-success-soft text-success">
                   <span className="material-symbols-outlined text-[16px]">
                     map
                   </span>
@@ -581,7 +581,7 @@ function WizardStep1() {
               className="bg-white rounded-xl p-1.5 sm:p-2 shadow-sm border border-slate-100 flex items-center justify-between group"
             >
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-2xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center text-[10px] sm:text-[11px] font-bold">
+                <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-2xl bg-danger-soft text-danger border border-danger/20 flex items-center justify-center text-[10px] sm:text-[11px] font-bold">
                   1
                 </div>
                 <span className="text-[11px] sm:text-[12px] font-semibold text-slate-700">
@@ -600,7 +600,7 @@ function WizardStep1() {
               className="bg-white rounded-xl p-1.5 sm:p-2 shadow-sm border border-slate-100 flex items-center justify-between group"
             >
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center text-[10px] sm:text-[11px] font-bold">
+                <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-2xl bg-warning-soft text-warning border border-warning/20 flex items-center justify-center text-[10px] sm:text-[11px] font-bold">
                   2
                 </div>
                 <span className="text-[11px] sm:text-[12px] font-semibold text-slate-700">
@@ -664,7 +664,7 @@ function WizardStep2Updated() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 shadow-sm shadow-teal-900/10 shrink-0 overflow-hidden"
+            className="w-full bg-gradient-to-r from-slate-900 to-primary shadow-sm shadow-primary/10 shrink-0 overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col sm:flex-row items-center justify-between py-2.5 gap-3">
@@ -677,7 +677,7 @@ function WizardStep2Updated() {
                     Βρέθηκε ενεργό match! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.
                   </p>
                 </div>
-                <button className="w-full sm:w-auto text-[11px] font-bold text-teal-700 bg-white hover:bg-teal-50 px-4 py-1.5 rounded-full transition-all shadow-sm active:scale-95">
+                <button className="w-full sm:w-auto text-[11px] font-bold text-primary bg-white hover:bg-primary-soft px-4 py-1.5 rounded-full transition-all shadow-sm active:scale-95">
                   Προβολή →
                 </button>
               </div>
@@ -692,29 +692,29 @@ function WizardStep2Updated() {
           {/* Main Dashboard */}
           <div className="space-y-6">
             <div className="relative overflow-hidden rounded-4xl glass-card">
-              <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-100/40 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
 
               <div className="p-5 sm:p-7 relative z-10">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-800 tracking-tight flex items-center gap-2.5">
+                    <h2 className="text-lg font-bold text-foreground tracking-tight flex items-center gap-2.5">
                       Αίτηση Αμοιβαίας
                     </h2>
-                    <p className="text-xs text-slate-500 mt-1.5">
+                    <p className="text-xs text-text-tertiary mt-1.5">
                       Υποβλήθηκε στις{" "}
-                      <span className="text-slate-700 font-medium">
+                      <span className="text-foreground font-medium">
                         1 Απρ 2026
                       </span>
                     </p>
                   </div>
-                  <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-100 shadow-sm shadow-sky-900/5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500 mr-2 animate-pulse"></span>
+                  <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-semibold bg-primary/10 text-primary border border-primary/20 shadow-sm shadow-primary/5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-pulse"></span>
                     Ενεργή
                   </span>
                 </div>
 
                 {/* Scanning Animation */}
-                <div className="scanning-pulse relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 to-blue-900 border border-blue-800/50 shadow-xl shadow-sky-900/10 mb-6">
+                <div className="scanning-pulse relative overflow-hidden rounded-3xl bg-gradient-to-br from-tech-card-start to-tech-card-end border border-tech-card-border shadow-xl shadow-primary/10 mb-6">
                   <div
                     className="absolute inset-0 opacity-10 mix-blend-overlay"
                     style={{
@@ -726,17 +726,17 @@ function WizardStep2Updated() {
                     <div className="flex-shrink-0 relative">
                       <div className="w-16 h-16 relative flex items-center justify-center">
                         <span
-                          className="absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-20 animate-ping"
+                          className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-20 animate-ping"
                           style={{ animationDuration: "3s" }}
                         ></span>
-                        <div className="relative w-12 h-12 rounded-full bg-slate-950 border border-sky-700/50 flex items-center justify-center">
+                        <div className="relative w-12 h-12 rounded-full bg-background border border-primary/50 flex items-center justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
                             fill="none"
-                            stroke="#38bdf8"
+                            stroke="var(--primary)"
                             strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -756,14 +756,14 @@ function WizardStep2Updated() {
                         <h3 className="text-sm font-semibold text-white">
                           Σάρωση για Αμοιβαίες...
                         </h3>
-                        <span className="text-[9px] font-bold text-sky-300 bg-sky-900/40 px-2 py-0.5 rounded-2xl border border-sky-800/50">
+                        <span className="text-[9px] font-bold text-primary-foreground bg-primary/40 px-2 py-0.5 rounded-2xl border border-primary/50">
                           REALTIME
                         </span>
                       </div>
                       <div className="w-full bg-slate-800/80 rounded-full h-1.5 mb-2 overflow-hidden border border-slate-700/50">
-                        <div className="bg-gradient-to-r from-sky-600 via-sky-400 to-blue-500 h-full rounded-full w-3/4 animate-shimmer"></div>
+                        <div className="bg-gradient-to-r from-primary/80 via-primary to-tech-accent h-full rounded-full w-3/4 animate-shimmer"></div>
                       </div>
-                      <p className="text-slate-300 text-[11px]">
+                      <p className="text-text-tertiary text-[11px]">
                         Φάση: Ανάλυση Περιοχών
                       </p>
                     </div>
@@ -772,28 +772,28 @@ function WizardStep2Updated() {
 
                 {/* My Preferences */}
                 <div className="mb-6">
-                  <h3 className="text-xs font-bold text-slate-800 mb-3 tracking-wide">
+                  <h3 className="text-xs font-bold text-foreground mb-3 tracking-wide">
                     Οι Προτιμήσεις μου
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex items-center p-2.5 rounded-xl bg-white border border-slate-100 shadow-sm">
-                      <div className="w-7 h-7 rounded-2xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-[10px] font-bold mr-2.5">
+                    <div className="flex items-center p-2.5 rounded-xl bg-background border border-border shadow-sm">
+                      <div className="w-7 h-7 rounded-2xl bg-muted border border-border text-text-tertiary flex items-center justify-center text-[10px] font-bold mr-2.5">
                         1
                       </div>
                       <div className="flex-grow flex justify-between items-center text-xs font-medium text-slate-700">
                         <span>Β' Αθήνας</span>
-                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-rose-50 text-rose-600 border border-rose-100 uppercase">
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-danger-soft text-danger border border-danger/20 uppercase">
                           ΜΕΓΙΣΤΗ
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center p-2.5 rounded-xl bg-white border border-slate-100 shadow-sm">
-                      <div className="w-7 h-7 rounded-2xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-[10px] font-bold mr-2.5">
+                    <div className="flex items-center p-2.5 rounded-xl bg-background border border-border shadow-sm">
+                      <div className="w-7 h-7 rounded-2xl bg-muted border border-border text-text-tertiary flex items-center justify-center text-[10px] font-bold mr-2.5">
                         2
                       </div>
                       <div className="flex-grow flex justify-between items-center text-xs font-medium text-slate-700">
                         <span>Ανατ. Αττική</span>
-                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-amber-50 text-amber-600 border border-amber-100 uppercase">
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-warning-soft text-warning border border-warning/20 uppercase">
                           ΥΨΗΛΗ
                         </span>
                       </div>
@@ -802,11 +802,11 @@ function WizardStep2Updated() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex flex-col sm:flex-row gap-3 border-t border-slate-100 pt-5">
+                <div className="flex flex-col sm:flex-row gap-3 border-t border-border pt-5">
                   <button className="flex-1 sm:flex-none bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-xl text-xs font-semibold transition-all shadow-soft active:scale-95">
                     Επεξεργασία
                   </button>
-                  <button className="flex-1 sm:flex-none bg-rose-50 border border-rose-100 hover:bg-rose-100 text-rose-600 px-6 py-2.5 rounded-xl text-xs font-medium transition-colors">
+                  <button className="flex-1 sm:flex-none bg-danger-soft border border-danger/20 hover:bg-danger/20 text-danger px-6 py-2.5 rounded-xl text-xs font-medium transition-colors">
                     Διαγραφή
                   </button>
                 </div>
@@ -870,30 +870,30 @@ function WizardStep3Updated() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="text-slate-900 antialiased flex h-full w-full bg-white relative overflow-hidden font-sans pointer-events-none select-none"
+      className="text-foreground antialiased flex h-full w-full bg-background relative overflow-hidden font-sans pointer-events-none select-none"
     >
       {/* SIDEBAR - Κρυμμένο στα κινητά, ορατό από sm και πάνω */}
-      <aside className="hidden sm:flex w-[180px] md:w-[220px] bg-white border-r border-slate-200 flex-col flex-shrink-0 z-10 h-full">
-        <div className="p-3 border-b border-slate-100 bg-slate-50/50 flex-shrink-0">
-          <div className="relative flex justify-center mx-auto p-1 bg-slate-200/50 backdrop-blur-sm rounded-full w-full">
-            <div className="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-white rounded-full shadow-sm z-0"></div>
-            <button className="relative z-10 py-1.5 rounded-full font-bold text-[11px] w-1/2 text-slate-900">
+      <aside className="hidden sm:flex w-[180px] md:w-[220px] bg-background border-r border-border flex-col flex-shrink-0 z-10 h-full">
+        <div className="p-3 border-b border-border bg-muted/50 flex-shrink-0">
+          <div className="relative flex justify-center mx-auto p-1 bg-muted/50 backdrop-blur-sm rounded-full w-full">
+            <div className="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-background rounded-full shadow-sm z-0"></div>
+            <button className="relative z-10 py-1.5 rounded-full font-bold text-[11px] w-1/2 text-foreground">
               Ενεργές (1)
             </button>
-            <button className="relative z-10 py-1.5 rounded-full font-bold text-[11px] w-1/2 text-slate-500">
+            <button className="relative z-10 py-1.5 rounded-full font-bold text-[11px] w-1/2 text-text-tertiary">
               Ιστορικό (4)
             </button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-hidden p-2 space-y-2 bg-slate-50/30">
-          <div className="group p-2.5 rounded-xl cursor-pointer transition-all border bg-sky-50 border-sky-100">
+        <div className="flex-1 overflow-hidden p-2 space-y-2 bg-muted/30">
+          <div className="group p-2.5 rounded-xl cursor-pointer transition-all border bg-primary-soft border-primary/20">
             <div className="flex gap-2.5 items-center">
               <div className="relative flex-shrink-0">
-                <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-[11px] font-bold bg-amber-50 border border-amber-100 text-amber-500">
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-[11px] font-bold bg-warning-soft border border-warning/20 text-warning">
                   ΜΣ
                 </div>
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 border-2 border-white rounded-full bg-emerald-500"></div>
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 border-2 border-background rounded-full bg-success"></div>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between items-baseline mb-0.5">
@@ -904,7 +904,7 @@ function WizardStep3Updated() {
                     Σήμερα
                   </span>
                 </div>
-                <span className="text-[9px] font-medium text-slate-500 block mb-1 truncate">
+                <span className="text-[9px] font-medium text-text-tertiary block mb-1 truncate">
                   Α' Θεσσαλονίκης
                 </span>
                 <div className="flex gap-1.5">
@@ -916,23 +916,23 @@ function WizardStep3Updated() {
             </div>
           </div>
 
-          <div className="group p-2.5 rounded-xl cursor-pointer transition-all border bg-white border-slate-200 opacity-80">
+          <div className="group p-2.5 rounded-xl cursor-pointer transition-all border bg-background border-border opacity-80">
             <div className="flex gap-2.5 items-center">
               <div className="relative flex-shrink-0">
-                <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-[11px] font-bold bg-slate-50 border border-slate-200 text-slate-500">
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-[11px] font-bold bg-muted border border-border text-text-tertiary">
                   ΕΠ
                 </div>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between items-baseline mb-0.5">
-                  <h4 className="text-[12px] font-bold truncate text-slate-700">
+                  <h4 className="text-[12px] font-bold truncate text-foreground">
                     Ελένη Π.
                   </h4>
-                  <span className="text-[9px] font-bold text-slate-400">
+                  <span className="text-[9px] font-bold text-text-quaternary">
                     12 Απρ
                   </span>
                 </div>
-                <span className="text-[9px] font-medium text-slate-500 block mb-1 truncate">
+                <span className="text-[9px] font-medium text-text-tertiary block mb-1 truncate">
                   Χανιά
                 </span>
               </div>
@@ -942,20 +942,20 @@ function WizardStep3Updated() {
       </aside>
 
       {/* CHAT AREA */}
-      <main className="flex-1 flex flex-col relative h-full bg-slate-50/50">
-        <header className="h-14 sm:h-16 px-4 border-b border-slate-200 bg-white flex items-center justify-between flex-shrink-0 shadow-sm z-10">
+      <main className="flex-1 flex flex-col relative h-full bg-muted/50">
+        <header className="h-14 sm:h-16 px-4 border-b border-border bg-background flex items-center justify-between flex-shrink-0 shadow-sm z-10">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-9 h-9 rounded-2xl flex items-center justify-center text-xs font-bold bg-amber-50 border border-amber-100 text-amber-500">
+              <div className="w-9 h-9 rounded-2xl flex items-center justify-center text-xs font-bold bg-warning-soft border border-warning/20 text-warning">
                 ΜΣ
               </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 border-2 border-white rounded-full bg-emerald-500"></div>
+              <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 border-2 border-background rounded-full bg-success"></div>
             </div>
             <div>
-              <h3 className="font-bold text-sm text-slate-800 tracking-tight leading-tight">
+              <h3 className="font-bold text-sm text-foreground tracking-tight leading-tight">
                 Μάριος Στεργίου
               </h3>
-              <p className="text-[10px] font-medium text-slate-500 flex items-center gap-1 mt-0.5">
+              <p className="text-[10px] font-medium text-text-tertiary flex items-center gap-1 mt-0.5">
                 <span className="material-symbols-outlined text-[12px]">
                   location_on
                 </span>
@@ -964,10 +964,10 @@ function WizardStep3Updated() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="hidden sm:inline-flex items-center px-2 py-1 rounded-2xl text-[9px] font-bold bg-green-50 text-green-600 border border-green-100 uppercase">
+            <span className="hidden sm:inline-flex items-center px-2 py-1 rounded-2xl text-[9px] font-bold bg-success-soft text-success border border-success/20 uppercase">
               Ενεργό Match
             </span>
-            <button className="text-slate-400 p-1.5 rounded-2xl">
+            <button className="text-text-quaternary p-1.5 rounded-2xl">
               <span className="material-symbols-outlined text-[18px]">
                 more_vert
               </span>
@@ -1002,15 +1002,15 @@ function WizardStep3Updated() {
                 animate="visible"
                 className="flex items-end gap-2 max-w-[85%]"
               >
-                <div className="hidden sm:flex w-6 h-6 rounded-full flex-shrink-0 border border-slate-200 shadow-sm font-bold items-center justify-center text-[8px] text-amber-500 bg-white">
+                <div className="hidden sm:flex w-6 h-6 rounded-full flex-shrink-0 border border-border shadow-sm font-bold items-center justify-center text-[8px] text-warning bg-background">
                   ΜΣ
                 </div>
                 <div className="flex flex-col gap-1">
-                  <div className="bg-white px-3.5 py-2.5 rounded-2xl rounded-bl-sm shadow-sm border border-slate-100 text-slate-700 text-[12px] leading-relaxed">
+                  <div className="bg-background px-3.5 py-2.5 rounded-2xl rounded-bl-sm shadow-sm border border-border text-foreground text-[12px] leading-relaxed">
                     Καλησπέρα! Είδα ότι έχουμε ταίριασμα για τις περιοχές μας.
                     Με ενδιαφέρει πολύ η Αθήνα.
                   </div>
-                  <span className="text-[9px] font-medium text-slate-400 ml-1">
+                  <span className="text-[9px] font-medium text-text-quaternary ml-1">
                     14:20
                   </span>
                 </div>
@@ -1032,7 +1032,7 @@ function WizardStep3Updated() {
                     σχολείο στη Β' Αθηνας, σας εξυπηρετεί;
                   </div>
                   <div className="flex items-center gap-1 mr-1">
-                    <span className="text-[9px] font-medium text-slate-400">
+                    <span className="text-[9px] font-medium text-text-quaternary">
                       14:25
                     </span>
                     <span className="material-symbols-outlined text-[12px] text-primary">
@@ -1073,9 +1073,9 @@ function WizardStep3Updated() {
         </div>
 
         {/* Input Area */}
-        <footer className="p-3 sm:p-4 bg-white border-t border-slate-200 z-10 flex-shrink-0">
+        <footer className="p-3 sm:p-4 bg-background border-t border-border z-10 flex-shrink-0">
           <div className="flex items-end gap-2">
-            <button className="w-10 h-10 flex-shrink-0 flex items-center justify-center text-slate-400 rounded-2xl">
+            <button className="w-10 h-10 flex-shrink-0 flex items-center justify-center text-text-quaternary rounded-2xl">
               <span className="material-symbols-outlined text-[20px]">
                 attach_file
               </span>
@@ -1083,7 +1083,7 @@ function WizardStep3Updated() {
             <div className="flex-1 relative">
               <textarea
                 readOnly
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3.5 text-xs outline-none resize-none text-slate-700 cursor-default"
+                className="w-full bg-muted border border-border rounded-xl py-2.5 px-3.5 text-xs outline-none resize-none text-foreground cursor-default"
                 placeholder="Γράψτε ένα μήνυμα..."
                 rows={1}
               ></textarea>
@@ -1099,4 +1099,3 @@ function WizardStep3Updated() {
     </motion.div>
   );
 }
-

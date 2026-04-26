@@ -123,10 +123,10 @@ export default function ZoneDetailedStatsClient({
 
   // Difficulty Mapping
   const diffMap: Record<string, { label: string; color: string }> = {
-    Extreme:   { label: 'Υψηλός Ανταγωνισμός', color: 'text-rose-600 bg-rose-50 border-rose-100' },
-    High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-amber-600 bg-amber-50 border-amber-100' },
-    Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-sky-600 bg-sky-50 border-sky-100' },
-    Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-teal-600 bg-teal-50 border-teal-100' },
+    Extreme:   { label: 'Υψηλός Ανταγωνισμός', color: 'text-danger bg-danger-soft border-danger/20' },
+    High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-warning bg-warning-soft border-warning/20' },
+    Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-info bg-info-soft border-info/20' },
+    Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-success bg-success-soft border-success/20' },
     Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-text-tertiary bg-surface-dim border-border' },
   }
   const diff = diffMap[stats.difficultyCategory] || diffMap.Unknown;
@@ -243,7 +243,7 @@ export default function ZoneDetailedStatsClient({
                 fontWeight="700"
                 padding="6px 14px"
                 background="rgba(255, 255, 255, 0.35)"
-                className="!text-sky-700"
+                className="!text-primary-hover"
               />
             </div>
             
@@ -290,7 +290,7 @@ export default function ZoneDetailedStatsClient({
                       <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
                       <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-slate-800 text-left p-3.5 rounded-xl shadow-xl z-50 pointer-events-none">
                         <div className="mb-2">
-                          <span className="text-[10px] font-extrabold text-sky-400 uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+                          <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
                           <span className="text-xs text-slate-200 leading-snug">{kpi.infoWhat}</span>
                         </div>
                         <div>
@@ -303,7 +303,7 @@ export default function ZoneDetailedStatsClient({
 
                     {kpi.diff !== 0 && (
                       <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${
-                        kpi.diff === 0 ? "text-text-tertiary bg-muted" : isGood ? "text-emerald-700 bg-emerald-50 border border-emerald-100/50" : "text-rose-700 bg-rose-50 border border-rose-100/50"
+                        kpi.diff === 0 ? "text-text-tertiary bg-muted" : isGood ? "text-success bg-success-soft border border-success/20" : "text-danger bg-danger-soft border border-danger/20"
                       }`}>
                         {isPositive ? "+" : ""}{kpi.diff}% <DiffIcon className="w-3 h-3 ml-0.5" strokeWidth={2.5} />
                       </div>

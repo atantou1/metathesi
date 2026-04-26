@@ -33,10 +33,10 @@ export async function sendMatchEmail({
             subject: '🎉 Βρέθηκε Νέο Ταίριασμα Μετάθεσης!',
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #334155;">
-                    <h2 style="color: #0ea5e9;">Συγχαρητήρια ${userName}!</h2>
+                    <h2 style="color: #0369a1;">Συγχαρητήρια ${userName}!</h2>
                     <p>Μόλις βρέθηκε ένα νέο ταίριασμα για την αίτηση μετάθεσής σας.</p>
                     
-                    <div style="background-color: #f8fafc; border-left: 4px solid #0ea5e9; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0;">
+                    <div style="background-color: #f8fafc; border-left: 4px solid #0369a1; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0;">
                         <p style="margin: 0 0 8px 0;"><strong>Ονοματεπώνυμο:</strong> ${matchName}</p>
                         <p style="margin: 0;"><strong>Περιοχή Υπηρέτησης:</strong> ${matchZoneName}</p>
                     </div>
@@ -44,7 +44,7 @@ export async function sendMatchEmail({
                     <p>Μπορείτε τώρα να συνδεθείτε στην πλατφόρμα, να ελέγξετε το προφίλ της αντιστοίχισης και να ξεκινήσετε άμεσα συζήτηση μέσω του <strong>Match Chat</strong>!</p>
                     
                     <div style="text-align: center; margin-top: 32px;">
-                        <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/matches" style="background-color: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                        <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/matches" style="background-color: #0369a1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
                             Προβολή Αντιστοίχισης
                         </a>
                     </div>
@@ -95,11 +95,11 @@ export async function sendVerificationEmail(
             subject: '✅ Επιβεβαιώστε το email σας - metaThesi',
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #334155;">
-                    <h2 style="color: #0ea5e9;">Καλώς ήρθατε στο metaThesi!</h2>
+                    <h2 style="color: #0369a1;">Καλώς ήρθατε στο metaThesi!</h2>
                     <p>Παρακαλούμε επιβεβαιώστε το email σας κάνοντας κλικ στον παρακάτω σύνδεσμο:</p>
                     
                     <div style="text-align: center; margin-top: 32px; margin-bottom: 32px;">
-                        <a href="${confirmLink}" style="background-color: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                        <a href="${confirmLink}" style="background-color: #0369a1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
                             Επιβεβαίωση Email
                         </a>
                     </div>

@@ -432,7 +432,7 @@ export default function SummaryPageClient() {
             <div className="flex items-center space-x-3 mb-3">
               <Link
                 href={`/stats?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialty)}`}
-                className="text-text-tertiary hover:text-sky-700 hover:bg-sky-50 transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-xl border border-transparent hover:border-sky-100 cursor-pointer"
+                className="text-text-tertiary hover:text-primary-hover hover:bg-primary-soft transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-xl border border-transparent hover:border-primary/20 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4 mr-1.5" /> Επιστροφή στον Χάρτη
               </Link>
@@ -511,11 +511,11 @@ export default function SummaryPageClient() {
                 const DiffIcon = isPositive ? TrendingUp : TrendingDown;
 
                 const badgeClasses =
-                  kpi.diff === 0
-                    ? "text-text-tertiary bg-muted"
+                    kpi.diff === 0
+                        ? "text-text-tertiary bg-muted"
                     : isGood
-                    ? "text-emerald-700 bg-emerald-50 border border-emerald-100/50"
-                    : "text-rose-700 bg-rose-50 border border-rose-100/50";
+                    ? "text-success bg-success-soft border border-success/20"
+                    : "text-danger bg-danger-soft border border-danger/20";
 
                 return (
                     <div
@@ -534,7 +534,7 @@ export default function SummaryPageClient() {
                           {/* Tooltip Content */}
                           <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-slate-800 text-left p-3.5 rounded-xl shadow-xl z-50 pointer-events-none">
                             <div className="mb-2">
-                              <span className="text-[10px] font-extrabold text-sky-400 uppercase tracking-widest block mb-1">
+                              <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">
                                 ΤΙ ΕΙΝΑΙ
                               </span>
                               <span className="text-xs text-slate-200 leading-snug">
@@ -732,7 +732,7 @@ export default function SummaryPageClient() {
                     {dashboardData?.topTargeting.map((item, idx) => (
                         <div key={idx} className="group">
                              <div className="flex justify-between items-end mb-2">
-                                <span className="text-sm font-semibold text-text-secondary group-hover:text-sky-700 transition-colors">
+                                <span className="text-sm font-semibold text-text-secondary group-hover:text-primary-hover transition-colors">
                                     {item.name}
                                 </span>
                                 <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
@@ -781,7 +781,7 @@ export default function SummaryPageClient() {
                     {dashboardData?.topDestinations.map((item, idx) => (
                       <div key={idx} className="group cursor-pointer">
                         <div className="flex justify-between items-end mb-2">
-                          <span className="text-sm font-semibold text-text-secondary group-hover:text-sky-700 transition-colors">
+                          <span className="text-sm font-semibold text-text-secondary group-hover:text-primary-hover transition-colors">
                             {item.name}
                           </span>
                           <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">

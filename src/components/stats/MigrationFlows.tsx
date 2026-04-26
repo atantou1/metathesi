@@ -29,7 +29,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-border pb-6 font-sans">
         <div>
           <h3 className="text-xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-sky-50 text-sky-700 border border-sky-100">
+            <div className="p-2.5 rounded-2xl bg-info-soft text-info border border-info/20">
               <Activity className="w-5 h-5" />
             </div>
             Αναλυτικές Ροές Μετακίνησης
@@ -43,7 +43,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
         {/* Inflow */}
         <div className="font-sans">
           <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-8 pb-2 border-b border-border flex items-center gap-2">
-            <TrendingUp className="w-3 h-3 text-emerald-500" /> Απο που προηλθαν
+            <TrendingUp className="w-3 h-3 text-success" /> Απο που προηλθαν
           </h4>
           <div className="space-y-6">
             {visibleInflow.length > 0 ? (
@@ -70,14 +70,14 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
         {/* Outflow */}
         <div className="font-sans">
           <h4 className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-8 pb-2 border-b border-border-dim flex items-center gap-2">
-            <TrendingDown className="w-3 h-3 text-rose-500" /> Που θελουν να πανε
+            <TrendingDown className="w-3 h-3 text-danger" /> Που θελουν να πανε
           </h4>
           <div className="space-y-6">
             {visibleOutflow.length > 0 ? (
               visibleOutflow.map((f) => (
                 <div key={f.name} className="group cursor-pointer">
                   <div className="flex justify-between items-end mb-2.5">
-                    <span className="text-sm font-bold text-text-secondary group-hover:text-sky-700 transition-colors uppercase tracking-tight">{f.name}</span>
+                    <span className="text-sm font-bold text-text-secondary group-hover:text-primary-hover transition-colors uppercase tracking-tight">{f.name}</span>
                     <span className="text-[10px] font-extrabold text-primary bg-primary-soft border border-primary/20 px-2.5 py-1 rounded-2xl">{f.count} αιτήσεις</span>
                   </div>
                   <div className="w-full bg-muted/80 rounded-full h-1.5 overflow-hidden">

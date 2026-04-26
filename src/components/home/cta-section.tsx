@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export function CtaSection() {
   return (
-    <section className="relative overflow-hidden bg-[#F8FAFC] py-32 px-6 dark:bg-black font-sans">
+    <section className="relative overflow-hidden bg-background py-32 px-6 font-sans">
       {/* Διακριτικό glow effect στο background για αίσθηση βάθους όπως στο Magic UI */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] pointer-events-none opacity-40 mix-blend-multiply dark:mix-blend-lighten blur-[120px]">
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-sky-200 to-indigo-200 dark:from-sky-900/40 dark:to-indigo-900/40"></div>

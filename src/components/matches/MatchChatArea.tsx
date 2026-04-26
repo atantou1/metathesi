@@ -137,7 +137,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                     
                     <div className="relative">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
-                            isOnline ? 'bg-amber-50 border-amber-100 text-amber-500' : 'bg-muted border-border text-muted-foreground grayscale'
+                            isOnline ? 'bg-warning-soft border-warning/20 text-warning' : 'bg-muted border-border text-muted-foreground grayscale'
                         } border`}>
                             {getInitials(match.user.fullName)}
                         </div>
@@ -153,7 +153,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                 
                 <div className="flex items-center gap-2 sm:gap-3">
                     {isOnline ? (
-                        <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-50 text-green-600 border border-green-100 uppercase tracking-wide">
+                        <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-success-soft text-success border border-success/20 uppercase tracking-wide">
                             Ενεργο Match
                         </span>
                     ) : (
@@ -208,7 +208,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                                     </div>
                                 ) : (
                                     <div className={`flex items-end gap-2 sm:gap-3 max-w-[85%] sm:max-w-[80%] group/msg ${!isOnline ? 'opacity-70' : ''}`}>
-                                        <div className="hidden sm:flex w-8 h-8 rounded-full flex-shrink-0 border border-border shadow-soft font-bold items-center justify-center text-xs text-amber-500 bg-card">
+                                        <div className="hidden sm:flex w-8 h-8 rounded-full flex-shrink-0 border border-border shadow-soft font-bold items-center justify-center text-xs text-warning bg-card">
                                             {getInitials(match.user.fullName)}
                                         </div>
                                         <div className="flex flex-col gap-1">

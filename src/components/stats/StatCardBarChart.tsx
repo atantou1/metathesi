@@ -4,10 +4,10 @@ interface StatCardBarChartProps {
   title: string
   currentValue: string | number
   history: Record<string, number | null | undefined>
-  color: 'sky' | 'rose' | 'indigo' | 'orange' | 'slate'
+  color: 'info' | 'danger' | 'primary' | 'warning' | 'slate'
   diffLabel?: string
   diffDirection?: 'up' | 'down'
-  diffColor?: 'teal' | 'rose' | 'slate'
+  diffColor?: 'success' | 'danger' | 'slate'
 }
 
 export function StatCardBarChart({
@@ -45,15 +45,15 @@ export function StatCardBarChart({
 
   // Color mapping for Tailwind classes
   const colorMap: Record<string, { text: string; bg: string; borderHover: string; bar: string }> = {
-    sky:    { text: 'text-sky-600',    bg: 'bg-sky-50',    borderHover: 'hover:border-sky-200',    bar: 'bg-sky-500' },
-    rose:   { text: 'text-rose-500',   bg: 'bg-rose-50',   borderHover: 'hover:border-rose-200',   bar: 'bg-rose-500' },
-    indigo: { text: 'text-indigo-600', bg: 'bg-indigo-50', borderHover: 'hover:border-indigo-200', bar: 'bg-indigo-500' },
-    orange: { text: 'text-orange-500', bg: 'bg-orange-50', borderHover: 'hover:border-orange-200', bar: 'bg-orange-500' },
-    slate:  { text: 'text-text-tertiary',  bg: 'bg-surface-dim',  borderHover: 'hover:border-border-strong',  bar: 'bg-surface-dim0' },
+    info:    { text: 'text-info',    bg: 'bg-info-soft',    borderHover: 'hover:border-info/20',    bar: 'bg-info' },
+    danger:   { text: 'text-danger',   bg: 'bg-danger-soft',   borderHover: 'hover:border-danger/20',   bar: 'bg-danger' },
+    primary: { text: 'text-primary', bg: 'bg-primary-soft', borderHover: 'hover:border-primary/20', bar: 'bg-primary' },
+    warning: { text: 'text-warning', bg: 'bg-warning-soft', borderHover: 'hover:border-warning/20', bar: 'bg-warning' },
+    slate:  { text: 'text-text-tertiary',  bg: 'bg-surface-dim',  borderHover: 'hover:border-border-strong',  bar: 'bg-slate-400' },
   }
   
   const c = colorMap[color] || colorMap.slate
-  const diffClasses = diffColor === 'teal' ? 'text-teal-600 bg-teal-50' : diffColor === 'rose' ? 'text-rose-500 bg-rose-50' : 'text-text-tertiary bg-surface-dim'
+  const diffClasses = diffColor === 'success' ? 'text-success bg-success-soft' : diffColor === 'danger' ? 'text-danger bg-danger-soft' : 'text-text-tertiary bg-surface-dim'
 
   return (
     <div className={`bg-white p-6 rounded-3xl border border-border-dim shadow-sm ${c.borderHover} hover:shadow-md transition-all group flex flex-col justify-between h-48`}>

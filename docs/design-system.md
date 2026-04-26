@@ -11,10 +11,10 @@
 
 | Token               | Light          | Dark           | Tailwind Class    |
 |----------------------|----------------|----------------|-------------------|
-| `--primary`          | `#0369a1`      | `#0ea5e9`      | `bg-primary`, `text-primary` |
-| `--primary-hover`    | `#0c4a6e`      | `#0284c7`      | `bg-primary-hover` |
+| `--primary`          | `#0369a1`      | `#0369a1`      | `bg-primary`, `text-primary` |
+| `--primary-hover`    | `#0c4a6e`      | `#0c4a6e`      | `bg-primary-hover` |
 | `--primary-foreground` | `#ffffff`    | `#ffffff`      | `text-primary-foreground` |
-| `--primary-soft`     | `rgba(3,105,161, 0.1)` | `rgba(14,165,233, 0.15)` | `bg-primary-soft` |
+| `--primary-soft`     | `rgba(3,105,161, 0.1)` | `rgba(3,105,161, 0.15)` | `bg-primary-soft` |
 
 ### Surfaces
 

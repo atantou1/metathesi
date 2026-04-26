@@ -22,17 +22,17 @@ import { MatchBanner } from "@/components/dashboard/match-banner";
 
 const PopularityBadge = ({ popularity }: { popularity: number }) => {
     let label = "ΧΑΜΗΛΗ";
-    let colorClass = "bg-teal-50 text-teal-600 border-teal-100";
+    let colorClass = "bg-success-soft text-success border-success/20";
 
     if (popularity >= 2.0) {
         label = "ΜΕΓΙΣΤΗ";
-        colorClass = "bg-rose-50 text-rose-600 border-rose-100";
+        colorClass = "bg-danger-soft text-danger border-danger/20";
     } else if (popularity >= 1.2) {
         label = "ΥΨΗΛΗ";
-        colorClass = "bg-amber-50 text-amber-600 border-amber-100";
+        colorClass = "bg-warning-soft text-warning border-warning/20";
     } else if (popularity >= 0.5) {
         label = "ΜΕΣΗ";
-        colorClass = "bg-sky-50 text-sky-600 border-sky-100";
+        colorClass = "bg-primary-soft text-primary border-primary/20";
     }
 
     return (
@@ -74,11 +74,11 @@ export default async function Dashboard() {
                         <div className="lg:col-span-8 space-y-6">
                             {/* No Active Request Card */}
                             <div className="glass-card rounded-4xl overflow-hidden relative">
-                                <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-100/40 rounded-full blur-3xl pointer-events-none"></div>
+                                <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
                                 <div className="p-8 sm:p-12 flex flex-col items-center text-center relative z-10">
                                     <div className="w-24 h-24 bg-gradient-to-br from-primary/60 to-primary shadow-lg shadow-primary/20 rounded-full flex items-center justify-center mb-6 relative">
                                         <MapPin className="text-white w-12 h-12" />
-                                        <div className="absolute -top-1 -right-1 w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-white">
+                                        <div className="absolute -top-1 -right-1 w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-background">
                                             <Plus className="text-white w-5 h-5" />
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@ export default async function Dashboard() {
                             {/* Profile Summary - Only show if profile exists */}
                             {profile && (
                                 <div className="glass-card rounded-4xl h-fit overflow-hidden">
-                                    <div className="p-6 border-b border-sky-50 flex justify-between items-center bg-white/50">
+                                    <div className="p-6 border-b border-primary/10 flex justify-between items-center bg-card/50">
                                         <h3 className="text-xs font-bold text-text-secondary uppercase tracking-widest">Σύνοψη Προφίλ</h3>
                                     </div>
                                     <div className="p-6 space-y-6">
@@ -144,7 +144,7 @@ export default async function Dashboard() {
                                         </div>
                                         {/* Department */}
                                         <div className="flex items-center gap-5 group">
-                                            <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 border border-orange-100/50 group-hover:bg-orange-100/80 transition-colors">
+                                            <div className="w-12 h-12 rounded-2xl bg-warning-soft flex items-center justify-center text-warning border border-warning/20 group-hover:bg-warning/20 transition-colors">
                                                 <Building2 className="w-5 h-5" />
                                             </div>
                                             <div>
@@ -154,7 +154,7 @@ export default async function Dashboard() {
                                         </div>
                                         {/* Current Zone */}
                                         <div className="flex items-center gap-5 group">
-                                            <div className="w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center text-teal-600 border border-teal-100/50 group-hover:bg-teal-100/80 transition-colors">
+                                            <div className="w-12 h-12 rounded-2xl bg-success-soft flex items-center justify-center text-success border border-success/20 group-hover:bg-success/20 transition-colors">
                                                 <MapPin className="w-5 h-5" />
                                             </div>
                                             <div>
@@ -201,7 +201,7 @@ export default async function Dashboard() {
                         </button>
                         <div className="relative -top-5">
                             <Link href="/request/create">
-                                <button className="w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center transform transition-transform active:scale-95 border-2 border-white dark:border-card">
+                                <button className="w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center transform transition-transform active:scale-95 border-2 border-background dark:border-card">
                                     <Plus className="w-6 h-6" />
                                 </button>
                             </Link>
@@ -243,7 +243,7 @@ export default async function Dashboard() {
                         {/* Active Request Card with Embedded Scanning Block */}
                         <div className="relative overflow-hidden rounded-4xl glass-card">
                             {hasActiveMatch && <MatchBanner />}
-                            <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-100/40 rounded-full blur-3xl pointer-events-none"></div>
+                            <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
                             <div className="p-6 sm:p-8 relative z-10">
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                                     <div>
@@ -257,37 +257,37 @@ export default async function Dashboard() {
                                             <span className="text-sm text-text-tertiary">Υποβλήθηκε στις <span className="text-text-secondary font-medium">{request.createdAt.toLocaleDateString("el-GR", { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>
                                         </div>
                                     </div>
-                                    <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-100 shadow-sm shadow-sky-900/5">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-sky-500 mr-2.5 animate-pulse"></span>
+                                    <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-primary-soft text-primary border border-primary/20 shadow-sm shadow-primary/5">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2.5 animate-pulse"></span>
                                         Ενεργή
                                     </span>
                                 </div>
 
                                 {/* Scanning Block Embedded */}
-                                <div className="scanning-pulse relative overflow-hidden rounded-4xl bg-gradient-to-br from-slate-900 to-blue-900 border border-blue-800/50 shadow-xl shadow-sky-900/10 mb-8">
+                                <div className="scanning-pulse relative overflow-hidden rounded-4xl bg-gradient-to-br from-tech-card-start to-tech-card-end border border-tech-card-border shadow-xl shadow-primary/10 mb-8">
                                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-                                    <div className="absolute right-0 top-0 w-2/3 h-full bg-gradient-to-l from-blue-900/40 via-sky-900/20 to-transparent"></div>
+                                    <div className="absolute right-0 top-0 w-2/3 h-full bg-gradient-to-l from-primary/20 via-primary/10 to-transparent"></div>
                                     <div className="relative p-8 flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
                                         <div className="flex-shrink-0 relative">
                                             <div className="w-20 h-20 relative flex items-center justify-center">
-                                                <span className="absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-20 animate-ping" style={{ animationDuration: '3s' }}></span>
-                                                <span className="absolute inline-flex h-[130%] w-[130%] rounded-full bg-sky-400 opacity-10 animate-pulse"></span>
-                                                <div className="relative w-16 h-16 rounded-full bg-slate-950 border border-sky-700/50 flex items-center justify-center shadow-[0_0_20px_rgba(14,165,233,0.2)]">
-                                                    <Radio className="w-8 h-8 text-sky-400 animate-pulse" />
-                                                    <div className="absolute inset-0 rounded-full border-t-2 border-sky-500/30 animate-spin" style={{ animationDuration: '4s' }}></div>
+                                                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-20 animate-ping" style={{ animationDuration: '3s' }}></span>
+                                                <span className="absolute inline-flex h-[130%] w-[130%] rounded-full bg-primary opacity-10 animate-pulse"></span>
+                                                <div className="relative w-16 h-16 rounded-full bg-background border border-primary/50 flex items-center justify-center shadow-[0_0_20px_rgba(3,105,161,0.2)]">
+                                                    <Radio className="w-8 h-8 text-primary animate-pulse" />
+                                                    <div className="absolute inset-0 rounded-full border-t-2 border-primary/30 animate-spin" style={{ animationDuration: '4s' }}></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="flex-grow w-full pt-1">
                                             <div className="flex justify-between items-start mb-3">
                                                 <h3 className="text-lg font-semibold text-white tracking-wide">Σάρωση για Αμοιβαίες...</h3>
-                                                <span className="text-[10px] font-mono text-sky-300 bg-sky-900/40 px-2 py-1 rounded-2xl border border-sky-800/50 tracking-wider">REALTIME</span>
+                                                <span className="text-[10px] font-mono text-primary-foreground bg-primary/40 px-2 py-1 rounded-2xl border border-primary/50 tracking-wider">REALTIME</span>
                                             </div>
                                             <p className="text-text-quaternary text-sm mb-5 leading-relaxed font-light">
                                                 Ο αλγόριθμος αναζητά ευκαιρίες αμοιβαίας μετάθεσης στις Περιοχές Προτίμησής σας.
                                             </p>
                                             <div className="w-full bg-slate-800/80 rounded-full h-2 mb-4 overflow-hidden shadow-inner border border-border/50">
-                                                <div className="bg-gradient-to-r from-sky-600 via-sky-400 to-blue-500 h-full rounded-full w-3/4 animate-[shimmer_3s_infinite] relative overflow-hidden">
+                                                <div className="bg-gradient-to-r from-primary via-primary/80 to-tech-accent h-full rounded-full w-3/4 animate-[shimmer_3s_infinite] relative overflow-hidden">
                                                     <div className="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]"></div>
                                                 </div>
                                             </div>
@@ -345,7 +345,7 @@ export default async function Dashboard() {
                             <div className="p-6 space-y-6">
                                 {/* Designation */}
                                 <div className="flex items-center gap-5 group">
-                                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100/50 group-hover:bg-indigo-100/80 transition-colors">
+                                    <div className="w-12 h-12 rounded-2xl bg-info-soft flex items-center justify-center text-info border border-info/20 group-hover:bg-info/20 transition-colors">
                                         <BadgeCheck className="w-5 h-5" />
                                     </div>
                                     <div>
@@ -355,7 +355,7 @@ export default async function Dashboard() {
                                 </div>
                                 {/* Department */}
                                 <div className="flex items-center gap-5 group">
-                                    <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 border border-orange-100/50 group-hover:bg-orange-100/80 transition-colors">
+                                    <div className="w-12 h-12 rounded-2xl bg-warning-soft flex items-center justify-center text-warning border border-warning/20 group-hover:bg-warning/20 transition-colors">
                                         <Building2 className="w-5 h-5" />
                                     </div>
                                     <div>
@@ -365,7 +365,7 @@ export default async function Dashboard() {
                                 </div>
                                 {/* Current Zone */}
                                 <div className="flex items-center gap-5 group">
-                                    <div className="w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center text-teal-600 border border-teal-100/50 group-hover:bg-teal-100/80 transition-colors">
+                                    <div className="w-12 h-12 rounded-2xl bg-success-soft flex items-center justify-center text-success border border-success/20 group-hover:bg-success/20 transition-colors">
                                         <MapPin className="w-5 h-5" />
                                     </div>
                                     <div>

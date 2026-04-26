@@ -35,7 +35,7 @@ export function MainNav() {
                         "px-5 py-2.5 text-sm font-medium rounded-2xl transition-colors",
                         link.active
                             ? "text-primary bg-primary-soft dark:text-primary dark:bg-primary-soft"
-                            : "text-text-tertiary hover:text-foreground hover:bg-muted dark:text-text-quaternary dark:hover:text-foreground dark:hover:bg-muted"
+                            : "text-text-secondary hover:text-primary hover:bg-muted dark:text-text-secondary dark:hover:text-primary dark:hover:bg-muted"
                     )}
                 >
                     {link.label}

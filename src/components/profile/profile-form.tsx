@@ -139,7 +139,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
 
     if (!isEditing && initialData) {
         return (
-            <Card className="w-full max-w-2xl mx-auto border-t-4 border-t-blue-500 shadow-lg">
+            <Card className="w-full max-w-2xl mx-auto border-t-4 border-t-primary shadow-lg">
                 <CardHeader>
                     <div className="flex justify-between items-center">
                         <div>

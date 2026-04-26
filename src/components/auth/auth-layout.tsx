@@ -38,9 +38,9 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
                         </p>
                         <div className="mt-12 flex justify-center gap-4">
                             <div className="flex -space-x-3">
-                                <div className="w-10 h-10 rounded-full border-2 border-primary bg-sky-700 flex items-center justify-center text-xs text-white">AM</div>
-                                <div className="w-10 h-10 rounded-full border-2 border-primary bg-sky-600 flex items-center justify-center text-xs text-white">BR</div>
-                                <div className="w-10 h-10 rounded-full border-2 border-primary bg-sky-500 flex items-center justify-center text-xs text-white">CK</div>
+                                <div className="w-10 h-10 rounded-full border-2 border-primary bg-primary-hover flex items-center justify-center text-xs text-white">AM</div>
+                                <div className="w-10 h-10 rounded-full border-2 border-primary bg-primary flex items-center justify-center text-xs text-white">BR</div>
+                                <div className="w-10 h-10 rounded-full border-2 border-primary bg-primary/80 flex items-center justify-center text-xs text-white">CK</div>
                             </div>
                             <div className="flex items-center text-sm text-foreground/80 font-medium">
                                 <Star className="w-4 h-4 text-yellow-400 mr-1 fill-yellow-400" />

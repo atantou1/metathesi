@@ -26,10 +26,10 @@ export function AnalyticsHeader({
   
   // Difficulty Mapping
   const diffMap: Record<string, { label: string; color: string; icon: string }> = {
-    Extreme:   { label: 'Υψηλός Ανταγωνισμός', color: 'text-rose-600 bg-rose-50 border-rose-100', icon: '🔴' },
-    High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-amber-600 bg-amber-50 border-amber-100', icon: '🟠' },
-    Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-sky-600 bg-sky-50 border-sky-100', icon: '🔵' },
-    Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-teal-600 bg-teal-50 border-teal-100', icon: '🟢' },
+    Extreme:   { label: 'Υψηλός Ανταγωνισμός', color: 'text-danger bg-danger-soft border-danger/20', icon: '🔴' },
+    High:      { label: 'Αυξημένος Ανταγωνισμός',  color: 'text-warning bg-warning-soft border-warning/20', icon: '🟠' },
+    Moderate:  { label: 'Υπολογίσιμος Ανταγωνισμός', color: 'text-info bg-info-soft border-info/20', icon: '🔵' },
+    Accessible: { label: 'Ήπιος Ανταγωνισμός', color: 'text-success bg-success-soft border-success/20', icon: '🟢' },
     Unknown:   { label: 'Χωρίς Δεδομένα', color: 'text-text-tertiary bg-surface-dim border-border', icon: '⚪' },
   }
   
@@ -58,7 +58,7 @@ export function AnalyticsHeader({
           <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">Ικανοποιηση Κλαδου:</span>
           <span className="text-base font-black text-primary">{satisfactionRate.toFixed(1)}%</span>
           {satisfactionTrend !== 0 && (
-            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-2xl flex items-center border shadow-sm ${satisfactionTrend >= 0 ? 'text-teal-600 bg-teal-50 border-teal-100' : 'text-rose-600 bg-rose-50 border-rose-100'}`}>
+            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-2xl flex items-center border shadow-sm ${satisfactionTrend >= 0 ? 'text-success bg-success-soft border-success/20' : 'text-danger bg-danger-soft border-danger/20'}`}>
               {satisfactionTrend >= 0 ? '+' : ''}{satisfactionTrend.toFixed(1)}% 
               <svg className={`w-3 h-3 ml-0.5 ${satisfactionTrend < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
             </span>

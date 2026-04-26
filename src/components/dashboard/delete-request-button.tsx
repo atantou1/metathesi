@@ -27,7 +27,7 @@ export function DeleteRequestButton() {
             <button
                 onClick={() => setShowConfirm(true)}
                 disabled={isPending}
-                className="flex-1 sm:flex-none bg-white border border-rose-100 hover:bg-rose-50 text-rose-600 px-8 py-3.5 rounded-2xl text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
+                className="flex-1 sm:flex-none bg-card border border-danger/20 hover:bg-danger-soft text-danger px-8 py-3.5 rounded-2xl text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
             >
                 {isPending ? "Διαγραφή..." : "Διαγραφή"}
             </button>
@@ -41,7 +41,7 @@ export function DeleteRequestButton() {
                     >
                         {/* Header with Close Button */}
                         <div className="p-6 flex justify-between items-start">
-                            <div className="w-12 h-12 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-500">
+                            <div className="w-12 h-12 rounded-2xl bg-danger-soft flex items-center justify-center text-danger">
                                 <AlertCircle className="w-6 h-6" />
                             </div>
                             <button 
@@ -71,7 +71,7 @@ export function DeleteRequestButton() {
                             <button
                                 onClick={handleDelete}
                                 disabled={isPending}
-                                className="flex-1 px-6 py-3 rounded-2xl bg-rose-600 text-white font-semibold text-sm hover:bg-rose-700 transition-colors shadow-lg shadow-rose-200 flex items-center justify-center cursor-pointer"
+                                className="flex-1 px-6 py-3 rounded-2xl bg-danger text-danger-foreground font-semibold text-sm hover:bg-danger/90 transition-colors shadow-lg shadow-danger/20 flex items-center justify-center cursor-pointer"
                             >
                                 {isPending ? "Διαγραφή..." : "Ναι, Διαγραφή"}
                             </button>

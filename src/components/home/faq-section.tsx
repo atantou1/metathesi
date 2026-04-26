@@ -58,7 +58,7 @@ const faqs = [
 
 const FAQItem = ({ faq, isOpen, toggleOpen }: { faq: any; isOpen: boolean; toggleOpen: () => void }) => {
   return (
-    <div className={`border border-border rounded-2xl transition-all duration-200 ${isOpen ? "bg-muted/50 border-primary/20 shadow-soft" : "bg-white hover:bg-muted/30"}`}>
+    <div className={`border border-border rounded-2xl transition-all duration-200 ${isOpen ? "bg-muted/50 border-primary/20 shadow-soft" : "bg-surface hover:bg-muted/30"}`}>
       <button
         type="button"
         className="flex w-full items-start justify-between gap-[16px] p-[16px] text-left focus:outline-none rounded-2xl"
@@ -101,7 +101,7 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="bg-white py-24 px-6 dark:bg-black font-sans">
+    <section className="bg-surface py-24 px-6 font-sans">
       <div className="mx-auto max-w-[900px]">
         {/* Επικεφαλίδα */}
         <div className="mb-16 flex flex-col items-center text-center">

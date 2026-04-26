@@ -7,11 +7,13 @@
 @theme inline {
   /* Colors — Core */
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-hover: var(--primary-hover);
   --color-primary-soft: var(--primary-soft);
+  --color-primary-bright: var(--primary-bright);
   
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -44,11 +46,26 @@
   --color-border-strong: var(--border-strong);
   
   --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-success-soft: var(--success-soft);
+  
   --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
   --color-warning-soft: var(--warning-soft);
+  
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-danger-soft: var(--danger-soft);
+  
   --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-info-soft: var(--info-soft);
+  
+  /* Tech Card Palette */
+  --color-tech-card-start: var(--tech-card-start);
+  --color-tech-card-end: var(--tech-card-end);
+  --color-tech-card-border: var(--tech-card-border);
+  --color-tech-accent: var(--tech-accent);
 
   /* Fonts */
   --font-sans: var(--font-geist-sans);
@@ -66,13 +83,15 @@
 
 :root {
   --background: #F8FAFC;
+  --surface: #ffffff;
   --foreground: #0F172A;
   
   /* Primary - Unified Blue */
   --primary: #0369a1;
-  --primary-hover: #0c4a6e;
+  --primary-hover: #075985;
   --primary-foreground: #ffffff;
-  --primary-soft: rgba(3, 105, 161, 0.1);
+  --primary-soft: rgba(3, 105, 161, 0.15);
+  --primary-bright: #38bdf8;
 
   --card: #ffffff;
   --card-foreground: #0F172A;
@@ -89,6 +108,12 @@
   --border: #e2e8f0;
   --input: #e2e8f0;
   --ring: #0369a1;
+
+  /* Tech Card Defaults */
+  --tech-card-start: #0f172a;
+  --tech-card-end: #1e3a8a;
+  --tech-card-border: rgba(30, 58, 138, 0.5);
+  --tech-accent: #3b82f6;
   
   --destructive: #ef4444;
   
@@ -111,21 +136,32 @@
 
   /* Extended: Status */
   --success: #0d9488;
+  --success-foreground: #ffffff;
   --success-soft: rgba(13, 148, 136, 0.1);
+  
   --warning: #d97706;
+  --warning-foreground: #ffffff;
   --warning-soft: rgba(217, 119, 6, 0.1);
-  --info: #0ea5e9;
-  --info-soft: rgba(14, 165, 233, 0.1);
+  
+  --danger: #e11d48;
+  --danger-foreground: #ffffff;
+  --danger-soft: rgba(225, 29, 72, 0.1);
+  
+  --info: #0369a1;
+  --info-foreground: #ffffff;
+  --info-soft: rgba(3, 105, 161, 0.1);
 }
 
 .dark {
   --background: #020617;
+  --surface: #0f172a;
   --foreground: #F8FAFC;
   
-  --primary: #0ea5e9;
-  --primary-hover: #0284c7;
+  --primary: #0369a1;
+  --primary-hover: #0c4a6e;
   --primary-foreground: #ffffff;
-  --primary-soft: rgba(14, 165, 233, 0.15);
+  --primary-soft: rgba(3, 105, 161, 0.15);
+  --primary-bright: #0ea5e9;
 
   --card: #0f172a;
   --card-foreground: #F8FAFC;
@@ -141,7 +177,13 @@
   
   --border: #1e293b;
   --input: #1e293b;
-  --ring: #0ea5e9;
+  --ring: #0369a1;
+
+  /* Tech Card Dark */
+  --tech-card-start: #020617;
+  --tech-card-end: #1e3a8a;
+  --tech-card-border: rgba(30, 58, 138, 0.5);
+  --tech-accent: #38bdf8;
   
   --destructive: #f43f5e;
 
@@ -162,10 +204,19 @@
 
   /* Extended: Status */
   --success: #2dd4bf;
+  --success-foreground: #042f2e;
   --success-soft: rgba(45, 212, 191, 0.15);
+  
   --warning: #fbbf24;
+  --warning-foreground: #451a03;
   --warning-soft: rgba(251, 191, 36, 0.15);
+  
+  --danger: #fb7185;
+  --danger-foreground: #4c0519;
+  --danger-soft: rgba(251, 113, 133, 0.15);
+  
   --info: #38bdf8;
+  --info-foreground: #082f49;
   --info-soft: rgba(56, 189, 248, 0.15);
 }
 

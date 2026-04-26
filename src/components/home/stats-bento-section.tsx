@@ -4,7 +4,7 @@ import React from "react"
 
 export function StatsBentoSection() {
   return (
-    <section className="bg-surface-dim py-24 px-6 dark:bg-background font-sans">
+    <section className="bg-background py-24 px-6 font-sans">
       <div className="mx-auto max-w-[1200px]">
         {/* Επικεφαλίδα (Solution Section) */}
         <div className="mb-16 flex flex-col items-center text-center">
