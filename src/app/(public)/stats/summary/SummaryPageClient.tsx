@@ -427,7 +427,7 @@ export default function SummaryPageClient() {
     <div className="p-4 md:p-8 text-foreground antialiased min-h-screen bg-background font-inter">
       <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8 pt-20 md:pt-24">
         {/* --- Header with Seamless Dropdowns --- */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
+        <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl">
           <div>
             <div className="flex items-center space-x-3 mb-3">
               <Link
@@ -495,7 +495,7 @@ export default function SummaryPageClient() {
         ) : loading ? (
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
                 {[...Array(12)].map((_, i) => (
-                    <div key={i} className="bg-white p-5 rounded-3xl border border-border/60 shadow-sm h-56 animate-pulse">
+                    <div key={i} className="bg-white p-5 rounded-4xl border border-border/60 shadow-sm h-56 animate-pulse">
                         <div className="h-4 bg-muted rounded w-1/2 mb-4"></div>
                         <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
                         <div className="h-20 bg-surface-dim rounded mt-auto"></div>
@@ -518,9 +518,9 @@ export default function SummaryPageClient() {
                     : "text-rose-700 bg-rose-50 border border-rose-100/50";
 
                 return (
-                  <div
+                    <div
                     key={kpi.id}
-                    className="bg-card p-5 rounded-2xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
+                    className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
                   >
                     <div>
                       <div className="flex justify-between items-start mb-1 h-8">
@@ -648,7 +648,7 @@ export default function SummaryPageClient() {
 
             {/* --- Comparison Chart (Clean) --- */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl flex flex-col">
+              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col">
                 <div className="flex justify-between items-start mb-6">
                   <div>
                     <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">
@@ -755,7 +755,7 @@ export default function SummaryPageClient() {
             </div>
 
             {/* --- Rankings Area (Top 5) --- */}
-            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
+            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-border-dim pb-6">
                 <div>
                   <h3 className="text-xl font-bold text-foreground tracking-tight flex items-center gap-3">

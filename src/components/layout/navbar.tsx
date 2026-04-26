@@ -18,6 +18,7 @@ import { MobileMenu } from "@/components/layout/mobile-menu"
 import { NotificationBellClient } from "@/components/layout/NotificationBellClient"
 import { Logo } from "@/components/logo"
 import { FloatingNavWrapper } from "@/components/layout/floating-nav-wrapper"
+import { ThemeToggleClient } from "@/components/layout/ThemeToggleClient"
 
 export async function Navbar() {
     const session = await auth()
@@ -82,25 +83,8 @@ export async function Navbar() {
 
                                         <div className="h-px bg-border-dim my-1"></div>
 
-                                        {/* Light/Dark Toggle (Visual Only) */}
-                                        <div className="flex items-center justify-between px-4 py-2.5 select-none hover:bg-muted transition-colors rounded-sm">
-                                            <div className="flex items-center gap-3 text-sm text-text-secondary">
-                                                <Moon className="w-5 h-5" />
-                                                Εναλλαγή Dark mode
-                                            </div>
-                                            <div className="relative inline-block w-10 mr-2 align-middle transition duration-200 ease-in">
-                                                <input
-                                                    type="checkbox"
-                                                    name="toggle"
-                                                    id="toggle"
-                                                    className="peer absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-border-strong right-5 checked:right-0 duration-200 ease-in checked:border-primary"
-                                                />
-                                                <label
-                                                    htmlFor="toggle"
-                                                    className="block overflow-hidden h-5 rounded-full bg-border-strong cursor-pointer peer-checked:bg-primary transition-colors"
-                                                ></label>
-                                            </div>
-                                        </div>
+                                        {/* Light/Dark Toggle */}
+                                        <ThemeToggleClient />
 
                                         <div className="h-px bg-border-dim my-1"></div>
 

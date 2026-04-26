@@ -25,7 +25,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
   const hasMore = inflow.length > 5 || outflow.length > 5
 
   return (
-    <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
+    <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-border pb-6 font-sans">
         <div>
           <h3 className="text-xl font-extrabold text-foreground tracking-tight flex items-center gap-3">

@@ -215,7 +215,7 @@ export default function ZoneDetailedStatsClient({
       <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8 pt-20 md:pt-24">
         
         {/* --- Premium Header --- */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
+        <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl">
           <div className="flex-1">
             <div className="flex items-center space-x-3 mb-4">
               <Link
@@ -277,9 +277,9 @@ export default function ZoneDetailedStatsClient({
             const DiffIcon = isPositive ? TrendingUp : TrendingDown;
 
             return (
-              <div
+                  <div
                 key={kpi.id}
-                className="bg-card p-5 rounded-2xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
+                className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
               >
                 <div>
                   <div className="flex justify-between items-start mb-1 h-8">
@@ -346,7 +346,7 @@ export default function ZoneDetailedStatsClient({
 
         {/* --- Main Charts --- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl flex flex-col h-[400px]">
+            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col h-[400px]">
                 <div className="flex justify-between items-start mb-6">
                     <div>
                         <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">Σύγκριση Μορίων & Βάσεων</h3>
@@ -367,7 +367,7 @@ export default function ZoneDetailedStatsClient({
                 </div>
             </div>
 
-            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl flex flex-col h-[400px]">
+            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col h-[400px]">
                 <div className="flex justify-between items-start mb-6">
                     <div>
                         <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">Ισοζύγιο Προσφοράς & Ζήτησης</h3>
