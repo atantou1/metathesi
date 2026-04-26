@@ -86,8 +86,8 @@ export function Step1Identity() {
         <div className="glass-card p-6 sm:p-8 relative overflow-hidden">
             <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-50 rounded-full blur-3xl pointer-events-none"></div>
 
-            <h2 className="text-lg font-bold text-slate-800 tracking-tight flex items-center gap-3 mb-6">
-                <div className="p-2 rounded-xl bg-sky-50 text-[#0369A1]">
+            <h2 className="text-lg font-bold text-foreground tracking-tight flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-2xl bg-primary-soft text-primary">
                     <UserCircle className="w-5 h-5" />
                 </div>
                 Επαγγελματική Ταυτότητα & Τρέχουσα Θέση
@@ -101,15 +101,15 @@ export function Step1Identity() {
                         name="fullName"
                         render={({ field }) => (
                             <FormItem className="space-y-2">
-                                <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Ονομα</FormLabel>
+                                <FormLabel className="block text-[10px] font-bold text-muted-foreground uppercase tracking-widest pl-1">Ονομα</FormLabel>
                                 <div className="relative">
-                                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                     <FormControl>
                                         <input
                                             {...field}
                                             type="text"
                                             placeholder="π.χ. Νικόλαος Παππάς"
-                                            className="form-input pl-10 bg-slate-50 border-slate-200"
+                                            className="form-input pl-10 bg-muted border-border"
                                         />
                                     </FormControl>
                                 </div>
@@ -128,10 +128,10 @@ export function Step1Identity() {
                             <FormItem className="space-y-2">
                                 <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Βαθμιδα</FormLabel>
                                 <div className="relative">
-                                    <Layers className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0369A1]" />
+                                    <Layers className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                                     <FormControl>
                                         <select
-                                            className="form-input pl-10 appearance-none cursor-pointer bg-slate-50 border-slate-200"
+                                            className="form-input pl-10 appearance-none cursor-pointer bg-muted border-border"
                                             value={field.value ? String(field.value) : ""}
                                             onChange={(e) => field.onChange(Number(e.target.value))}
                                         >
@@ -143,7 +143,7 @@ export function Step1Identity() {
                                             ))}
                                         </select>
                                     </FormControl>
-                                    <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                                    <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                                 </div>
                                 <FormMessage />
                             </FormItem>
@@ -159,24 +159,24 @@ export function Step1Identity() {
                         render={({ field }) => (
                             <FormItem className="space-y-2">
                                 <FormLabel className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Ειδικοτητα</FormLabel>
-                                <div className="flex rounded-[1rem] bg-slate-50 border border-slate-200 focus-within:border-[#0369a1] focus-within:ring-[3px] focus-within:ring-sky-500/15 transition-all overflow-hidden focus-within:bg-white">
-                                    <div className="relative w-24 flex-shrink-0 border-r border-slate-200 bg-slate-50">
+                                <div className="flex rounded-2xl bg-muted border border-border focus-within:border-primary focus-within:ring-[3px] focus-within:ring-primary/15 transition-all overflow-hidden focus-within:bg-card">
+                                    <div className="relative w-24 flex-shrink-0 border-r border-border bg-muted">
                                         <select
                                             value={specialtyCategory}
                                             onChange={(e) => setSpecialtyCategory(e.target.value)}
-                                            className="w-full h-full pl-4 pr-8 py-[0.875rem] text-sm font-medium text-slate-700 bg-transparent appearance-none cursor-pointer focus:outline-none"
+                                            className="w-full h-full pl-4 pr-8 py-[0.875rem] text-sm font-medium text-foreground bg-transparent appearance-none cursor-pointer focus:outline-none"
                                         >
                                             <option value="PE">ΠΕ</option>
                                             <option value="TE">ΤΕ</option>
                                             <option value="DE">ΔΕ</option>
                                         </select>
-                                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                                     </div>
                                     <div className="relative flex-grow">
                                         <FormControl>
                                             <select
                                                 disabled={!selectedDivisionId}
-                                                className="w-full h-full pl-4 pr-10 py-[0.875rem] text-sm bg-transparent appearance-none cursor-pointer focus:outline-none text-slate-900"
+                                                className="w-full h-full pl-4 pr-10 py-[0.875rem] text-sm bg-transparent appearance-none cursor-pointer focus:outline-none text-foreground"
                                                 value={field.value ? String(field.value) : ""}
                                                 onChange={(e) => field.onChange(Number(e.target.value))}
                                             >
@@ -197,7 +197,7 @@ export function Step1Identity() {
                     />
                 </div>
 
-                <div className="md:col-span-2 border-t border-slate-100 my-2"></div>
+                <div className="md:col-span-2 border-t border-border my-2"></div>
 
                 {/* Region (Περιφέρεια) */}
                 <div>
@@ -210,7 +210,7 @@ export function Step1Identity() {
                                 <div className="relative">
                                     <FormControl>
                                         <select
-                                            className="form-input appearance-none cursor-pointer bg-slate-50 border-slate-200"
+                                            className="form-input appearance-none cursor-pointer bg-muted border-border"
                                             value={field.value ? String(field.value) : ""}
                                             onChange={(e) => field.onChange(e.target.value)}
                                         >

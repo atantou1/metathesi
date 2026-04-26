@@ -40,21 +40,21 @@ export function AdminSidebar() {
         <motion.aside
             initial={false}
             animate={{ width: isOpen ? 260 : 64 }}
-            className="flex flex-col bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 h-screen sticky top-0 transition-all duration-300 ease-in-out z-50 shadow-sm overflow-hidden"
+            className="flex flex-col bg-card dark:bg-slate-950 border-r border-border h-screen sticky top-0 transition-all duration-300 ease-in-out z-50 shadow-soft overflow-hidden"
         >
             {/* Sidebar Header */}
             <div className="h-14 flex items-center px-4 shrink-0">
                 <Link href="/admin" className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#0369A1] flex items-center justify-center text-white shrink-0">
+                    <div className="w-8 h-8 rounded-2xl bg-primary flex items-center justify-center text-white shrink-0">
                         <ShieldCheck className="w-5 h-5" />
                     </div>
                     {isOpen && (
                         <motion.span 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="font-bold text-slate-900 dark:text-white tracking-tight"
+                            className="font-bold text-foreground dark:text-white tracking-tight"
                         >
-                            Admin<span className="text-[#0369A1]">Panel</span>
+                            Admin<span className="text-primary">Panel</span>
                         </motion.span>
                     )}
                 </Link>
@@ -69,15 +69,15 @@ export function AdminSidebar() {
                             key={item.href} 
                             href={item.href}
                             className={cn(
-                                "flex items-center gap-3 px-3 py-2 rounded-lg transition-all group relative",
+                                "flex items-center gap-3 px-3 py-2 rounded-2xl transition-all group relative",
                                 isActive 
-                                    ? "bg-slate-100 dark:bg-slate-800 text-[#0369A1] font-semibold" 
-                                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200"
+                                    ? "bg-muted dark:bg-slate-800 text-primary font-semibold" 
+                                    : "text-muted-foreground dark:text-slate-400 hover:bg-muted dark:hover:bg-slate-900 hover:text-foreground dark:hover:text-slate-200"
                             )}
                         >
                             <item.icon className={cn(
                                 "w-4.5 h-4.5 shrink-0",
-                                isActive ? "text-[#0369A1]" : "text-slate-400 group-hover:text-slate-600 transition-colors"
+                                isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"
                             )} />
                             {isOpen && (
                                 <motion.span
@@ -89,7 +89,7 @@ export function AdminSidebar() {
                                 </motion.span>
                             )}
                             {!isOpen && isActive && (
-                                <div className="absolute left-0 top-2 bottom-2 w-1 bg-[#0369A1] rounded-r-full" />
+                                <div className="absolute left-0 top-2 bottom-2 w-1 bg-primary rounded-r-full" />
                             )}
                         </Link>
                     )
@@ -97,16 +97,16 @@ export function AdminSidebar() {
             </div>
 
             {/* Sidebar Footer with User Info */}
-            <div className="p-2 border-t border-slate-100 dark:border-slate-800">
+            <div className="p-2 border-t border-border dark:border-slate-800">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <button className={cn(
-                            "w-full flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all outline-none",
+                            "w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-muted dark:hover:bg-slate-800 transition-all outline-none",
                             !isOpen && "justify-center"
                         )}>
-                            <Avatar className="w-8 h-8 rounded-lg shadow-sm">
+                            <Avatar className="w-8 h-8 rounded-2xl shadow-sm">
                                 <AvatarImage src={session?.user?.image || undefined} />
-                                <AvatarFallback className="bg-slate-100 text-slate-600 text-[10px] font-bold rounded-lg">
+                                <AvatarFallback className="bg-muted text-muted-foreground text-[10px] font-bold rounded-2xl">
                                     {session?.user?.name?.substring(0, 2).toUpperCase() || "AD"}
                                 </AvatarFallback>
                             </Avatar>
@@ -116,15 +116,15 @@ export function AdminSidebar() {
                                     animate={{ opacity: 1 }}
                                     className="flex-1 text-left min-w-0"
                                 >
-                                    <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                                    <p className="text-xs font-bold text-foreground dark:text-white truncate">
                                         {session?.user?.name}
                                     </p>
-                                    <p className="text-[10px] text-slate-500 truncate">
+                                    <p className="text-[10px] text-muted-foreground truncate">
                                         {session?.user?.email}
                                     </p>
                                 </motion.div>
                             )}
-                            {isOpen && <MoreHorizontal className="w-4 h-4 text-slate-400 shrink-0" />}
+                            {isOpen && <MoreHorizontal className="w-4 h-4 text-muted-foreground shrink-0" />}
                         </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-56 mb-2">

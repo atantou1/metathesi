@@ -10,7 +10,7 @@ export function SidebarTrigger() {
   return (
     <button
       onClick={toggle}
-      className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+      className="p-2 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
       aria-label="Toggle Sidebar"
     >
       <PanelLeft className="w-5 h-5" />

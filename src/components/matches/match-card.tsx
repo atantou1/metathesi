@@ -74,7 +74,7 @@ export function MatchCard({ match }: { match: MatchResult }) {
             <div className="p-4 space-y-4">
                 <div className="grid grid-cols-2 gap-3 text-sm">
                     {/* Location / Organic */}
-                    <div className="bg-slate-50 p-2.5 rounded-lg">
+                    <div className="bg-slate-50 p-2.5 rounded-2xl">
                         <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Οργανική</p>
                         <div className="flex items-center gap-1 text-slate-700 font-medium">
                             <MapPin className="w-3.5 h-3.5 text-blue-600" />
@@ -83,7 +83,7 @@ export function MatchCard({ match }: { match: MatchResult }) {
                     </div>
 
                     {/* Rank */}
-                    <div className={`${rankStyle.bg} border p-2.5 rounded-lg`}>
+                    <div className={`${rankStyle.bg} border p-2.5 rounded-2xl`}>
                         <p className={`text-[10px] font-bold uppercase tracking-wider mb-1 ${rankStyle.label}`}>Επιλογή</p>
                         <div className={`flex items-center gap-1 font-bold ${rankStyle.text}`}>
                             {rankStyle.icon}
@@ -109,7 +109,7 @@ export function MatchCard({ match }: { match: MatchResult }) {
             <div className="p-4 pt-0">
                 <a
                     href={`mailto:${match.user.email}`}
-                    className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm shadow-blue-600/30"
+                    className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-2xl transition-colors flex items-center justify-center gap-2 shadow-sm shadow-blue-600/30"
                 >
                     <MessageCircle className="w-4 h-4" />
                     Επικοινωνία

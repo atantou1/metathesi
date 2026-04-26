@@ -27,12 +27,12 @@ import { MigrationFlows } from "@/components/stats/MigrationFlows";
 // --- Design System Colors ---
 const theme = {
   bars: {
-    past: "#cbd5e1", // slate-300
-    current: "#0369a1", // sky-700
+    past: "#cbd5e1", // slate-300 (data viz)
+    current: "var(--primary)",
   },
   labels: {
-    past: "#94a3b8", // slate-400
-    current: "#0284c7", // sky-600
+    past: "#94a3b8", // slate-400 (data viz)
+    current: "var(--primary-hover)",
   },
 };
 
@@ -211,16 +211,16 @@ export default function ZoneDetailedStatsClient({
   }));
 
   return (
-    <div className="p-4 md:p-8 text-slate-900 antialiased min-h-screen bg-[#f8fafc] font-sans">
+    <div className="p-4 md:p-8 text-foreground antialiased min-h-screen bg-background font-sans">
       <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8 pt-20 md:pt-24">
         
         {/* --- Premium Header --- */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem]">
+        <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
           <div className="flex-1">
             <div className="flex items-center space-x-3 mb-4">
               <Link
                 href={`/stats?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialtyCode)}`}
-                className="text-slate-500 hover:text-sky-700 hover:bg-sky-50 transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-xl border border-transparent hover:border-sky-100 cursor-pointer"
+                className="text-muted-foreground hover:text-primary hover:bg-primary-soft transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-2xl border border-transparent hover:border-primary/20 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4 mr-1.5" /> Επιστροφή στον Χάρτη
               </Link>
@@ -279,7 +279,7 @@ export default function ZoneDetailedStatsClient({
             return (
               <div
                 key={kpi.id}
-                className="bg-white p-5 rounded-[1.5rem] border border-slate-200/60 shadow-sm hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between h-56 group"
+                className="bg-card p-5 rounded-2xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
               >
                 <div>
                   <div className="flex justify-between items-start mb-1 h-8">
@@ -302,14 +302,14 @@ export default function ZoneDetailedStatsClient({
                     </div>
 
                     {kpi.diff !== 0 && (
-                      <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-md flex items-center h-fit ${
+                      <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${
                         kpi.diff === 0 ? "text-slate-500 bg-slate-100" : isGood ? "text-emerald-700 bg-emerald-50 border border-emerald-100/50" : "text-rose-700 bg-rose-50 border border-rose-100/50"
                       }`}>
                         {isPositive ? "+" : ""}{kpi.diff}% <DiffIcon className="w-3 h-3 ml-0.5" strokeWidth={2.5} />
                       </div>
                     )}
                   </div>
-                  <div className="text-3xl mt-1 font-extrabold tracking-tight text-slate-800">{kpi.value}</div>
+                  <div className="text-3xl mt-1 font-extrabold tracking-tight text-foreground">{kpi.value}</div>
                 </div>
 
                 <div className="h-20 w-full mt-auto">
@@ -346,43 +346,43 @@ export default function ZoneDetailedStatsClient({
 
         {/* --- Main Charts --- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            <div className="bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem] flex flex-col h-[400px]">
+            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl flex flex-col h-[400px]">
                 <div className="flex justify-between items-start mb-6">
                     <div>
-                        <h3 className="text-lg font-bold text-slate-800 tracking-tight mb-1">Σύγκριση Μορίων & Βάσεων</h3>
-                        <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">ΠΩΣ ΚΙΝΗΘΗΚΕ Η ΒΑΣΗ ΣΕ ΣΧΕΣΗ ΜΕ ΤΟΥΣ ΑΙΤΟΥΝΤΕΣ</p>
+                        <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">Σύγκριση Μορίων & Βάσεων</h3>
+                        <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">ΠΩΣ ΚΙΝΗΘΗΚΕ Η ΒΑΣΗ ΣΕ ΣΧΕΣΗ ΜΕ ΤΟΥΣ ΑΙΤΟΥΝΤΕΣ</p>
                     </div>
                 </div>
                 <div className="flex-1 w-full mt-4">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={comparisonData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#64748b", fontWeight: 600 }} dy={10} />
-                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "var(--muted-foreground)", fontWeight: 600 }} dy={10} />
+                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} />
                       <RechartsTooltip contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" }} />
-                      <Bar dataKey="base" name="Βάση" fill="#0369a1" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="base" name="Βάση" fill="var(--primary)" radius={[4, 4, 0, 0]} />
                       <Bar dataKey="avgApp" name="Μ.Ο. Αιτούντων" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
             </div>
 
-            <div className="bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem] flex flex-col h-[400px]">
+            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl flex flex-col h-[400px]">
                 <div className="flex justify-between items-start mb-6">
                     <div>
-                        <h3 className="text-lg font-bold text-slate-800 tracking-tight mb-1">Ισοζύγιο Προσφοράς & Ζήτησης</h3>
-                        <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">ΣΥΓΚΡΙΣΗ ΑΙΤΗΣΕΩΝ ΜΕ ΠΡΑΓΜΑΤΙΚΕΣ ΘΕΣΕΙΣ</p>
+                        <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">Ισοζύγιο Προσφοράς & Ζήτησης</h3>
+                        <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">ΣΥΓΚΡΙΣΗ ΑΙΤΗΣΕΩΝ ΜΕ ΠΡΑΓΜΑΤΙΚΕΣ ΘΕΣΕΙΣ</p>
                     </div>
                 </div>
                 <div className="flex-1 w-full mt-4">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={balanceData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#64748b", fontWeight: 600 }} dy={10} />
-                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "var(--muted-foreground)", fontWeight: 600 }} dy={10} />
+                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} />
                       <RechartsTooltip contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" }} />
                       <Bar dataKey="demand" name="Ζήτηση" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="success" name="Μεταθέσεις" fill="#0369a1" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="success" name="Μεταθέσεις" fill="var(--primary)" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

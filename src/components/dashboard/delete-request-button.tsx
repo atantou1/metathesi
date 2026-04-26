@@ -27,7 +27,7 @@ export function DeleteRequestButton() {
             <button
                 onClick={() => setShowConfirm(true)}
                 disabled={isPending}
-                className="flex-1 sm:flex-none bg-white border border-rose-100 hover:bg-rose-50 text-rose-600 px-8 py-3.5 rounded-[1.25rem] text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
+                className="flex-1 sm:flex-none bg-white border border-rose-100 hover:bg-rose-50 text-rose-600 px-8 py-3.5 rounded-2xl text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
             >
                 {isPending ? "Διαγραφή..." : "Διαγραφή"}
             </button>

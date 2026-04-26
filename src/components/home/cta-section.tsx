@@ -14,12 +14,12 @@ export function CtaSection() {
 
       <div className="relative z-10 mx-auto max-w-4xl flex flex-col items-center text-center">
         {/* Υπότιτλος */}
-        <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-[#0369a1]">
+        <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">
           Ετοιμοι να ξεκινησετε;
         </h4>
 
         {/* Κύριος Τίτλος */}
-        <h2 className="mb-8 text-[48px] font-semibold tracking-tight text-slate-950 leading-[48px] dark:text-white">
+        <h2 className="mb-8 text-[48px] font-semibold tracking-tight text-foreground leading-[48px] dark:text-white">
           Γίνετε μέλος της κοινότητας σήμερα.
         </h2>
 
@@ -33,7 +33,7 @@ export function CtaSection() {
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 rounded-xl bg-[#0369a1] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-sky-900/20 hover:bg-sky-800 transition-colors"
+            className="flex items-center gap-2 rounded-2xl bg-primary px-8 py-4 text-base font-semibold text-white shadow-soft hover:bg-primary-hover transition-colors"
           >
             <span className="material-symbols-outlined text-[20px]">
               rocket_launch

@@ -8,7 +8,7 @@ export function Footer() {
                 <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
                     <div className="col-span-1 md:col-span-2">
                         <div className="mb-6 flex items-center gap-2">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-primary text-white">
                                 <span className="material-symbols-outlined text-sm">sync_alt</span>
                             </div>
                             <span className="text-xl font-bold tracking-tight text-slate-900">metaThesi</span>

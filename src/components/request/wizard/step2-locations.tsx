@@ -83,18 +83,18 @@ export function Step2Locations() {
         <div className="glass-card p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <div>
-                    <h2 className="text-lg font-bold text-slate-800 tracking-tight flex items-center gap-3">
+                    <h2 className="text-lg font-bold text-foreground tracking-tight flex items-center gap-3">
                         <div className="p-2 rounded-xl bg-teal-50 text-teal-600">
                             <MapPin className="w-5 h-5" />
                         </div>
                         Περιοχές Προτίμησης
                     </h2>
-                    <p className="text-xs font-medium text-slate-500 mt-2 pl-12">Ορίστε τις περιοχές που επιθυμείτε με σειρά προτεραιότητας.</p>
+                    <p className="text-xs font-medium text-muted-foreground mt-2 pl-12">Ορίστε τις περιοχές που επιθυμείτε με σειρά προτεραιότητας.</p>
                 </div>
                 <button 
                     type="button" 
                     onClick={() => setValue("targetZoneIds", [], { shouldValidate: true })}
-                    className="text-[11px] font-bold text-slate-500 hover:text-rose-600 bg-slate-50 hover:bg-rose-50 px-3 py-1.5 rounded-lg transition-colors border border-slate-200 hover:border-rose-200 cursor-pointer"
+                    className="text-[11px] font-bold text-muted-foreground hover:text-rose-600 bg-muted hover:bg-rose-50 px-3 py-1.5 rounded-2xl transition-colors border border-border hover:border-rose-200 cursor-pointer"
                 >
                     Καθαρισμός
                 </button>
@@ -104,16 +104,16 @@ export function Step2Locations() {
                 <Reorder.Group axis="y" values={targetZoneIds} onReorder={handleReorder} className="space-y-3">
                     {targetZoneIds.map((id: number, index: number) => (
                         <Reorder.Item key={id} value={id} className="focus:outline-none">
-                            <div className="group bg-white rounded-[1rem] p-2 shadow-sm border border-slate-100 hover:border-sky-200 transition-all flex items-center justify-between cursor-grab active:cursor-grabbing">
+                            <div className="group bg-card rounded-2xl p-2 shadow-soft border border-border hover:border-primary/30 transition-all flex items-center justify-between cursor-grab active:cursor-grabbing">
                                 <div className="flex items-center gap-4 flex-1">
-                                    <div className={`h-8 w-8 rounded-[1rem] flex items-center justify-center text-xs font-bold border ${
+                                    <div className={`h-8 w-8 rounded-2xl flex items-center justify-center text-xs font-bold border ${
                                         index === 0 ? 'bg-rose-50 text-rose-600 border-rose-100' : 
                                         index === 1 ? 'bg-amber-50 text-amber-600 border-amber-100' :
-                                        'bg-slate-50 text-slate-600 border-slate-100'
+                                        'bg-muted text-muted-foreground border-border'
                                     }`}>
                                         {index + 1}
                                     </div>
-                                    <div className="text-sm font-semibold text-slate-700 group-hover:text-[#0369a1] transition-colors">
+                                    <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
                                         {getZoneName(id)}
                                     </div>
                                 </div>
@@ -121,11 +121,11 @@ export function Step2Locations() {
                                     <button 
                                         type="button" 
                                         onClick={() => removeTargetZone(id)}
-                                        className="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                                        className="p-1.5 text-muted-foreground hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition-colors cursor-pointer"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
-                                    <GripVertical className="w-5 h-5 text-slate-300" />
+                                    <GripVertical className="w-5 h-5 text-muted-foreground/50" />
                                 </div>
                             </div>
                         </Reorder.Item>
@@ -135,19 +135,19 @@ export function Step2Locations() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
                     <div className="relative">
                         <select 
-                            className="w-full h-12 pl-4 pr-10 border-dashed border-slate-300 border-2 rounded-[1rem] text-slate-500 text-sm font-medium focus:border-sky-500 focus:bg-sky-50 focus:text-[#0369a1] transition-all bg-white appearance-none cursor-pointer focus:outline-none"
+                            className="w-full h-12 pl-4 pr-10 border-dashed border-border border-2 rounded-2xl text-muted-foreground text-sm font-medium focus:border-primary focus:bg-primary-soft focus:text-primary transition-all bg-card appearance-none cursor-pointer focus:outline-none"
                             value={targetRegionId}
                             onChange={(e) => setTargetRegionId(e.target.value)}
                         >
                             <option value="">Επιλογή Περιφέρειας...</option>
                             {regions.map(r => <option key={r.id} value={String(r.id)}>{r.name}</option>)}
                         </select>
-                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                     </div>
                     
                     <div className="relative">
                         <select 
-                            className="w-full h-12 pl-4 pr-10 border-dashed border-slate-300 border-2 rounded-[1rem] text-slate-500 text-sm font-medium focus:border-sky-500 focus:bg-sky-50 focus:text-[#0369a1] transition-all bg-white appearance-none cursor-pointer focus:outline-none disabled:opacity-50"
+                            className="w-full h-12 pl-4 pr-10 border-dashed border-border border-2 rounded-2xl text-muted-foreground text-sm font-medium focus:border-primary focus:bg-primary-soft focus:text-primary transition-all bg-card appearance-none cursor-pointer focus:outline-none disabled:opacity-50"
                             disabled={!targetRegionId || targetZoneOptions.length === 0}
                             value=""
                             onChange={(e) => addTargetZone(Number(e.target.value))}

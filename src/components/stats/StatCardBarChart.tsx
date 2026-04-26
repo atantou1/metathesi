@@ -29,14 +29,14 @@ export function StatCardBarChart({
   // If no data at all
   if (nonNullValues.length === 0) {
     return (
-      <div className="bg-white p-6 rounded-[1.5rem] border border-slate-100 shadow-sm hover:border-slate-200 transition-all group flex flex-col justify-between h-48">
+      <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:border-slate-200 transition-all group flex flex-col justify-between h-48">
         <div>
           <div className="flex justify-between items-start mb-1">
             <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest group-hover:text-slate-500 transition-colors">{title}</div>
           </div>
           <div className="text-3xl font-black text-slate-300 tracking-tight">-</div>
         </div>
-        <div className="flex items-center justify-center h-16 w-full mt-2 border-2 border-dashed border-slate-100 rounded-lg bg-slate-50/50">
+        <div className="flex items-center justify-center h-16 w-full mt-2 border-2 border-dashed border-slate-100 rounded-2xl bg-slate-50/50">
           <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Μη Διαθέσιμο</span>
         </div>
       </div>
@@ -56,12 +56,12 @@ export function StatCardBarChart({
   const diffClasses = diffColor === 'teal' ? 'text-teal-600 bg-teal-50' : diffColor === 'rose' ? 'text-rose-500 bg-rose-50' : 'text-slate-500 bg-slate-50'
 
   return (
-    <div className={`bg-white p-6 rounded-[1.5rem] border border-slate-100 shadow-sm ${c.borderHover} hover:shadow-md transition-all group flex flex-col justify-between h-48`}>
+    <div className={`bg-white p-6 rounded-3xl border border-slate-100 shadow-sm ${c.borderHover} hover:shadow-md transition-all group flex flex-col justify-between h-48`}>
       <div>
         <div className="flex justify-between items-start mb-1">
           <div className={`text-slate-400 text-[10px] font-bold uppercase tracking-widest transition-colors group-hover:${c.text}`}>{title}</div>
           {diffLabel && (
-            <div className={`text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center ${diffClasses}`}>
+            <div className={`text-[10px] font-bold px-2 py-0.5 rounded-2xl flex items-center ${diffClasses}`}>
               {diffLabel}
               <svg className={`w-3 h-3 ml-0.5 ${diffDirection === 'down' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>

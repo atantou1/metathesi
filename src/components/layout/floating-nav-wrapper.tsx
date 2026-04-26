@@ -22,7 +22,7 @@ export function FloatingNavWrapper({ children }: { children: ReactNode }) {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 className={cn(
-                    "w-full max-w-7xl pointer-events-auto rounded-2xl transition-all duration-300",
+                    "w-full max-w-7xl pointer-events-auto rounded-4xl transition-all duration-300",
                     scrolled
                         ? "bg-white/40 dark:bg-slate-900/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-800/50"
                         : "bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm shadow-sm border border-white/10 dark:border-slate-800/30"

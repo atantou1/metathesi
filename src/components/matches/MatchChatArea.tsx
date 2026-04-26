@@ -126,26 +126,26 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
 
     return (
         <div className="flex-1 flex flex-col relative h-full">
-            <div className="h-20 px-4 sm:px-8 border-b border-slate-200 bg-white flex items-center justify-between flex-shrink-0 shadow-sm z-10 w-full">
+            <div className="h-20 px-4 sm:px-8 border-b border-border bg-card flex items-center justify-between flex-shrink-0 shadow-soft z-10 w-full">
                 <div className="flex items-center gap-3">
                     <button 
                         onClick={() => router.push('/matches')}
-                        className="md:hidden p-2 -ml-2 text-slate-400 hover:text-slate-800 transition-colors"
+                        className="md:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground transition-colors"
                     >
                         <ArrowLeft className="w-6 h-6" />
                     </button>
                     
                     <div className="relative">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
-                            isOnline ? 'bg-amber-50 border-amber-100 text-amber-500' : 'bg-slate-100 border-slate-200 text-slate-500 grayscale'
+                            isOnline ? 'bg-amber-50 border-amber-100 text-amber-500' : 'bg-muted border-border text-muted-foreground grayscale'
                         } border`}>
                             {getInitials(match.user.fullName)}
                         </div>
                         {isOnline && <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 border-2 border-white rounded-full bg-emerald-500"></div>}
                     </div>
                     <div>
-                        <h3 className="font-bold text-lg text-slate-800 tracking-tight leading-tight">{match.user.fullName}</h3>
-                        <p className="text-xs font-medium text-slate-500 flex items-center gap-1">
+                        <h3 className="font-bold text-lg text-foreground tracking-tight leading-tight">{match.user.fullName}</h3>
+                        <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
                             <MapPin className="w-3 h-3" /> {match.user.currentZone.name}
                         </p>
                     </div>
@@ -157,11 +157,11 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                             Ενεργο Match
                         </span>
                     ) : (
-                        <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-50 text-slate-500 border border-slate-100 uppercase tracking-wide">
+                        <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-muted text-muted-foreground border border-border uppercase tracking-wide">
                             Ανενεργο
                         </span>
                     )}
-                    <button className="text-slate-400 hover:text-[#0369a1] hover:bg-sky-50 p-2 rounded-xl transition-colors">
+                    <button className="text-muted-foreground hover:text-primary hover:bg-primary-soft p-2 rounded-xl transition-colors cursor-pointer">
                         <MoreVertical className="w-5 h-5" />
                     </button>
                 </div>
@@ -169,14 +169,14 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
 
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6 bg-slate-50/50">
                 <div className="flex justify-center mb-6 mt-2">
-                    <div className="bg-sky-50 border border-sky-100 text-[#0369a1] text-[11px] sm:text-xs font-semibold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm text-center">
+                    <div className="bg-primary-soft border border-primary/20 text-primary text-[11px] sm:text-xs font-semibold px-4 py-2 rounded-2xl flex items-center gap-2 shadow-soft text-center">
                         <Sparkles className="w-4 h-4 flex-shrink-0" />
                         Το σύστημα εντόπισε αντιστοιχία στις {format(new Date(match.matchDate), "d MMM yyyy", { locale: el })}
                     </div>
                 </div>
 
                 {messages.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center text-slate-400 gap-2 h-full opacity-50 pb-20">
+                    <div className="flex flex-col items-center justify-center text-muted-foreground gap-2 h-full opacity-50 pb-20">
                         <span className="material-symbols-outlined text-4xl">{isOnline ? 'chat' : 'history'}</span>
                         <p className="text-sm">Δεν υπάρχουν μηνύματα ακόμη.</p>
                     </div>
@@ -189,7 +189,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                             <React.Fragment key={msg.id}>
                                 {showDateBreak && (
                                     <div className="flex justify-center mb-4 mt-6">
-                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white border border-slate-100 px-3 py-1 rounded-full shadow-sm">
+                                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest bg-card border border-border px-3 py-1 rounded-full shadow-soft">
                                             {format(new Date(msg.createdAt), "d MMMM yyyy", { locale: el })}
                                         </span>
                                     </div>
@@ -197,25 +197,25 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                                 {isMine ? (
                                     <div className={`flex items-end gap-2 sm:gap-3 max-w-[85%] sm:max-w-[80%] ml-auto flex-row-reverse group/msg ${!isOnline ? 'opacity-70' : ''}`}>
                                         <div className="flex flex-col gap-1 items-end">
-                                            <div className="p-3.5 sm:p-4 rounded-[1.25rem] sm:rounded-br-none text-[13px] sm:text-[14px] bg-[#0369A1] text-white shadow-md shadow-sky-900/10 leading-relaxed">
+                                            <div className="p-3.5 sm:p-4 rounded-2xl sm:rounded-br-none text-[13px] sm:text-[14px] bg-primary text-white shadow-soft leading-relaxed">
                                                 {msg.content}
                                             </div>
                                             <div className={`flex items-center gap-1 mr-1 ${isOnline ? 'opacity-0 group-hover/msg:opacity-100 transition-opacity' : ''}`}>
-                                                <span className="text-[10px] font-medium text-slate-400">{format(new Date(msg.createdAt), "HH:mm")}</span>
-                                                {isOnline && <CheckCheck className="w-3.5 h-3.5 text-[#0369a1]" />}
+                                                <span className="text-[10px] font-medium text-muted-foreground">{format(new Date(msg.createdAt), "HH:mm")}</span>
+                                                {isOnline && <CheckCheck className="w-3.5 h-3.5 text-primary" />}
                                             </div>
                                         </div>
                                     </div>
                                 ) : (
                                     <div className={`flex items-end gap-2 sm:gap-3 max-w-[85%] sm:max-w-[80%] group/msg ${!isOnline ? 'opacity-70' : ''}`}>
-                                        <div className="hidden sm:flex w-8 h-8 rounded-full flex-shrink-0 border border-slate-200 shadow-sm font-bold items-center justify-center text-xs text-amber-500 bg-white">
+                                        <div className="hidden sm:flex w-8 h-8 rounded-full flex-shrink-0 border border-border shadow-soft font-bold items-center justify-center text-xs text-amber-500 bg-card">
                                             {getInitials(match.user.fullName)}
                                         </div>
                                         <div className="flex flex-col gap-1">
-                                            <div className="bg-white p-3.5 sm:p-4 rounded-[1.25rem] sm:rounded-bl-none shadow-sm border border-slate-100 text-slate-700 text-[13px] sm:text-[14px] leading-relaxed">
+                                            <div className="bg-card p-3.5 sm:p-4 rounded-2xl sm:rounded-bl-none shadow-soft border border-border text-foreground text-[13px] sm:text-[14px] leading-relaxed">
                                                 {msg.content}
                                             </div>
-                                            <span className={`text-[10px] font-medium text-slate-400 ml-1 ${isOnline ? 'opacity-0 group-hover/msg:opacity-100 transition-opacity' : ''}`}>
+                                            <span className={`text-[10px] font-medium text-muted-foreground ml-1 ${isOnline ? 'opacity-0 group-hover/msg:opacity-100 transition-opacity' : ''}`}>
                                                 {format(new Date(msg.createdAt), "HH:mm")}
                                             </span>
                                         </div>
@@ -228,9 +228,9 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
             </div>
 
             {isOnline ? (
-                <div className="p-4 sm:p-6 bg-white border-t border-slate-200 z-10 flex-shrink-0">
+                <div className="p-4 sm:p-6 bg-card border-t border-border z-10 flex-shrink-0">
                     <div className="flex items-end gap-2 sm:gap-3">
-                        <button className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center text-slate-400 hover:text-[#0369a1] hover:bg-sky-50 rounded-xl transition-colors">
+                        <button className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary-soft rounded-xl transition-colors cursor-pointer">
                             <Paperclip className="w-5 h-5" />
                         </button>
                         <div className="flex-1 relative">
@@ -244,7 +244,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                                     }
                                 }}
                                 rows={1} 
-                                className="w-full bg-slate-50 border border-slate-200 focus:border-[#0369a1] focus:ring-[3px] focus:ring-sky-500/15 rounded-2xl py-3 sm:py-3.5 px-4 sm:px-5 text-sm outline-none resize-none transition-all text-slate-700" 
+                                className="w-full bg-muted border border-border focus:border-primary focus:ring-[3px] focus:ring-primary/15 rounded-2xl py-3 sm:py-3.5 px-4 sm:px-5 text-sm outline-none resize-none transition-all text-foreground" 
                                 placeholder="Γράψτε ένα μήνυμα..."
                                 disabled={isSending}
                             />
@@ -252,15 +252,15 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                         <button 
                             onClick={handleSendMessage}
                             disabled={!newMessage.trim() || isSending}
-                            className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-[#0369A1] hover:bg-[#075985] text-white rounded-xl flex items-center justify-center shadow-lg shadow-sky-900/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-primary hover:bg-primary-hover text-white rounded-xl flex items-center justify-center shadow-floating transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         >
                             <Send className="w-4 h-4 sm:w-5 sm:h-5 ml-0.5 sm:ml-1" />
                         </button>
                     </div>
                 </div>
             ) : (
-                <div className="p-4 sm:p-6 bg-white border-t border-slate-200 z-10 flex-shrink-0">
-                    <div className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 flex items-center justify-center text-sm font-medium text-slate-500 gap-2">
+                <div className="p-4 sm:p-6 bg-card border-t border-border z-10 flex-shrink-0">
+                    <div className="w-full bg-muted border border-border rounded-xl py-4 flex items-center justify-center text-sm font-medium text-muted-foreground gap-2">
                         <Lock className="w-4 h-4" />
                         Η συνομιλία έχει αρχειοθετηθεί
                     </div>

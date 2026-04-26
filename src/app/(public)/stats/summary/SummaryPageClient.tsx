@@ -92,12 +92,12 @@ const removeGreekAccents = (str: string) => {
 // Design System Colors: Clean & Semantic
 const theme = {
   bars: {
-    past: "#cbd5e1", // slate-300
-    current: "#0369a1", // sky-700 (Primary)
+    past: "#cbd5e1", // slate-300 (data viz)
+    current: "var(--primary)",
   },
   labels: {
-    past: "#94a3b8", // slate-400
-    current: "#0284c7", // sky-600
+    past: "#94a3b8", // slate-400 (data viz)
+    current: "var(--primary-hover)",
   },
 };
 
@@ -424,10 +424,10 @@ export default function SummaryPageClient() {
 
 
   return (
-    <div className="p-4 md:p-8 text-slate-900 antialiased min-h-screen bg-[#f8fafc] font-inter">
+    <div className="p-4 md:p-8 text-foreground antialiased min-h-screen bg-background font-inter">
       <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8 pt-20 md:pt-24">
         {/* --- Header with Seamless Dropdowns --- */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem]">
+        <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
           <div>
             <div className="flex items-center space-x-3 mb-3">
               <Link
@@ -485,7 +485,7 @@ export default function SummaryPageClient() {
 
         {/* --- 12 KPI Cards Grid (Clean Layout) --- */}
         {!analytics && !loading ? (
-             <div className="bg-white border border-slate-200/60 shadow-sm p-12 rounded-[2rem] text-center">
+             <div className="bg-white border border-slate-200/60 shadow-sm p-12 rounded-4xl text-center">
                 <Search className="w-12 h-12 text-slate-200 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-slate-800 mb-2">Δεν βρέθηκαν στατιστικά</h3>
                 <p className="text-sm text-slate-500 max-w-sm mx-auto">
@@ -495,7 +495,7 @@ export default function SummaryPageClient() {
         ) : loading ? (
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
                 {[...Array(12)].map((_, i) => (
-                    <div key={i} className="bg-white p-5 rounded-[1.5rem] border border-slate-200/60 shadow-sm h-56 animate-pulse">
+                    <div key={i} className="bg-white p-5 rounded-3xl border border-slate-200/60 shadow-sm h-56 animate-pulse">
                         <div className="h-4 bg-slate-100 rounded w-1/2 mb-4"></div>
                         <div className="h-8 bg-slate-100 rounded w-3/4 mb-4"></div>
                         <div className="h-20 bg-slate-50 rounded mt-auto"></div>
@@ -520,7 +520,7 @@ export default function SummaryPageClient() {
                 return (
                   <div
                     key={kpi.id}
-                    className="bg-white p-5 rounded-[1.5rem] border border-slate-200/60 shadow-sm hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between h-56 group"
+                    className="bg-card p-5 rounded-2xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
                   >
                     <div>
                       <div className="flex justify-between items-start mb-1 h-8">
@@ -556,7 +556,7 @@ export default function SummaryPageClient() {
                         {/* Semantic Diff Badge */}
                         {kpi.diff !== 0 && (
                           <div
-                            className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-md flex items-center h-fit ${badgeClasses}`}
+                            className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${badgeClasses}`}
                           >
                             {isPositive ? "+" : ""}
                             {kpi.diff}
@@ -569,8 +569,7 @@ export default function SummaryPageClient() {
                         )}
                       </div>
 
-                      {/* Clean Number Value */}
-                      <div className="text-3xl mt-1 font-extrabold tracking-tight text-slate-800">
+                      <div className="text-3xl mt-1 font-extrabold tracking-tight text-foreground">
                         {kpi.value}
                         {kpi.isPercent ? "%" : ""}
                       </div>
@@ -649,7 +648,7 @@ export default function SummaryPageClient() {
 
             {/* --- Comparison Chart (Clean) --- */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-              <div className="bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem] flex flex-col">
+              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl flex flex-col">
                 <div className="flex justify-between items-start mb-6">
                   <div>
                     <h3 className="text-lg font-bold text-slate-800 tracking-tight mb-1">
@@ -704,7 +703,7 @@ export default function SummaryPageClient() {
                       />
                       <Bar
                         dataKey="base"
-                        fill="#0369a1"
+                        fill="var(--primary)"
                         radius={[4, 4, 0, 0]}
                         name="Βάση"
                       />
@@ -719,7 +718,7 @@ export default function SummaryPageClient() {
                 </div>
               </div>
 
-              <div className="bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem] flex flex-col justify-start items-start text-left">
+              <div className="bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
                 <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 text-slate-600">
                         <Activity className="w-5 h-5" />
@@ -736,13 +735,13 @@ export default function SummaryPageClient() {
                                 <span className="text-sm font-semibold text-slate-700 group-hover:text-sky-700 transition-colors">
                                     {item.name}
                                 </span>
-                                <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md shadow-sm">
+                                <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-2xl shadow-sm">
                                     {item.val} άτομα
                                 </span>
                              </div>
                              <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                                 <div
-                                    className="bg-[#0284C7] h-1.5 rounded-full transition-all duration-500"
+                                    className="bg-primary h-1.5 rounded-full transition-all duration-500"
                                     style={{ width: `${(item.val / item.max) * 100}%` }}
                                 ></div>
                             </div>
@@ -756,7 +755,7 @@ export default function SummaryPageClient() {
             </div>
 
             {/* --- Rankings Area (Top 5) --- */}
-            <div className="bg-white border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-[2rem]">
+            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-slate-100 pb-6">
                 <div>
                   <h3 className="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-3">
@@ -785,13 +784,13 @@ export default function SummaryPageClient() {
                           <span className="text-sm font-semibold text-slate-700 group-hover:text-sky-700 transition-colors">
                             {item.name}
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md shadow-sm">
+                          <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-2xl shadow-sm">
                             {item.val} θέσεις
                           </span>
                         </div>
                         <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                           <div
-                            className="bg-[#0284C7] h-1.5 rounded-full transition-all duration-500"
+                            className="bg-primary h-1.5 rounded-full transition-all duration-500"
                             style={{ width: `${(item.val / item.max) * 100}%` }}
                           ></div>
                         </div>
@@ -812,13 +811,13 @@ export default function SummaryPageClient() {
                           <span className="text-sm font-semibold text-slate-700 group-hover:text-sky-700 transition-colors">
                             {item.name}
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md shadow-sm">
+                          <span className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-2xl shadow-sm">
                             {item.val} μόρια
                           </span>
                         </div>
                         <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                           <div
-                            className="bg-[#0284C7] h-1.5 rounded-full transition-all duration-500"
+                            className="bg-primary h-1.5 rounded-full transition-all duration-500"
                             style={{ width: `${(item.val / item.max) * 100}%` }}
                           ></div>
                         </div>

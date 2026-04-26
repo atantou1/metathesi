@@ -36,7 +36,7 @@ const PopularityBadge = ({ popularity }: { popularity: number }) => {
     }
 
     return (
-        <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold uppercase ${colorClass} border`}>
+        <span className={`inline-flex items-center px-2 py-0.5 rounded-2xl text-[9px] font-bold uppercase ${colorClass} border`}>
             {label}
         </span>
     );
@@ -73,21 +73,21 @@ export default async function Dashboard() {
                         {/* LEFT COLUMN */}
                         <div className="lg:col-span-8 space-y-6">
                             {/* No Active Request Card */}
-                            <div className="glass-card rounded-[2rem] overflow-hidden relative">
+                            <div className="glass-card rounded-4xl overflow-hidden relative">
                                 <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-100/40 rounded-full blur-3xl pointer-events-none"></div>
                                 <div className="p-8 sm:p-12 flex flex-col items-center text-center relative z-10">
-                                    <div className="w-24 h-24 bg-gradient-to-br from-sky-400 to-[#0369A1] shadow-lg shadow-sky-500/20 rounded-full flex items-center justify-center mb-6 relative">
+                                    <div className="w-24 h-24 bg-gradient-to-br from-primary/60 to-primary shadow-lg shadow-primary/20 rounded-full flex items-center justify-center mb-6 relative">
                                         <MapPin className="text-white w-12 h-12" />
-                                        <div className="absolute -top-1 -right-1 w-8 h-8 bg-[#0369A1] rounded-full flex items-center justify-center border-4 border-white">
+                                        <div className="absolute -top-1 -right-1 w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-white">
                                             <Plus className="text-white w-5 h-5" />
                                         </div>
                                     </div>
-                                    <h2 className="text-2xl font-bold text-slate-800 tracking-tight mb-3">Δεν έχετε ενεργή αίτηση</h2>
-                                    <p className="text-slate-500 max-w-md mx-auto mb-10 leading-relaxed text-sm">
+                                    <h2 className="text-2xl font-bold text-foreground tracking-tight mb-3">Δεν έχετε ενεργή αίτηση</h2>
+                                    <p className="text-muted-foreground max-w-md mx-auto mb-10 leading-relaxed text-sm">
                                         Ξεκινήστε τώρα τη διαδικασία για να βρείτε την ιδανική αμοιβαία μετάθεση. Η διαδικασία είναι απλή και γρήγορη.
                                     </p>
                                     <Link href="/request/create">
-                                        <button className="w-full sm:w-auto bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] flex items-center justify-center gap-2">
+                                        <button className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl text-sm font-semibold transition-all shadow-soft active:scale-[0.98] flex items-center justify-center gap-2">
                                             <Plus className="w-5 h-5" />
                                             Δημιουργία Νέας Αίτησης
                                         </button>
@@ -96,26 +96,26 @@ export default async function Dashboard() {
                             </div>
 
                             {/* How it works */}
-                            <div className="glass-card rounded-[2rem] p-6 sm:p-8">
-                                <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-3">
-                                    <div className="p-2 rounded-2xl bg-sky-50 text-[#0369A1]">
+                            <div className="glass-card rounded-4xl p-6 sm:p-8">
+                                <h3 className="text-lg font-bold text-foreground mb-6 flex items-center gap-3">
+                                    <div className="p-2 rounded-2xl bg-primary-soft text-primary">
                                         <Eye className="w-5 h-5" />
                                     </div>
                                     Πώς λειτουργεί το metaThesi;
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="space-y-3">
-                                        <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">1</div>
+                                        <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">1</div>
                                         <h4 className="font-semibold text-slate-800 text-sm">Δημιουργία Προφίλ</h4>
                                         <p className="text-xs leading-relaxed text-slate-500 font-medium">Καταχωρήστε τα στοιχεία της οργανικής σας θέσης και τις περιοχές που σας ενδιαφέρουν.</p>
                                     </div>
                                     <div className="space-y-3">
-                                        <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">2</div>
+                                        <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">2</div>
                                         <h4 className="font-semibold text-slate-800 text-sm">Αυτόματη Αναζήτηση</h4>
                                         <p className="text-xs leading-relaxed text-slate-500 font-medium">Ο αλγόριθμός μας αναζητά συνεχώς συμβατές αιτήσεις σε πραγματικό χρόνο.</p>
                                     </div>
                                     <div className="space-y-3">
-                                        <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">3</div>
+                                        <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-bold text-sm border border-slate-100">3</div>
                                         <h4 className="font-semibold text-slate-800 text-sm">Επικοινωνία & Ταυτοποίηση</h4>
                                         <p className="text-xs leading-relaxed text-slate-500 font-medium">Μόλις βρεθεί ταίριασμα, ενημερώνεστε αμέσως για να ξεκινήσετε τη διαδικασία.</p>
                                     </div>
@@ -127,24 +127,24 @@ export default async function Dashboard() {
                         <div className="lg:col-span-4 space-y-6">
                             {/* Profile Summary - Only show if profile exists */}
                             {profile && (
-                                <div className="glass-card rounded-[2rem] h-fit overflow-hidden">
+                                <div className="glass-card rounded-4xl h-fit overflow-hidden">
                                     <div className="p-6 border-b border-sky-50 flex justify-between items-center bg-white/50">
                                         <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Σύνοψη Προφίλ</h3>
                                     </div>
                                     <div className="p-6 space-y-6">
                                         {/* Designation */}
                                         <div className="flex items-center gap-5 group">
-                                            <div className="w-12 h-12 rounded-[1.25rem] bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100/50 group-hover:bg-indigo-100/80 transition-colors">
+                                            <div className="w-12 h-12 rounded-2xl bg-primary-soft flex items-center justify-center text-primary border border-border group-hover:bg-primary/20 transition-colors">
                                                 <BadgeCheck className="w-5 h-5" />
                                             </div>
                                             <div>
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">ΒΑΘΜΙΔΑ</p>
-                                                <p className="text-sm font-medium text-slate-700">{profile.division.name}</p>
+                                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">ΒΑΘΜΙΔΑ</p>
+                                                <p className="text-sm font-medium text-foreground">{profile.division.name}</p>
                                             </div>
                                         </div>
                                         {/* Department */}
                                         <div className="flex items-center gap-5 group">
-                                            <div className="w-12 h-12 rounded-[1.25rem] bg-orange-50 flex items-center justify-center text-orange-600 border border-orange-100/50 group-hover:bg-orange-100/80 transition-colors">
+                                            <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 border border-orange-100/50 group-hover:bg-orange-100/80 transition-colors">
                                                 <Building2 className="w-5 h-5" />
                                             </div>
                                             <div>
@@ -154,7 +154,7 @@ export default async function Dashboard() {
                                         </div>
                                         {/* Current Zone */}
                                         <div className="flex items-center gap-5 group">
-                                            <div className="w-12 h-12 rounded-[1.25rem] bg-teal-50 flex items-center justify-center text-teal-600 border border-teal-100/50 group-hover:bg-teal-100/80 transition-colors">
+                                            <div className="w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center text-teal-600 border border-teal-100/50 group-hover:bg-teal-100/80 transition-colors">
                                                 <MapPin className="w-5 h-5" />
                                             </div>
                                             <div>
@@ -167,16 +167,16 @@ export default async function Dashboard() {
                             )}
 
                             {/* Help Box */}
-                            <div className="bg-[#0369A1] rounded-[2rem] p-6 text-white relative overflow-hidden shadow-xl shadow-[#0369A1]/20">
+                            <div className="bg-primary rounded-2xl p-6 text-white relative overflow-hidden shadow-floating">
                                 <div className="relative z-10">
-                                    <div className="mb-4 text-sky-200">
+                                    <div className="mb-4 text-primary-foreground/80">
                                         <Users className="w-6 h-6" />
                                     </div>
                                     <h4 className="font-bold mb-2 tracking-tight">Χρειάζεστε βοήθεια;</h4>
-                                    <p className="text-sm text-sky-100 mb-4 opacity-90 leading-relaxed font-light">
+                                    <p className="text-sm text-primary-foreground/90 mb-4 opacity-90 leading-relaxed font-light">
                                         Δείτε τον οδηγό χρήσης ή επικοινωνήστε με την υποστήριξη για οποιαδήποτε απορία.
                                     </p>
-                                    <Link href="#" className="inline-flex items-center text-sm font-semibold hover:text-sky-200 transition-colors">
+                                    <Link href="#" className="inline-flex items-center text-sm font-semibold hover:text-white/80 transition-colors">
                                         Κέντρο Βοήθειας
                                     </Link>
                                 </div>
@@ -241,7 +241,7 @@ export default async function Dashboard() {
                     <div className="lg:col-span-8 space-y-6">
 
                         {/* Active Request Card with Embedded Scanning Block */}
-                        <div className="relative overflow-hidden rounded-[2rem] glass-card">
+                        <div className="relative overflow-hidden rounded-4xl glass-card">
                             {hasActiveMatch && <MatchBanner />}
                             <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-100/40 rounded-full blur-3xl pointer-events-none"></div>
                             <div className="p-6 sm:p-8 relative z-10">
@@ -249,7 +249,7 @@ export default async function Dashboard() {
                                     <div>
                                         <h2 className="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-3">
                                             Αίτηση Αμοιβαίας
-                                            <span className="px-2.5 py-1 rounded-lg text-[10px] bg-slate-50 border border-slate-200 text-slate-500 font-mono tracking-wider">
+                                            <span className="px-2.5 py-1 rounded-2xl bg-muted border border-border text-muted-foreground font-mono tracking-wider">
                                                 #TR-{request.id}
                                             </span>
                                         </h2>
@@ -264,7 +264,7 @@ export default async function Dashboard() {
                                 </div>
 
                                 {/* Scanning Block Embedded */}
-                                <div className="scanning-pulse relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-slate-900 to-blue-900 border border-blue-800/50 shadow-xl shadow-sky-900/10 mb-8">
+                                <div className="scanning-pulse relative overflow-hidden rounded-4xl bg-gradient-to-br from-slate-900 to-blue-900 border border-blue-800/50 shadow-xl shadow-sky-900/10 mb-8">
                                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
                                     <div className="absolute right-0 top-0 w-2/3 h-full bg-gradient-to-l from-blue-900/40 via-sky-900/20 to-transparent"></div>
                                     <div className="relative p-8 flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
@@ -281,7 +281,7 @@ export default async function Dashboard() {
                                         <div className="flex-grow w-full pt-1">
                                             <div className="flex justify-between items-start mb-3">
                                                 <h3 className="text-lg font-semibold text-white tracking-wide">Σάρωση για Αμοιβαίες...</h3>
-                                                <span className="text-[10px] font-mono text-sky-300 bg-sky-900/40 px-2 py-1 rounded-lg border border-sky-800/50 tracking-wider">REALTIME</span>
+                                                <span className="text-[10px] font-mono text-sky-300 bg-sky-900/40 px-2 py-1 rounded-2xl border border-sky-800/50 tracking-wider">REALTIME</span>
                                             </div>
                                             <p className="text-slate-300 text-sm mb-5 leading-relaxed font-light">
                                                 Ο αλγόριθμος αναζητά ευκαιρίες αμοιβαίας μετάθεσης στις Περιοχές Προτίμησής σας.
@@ -307,8 +307,8 @@ export default async function Dashboard() {
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                         {request.targetZones.map((target, index) => (
-                                            <div key={target.id} className="group flex items-center p-3 rounded-[1.25rem] bg-white border border-slate-100 hover:border-sky-200 hover:bg-sky-50 transition-all shadow-sm">
-                                                <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold mr-3 group-hover:border-sky-200 group-hover:text-sky-600 group-hover:bg-sky-50 transition-colors">
+                                            <div key={target.id} className="group flex items-center p-3 rounded-2xl bg-white border border-slate-100 hover:border-sky-200 hover:bg-sky-50 transition-all shadow-sm">
+                                                <div className="w-8 h-8 rounded-2xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold mr-3 group-hover:border-sky-200 group-hover:text-sky-600 group-hover:bg-sky-50 transition-colors">
                                                     {index + 1}
                                                 </div>
                                                 <div className="flex-grow">
@@ -324,7 +324,7 @@ export default async function Dashboard() {
 
                                 <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-100 pt-6">
                                     <Link href="/request/create" className="flex-1 sm:flex-none">
-                                        <button className="w-full bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] cursor-pointer">
+                                        <button className="w-full bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl text-sm font-semibold transition-all shadow-soft active:scale-[0.98] cursor-pointer">
                                             Επεξεργασία
                                         </button>
                                     </Link>
@@ -338,14 +338,14 @@ export default async function Dashboard() {
                     <div className="lg:col-span-4 space-y-6">
 
                         {/* Profile Summary */}
-                        <div className="glass-card rounded-[2rem] h-fit overflow-hidden">
+                        <div className="glass-card rounded-4xl h-fit overflow-hidden">
                             <div className="p-6 border-b border-sky-50 flex justify-between items-center bg-white/50">
                                 <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Σύνοψη Προφίλ</h3>
                             </div>
                             <div className="p-6 space-y-6">
                                 {/* Designation */}
                                 <div className="flex items-center gap-5 group">
-                                    <div className="w-12 h-12 rounded-[1.25rem] bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100/50 group-hover:bg-indigo-100/80 transition-colors">
+                                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100/50 group-hover:bg-indigo-100/80 transition-colors">
                                         <BadgeCheck className="w-5 h-5" />
                                     </div>
                                     <div>
@@ -355,7 +355,7 @@ export default async function Dashboard() {
                                 </div>
                                 {/* Department */}
                                 <div className="flex items-center gap-5 group">
-                                    <div className="w-12 h-12 rounded-[1.25rem] bg-orange-50 flex items-center justify-center text-orange-600 border border-orange-100/50 group-hover:bg-orange-100/80 transition-colors">
+                                    <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 border border-orange-100/50 group-hover:bg-orange-100/80 transition-colors">
                                         <Building2 className="w-5 h-5" />
                                     </div>
                                     <div>
@@ -365,7 +365,7 @@ export default async function Dashboard() {
                                 </div>
                                 {/* Current Zone */}
                                 <div className="flex items-center gap-5 group">
-                                    <div className="w-12 h-12 rounded-[1.25rem] bg-teal-50 flex items-center justify-center text-teal-600 border border-teal-100/50 group-hover:bg-teal-100/80 transition-colors">
+                                    <div className="w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center text-teal-600 border border-teal-100/50 group-hover:bg-teal-100/80 transition-colors">
                                         <MapPin className="w-5 h-5" />
                                     </div>
                                     <div>
@@ -377,7 +377,7 @@ export default async function Dashboard() {
                         </div>
 
                         {/* Target Zones */}
-                        <div className="glass-card rounded-[2rem] flex flex-col overflow-hidden h-fit">
+                        <div className="glass-card rounded-4xl flex flex-col overflow-hidden h-fit">
                             <div className="p-6 border-b border-sky-50 bg-white/50">
                                 <div className="flex justify-between items-center">
                                     <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">ΖΗΤΗΣΗ ΠΕΡΙΟΧΩΝ</h3>
@@ -385,9 +385,9 @@ export default async function Dashboard() {
                             </div>
                             <div className="p-4 space-y-3">
                                 {request.targetZones.map((target, index) => (
-                                    <div key={target.id} className="group flex items-center p-3 rounded-[1.25rem] hover:bg-sky-50 border border-transparent hover:border-sky-100 transition-all">
+                                    <div key={target.id} className="group flex items-center p-3 rounded-2xl hover:bg-sky-50 border border-transparent hover:border-sky-100 transition-all">
                                         <div className="flex-shrink-0 mr-4">
-                                            <div className="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:text-sky-600 transition-colors border border-slate-100 group-hover:border-sky-200 group-hover:bg-sky-50">
+                                            <div className="w-8 h-8 rounded-2xl bg-slate-50 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:text-sky-600 transition-colors border border-slate-100 group-hover:border-sky-200 group-hover:bg-sky-50">
                                                 {index + 1}
                                             </div>
                                         </div>

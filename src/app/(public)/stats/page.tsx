@@ -73,36 +73,16 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
       <button
         type="button"
         onClick={() => setOpen(p => !p)}
+        className="flex items-center gap-[8px] px-4 py-[9px] bg-white/35 backdrop-blur-md border border-white/25 rounded-full text-[13px] font-semibold text-foreground cursor-pointer shadow-soft transition-all hover:bg-white/50"
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '9px 16px',
-          background: 'rgba(255,255,255,0.35)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          border: '1px solid rgba(255,255,255,0.25)',
-          borderRadius: '9999px',
-          fontSize: '13px',
-          fontWeight: 600,
-          color: '#0f172a',
-          cursor: 'pointer',
-          whiteSpace: 'nowrap',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.10)',
-          transition: 'background 0.2s, box-shadow 0.2s',
           ...(fullWidth ? { width: '100%', justifyContent: 'space-between' } : {}),
         }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.5)' }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.35)' }}
       >
         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '160px' }}>{label}</span>
         <span
-          className="material-symbols-outlined"
+          className="material-symbols-outlined text-[18px] text-muted-foreground transition-transform duration-200"
           style={{
-            fontSize: '18px',
-            color: '#64748b',
             flexShrink: 0,
-            transition: 'transform 0.2s',
             transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
           }}
         >
@@ -111,25 +91,12 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
       </button>
 
       {open && (
-        <div style={{
-          position: 'absolute',
-          top: 'calc(100% + 8px)',
-          left: 0,
-          zIndex: 9999,
-          minWidth: '200px',
-          maxHeight: '240px',
-          overflowY: 'auto',
-          background: 'rgba(255,255,255,0.97)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(226,232,240,0.8)',
-          borderRadius: '16px',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
-        }}>
+        <div className="absolute top-[calc(100%+8px)] left-0 z-[9999] min-w-[200px] max-h-[240px] overflow-y-auto bg-white/97 backdrop-blur-xl border border-border/80 rounded-2xl shadow-floating">
           {placeholder && (
             <button
               type="button"
               onClick={() => { onChange(''); setOpen(false) }}
-              style={{ width: '100%', textAlign: 'left', padding: '10px 16px', fontSize: '13px', color: '#94a3b8', background: 'none', border: 'none', cursor: 'pointer' }}
+              className="w-full text-left px-4 py-[10px] text-[13px] text-muted-foreground bg-transparent border-none cursor-pointer"
             >
               {placeholder}
             </button>
@@ -139,23 +106,9 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
               key={opt.value}
               type="button"
               onClick={() => { onChange(opt.value); setOpen(false) }}
-              style={{
-                width: '100%',
-                textAlign: 'left',
-                padding: '10px 16px',
-                fontSize: '13px',
-                fontWeight: 500,
-                background: value === opt.value ? 'rgba(14,165,233,0.08)' : 'none',
-                color: value === opt.value ? '#0ea5e9' : '#334155',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={e => {
-                if (value !== opt.value) (e.currentTarget as HTMLButtonElement).style.background = '#f8fafc'
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLButtonElement).style.background = value === opt.value ? 'rgba(14,165,233,0.08)' : 'none'
-              }}
+              className={`w-full text-left px-4 py-[10px] text-[13px] font-medium border-none cursor-pointer transition-colors ${
+                value === opt.value ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
+              }`}
             >
               {opt.label}
             </button>
@@ -253,25 +206,7 @@ function MobileFilterDrawer({
               window.location.href = `/stats/summary?division=${encodeURIComponent(pDiv)}&specialty=${encodeURIComponent(pSpec)}`;
               onClose();
             }}
-            style={{
-              padding: '12px 32px',
-              background: '#0369a1',
-              color: '#fff',
-              fontWeight: 700,
-              fontSize: '14px',
-              border: 'none',
-              borderRadius: '9999px',
-              cursor: 'pointer',
-              boxShadow: '0 4px 12px rgba(3,105,161,0.25)',
-              transition: 'all 0.2s',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px'
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#0284c7')}
-            onMouseLeave={e => (e.currentTarget.style.background = '#0369a1')}
+            className="w-full h-12 flex items-center justify-center gap-2 bg-primary text-white font-bold text-sm rounded-full cursor-pointer shadow-soft transition-all hover:bg-primary-hover active:scale-95"
           >
             Πανελλαδική Σύνοψη
           </button>
@@ -305,21 +240,7 @@ function MobileFilterDrawer({
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <button
             onClick={handleApply}
-            style={{
-              padding: '10px 32px',
-              background: '#0369a1',
-              color: '#fff',
-              fontWeight: 700,
-              fontSize: '14px',
-              border: 'none',
-              borderRadius: '9999px',
-              cursor: 'pointer',
-              boxShadow: '0 4px 12px rgba(3,105,161,0.25)',
-              transition: 'background 0.2s',
-              width: '200px',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#0284c7')}
-            onMouseLeave={e => (e.currentTarget.style.background = '#0369a1')}
+            className="w-[200px] h-10 bg-primary text-white font-bold text-sm rounded-full cursor-pointer shadow-soft transition-all hover:bg-primary-hover"
           >
             Εφαρμογή
           </button>
@@ -380,27 +301,19 @@ function LegendCard({ indicator }: { indicator: string }) {
 
   return (
     <div style={{ position: 'absolute', bottom: '40px', left: '40px', zIndex: 500, pointerEvents: 'auto' }}>
-      <div
-        style={{
-          background: 'rgba(255,255,255,0.35)',
-          backdropFilter: 'blur(16px)',
-          border: '1px solid rgba(255,255,255,0.25)',
-          borderRadius: '16px',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
-          padding: '16px 20px',
-          maxWidth: '240px',
-          transition: 'all 0.3s',
-        }}
-      >
-        <h3 style={{ fontSize: '10px', fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>
+      <div className="bg-white/35 backdrop-blur-xl border border-white/25 rounded-2xl shadow-floating px-5 py-4 max-w-[240px] transition-all">
+        <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-[10px]">
           {indicatorLabel}
         </h3>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div className="flex flex-col gap-2">
           {items.map(item => (
-            <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: item.color, flexShrink: 0 }} />
-              <span style={{ fontSize: '12px', fontWeight: 500, color: '#374151' }}>{item.label}</span>
+            <div key={item.label} className="flex items-center gap-[10px]">
+              <div 
+                className="w-[10px] h-[10px] rounded-full shrink-0" 
+                style={{ background: item.color }} 
+              />
+              <span className="text-[12px] font-medium text-foreground">{item.label}</span>
             </div>
           ))}
         </div>
@@ -414,24 +327,24 @@ function LegendCard({ indicator }: { indicator: string }) {
 function PanelContent({ title, specialtyName, data, division, specialty, onClose, isMobile }: { title: string; specialtyName: string; division: string; specialty: string; data: any; onClose: () => void; isMobile: boolean }) {
   if (!data) {
     return (
-      <div className="w-full bg-white h-full shadow-[0_8px_30px_-4px_rgba(3,105,161,0.1)] flex flex-col border-l border-slate-200">
-        <div className="p-6 border-b border-slate-100 bg-white/50 shrink-0">
+      <div className="w-full bg-background h-full shadow-floating flex flex-col border-l border-border">
+        <div className="p-6 border-b border-border/50 bg-card shrink-0">
           <div className="flex justify-between items-start mb-3">
             <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{specialtyName}</p>
-              <h2 className="text-2xl font-bold text-slate-800 tracking-tight">{title}</h2>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">{specialtyName}</p>
+              <h2 className="text-2xl font-bold text-foreground tracking-tight">{title}</h2>
             </div>
-            <button onClick={onClose} className="text-slate-400 hover:text-sky-600 p-1.5 rounded-xl hover:bg-sky-50 transition-colors cursor-pointer">
+            <button onClick={onClose} className="text-muted-foreground hover:text-primary p-1.5 rounded-xl hover:bg-primary-soft transition-colors cursor-pointer border-none bg-transparent">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
           </div>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-12 text-center">
-          <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-300 mb-4">
+          <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center text-muted-foreground mb-4">
             <span className="material-symbols-outlined text-4xl">database_off</span>
           </div>
-          <h3 className="text-lg font-bold text-slate-800 mb-2">Δεν βρέθηκαν δεδομένα</h3>
-          <p className="text-sm text-slate-500 max-w-[240px]">Δεν υπάρχουν στατιστικά στοιχεία για αυτή την περιοχή με τα επιλεγμένα φίλτρα.</p>
+          <h3 className="text-lg font-bold text-foreground mb-2">Δεν βρέθηκαν δεδομένα</h3>
+          <p className="text-sm text-muted-foreground max-w-[240px]">Δεν υπάρχουν στατιστικά στοιχεία για αυτή την περιοχή με τα επιλεγμένα φίλτρα.</p>
         </div>
       </div>
     )
@@ -499,7 +412,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                   <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide border shadow-sm ${diff.color}`}>
                       {diff.icon} {diff.label}
                   </span>
-                  <span className="text-[11px] font-semibold text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100">Τάση: {trend}</span>
+                  <span className="text-[11px] font-semibold text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-2xl border border-slate-100">Τάση: {trend}</span>
               </div>
             )}
         </div>
@@ -508,14 +421,14 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
             
             <div className="grid grid-cols-2 gap-4">
                 
-                <div className="bg-white p-5 rounded-[1.25rem] border border-slate-100 shadow-sm hover:border-sky-100 hover:bg-sky-50/30 transition-colors group">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 group-hover:text-sky-600 transition-colors">
+                <div className="bg-card p-5 rounded-2xl border border-border shadow-soft hover:border-primary/30 hover:bg-primary-soft/30 transition-colors group">
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">
                       Βαση Μοριων {baseYear ? `(${baseYear})` : ''}
                     </p>
                     <div className="flex items-baseline space-x-2">
-                        <span className="text-2xl font-bold text-slate-800">{data.baseScore?.toFixed(2) || '—'}</span>
+                        <span className="text-2xl font-bold text-foreground">{data.baseScore?.toFixed(2) || '—'}</span>
                         {data.baseScoreDiff !== null && data.baseScoreDiff !== 0 && (
-                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-md ${data.baseScoreDiff > 0 ? 'text-rose-600 bg-rose-50' : 'text-emerald-600 bg-emerald-50'}`}>
+                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-2xl ${data.baseScoreDiff > 0 ? 'text-rose-600 bg-rose-50' : 'text-emerald-600 bg-emerald-50'}`}>
                               <svg className={`w-3 h-3 mr-0.5 ${data.baseScoreDiff < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
                               {Math.abs(data.baseScoreDiff).toFixed(1)}
                           </span>
@@ -523,12 +436,12 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                     </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-[1.25rem] border border-slate-100 shadow-sm hover:border-indigo-50 transition-colors group">
+                <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:border-indigo-50 transition-colors group">
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 group-hover:text-indigo-500 transition-colors">Ζητηση (1η Προτ.)</p>
                     <div className="flex items-baseline space-x-2">
                         <span className="text-2xl font-bold text-slate-800">{data.targeting1stCount}</span>
                         {data.targeting1stCountDiff !== 0 && (
-                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-md ${data.targeting1stCountDiff > 0 ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'}`}>
+                          <span className={`text-[11px] font-bold flex items-center px-1.5 py-0.5 rounded-2xl ${data.targeting1stCountDiff > 0 ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'}`}>
                               <svg className={`w-3 h-3 mr-0.5 ${data.targeting1stCountDiff < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
                               {Math.abs(data.targeting1stCountDiff)}
                           </span>
@@ -536,16 +449,16 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                     </div>
                 </div>
 
-                <div className="col-span-2 bg-sky-50 p-5 rounded-[1.25rem] border border-sky-100 flex justify-between items-center shadow-sm">
+                <div className="col-span-2 bg-primary-soft p-5 rounded-2xl border border-primary/20 flex justify-between items-center shadow-soft">
                     <div>
-                        <p className="text-[10px] font-bold text-[#0369a1] uppercase tracking-widest mb-1">Αριθμος Μεταθεσεων</p>
+                        <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Αριθμος Μεταθεσεων</p>
                         <div className="flex items-baseline space-x-2">
-                            <span className="text-3xl font-bold text-slate-800 tracking-tight">{data.successCount}</span>
-                            <span className="text-xs font-medium text-slate-500">άτομα πήραν μετάθεση</span>
+                            <span className="text-3xl font-bold text-foreground tracking-tight">{data.successCount}</span>
+                            <span className="text-xs font-medium text-muted-foreground">άτομα πήραν μετάθεση</span>
                         </div>
                     </div>
                     <div className="text-right">
-                        <span className="inline-flex px-2.5 py-1.5 bg-white text-sky-700 text-[10px] uppercase tracking-wider font-bold rounded-lg border border-sky-100 shadow-sm">
+                        <span className="inline-flex px-2.5 py-1.5 bg-background text-primary text-[10px] uppercase tracking-wider font-bold rounded-2xl border border-primary/10 shadow-soft">
                           Το {successYear || 2024}
                         </span>
                     </div>
@@ -556,7 +469,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
 
             <div>
                 <h3 className="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2 mb-5">
-                    <div className="p-1.5 rounded-lg bg-sky-50 text-[#0369A1]">
+                    <div className="p-1.5 rounded-2xl bg-primary-soft text-primary">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     </div>
                     Ποιότητα Ανταγωνισμού
@@ -568,7 +481,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                             <span className="font-bold text-slate-800">{data.avgScore?.toFixed(1) || '—'}</span>
                         </div>
                         <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                            <div className="bg-gradient-to-r from-sky-400 to-[#0369a1] h-2 rounded-full shadow-inner" style={{width: `${Math.min(100, (data.avgScore || 0))}%`}}></div>
+                            <div className="bg-gradient-to-r from-sky-400 to-primary h-2 rounded-full shadow-inner" style={{width: `${Math.min(100, (data.avgScore || 0))}%`}}></div>
                         </div>
                     </div>
                     <div className="bg-white p-4 rounded-2xl border border-slate-50 shadow-sm">
@@ -587,12 +500,12 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
 
             <div>
                 <h3 className="text-sm font-bold text-slate-800 tracking-wide flex items-center gap-2 mb-5">
-                    <div className="p-1.5 rounded-lg bg-sky-50 text-[#0369A1]">
+                    <div className="p-1.5 rounded-2xl bg-primary-soft text-primary">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                     </div>
                     Ροές Μετακίνησης (Ιστορικά)
                 </h3>
-                <div className="grid grid-cols-2 gap-6 bg-slate-50 p-5 rounded-[1.25rem] border border-slate-100">
+                <div className="grid grid-cols-2 gap-6 bg-slate-50 p-5 rounded-2xl border border-slate-100">
                     <div>
                         <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-3">Ηρθαν Απο:</p>
                         {inflow.length > 0 ? (
@@ -600,7 +513,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                               {inflow.slice(0, 5).map(f => (
                                 <li key={f.name} className="flex items-center justify-between">
                                     <span className="text-xs font-medium text-slate-600 truncate mr-1" title={f.name}>{f.name}</span> 
-                                    <span className="text-[10px] font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-md shadow-sm">{f.count}</span>
+                                    <span className="text-[10px] font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
                                 </li>
                               ))}
                           </ul>
@@ -613,7 +526,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                             {outflow.slice(0, 5).map(f => (
                               <li key={f.name} className="flex items-center justify-between">
                                   <span className="text-xs font-medium text-slate-600 truncate mr-1" title={f.name}>{f.name}</span> 
-                                  <span className="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-100 px-2 py-0.5 rounded-md shadow-sm">{f.count}</span>
+                                  <span className="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-100 px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
                               </li>
                             ))}
                           </ul>
@@ -627,7 +540,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
         <div className="p-6 border-t border-slate-100 bg-white/80 backdrop-blur-sm shrink-0">
             <Link 
                 href={`/stats/zones/${encodeURIComponent(title)}?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialty)}`}
-                className="w-full flex items-center justify-center bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] cursor-pointer"
+                className="w-full flex items-center justify-center bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl text-sm font-semibold transition-all shadow-floating active:scale-[0.98] cursor-pointer"
             >
                 Προβολή Αναλυτικών Στατιστικών
             </Link>

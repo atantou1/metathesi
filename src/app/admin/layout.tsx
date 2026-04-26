@@ -18,25 +18,25 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     return (
         <SessionProvider session={session}>
             <SidebarProvider>
-                <div className="flex h-screen overflow-hidden bg-white dark:bg-[#020617] font-display text-slate-900 dark:text-slate-100">
+                <div className="flex h-screen overflow-hidden bg-background font-display text-foreground">
                     {/* Sidebar Container */}
                     <AdminSidebar />
                     
                     {/* Main Content Area */}
-                    <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden bg-[#F8FAFC]/30 dark:bg-transparent">
+                    <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden bg-muted/30">
                         {/* Internal Header (Dashboard-01 Style) */}
-                        <header className="h-14 flex items-center px-4 gap-4 shrink-0 transition-all border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950">
+                        <header className="h-14 flex items-center px-4 gap-4 shrink-0 transition-all border-b border-border bg-background">
                             <SidebarTrigger />
                             
                             <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
                             
                             {/* Breadcrumbs */}
                             <nav className="flex items-center gap-2 text-sm">
-                                <Link href="/admin" className="text-slate-500 hover:text-slate-900 transition-colors">
+                                <Link href="/admin" className="text-muted-foreground hover:text-foreground transition-colors">
                                     Admin
                                 </Link>
-                                <ChevronRight className="w-4 h-4 text-slate-300" />
-                                <span className="font-semibold text-slate-900 dark:text-white">Dashboard</span>
+                                <ChevronRight className="w-4 h-4 text-muted-foreground/30" />
+                                <span className="font-semibold text-foreground">Dashboard</span>
                             </nav>
                         </header>
                         

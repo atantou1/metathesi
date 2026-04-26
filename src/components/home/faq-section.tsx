@@ -58,20 +58,20 @@ const faqs = [
 
 const FAQItem = ({ faq, isOpen, toggleOpen }: { faq: any; isOpen: boolean; toggleOpen: () => void }) => {
   return (
-    <div className={`border border-slate-200 rounded-[8px] transition-all duration-200 ${isOpen ? "bg-slate-50/50 border-sky-200 shadow-sm" : "bg-white hover:bg-slate-50"}`}>
+    <div className={`border border-border rounded-2xl transition-all duration-200 ${isOpen ? "bg-muted/50 border-primary/20 shadow-soft" : "bg-white hover:bg-muted/30"}`}>
       <button
         type="button"
-        className="flex w-full items-start justify-between gap-[16px] p-[16px] text-left focus:outline-none rounded-[8px]"
+        className="flex w-full items-start justify-between gap-[16px] p-[16px] text-left focus:outline-none rounded-2xl"
         onClick={toggleOpen}
       >
-        <span className={`text-[14px] font-medium leading-[20px] flex-1 transition-colors ${isOpen ? "text-[#0369a1]" : "text-slate-900"}`}>
+        <span className={`text-[14px] font-medium leading-[20px] flex-1 transition-colors ${isOpen ? "text-primary" : "text-foreground"}`}>
           {faq.question}
         </span>
         <span className="flex items-center flex-shrink-0 mt-[-2px]">
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3 }}
-            className={`material-symbols-outlined text-[20px] transition-colors ${isOpen ? "text-[#0369a1]" : "text-slate-400"}`}
+            className={`material-symbols-outlined text-[20px] transition-colors ${isOpen ? "text-primary" : "text-muted-foreground"}`}
           >
             expand_more
           </motion.span>
@@ -86,7 +86,7 @@ const FAQItem = ({ faq, isOpen, toggleOpen }: { faq: any; isOpen: boolean; toggl
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className="px-[16px] pb-[16px] text-[14px] leading-[24px] text-slate-600">
+            <p className="px-[16px] pb-[16px] text-[14px] leading-[24px] text-muted-foreground">
               {faq.answer}
             </p>
           </motion.div>
@@ -105,10 +105,10 @@ export function FaqSection() {
       <div className="mx-auto max-w-[900px]">
         {/* Επικεφαλίδα */}
         <div className="mb-16 flex flex-col items-center text-center">
-          <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-[#0369a1]">
+          <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">
             Συχνες Ερωτησεις
           </h4>
-          <h2 className="mb-6 text-[48px] font-semibold tracking-tight text-neutral-900 leading-[48px] dark:text-white">
+          <h2 className="mb-6 text-[48px] font-semibold tracking-tight text-foreground leading-[48px] dark:text-white">
             Λύστε κάθε απορία σας
           </h2>
         </div>

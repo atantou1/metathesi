@@ -57,10 +57,10 @@ export function SignUpForm({
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
-            <Card className="overflow-hidden border-none shadow-2xl p-0 bg-transparent">
+            <Card className="overflow-hidden border-none shadow-2xl p-0 bg-transparent rounded-4xl">
                 <CardContent className="grid p-0 md:grid-cols-2">
                     {/* Left Decorative Pane */}
-                    <div className="relative hidden bg-[#0369a1] md:flex flex-col items-center justify-center overflow-hidden p-10 text-white">
+                    <div className="relative hidden bg-primary md:flex flex-col items-center justify-center overflow-hidden p-10 text-white">
                         <div
                             className="absolute inset-0 opacity-20"
                             style={{
@@ -68,7 +68,7 @@ export function SignUpForm({
                                 backgroundSize: '30px 30px'
                             }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-br from-[#0369a1] to-[#0c4a6e]" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-hover" />
 
                         <div className="relative z-10 flex flex-col items-center text-center">
                             <div className="w-24 h-24 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center border border-white/20 shadow-2xl mb-6">
@@ -89,10 +89,10 @@ export function SignUpForm({
                                     <Mail className="w-10 h-10" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Ελέγξτε το email σας!</h3>
+                                        <h1 className="text-2xl font-bold tracking-tight text-foreground">Εγγραφή</h1>
                                     <p className="text-slate-600 font-medium">Στείλαμε έναν σύνδεσμο επιβεβαίωσης στο email σας.</p>
                                 </div>
-                                <div className="bg-white/50 p-4 rounded-lg border border-white/20 text-sm text-slate-500 max-w-xs">
+                                <div className="bg-white/50 p-4 rounded-2xl border border-white/20 text-sm text-slate-500 max-w-xs">
                                     Παρακαλούμε ελέγξτε και τον φάκελο ανεπιθύμητων (spam) αν δεν το βρείτε στα εισερχόμενά σας.
                                 </div>
                                 <Button variant="outline" asChild className="mt-4">
@@ -115,7 +115,7 @@ export function SignUpForm({
                                             name="email"
                                             render={({ field }) => (
                                                 <FormItem className="grid gap-2">
-                                                    <FormLabel className="text-sm font-medium text-slate-700">Email Address</FormLabel>
+                                                    <FormLabel className="text-sm font-medium text-foreground">Email Address</FormLabel>
                                                     <FormControl>
                                                         <div className="relative group">
                                                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
@@ -123,7 +123,7 @@ export function SignUpForm({
                                                                 placeholder="teacher@school.gov"
                                                                 {...field}
                                                                 required
-                                                                className="pl-10 h-11 bg-slate-50/50 border-slate-200 focus:bg-white transition-all rounded-lg"
+                                                                className="pl-10 h-11 bg-muted/30 border-border focus:bg-white transition-all rounded-2xl"
                                                             />
                                                         </div>
                                                     </FormControl>
@@ -137,7 +137,7 @@ export function SignUpForm({
                                             name="password"
                                             render={({ field }) => (
                                                 <FormItem className="grid gap-2">
-                                                    <FormLabel className="text-sm font-medium text-slate-700">Κωδικός Πρόσβασης</FormLabel>
+                                                    <FormLabel className="text-sm font-medium text-foreground">Κωδικός Πρόσβασης</FormLabel>
                                                     <FormControl>
                                                         <div className="relative group">
                                                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
@@ -146,7 +146,7 @@ export function SignUpForm({
                                                                 required
                                                                 {...field}
                                                                 placeholder="******"
-                                                                className="pl-10 pr-10 h-11 bg-slate-50/50 border-slate-200 focus:bg-white transition-all rounded-lg"
+                                                                className="pl-10 pr-10 h-11 bg-slate-50/50 border-slate-200 focus:bg-white transition-all rounded-2xl"
                                                             />
                                                             <button
                                                                 type="button"
@@ -167,7 +167,7 @@ export function SignUpForm({
                                             name="confirmPassword"
                                             render={({ field }) => (
                                                 <FormItem className="grid gap-2">
-                                                    <FormLabel className="text-sm font-medium text-slate-700">Επιβεβαίωση Κωδικού</FormLabel>
+                                                    <FormLabel className="text-sm font-medium text-foreground">Επιβεβαίωση Κωδικού</FormLabel>
                                                     <FormControl>
                                                         <div className="relative group">
                                                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
@@ -176,7 +176,7 @@ export function SignUpForm({
                                                                 required
                                                                 {...field}
                                                                 placeholder="******"
-                                                                className="pl-10 pr-10 h-11 bg-slate-50/50 border-slate-200 focus:bg-white transition-all rounded-lg"
+                                                                className="pl-10 pr-10 h-11 bg-slate-50/50 border-slate-200 focus:bg-white transition-all rounded-2xl"
                                                             />
                                                         </div>
                                                     </FormControl>
@@ -186,27 +186,27 @@ export function SignUpForm({
                                         />
 
                                         {form.formState.errors.root && (
-                                            <div className="bg-red-50 border border-red-100 text-red-600 text-sm p-3 rounded-lg text-center font-medium animate-in fade-in slide-in-from-top-1">
+                                            <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm p-3 rounded-2xl text-center font-medium animate-in fade-in slide-in-from-top-1">
                                                 {form.formState.errors.root.message}
                                             </div>
                                         )}
 
-                                        <Button type="submit" className="w-full h-11 font-medium text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-[0.98] rounded-lg" disabled={isPending}>
+                                        <Button type="submit" className="w-full h-11 font-medium text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-[0.98] rounded-2xl" disabled={isPending}>
                                             {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : "Δημιουργία Λογαριασμού"}
                                         </Button>
                                     </div>
 
                                     <div className="flex items-center gap-4">
-                                        <div className="flex-1 border-t border-slate-200" />
+                                        <div className="flex-1 border-t border-border" />
                                         <span className="text-sm text-muted-foreground font-medium whitespace-nowrap">Ή εγγραφείτε με</span>
-                                        <div className="flex-1 border-t border-slate-200" />
+                                        <div className="flex-1 border-t border-border" />
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-4">
                                         <Button
                                             variant="outline"
                                             type="button"
-                                            className="h-11 font-medium border-slate-200 transition-all active:scale-[0.98] bg-white/50 rounded-lg"
+                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-white/50 rounded-2xl"
                                             onClick={() => startTransition(() => loginWithProvider('google'))}
                                             disabled={isPending}
                                         >
@@ -221,7 +221,7 @@ export function SignUpForm({
                                         <Button
                                             variant="outline"
                                             type="button"
-                                            className="h-11 font-medium border-slate-200 transition-all active:scale-[0.98] bg-white/50 rounded-lg"
+                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-white/50 rounded-2xl"
                                             onClick={() => startTransition(() => loginWithProvider('facebook'))}
                                             disabled={isPending}
                                         >

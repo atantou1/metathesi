@@ -266,7 +266,7 @@ export function RequestForm({ initialRequest }: Props) {
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
                         {/* ... fields ... */}
-                        <div className="space-y-4 border p-4 rounded-md bg-slate-50">
+                        <div className="space-y-4 border p-4 rounded-2xl bg-slate-50">
                             <h3 className="font-medium">Προσθήκη Επιλογών (Κατά σειρά προτίμησης)</h3>
 
                             <div className="grid grid-cols-2 gap-4">

@@ -60,7 +60,7 @@ export default function Home() {
                 <div className="mt-10 flex items-center justify-center lg:justify-start gap-x-6">
                   <Link
                     href="/signup"
-                    className="rounded-md bg-[#0369a1] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#075985] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-2xl bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-soft hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   >
                     Ξεκίνα τώρα
                   </Link>

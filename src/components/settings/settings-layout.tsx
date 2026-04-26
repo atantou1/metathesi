@@ -80,7 +80,7 @@ export function SettingsLayout() {
                 <nav className="space-y-1 px-2 sm:px-4 flex-1">
                     <button
                         onClick={() => setActiveTab("account")}
-                        className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-lg transition-all group ${activeTab === "account"
+                        className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-2xl transition-all group ${activeTab === "account"
                             ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
                             : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
                             }`}
@@ -94,7 +94,7 @@ export function SettingsLayout() {
 
                     <button
                         onClick={() => setActiveTab("security")}
-                        className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-lg transition-all group relative ${activeTab === "security"
+                        className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-2xl transition-all group relative ${activeTab === "security"
                             ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
                             : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
                             }`}
@@ -108,7 +108,7 @@ export function SettingsLayout() {
 
                     <button
                         onClick={() => setActiveTab("appearance")}
-                        className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-lg transition-all group relative ${activeTab === "appearance"
+                        className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-2xl transition-all group relative ${activeTab === "appearance"
                             ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
                             : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
                             }`}
@@ -123,7 +123,7 @@ export function SettingsLayout() {
                     <div className="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800">
                         <button
                             onClick={() => setActiveTab("data")}
-                            className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-lg transition-all group relative ${activeTab === "data"
+                            className={`w-full flex items-center sm:justify-start justify-center gap-3 px-3 py-3 rounded-2xl transition-all group relative ${activeTab === "data"
                                 ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20"
                                 : "text-slate-500 hover:text-blue-600 hover:bg-blue-600/5 dark:text-slate-400 dark:hover:text-blue-600"
                                 }`}
@@ -145,7 +145,7 @@ export function SettingsLayout() {
                     {activeTab === "account" && (
                         <div className="animate-in fade-in zoom-in duration-300">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 bg-blue-600/10 rounded-lg text-blue-600">
+                                <div className="p-2 bg-blue-600/10 rounded-2xl text-blue-600">
                                     <User className="w-5 h-5" />
                                 </div>
                                 <div>
@@ -164,7 +164,7 @@ export function SettingsLayout() {
                     {activeTab === "security" && (
                         <section className="animate-in fade-in zoom-in duration-300">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 bg-blue-600/10 rounded-lg text-blue-600">
+                                <div className="p-2 bg-blue-600/10 rounded-2xl text-blue-600">
                                     <Lock className="w-5 h-5" />
                                 </div>
                                 <div>
@@ -176,14 +176,14 @@ export function SettingsLayout() {
                                 <form className="space-y-5" onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
 
                                     {passwordError && (
-                                        <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-lg text-sm font-medium flex items-center gap-2">
+                                        <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-2xl text-sm font-medium flex items-center gap-2">
                                             <AlertTriangle className="w-4 h-4" />
                                             {passwordError}
                                         </div>
                                     )}
 
                                     {passwordSuccess && (
-                                        <div className="p-3 bg-green-50 text-green-700 border border-green-200 rounded-lg text-sm font-medium flex items-center gap-2">
+                                        <div className="p-3 bg-green-50 text-green-700 border border-green-200 rounded-2xl text-sm font-medium flex items-center gap-2">
                                             <CheckCircle2 className="w-4 h-4" />
                                             {passwordSuccess}
                                         </div>
@@ -197,7 +197,7 @@ export function SettingsLayout() {
                                             </div>
                                             <input
                                                 {...passwordForm.register("currentPassword")}
-                                                className={`w-full pl-10 pr-4 py-2.5 rounded-lg border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.currentPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.currentPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
                                                 placeholder="••••••••"
                                                 type="password"
                                             />
@@ -215,7 +215,7 @@ export function SettingsLayout() {
                                                 </div>
                                                 <input
                                                     {...passwordForm.register("newPassword")}
-                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.newPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.newPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
                                                     placeholder="••••••••"
                                                     type="password"
                                                 />
@@ -232,7 +232,7 @@ export function SettingsLayout() {
                                                 </div>
                                                 <input
                                                     {...passwordForm.register("confirmPassword")}
-                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.confirmPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
+                                                    className={`w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow sm:text-sm ${passwordForm.formState.errors.confirmPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
                                                     placeholder="••••••••"
                                                     type="password"
                                                 />
@@ -245,7 +245,7 @@ export function SettingsLayout() {
                                     <div className="pt-2 flex justify-end">
                                         <button
                                             disabled={isPendingPassword}
-                                            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-600/20 flex items-center gap-2 disabled:opacity-50 min-w-[160px] justify-center"
+                                            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-2xl text-sm font-medium transition-colors shadow-lg shadow-blue-600/20 flex items-center gap-2 disabled:opacity-50 min-w-[160px] justify-center"
                                             type="submit"
                                         >
                                             {isPendingPassword ? (
@@ -264,7 +264,7 @@ export function SettingsLayout() {
                     {activeTab === "appearance" && (
                         <section className="animate-in fade-in zoom-in duration-300">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-lg">
+                                <div className="p-2 bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-2xl">
                                     <Palette className="w-5 h-5" />
                                 </div>
                                 <div>
@@ -282,7 +282,7 @@ export function SettingsLayout() {
                                         onChange={() => setTheme("light")}
                                     />
                                     <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
-                                        <div className="h-20 bg-slate-100 rounded-lg mb-3 flex items-center justify-center border border-slate-200">
+                                        <div className="h-20 bg-slate-100 rounded-2xl mb-3 flex items-center justify-center border border-slate-200">
                                             <Sun className="w-8 h-8 text-amber-500" />
                                         </div>
                                         <div className="flex items-center justify-between">
@@ -300,7 +300,7 @@ export function SettingsLayout() {
                                         onChange={() => setTheme("dark")}
                                     />
                                     <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
-                                        <div className="h-20 bg-slate-800 rounded-lg mb-3 flex items-center justify-center border border-slate-700">
+                                        <div className="h-20 bg-slate-800 rounded-2xl mb-3 flex items-center justify-center border border-slate-700">
                                             <Moon className="w-8 h-8 text-purple-400" />
                                         </div>
                                         <div className="flex items-center justify-between">
@@ -318,7 +318,7 @@ export function SettingsLayout() {
                                         onChange={() => setTheme("system")}
                                     />
                                     <div className="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 transition-all hover:border-blue-600/50 peer-checked:border-blue-600 peer-checked:ring-1 peer-checked:ring-blue-600">
-                                        <div className="h-20 bg-gradient-to-br from-slate-100 to-slate-800 rounded-lg mb-3 flex items-center justify-center border border-slate-200 dark:border-slate-700">
+                                        <div className="h-20 bg-gradient-to-br from-slate-100 to-slate-800 rounded-2xl mb-3 flex items-center justify-center border border-slate-200 dark:border-slate-700">
                                             <Monitor className="w-8 h-8 text-slate-500 dark:text-slate-300" />
                                         </div>
                                         <div className="flex items-center justify-between">
@@ -335,7 +335,7 @@ export function SettingsLayout() {
                     {activeTab === "data" && (
                         <section className="animate-in fade-in zoom-in duration-300">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg">
+                                <div className="p-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-2xl">
                                     <FolderOpen className="w-5 h-5" />
                                 </div>
                                 <div>
@@ -351,7 +351,7 @@ export function SettingsLayout() {
                                             Κατεβάστε ένα αντίγραφο των δεδομένων σας (GDPR).
                                         </p>
                                     </div>
-                                    <button className="shrink-0 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                                    <button className="shrink-0 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2.5 rounded-2xl text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer">
                                         <Download className="w-5 h-5" />
                                         Λήψη αρχείου
                                     </button>
@@ -368,7 +368,7 @@ export function SettingsLayout() {
                                     </div>
                                     <button
                                         onClick={() => setShowDeleteConfirm(true)}
-                                        className="shrink-0 bg-white dark:bg-slate-800 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                                        className="shrink-0 bg-white dark:bg-slate-800 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 px-4 py-2.5 rounded-2xl text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2 cursor-pointer"
                                     >
                                         <Trash2 className="w-5 h-5" />
                                         Διαγραφή
@@ -407,7 +407,7 @@ export function SettingsLayout() {
                         </p>
 
                         {deleteError && (
-                            <div className="mb-4 p-3 bg-red-50 text-red-600 border border-red-200 rounded-lg text-sm font-medium">
+                            <div className="mb-4 p-3 bg-red-50 text-red-600 border border-red-200 rounded-2xl text-sm font-medium">
                                 {deleteError}
                             </div>
                         )}

@@ -36,29 +36,29 @@ export function AnalyticsHeader({
   const diff = diffMap[difficultyCategory] || diffMap.Unknown
 
   return (
-    <div className="flex flex-col md:flex-row md:items-start justify-between bg-white border border-slate-100 shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)] p-6 sm:p-8 rounded-[2rem]">
+    <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-xl">
       <div>
         <div className="flex items-center space-x-3 mb-3">
           <Link 
             href={`/stats${division || specialtyCode ? '?' : ''}${division ? `division=${encodeURIComponent(division)}` : ''}${division && specialtyCode ? '&' : ''}${specialtyCode ? `specialty=${encodeURIComponent(specialtyCode)}` : ''}`}
-            className="text-slate-500 hover:text-[#0369a1] hover:bg-sky-50 transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-xl border border-transparent hover:border-sky-100 cursor-pointer"
+            className="text-muted-foreground hover:text-primary hover:bg-primary-soft transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-2xl border border-transparent hover:border-primary/20 cursor-pointer"
           >
             <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
             Επιστροφή στον Χάρτη
           </Link>
-          <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-slate-50 text-slate-500 border border-slate-200">
+          <span className="px-2.5 py-1 rounded-2xl text-[10px] font-bold uppercase tracking-wider bg-muted text-muted-foreground border border-border">
             {specialtyCode}{specialtyName ? ` - ${specialtyName}` : ''}
           </span>
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">{zoneName}</h1>
+        <h1 className="text-3xl font-extrabold text-foreground tracking-tight">{zoneName}</h1>
         
         <div className="flex items-center gap-2 mt-4">
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Ικανοποιηση Κλαδου:</span>
-          <span className="text-base font-black text-[#0369a1]">{satisfactionRate.toFixed(1)}%</span>
+          <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">Ικανοποιηση Κλαδου:</span>
+          <span className="text-base font-black text-primary">{satisfactionRate.toFixed(1)}%</span>
           {satisfactionTrend !== 0 && (
-            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md flex items-center border shadow-sm ${satisfactionTrend >= 0 ? 'text-teal-600 bg-teal-50 border-teal-100' : 'text-rose-600 bg-rose-50 border-rose-100'}`}>
+            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-2xl flex items-center border shadow-sm ${satisfactionTrend >= 0 ? 'text-teal-600 bg-teal-50 border-teal-100' : 'text-rose-600 bg-rose-50 border-rose-100'}`}>
               {satisfactionTrend >= 0 ? '+' : ''}{satisfactionTrend.toFixed(1)}% 
               <svg className={`w-3 h-3 ml-0.5 ${satisfactionTrend < 0 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
             </span>

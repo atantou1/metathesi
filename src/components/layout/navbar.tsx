@@ -27,10 +27,10 @@ export async function Navbar() {
             <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-14">
                     <Link href="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-                        <Logo className="w-8 h-8 text-[#0369A1]" />
+                        <Logo className="w-8 h-8 text-primary" />
                         <span className="text-xl font-bold tracking-tight hidden sm:block">
-                            <span className="text-[#0F172A] dark:text-white">meta</span>
-                            <span className="text-[#0369A1]">Thesi</span>
+                            <span className="text-foreground dark:text-white">meta</span>
+                            <span className="text-primary">Thesi</span>
                         </span>
                     </Link>
 
@@ -62,7 +62,7 @@ export async function Navbar() {
                                             </div>
                                         </div>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end" className="w-64 p-2 bg-white rounded-xl border border-slate-200 shadow-xl">
+                                    <DropdownMenuContent align="end" className="w-64 p-2 bg-white rounded-2xl border border-border shadow-xl">
 
                                         {/* My Account (Non-clickable) */}
                                         <div className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition-colors cursor-default">
@@ -115,7 +115,7 @@ export async function Navbar() {
                                     <Button variant="ghost" className="cursor-pointer">Σύνδεση</Button>
                                 </Link>
                                 <Link href="/signup">
-                                    <Button className="bg-[#0369a1] hover:bg-[#0c4a6e] text-white rounded-lg cursor-pointer">Εγγραφή</Button>
+                                    <Button className="bg-primary hover:bg-primary-hover text-white rounded-2xl cursor-pointer">Εγγραφή</Button>
                                 </Link>
                             </div>
                         )}

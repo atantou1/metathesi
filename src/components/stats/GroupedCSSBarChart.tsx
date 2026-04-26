@@ -42,7 +42,7 @@ export function GroupedCSSBarChart({
   }
 
   return (
-    <div className="glass-card p-6 sm:p-8 rounded-[2rem] flex flex-col h-full bg-white border border-slate-100 shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)]">
+    <div className="glass-card p-6 sm:p-8 rounded-4xl flex flex-col h-full bg-white border border-slate-100 shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)]">
       <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6">
         <div>
           <h3 className="text-lg font-bold text-slate-800 tracking-tight mb-1">{title}</h3>

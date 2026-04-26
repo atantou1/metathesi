@@ -12,7 +12,7 @@ export default async function AdminUsersPage() {
                 <p className="text-slate-500 dark:text-slate-400 mt-2">Διαχείριση εγγεγραμμένων χρηστών και δικαιωμάτων.</p>
             </div>
 
-            <Card className="rounded-[1.5rem] border-slate-100 shadow-sm overflow-hidden">
+            <Card className="rounded-3xl border-slate-100 shadow-sm overflow-hidden">
                 <CardHeader>
                     <CardTitle>Εγγεγραμμένοι Χρήστες (Τελευταίοι 50)</CardTitle>
                 </CardHeader>
@@ -34,13 +34,13 @@ export default async function AdminUsersPage() {
                                         <td className="px-6 py-4 font-medium text-slate-900">{user.fullName || "N/A"}</td>
                                         <td className="px-6 py-4">{user.email}</td>
                                         <td className="px-6 py-4">
-                                            <span className="px-2 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-bold">{user.role}</span>
+                                            <span className="px-2 py-1 bg-slate-100 text-slate-700 rounded-2xl text-xs font-bold">{user.role}</span>
                                         </td>
                                         <td className="px-6 py-4">
                                             {user.status === "BANNED" ? (
-                                                <span className="px-2 py-1 bg-red-100 text-red-700 rounded-md text-xs font-bold" title={user.banReason || ""}>BANNED</span>
+                                                <span className="px-2 py-1 bg-red-100 text-red-700 rounded-2xl text-xs font-bold" title={user.banReason || ""}>BANNED</span>
                                             ) : (
-                                                <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-md text-xs font-bold">{user.status}</span>
+                                                <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-2xl text-xs font-bold">{user.status}</span>
                                             )}
                                         </td>
                                         <td className="px-6 py-4 text-right">

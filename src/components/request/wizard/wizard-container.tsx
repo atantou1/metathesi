@@ -75,24 +75,24 @@ export function WizardContainer({ initialData, requestId }: { initialData?: Init
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="text-slate-900 antialiased min-h-screen pb-20">
+            <form onSubmit={handleSubmit(onSubmit)} className="text-foreground antialiased min-h-screen pb-20">
                 {/* Sticky Navbar */}
-                <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-md">
+                <nav className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-md">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center h-20">
                             <div className="flex items-center gap-4">
                                 <button 
                                     type="button"
                                     onClick={() => window.location.href = "/dashboard"}
-                                    className="p-2 rounded-xl text-slate-400 hover:text-[#0369a1] hover:bg-sky-50 transition-colors cursor-pointer"
+                                    className="p-2 rounded-2xl text-muted-foreground hover:text-primary hover:bg-primary-soft transition-colors cursor-pointer"
                                 >
                                     <ArrowLeft className="w-5 h-5" />
                                 </button>
                                 <div>
-                                    <h1 className="text-xl font-bold tracking-tight text-slate-800">
+                                    <h1 className="text-xl font-bold tracking-tight text-foreground">
                                         {isEditing ? "Επεξεργασία Αίτησης" : "Δημιουργία Αίτησης"}
                                     </h1>
-                                    <p className="text-[11px] font-medium text-slate-500">Επιβεβαίωση στοιχείων και επιλογή περιοχών</p>
+                                    <p className="text-[11px] font-medium text-muted-foreground">Επιβεβαίωση στοιχείων και επιλογή περιοχών</p>
                                 </div>
                             </div>
                         </div>
@@ -108,20 +108,20 @@ export function WizardContainer({ initialData, requestId }: { initialData?: Init
 
                     {/* Footer Actions */}
                     <div className="flex flex-col sm:flex-row gap-4 items-center justify-end pt-4">
-                        <span className="text-[11px] text-slate-400 font-medium mr-auto hidden sm:block">
+                        <span className="text-[11px] text-muted-foreground font-medium mr-auto hidden sm:block">
                             Τα δεδομένα επεξεργάζονται με ασφάλεια βάσει GDPR.
                         </span>
                         <button 
                             type="button" 
                             onClick={() => window.location.href = "/dashboard"}
-                            className="w-full sm:w-auto bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-colors cursor-pointer"
+                            className="w-full sm:w-auto bg-card border border-border hover:bg-muted text-muted-foreground px-8 py-3.5 rounded-2xl text-sm font-semibold transition-colors cursor-pointer"
                         >
                             Ακύρωση
                         </button>
                         <button 
                             type="submit" 
                             disabled={isSubmitting}
-                            className="w-full sm:w-auto bg-[#0369A1] hover:bg-[#075985] text-white px-8 py-3.5 rounded-[1.25rem] text-sm font-semibold transition-all shadow-lg shadow-sky-900/10 active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl text-sm font-semibold transition-all shadow-floating active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isSubmitting ? "Επεξεργασία..." : (isEditing ? "Αποθήκευση Αλλαγών" : "Υποβολή Αίτησης")}
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

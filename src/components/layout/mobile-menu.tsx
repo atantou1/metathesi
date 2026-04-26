@@ -97,7 +97,7 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                         href={link.href}
                                         onClick={() => setIsOpen(false)}
                                         className={cn(
-                                            "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors",
+                                            "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-2xl transition-colors",
                                             link.active
                                                 ? "bg-blue-50/80 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
                                                 : "text-slate-700 dark:text-slate-300 hover:bg-slate-50/50 dark:hover:bg-slate-800/50"
@@ -131,14 +131,14 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                             <Link
                                                 href="/settings"
                                                 onClick={() => setIsOpen(false)}
-                                                className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100/50 dark:text-slate-300 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                                                className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100/50 dark:text-slate-300 dark:hover:bg-slate-800/50 rounded-2xl transition-colors"
                                             >
                                                 <Settings className="w-4 h-4" />
                                                 Ρυθμίσεις
                                             </Link>
                                             <button
                                                 onClick={() => signOut()}
-                                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50/80 dark:hover:bg-red-900/20 rounded-lg transition-colors cursor-pointer"
+                                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50/80 dark:hover:bg-red-900/20 rounded-2xl transition-colors cursor-pointer"
                                             >
                                                 <LogOut className="w-4 h-4" />
                                                 Αποσύνδεση
@@ -151,7 +151,7 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                             <Button variant="outline" className="w-full justify-center cursor-pointer bg-white/50 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50">Σύνδεση</Button>
                                         </Link>
                                         <Link href="/signup" onClick={() => setIsOpen(false)}>
-                                            <Button className="w-full justify-center bg-[#0369a1] hover:bg-[#0c4a6e] text-white rounded-lg cursor-pointer">Εγγραφή</Button>
+                                            <Button className="w-full justify-center bg-primary hover:bg-primary-hover text-white rounded-2xl cursor-pointer">Εγγραφή</Button>
                                         </Link>
                                     </div>
                                 )}

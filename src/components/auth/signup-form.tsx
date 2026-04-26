@@ -160,7 +160,7 @@ export function SignUpForm() {
                         </div>
 
                         {form.formState.errors.root && (
-                            <div className="text-red-500 text-sm text-center font-medium bg-red-50 p-2 rounded-lg">{form.formState.errors.root.message}</div>
+                            <div className="text-red-500 text-sm text-center font-medium bg-red-50 p-2 rounded-2xl">{form.formState.errors.root.message}</div>
                         )}
 
                         <div className="pt-2">
