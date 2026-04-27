@@ -674,7 +674,8 @@ function WizardStep2Updated() {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-white dark:bg-primary-bright"></span>
                   </span>
                   <p className="text-[12px] font-semibold text-white tracking-wide">
-                    Βρέθηκε ενεργό match! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.
+                    <span className="hidden sm:inline">Βρέθηκε ενεργό match! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.</span>
+                    <span className="inline sm:hidden">Βρέθηκε μια αντιστοίχιση</span>
                   </p>
                 </div>
                 <button className="w-full sm:w-auto text-[11px] font-bold text-primary dark:text-primary-foreground bg-white dark:bg-primary hover:bg-white/90 dark:hover:bg-primary/90 px-4 py-1.5 rounded-full transition-all shadow-sm active:scale-95">

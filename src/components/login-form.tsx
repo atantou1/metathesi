@@ -78,7 +78,7 @@ export function LoginForm({
             <div
               className="absolute inset-0 opacity-20"
               style={{
-                backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)',
+                backgroundImage: 'radial-gradient(hsl(var(--primary-foreground)) 1px, transparent 1px)',
                 backgroundSize: '30px 30px'
               }}
             />
@@ -89,7 +89,7 @@ export function LoginForm({
                 <Logo className="w-16 h-16 text-white" />
               </div>
               <h2 className="text-2xl font-bold mb-4 tracking-tight">metaThesi</h2>
-              <p className="text-sky-100/80 text-sm max-w-xs leading-relaxed">
+              <p className="text-primary-foreground/80 text-sm max-w-xs leading-relaxed">
                 Η πιο σύγχρονη πλατφόρμα διαχείρισης μεταθέσεων με την δύναμη των δεδομένων.
               </p>
             </div>
@@ -97,7 +97,7 @@ export function LoginForm({
 
           {/* Right Form Pane */}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-10 bg-white/40 backdrop-blur-md border-l border-white/10">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-10 bg-card/60 backdrop-blur-xl border-l border-white/5">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
                   <h1 className="text-2xl font-bold tracking-tight text-foreground">Καλώς ήρθατε</h1>
@@ -120,7 +120,7 @@ export function LoginForm({
                               placeholder="teacher@gmail.com"
                               {...field}
                               required
-                              className="pl-10 h-11 bg-muted/30 border-border focus:bg-white transition-all rounded-2xl"
+                              className="pl-10 h-11 bg-muted/30 border-border focus:bg-card transition-all rounded-2xl"
                             />
                           </div>
                         </FormControl>
@@ -151,7 +151,7 @@ export function LoginForm({
                               type={showPassword ? "text" : "password"}
                               required
                               {...field}
-                              className="pl-10 pr-10 h-11 bg-muted/30 border-border focus:bg-white transition-all rounded-2xl"
+                              className="pl-10 pr-10 h-11 bg-muted/30 border-border focus:bg-card transition-all rounded-2xl"
                             />
                             <button
                               type="button"

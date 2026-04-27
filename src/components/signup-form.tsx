@@ -82,17 +82,17 @@ export function SignUpForm({
                     </div>
 
                     {/* Right Form Pane */}
-                    <div className="p-6 md:p-10 bg-white/40 backdrop-blur-md border-l border-white/10">
+                    <div className="p-6 md:p-10 bg-card/60 backdrop-blur-xl border-l border-white/5">
                         {successMessage ? (
                             <div className="h-full flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in zoom-in duration-500">
-                                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 shadow-inner">
+                                <div className="w-20 h-20 bg-success-soft rounded-full flex items-center justify-center text-success shadow-inner">
                                     <Mail className="w-10 h-10" />
                                 </div>
                                 <div>
                                         <h1 className="text-2xl font-bold tracking-tight text-foreground">Εγγραφή</h1>
                                     <p className="text-text-tertiary font-medium">Στείλαμε έναν σύνδεσμο επιβεβαίωσης στο email σας.</p>
                                 </div>
-                                <div className="bg-white/50 p-4 rounded-2xl border border-white/20 text-sm text-text-tertiary max-w-xs">
+                                <div className="bg-card/50 p-4 rounded-2xl border border-border/20 text-sm text-text-tertiary max-w-xs">
                                     Παρακαλούμε ελέγξτε και τον φάκελο ανεπιθύμητων (spam) αν δεν το βρείτε στα εισερχόμενά σας.
                                 </div>
                                 <Button variant="outline" asChild className="mt-4">
@@ -123,7 +123,7 @@ export function SignUpForm({
                                                                 placeholder="teacher@school.gov"
                                                                 {...field}
                                                                 required
-                                                                className="pl-10 h-11 bg-muted/30 border-border focus:bg-white transition-all rounded-2xl"
+                                                                className="pl-10 h-11 bg-muted/30 border-border focus:bg-card transition-all rounded-2xl"
                                                             />
                                                         </div>
                                                     </FormControl>
@@ -146,7 +146,7 @@ export function SignUpForm({
                                                                 required
                                                                 {...field}
                                                                 placeholder="******"
-                                                                className="pl-10 pr-10 h-11 bg-surface-dim/50 border-border focus:bg-white transition-all rounded-2xl"
+                                                                className="pl-10 pr-10 h-11 bg-surface-dim/50 border-border focus:bg-card transition-all rounded-2xl"
                                                             />
                                                             <button
                                                                 type="button"
@@ -176,7 +176,7 @@ export function SignUpForm({
                                                                 required
                                                                 {...field}
                                                                 placeholder="******"
-                                                                className="pl-10 pr-10 h-11 bg-surface-dim/50 border-border focus:bg-white transition-all rounded-2xl"
+                                                                className="pl-10 pr-10 h-11 bg-surface-dim/50 border-border focus:bg-card transition-all rounded-2xl"
                                                             />
                                                         </div>
                                                     </FormControl>
@@ -206,7 +206,7 @@ export function SignUpForm({
                                         <Button
                                             variant="outline"
                                             type="button"
-                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-white/50 rounded-2xl"
+                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-card/50 rounded-2xl"
                                             onClick={() => startTransition(() => loginWithProvider('google'))}
                                             disabled={isPending}
                                         >
@@ -221,7 +221,7 @@ export function SignUpForm({
                                         <Button
                                             variant="outline"
                                             type="button"
-                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-white/50 rounded-2xl"
+                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-card/50 rounded-2xl"
                                             onClick={() => startTransition(() => loginWithProvider('facebook'))}
                                             disabled={isPending}
                                         >

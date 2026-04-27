@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { auth, signOut } from "@/auth"
 import { Button } from "@/components/ui/button"
-import { User as UserIcon, Settings, FileText, Moon, LogOut } from "lucide-react"
+import { User as UserIcon, Settings, FileText, LogOut } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -19,6 +19,7 @@ import { NotificationBellClient } from "@/components/layout/NotificationBellClie
 import { Logo } from "@/components/logo"
 import { FloatingNavWrapper } from "@/components/layout/floating-nav-wrapper"
 import { ThemeToggleClient } from "@/components/layout/ThemeToggleClient"
+import { ModeToggle } from "@/components/layout/ModeToggle"
 
 export async function Navbar() {
     const session = await auth()
@@ -38,7 +39,8 @@ export async function Navbar() {
                     {/* Desktop Navigation */}
                     {session ? <MainNav /> : null}
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 sm:gap-4">
+                        <ModeToggle />
                         {session ? (
                             <>
                                 <NotificationBellClient />
