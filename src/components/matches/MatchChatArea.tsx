@@ -141,7 +141,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                         } border`}>
                             {getInitials(match.user.fullName)}
                         </div>
-                        {isOnline && <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 border-2 border-white rounded-full bg-emerald-500"></div>}
+                        {isOnline && <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 border-2 border-background rounded-full bg-success"></div>}
                     </div>
                     <div>
                         <h3 className="font-bold text-lg text-foreground tracking-tight leading-tight">{match.user.fullName}</h3>

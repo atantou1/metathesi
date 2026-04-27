@@ -74,7 +74,7 @@ export function NotificationBellClient() {
         >
             <Bell className="w-6 h-6" />
             {hasUnread && (
-                <span className="absolute top-2 right-2 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-card animate-pulse"></span>
+                <span className="absolute top-2 right-2 block h-2.5 w-2.5 rounded-full bg-danger ring-2 ring-white/80 dark:ring-card/80 animate-pulse"></span>
             )}
         </button>
     )

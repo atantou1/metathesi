@@ -8,7 +8,7 @@ import { MapPin, Trash2, GripVertical, Plus, ChevronDown } from "lucide-react"
 
 type Option = { id: number; name: string }
 
-export function Step2Locations() {
+export function LocationsSection() {
     const { control, watch, setValue, getValues, formState: { errors } } = useFormContext()
     const [isPending, startTransition] = useTransition()
 
@@ -84,7 +84,7 @@ export function Step2Locations() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <div>
                     <h2 className="text-lg font-bold text-foreground tracking-tight flex items-center gap-3">
-                        <div className="p-2 rounded-xl bg-teal-50 text-teal-600">
+                        <div className="p-2 rounded-xl bg-success-soft text-success">
                             <MapPin className="w-5 h-5" />
                         </div>
                         Περιοχές Προτίμησης
@@ -94,7 +94,7 @@ export function Step2Locations() {
                 <button 
                     type="button" 
                     onClick={() => setValue("targetZoneIds", [], { shouldValidate: true })}
-                    className="text-[11px] font-bold text-muted-foreground hover:text-rose-600 bg-muted hover:bg-rose-50 px-3 py-1.5 rounded-2xl transition-colors border border-border hover:border-rose-200 cursor-pointer"
+                    className="text-[11px] font-bold text-muted-foreground hover:text-danger bg-muted hover:bg-danger-soft px-3 py-1.5 rounded-2xl transition-colors border border-border hover:border-danger/20 cursor-pointer"
                 >
                     Καθαρισμός
                 </button>
@@ -107,8 +107,8 @@ export function Step2Locations() {
                             <div className="group bg-card rounded-2xl p-2 shadow-soft border border-border hover:border-primary/30 transition-all flex items-center justify-between cursor-grab active:cursor-grabbing">
                                 <div className="flex items-center gap-4 flex-1">
                                     <div className={`h-8 w-8 rounded-2xl flex items-center justify-center text-xs font-bold border ${
-                                        index === 0 ? 'bg-rose-50 text-rose-600 border-rose-100' : 
-                                        index === 1 ? 'bg-amber-50 text-amber-600 border-amber-100' :
+                                        index === 0 ? 'bg-danger-soft text-danger border-danger/20' : 
+                                        index === 1 ? 'bg-warning-soft text-warning border-warning/20' :
                                         'bg-muted text-muted-foreground border-border'
                                     }`}>
                                         {index + 1}
@@ -121,7 +121,7 @@ export function Step2Locations() {
                                     <button 
                                         type="button" 
                                         onClick={() => removeTargetZone(id)}
-                                        className="p-1.5 text-muted-foreground hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition-colors cursor-pointer"
+                                        className="p-1.5 text-muted-foreground hover:text-danger hover:bg-danger-soft rounded-2xl transition-colors cursor-pointer"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
@@ -135,7 +135,7 @@ export function Step2Locations() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
                     <div className="relative">
                         <select 
-                            className="w-full h-12 pl-4 pr-10 border-dashed border-border border-2 rounded-2xl text-muted-foreground text-sm font-medium focus:border-primary focus:bg-primary-soft focus:text-primary transition-all bg-card appearance-none cursor-pointer focus:outline-none"
+                            className="w-full h-12 pl-4 pr-10 border-dashed border-border border-2 rounded-2xl text-muted-foreground text-sm font-medium focus:border-primary focus:bg-primary-soft focus:text-primary transition-all bg-muted appearance-none cursor-pointer focus:outline-none"
                             value={targetRegionId}
                             onChange={(e) => setTargetRegionId(e.target.value)}
                         >
@@ -147,7 +147,7 @@ export function Step2Locations() {
                     
                     <div className="relative">
                         <select 
-                            className="w-full h-12 pl-4 pr-10 border-dashed border-border border-2 rounded-2xl text-muted-foreground text-sm font-medium focus:border-primary focus:bg-primary-soft focus:text-primary transition-all bg-card appearance-none cursor-pointer focus:outline-none disabled:opacity-50"
+                            className="w-full h-12 pl-4 pr-10 border-dashed border-border border-2 rounded-2xl text-muted-foreground text-sm font-medium focus:border-primary focus:bg-primary-soft focus:text-primary transition-all bg-muted appearance-none cursor-pointer focus:outline-none disabled:opacity-50"
                             disabled={!targetRegionId || targetZoneOptions.length === 0}
                             value=""
                             onChange={(e) => addTargetZone(Number(e.target.value))}
@@ -159,7 +159,7 @@ export function Step2Locations() {
                     </div>
                 </div>
                 {errors.targetZoneIds && (
-                    <p className="text-rose-500 text-xs font-bold mt-2 pl-12">
+                    <p className="text-danger text-xs font-bold mt-2 pl-12">
                         {errors.targetZoneIds?.message as string}
                     </p>
                 )}

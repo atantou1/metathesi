@@ -92,11 +92,11 @@ const removeGreekAccents = (str: string) => {
 // Design System Colors: Clean & Semantic
 const theme = {
   bars: {
-    past: "#cbd5e1", // slate-300 (data viz)
+    past: "var(--border-strong)",
     current: "var(--primary)",
   },
   labels: {
-    past: "#94a3b8", // slate-400 (data viz)
+    past: "var(--text-tertiary)",
     current: "var(--primary-hover)",
   },
 };
@@ -462,8 +462,8 @@ export default function SummaryPageClient() {
                 }}
                 options={divisionOptions}
                 padding="4px 12px"
-                background="rgba(255, 255, 255, 0.35)"
-                className="text-[10px] font-bold uppercase tracking-wider"
+                background="var(--card)"
+                className="text-[10px] font-bold uppercase tracking-wider border border-border/20"
               />
             </div>
 
@@ -485,8 +485,8 @@ export default function SummaryPageClient() {
 
         {/* --- 12 KPI Cards Grid (Clean Layout) --- */}
         {!analytics && !loading ? (
-             <div className="bg-white border border-border/60 shadow-sm p-12 rounded-4xl text-center">
-                <Search className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+             <div className="bg-card border border-border/60 shadow-sm p-12 rounded-4xl text-center">
+                <Search className="w-12 h-12 text-text-quaternary/30 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-foreground mb-2">Δεν βρέθηκαν στατιστικά</h3>
                 <p className="text-sm text-text-tertiary max-w-sm mx-auto">
                     Δοκιμάστε να αλλάξετε την ειδικότητα ή τη βαθμίδα για να δείτε τα πανελλαδικά δεδομένα.
@@ -495,7 +495,7 @@ export default function SummaryPageClient() {
         ) : loading ? (
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
                 {[...Array(12)].map((_, i) => (
-                    <div key={i} className="bg-white p-5 rounded-4xl border border-border/60 shadow-sm h-56 animate-pulse">
+                    <div key={i} className="bg-card p-5 rounded-4xl border border-border/60 shadow-sm h-56 animate-pulse">
                         <div className="h-4 bg-muted rounded w-1/2 mb-4"></div>
                         <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
                         <div className="h-20 bg-surface-dim rounded mt-auto"></div>
@@ -532,12 +532,12 @@ export default function SummaryPageClient() {
                           <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
 
                           {/* Tooltip Content */}
-                          <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-slate-800 text-left p-3.5 rounded-xl shadow-xl z-50 pointer-events-none">
-                            <div className="mb-2">
+                          <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
+                            <div className="mb-3">
                               <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">
                                 ΤΙ ΕΙΝΑΙ
                               </span>
-                              <span className="text-xs text-slate-200 leading-snug">
+                              <span className="text-xs text-text-secondary leading-snug">
                                 {kpi.infoWhat}
                               </span>
                             </div>
@@ -545,11 +545,11 @@ export default function SummaryPageClient() {
                               <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">
                                 ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ
                               </span>
-                              <span className="text-xs text-slate-200 leading-snug">
+                              <span className="text-xs text-text-secondary leading-snug">
                                 {kpi.infoWhy}
                               </span>
                             </div>
-                            <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-slate-800 transform rotate-45"></div>
+                            <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
                           </div>
                         </div>
 
@@ -588,13 +588,13 @@ export default function SummaryPageClient() {
                             tickLine={false}
                             tick={{
                               fontSize: 10,
-                              fill: "#64748b",
+                              fill: "var(--text-tertiary)",
                               fontWeight: 500,
                             }}
                             dy={5}
                           />
                           <RechartsTooltip
-                            cursor={{ fill: "#f8fafc" }}
+                            cursor={{ fill: "var(--muted)" }}
                             contentStyle={{ display: "none" }}
                           />
                           <Bar dataKey="val" radius={[4, 4, 0, 0]}>
@@ -661,9 +661,7 @@ export default function SummaryPageClient() {
                     </p>
                   </div>
                   <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-3 h-3 rounded-sm bg-sky-700"></div> ΒΑΣΗ
-                    </div>
+                      <div className="w-3 h-3 rounded-sm bg-primary"></div> ΒΑΣΗ
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-sm bg-muted"></div>{" "}
                       ΑΙΤΟΥΝΤΕΣ
@@ -679,28 +677,32 @@ export default function SummaryPageClient() {
                       <CartesianGrid
                         strokeDasharray="3 3"
                         vertical={false}
-                        stroke="#f1f5f9"
+                        stroke="var(--border-dim)"
                       />
                       <XAxis
                         dataKey="year"
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fontSize: 12, fill: "#64748b", fontWeight: 600 }}
+                        tick={{ fontSize: 12, fill: "var(--text-tertiary)", fontWeight: 600 }}
                         dy={10}
                       />
                       <YAxis
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fontSize: 10, fill: "#94a3b8" }}
+                        tick={{ fontSize: 10, fill: "var(--text-quaternary)" }}
                       />
                       <RechartsTooltip
-                        cursor={{ fill: "#f8fafc" }}
-                        contentStyle={{
-                          borderRadius: "12px",
-                          border: "1px solid #e2e8f0",
-                          fontSize: "12px",
-                        }}
-                      />
+                         cursor={{ fill: "var(--muted)" }}
+                         contentStyle={{
+                           borderRadius: "12px",
+                           border: "1px solid var(--border)",
+                           fontSize: "12px",
+                           backgroundColor: "var(--card)",
+                           color: "var(--foreground)"
+                         }}
+                         itemStyle={{ color: "var(--foreground)", fontSize: "12px", fontWeight: 600 }}
+                         labelStyle={{ color: "var(--text-tertiary)", fontWeight: 700, marginBottom: "4px" }}
+                       />
                       <Bar
                         dataKey="base"
                         fill="var(--primary)"
@@ -709,7 +711,7 @@ export default function SummaryPageClient() {
                       />
                       <Bar
                         dataKey="avgApp"
-                        fill="#e2e8f0"
+                         fill="var(--border-strong)"
                         radius={[4, 4, 0, 0]}
                         name="Μ.Ο. Αιτούντων"
                       />
@@ -718,7 +720,7 @@ export default function SummaryPageClient() {
                 </div>
               </div>
 
-              <div className="bg-white border border-border/60 shadow-sm p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
                 <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 rounded-xl bg-surface-dim border border-border-dim text-text-tertiary">
                         <Activity className="w-5 h-5" />
@@ -808,7 +810,7 @@ export default function SummaryPageClient() {
                     {dashboardData?.topCompetitive.map((item, idx) => (
                       <div key={idx} className="group cursor-pointer">
                         <div className="flex justify-between items-end mb-2">
-                          <span className="text-sm font-semibold text-text-secondary group-hover:text-sky-700 transition-colors">
+                          <span className="text-sm font-semibold text-text-secondary group-hover:text-primary transition-colors">
                             {item.name}
                           </span>
                           <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">

@@ -21,9 +21,9 @@ export function MatchesSidebar() {
 
     return (
         <>
-            <div className="p-4 border-b border-border/50 bg-muted/50">
+            <div className="h-20 px-4 border-b border-border/50 bg-muted/50 flex items-center">
                 <div className="relative flex justify-center mx-auto p-1 bg-muted/50 backdrop-blur-sm rounded-full w-full max-w-sm">
-                    <div className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-full shadow-sm z-0 transition-transform duration-300 ease-out ${activeTab === 'active' ? 'left-1 translate-x-0' : 'left-1 translate-x-[100%]'}`}></div>
+                    <div className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-card rounded-full shadow-sm z-0 transition-transform duration-300 ease-out ${activeTab === 'active' ? 'left-1 translate-x-0' : 'left-1 translate-x-[100%]'}`}></div>
                     <button 
                         onClick={() => setActiveTab('active')}
                         className={`relative z-10 py-2 rounded-full font-bold text-[13px] select-none w-1/2 text-center transition-colors ${activeTab === 'active' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
@@ -58,12 +58,12 @@ export function MatchesSidebar() {
                                 <div className={`flex gap-3 ${isOnline ? 'items-center' : 'items-start'}`}>
                                     <div className="relative flex-shrink-0">
                                         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-bold ${
-                                            isOnline ? 'bg-amber-50 border border-amber-100 text-amber-500' :
+                                            isOnline ? 'bg-warning-soft border border-warning/20 text-warning' :
                                             'bg-muted border border-border text-muted-foreground grayscale'
                                         }`}>
                                             {getInitials(match.user.fullName)}
                                         </div>
-                                        {isOnline && <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-2 border-white rounded-full bg-emerald-500"></div>}
+                                        {isOnline && <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-2 border-background rounded-full bg-success"></div>}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex justify-between items-baseline mb-0.5">

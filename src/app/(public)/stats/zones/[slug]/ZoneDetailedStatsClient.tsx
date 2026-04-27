@@ -27,11 +27,11 @@ import { MigrationFlows } from "@/components/stats/MigrationFlows";
 // --- Design System Colors ---
 const theme = {
   bars: {
-    past: "#cbd5e1", // slate-300 (data viz)
+    past: "var(--border-strong)",
     current: "var(--primary)",
   },
   labels: {
-    past: "#94a3b8", // slate-400 (data viz)
+    past: "var(--text-tertiary)",
     current: "var(--primary-hover)",
   },
 };
@@ -232,7 +232,7 @@ export default function ZoneDetailedStatsClient({
                 fontSize="11px"
                 fontWeight="700"
                 padding="6px 14px"
-                background="rgba(255, 255, 255, 0.35)"
+                background="var(--card)"
               />
 
               <FilterSelect 
@@ -242,7 +242,7 @@ export default function ZoneDetailedStatsClient({
                 fontSize="11px"
                 fontWeight="700"
                 padding="6px 14px"
-                background="rgba(255, 255, 255, 0.35)"
+                background="var(--card)"
                 className="!text-primary-hover"
               />
             </div>
@@ -288,16 +288,16 @@ export default function ZoneDetailedStatsClient({
                         {removeGreekAccents(kpi.title).toUpperCase()}
                       </div>
                       <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                      <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-slate-800 text-left p-3.5 rounded-xl shadow-xl z-50 pointer-events-none">
-                        <div className="mb-2">
+                      <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
+                        <div className="mb-3">
                           <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                          <span className="text-xs text-slate-200 leading-snug">{kpi.infoWhat}</span>
+                          <span className="text-xs text-text-secondary leading-snug">{kpi.infoWhat}</span>
                         </div>
                         <div>
                           <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                          <span className="text-xs text-slate-200 leading-snug">{kpi.infoWhy}</span>
+                          <span className="text-xs text-text-secondary leading-snug">{kpi.infoWhy}</span>
                         </div>
-                        <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-slate-800 transform rotate-45"></div>
+                        <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
                       </div>
                     </div>
 
@@ -315,8 +315,8 @@ export default function ZoneDetailedStatsClient({
                 <div className="h-20 w-full mt-auto">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={kpi.data} margin={{ top: 15, right: 0, bottom: 0, left: 0 }}>
-                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "#64748b", fontWeight: 500 }} dy={5} />
-                      <RechartsTooltip cursor={{ fill: "#f8fafc" }} contentStyle={{ display: "none" }} />
+                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--text-tertiary)", fontWeight: 500 }} dy={5} />
+                      <RechartsTooltip cursor={{ fill: "var(--muted)" }} contentStyle={{ display: "none" }} />
                       <Bar dataKey="val" radius={[4, 4, 0, 0]}>
                         <LabelList
                           dataKey="val"
@@ -356,12 +356,23 @@ export default function ZoneDetailedStatsClient({
                 <div className="flex-1 w-full mt-4">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={comparisonData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
-                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "var(--muted-foreground)", fontWeight: 600 }} dy={10} />
-                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} />
-                      <RechartsTooltip contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" }} />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-dim)" />
+                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "var(--text-tertiary)", fontWeight: 600 }} dy={10} />
+                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--text-quaternary)" }} />
+                      <RechartsTooltip 
+                        cursor={{ fill: "var(--muted)" }}
+                        contentStyle={{ 
+                          borderRadius: "16px", 
+                          border: "1px solid var(--border)", 
+                          backgroundColor: "var(--card)", 
+                          color: "var(--foreground)", 
+                          boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" 
+                        }} 
+                        itemStyle={{ color: "var(--foreground)", fontSize: "12px", fontWeight: 600 }}
+                        labelStyle={{ color: "var(--text-tertiary)", fontWeight: 700, marginBottom: "4px" }}
+                      />
                       <Bar dataKey="base" name="Βάση" fill="var(--primary)" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="avgApp" name="Μ.Ο. Αιτούντων" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="avgApp" name="Μ.Ο. Αιτούντων" fill="var(--border-strong)" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -377,11 +388,22 @@ export default function ZoneDetailedStatsClient({
                 <div className="flex-1 w-full mt-4">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={balanceData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
-                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "var(--muted-foreground)", fontWeight: 600 }} dy={10} />
-                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} />
-                      <RechartsTooltip contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" }} />
-                      <Bar dataKey="demand" name="Ζήτηση" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-dim)" />
+                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "var(--text-tertiary)", fontWeight: 600 }} dy={10} />
+                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--text-quaternary)" }} />
+                      <RechartsTooltip 
+                        cursor={{ fill: "var(--muted)" }}
+                        contentStyle={{ 
+                          borderRadius: "16px", 
+                          border: "1px solid var(--border)", 
+                          backgroundColor: "var(--card)", 
+                          color: "var(--foreground)", 
+                          boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" 
+                        }} 
+                        itemStyle={{ color: "var(--foreground)", fontSize: "12px", fontWeight: 600 }}
+                        labelStyle={{ color: "var(--text-tertiary)", fontWeight: 700, marginBottom: "4px" }}
+                      />
+                      <Bar dataKey="demand" name="Ζήτηση" fill="var(--border-strong)" radius={[4, 4, 0, 0]} />
                       <Bar dataKey="success" name="Μεταθέσεις" fill="var(--primary)" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>

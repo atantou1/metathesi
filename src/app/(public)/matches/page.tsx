@@ -4,7 +4,7 @@ import { Satellite } from "lucide-react"
 export default function MatchesPage() {
     return (
         <div className="flex flex-col items-center justify-center h-full p-6 text-center opacity-80 w-full">
-            <div className="w-16 h-16 bg-white border border-border shadow-soft rounded-full flex items-center justify-center text-primary mb-4">
+            <div className="w-16 h-16 bg-card border border-border shadow-soft rounded-full flex items-center justify-center text-primary mb-4">
                 <Satellite className="w-8 h-8" />
             </div>
             <h3 className="text-sm font-bold text-foreground mb-2">Καμία επιλεγμένη συνομιλία</h3>

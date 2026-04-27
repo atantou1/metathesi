@@ -14,7 +14,7 @@ import { User, UserCircle, Layers, ChevronDown } from "lucide-react"
 
 type Option = { id: number; name: string; code?: string }
 
-export function Step1Identity() {
+export function IdentitySection() {
     const { control, watch, setValue, getValues } = useFormContext()
     const [isPending, startTransition] = useTransition()
 
@@ -83,8 +83,7 @@ export function Step1Identity() {
     }, [currentRegionId, selectedDivisionId])
 
     return (
-        <div className="glass-card p-6 sm:p-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-sky-50 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="glass-card p-6 sm:p-8 relative">
 
             <h2 className="text-lg font-bold text-foreground tracking-tight flex items-center gap-3 mb-6">
                 <div className="p-2 rounded-2xl bg-primary-soft text-primary">
@@ -242,7 +241,7 @@ export function Step1Identity() {
                                     <FormControl>
                                         <select
                                             disabled={!currentRegionId}
-                                            className="form-input appearance-none cursor-pointer bg-surface-dim border-border"
+                                            className="form-input appearance-none cursor-pointer bg-muted border-border"
                                             value={field.value ? String(field.value) : ""}
                                             onChange={(e) => field.onChange(Number(e.target.value))}
                                         >

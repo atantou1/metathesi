@@ -24,7 +24,7 @@ export function MatchesLayoutClient({
         <MatchesContext.Provider value={{ activeMatches, historyMatches, currentUserId }}>
             <div className="flex-grow flex w-full mx-auto overflow-hidden relative h-[calc(100vh-140px)] max-w-7xl rounded-4xl glass-card border border-border/50 shadow-xl mb-8 transition-all duration-300">
                 {/* Sidebar */}
-                <div className={`${isListOnly ? 'w-full flex md:w-[380px] lg:w-[420px]' : 'hidden md:flex md:w-[380px] lg:w-[420px]'} bg-white/50 border-r border-border/50 flex-col flex-shrink-0 z-10 h-full`}>
+                <div className={`${isListOnly ? 'w-full flex md:w-[380px] lg:w-[420px]' : 'hidden md:flex md:w-[380px] lg:w-[420px]'} bg-card/50 border-r border-border/50 flex-col flex-shrink-0 z-10 h-full`}>
                     <MatchesSidebar />
                 </div>
                 

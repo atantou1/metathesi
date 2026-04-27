@@ -73,7 +73,7 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
       <button
         type="button"
         onClick={() => setOpen(p => !p)}
-        className="flex items-center gap-[8px] px-4 py-[9px] bg-white/35 backdrop-blur-md border border-white/25 rounded-full text-[13px] font-semibold text-foreground cursor-pointer shadow-soft transition-all hover:bg-card/50"
+        className="flex items-center gap-[8px] px-4 py-[9px] bg-card/40 backdrop-blur-md border border-border/40 rounded-full text-[13px] font-semibold text-foreground cursor-pointer shadow-soft transition-all hover:bg-card/60"
         style={{
           ...(fullWidth ? { width: '100%', justifyContent: 'space-between' } : {}),
         }}
@@ -91,7 +91,7 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
       </button>
 
       {open && (
-        <div className="absolute top-[calc(100%+8px)] left-0 z-[9999] min-w-[200px] max-h-[240px] overflow-y-auto bg-white/97 backdrop-blur-xl border border-border/80 rounded-2xl shadow-floating">
+        <div className="absolute top-[calc(100%+8px)] left-0 z-[9999] min-w-[200px] max-h-[240px] overflow-y-auto bg-card/95 backdrop-blur-xl border border-border rounded-2xl shadow-floating">
           {placeholder && (
             <button
               type="button"
@@ -190,10 +190,11 @@ function MobileFilterDrawer({
       >
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-          <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#0f172a' }}>Φίλτρα</h3>
+          <h3 className="text-sm font-bold text-foreground">Φίλτρα</h3>
           <button
             onClick={onClose}
-            style={{ padding: '6px', borderRadius: '9999px', border: 'none', background: 'none', cursor: 'pointer', color: '#64748b' }}
+            style={{ padding: '6px', borderRadius: '9999px', border: 'none', background: 'none', cursor: 'pointer' }}
+            className="text-text-tertiary"
           >
             <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>close</span>
           </button>
@@ -216,22 +217,22 @@ function MobileFilterDrawer({
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
           {/* Row 1 ─ Βαθμίδα */}
           <div>
-            <p style={{ fontSize: '10px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>Βαθμίδα</p>
+            <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">Βαθμίδα</p>
             <FilterSelect value={pDiv} onChange={handleDivChange} options={divisionOptions} fullWidth />
           </div>
           {/* Row 1 ─ Ειδικότητα */}
           <div>
-            <p style={{ fontSize: '10px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>Ειδικότητα</p>
+            <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">Ειδικότητα</p>
             <FilterSelect value={pSpec} onChange={setPSpec} options={specialtyOptions} fullWidth />
           </div>
           {/* Row 2 ─ Δείκτης */}
           <div>
-            <p style={{ fontSize: '10px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>Δείκτης</p>
+            <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">Δείκτης</p>
             <FilterSelect value={pInd} onChange={setPInd} options={INDICATOR_OPTIONS} fullWidth />
           </div>
           {/* Row 2 ─ Περιοχή */}
           <div>
-            <p style={{ fontSize: '10px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>Περιοχή</p>
+            <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">Περιοχή</p>
             <FilterSelect value={pZone} onChange={setPZone} options={zoneOptions} placeholder="Όλες" fullWidth />
           </div>
         </div>
@@ -301,7 +302,7 @@ function LegendCard({ indicator }: { indicator: string }) {
 
   return (
     <div style={{ position: 'absolute', bottom: '40px', left: '40px', zIndex: 500, pointerEvents: 'auto' }}>
-      <div className="bg-white/35 backdrop-blur-xl border border-white/25 rounded-2xl shadow-floating px-5 py-4 max-w-[240px] transition-all">
+      <div className="bg-card/40 backdrop-blur-xl border border-border/40 rounded-2xl shadow-floating px-5 py-4 max-w-[240px] transition-all">
         <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-[10px]">
           {indicatorLabel}
         </h3>
@@ -396,7 +397,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
   return (
     <div className="w-full bg-card h-full shadow-soft flex flex-col border-l border-border">
         
-        <div className="p-6 border-b border-border-dim bg-card/50 shrink-0">
+        <div className={`p-6 ${!isMobile ? 'pt-24' : ''} border-b border-border-dim bg-card/50 shrink-0`}>
             <div className="flex justify-between items-start mb-3">
                 <div>
                     <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">{specialtyName}</p>
@@ -436,8 +437,8 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                     </div>
                 </div>
 
-                <div className="bg-card p-5 rounded-2xl border border-border-dim shadow-sm hover:border-indigo-50 transition-colors group">
-                    <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-2 group-hover:text-indigo-500 transition-colors">Ζητηση (1η Προτ.)</p>
+                <div className="bg-card p-5 rounded-2xl border border-border shadow-soft hover:border-primary/20 transition-colors group">
+                    <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">Ζητηση (1η Προτ.)</p>
                     <div className="flex items-baseline space-x-2">
                         <span className="text-2xl font-bold text-foreground">{data.targeting1stCount}</span>
                         {data.targeting1stCountDiff !== 0 && (
@@ -490,7 +491,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                             <span className="font-bold text-foreground">{data.avgScoreApplicants?.toFixed(1) || '—'}</span>
                         </div>
                         <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                            <div className="bg-slate-400 h-2 rounded-full shadow-inner" style={{width: `${Math.min(100, (data.avgScoreApplicants || 0))}%`}}></div>
+                            <div className="bg-text-quaternary h-2 rounded-full shadow-inner" style={{width: `${Math.min(100, (data.avgScoreApplicants || 0))}%`}}></div>
                         </div>
                     </div>
                 </div>
@@ -513,7 +514,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
                               {inflow.slice(0, 5).map(f => (
                                 <li key={f.name} className="flex items-center justify-between">
                                     <span className="text-xs font-medium text-text-tertiary truncate mr-1" title={f.name}>{f.name}</span> 
-                                    <span className="text-[10px] font-bold text-text-secondary bg-white border border-border px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
+                                    <span className="text-[10px] font-bold text-text-secondary bg-card border border-border px-2 py-0.5 rounded-2xl shadow-sm">{f.count}</span>
                                 </li>
                               ))}
                           </ul>
@@ -734,8 +735,8 @@ function StatsMapContent() {
 
   return (
     <div
-      className="text-foreground dark:text-foreground antialiased font-display"
-      style={{ height: '100vh', position: 'relative', background: '#f1f5f9' }}
+      className="text-foreground dark:text-foreground antialiased font-display bg-background"
+      style={{ height: '100vh', position: 'relative' }}
     >
       {/* Mobile filter drawer */}
       <MobileFilterDrawer
@@ -760,9 +761,9 @@ function StatsMapContent() {
       <main style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
 
         {/* Map layer */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: '#f1f5f9' }}>
+        <div className="absolute inset-0 z-0 bg-background" style={{ position: 'absolute', pointerEvents: 'auto' }}>
           <Suspense fallback={
-            <div style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' }}>
+            <div className="h-full w-full flex items-center justify-center text-text-tertiary">
               Φόρτωση χάρτη...
             </div>
           }>
@@ -883,7 +884,7 @@ function StatsMapContent() {
         {/* ── Desktop Side Panel (Right) ─────────────────────────────────── */}
           {!isMobile && (
             <div 
-              className={`absolute top-0 right-0 h-full w-[448px] z-50 pt-20 transform transition-transform duration-300 ease-out flex ${selectedZone ? 'translate-x-0' : 'translate-x-full'}`}
+              className={`absolute top-0 right-0 h-full w-[448px] z-50 pt-0 transform transition-transform duration-300 ease-out flex ${selectedZone ? 'translate-x-0' : 'translate-x-full'}`}
               style={{ pointerEvents: selectedZone ? 'auto' : 'none' }}
             >
               <PanelContent 

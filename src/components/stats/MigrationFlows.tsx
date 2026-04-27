@@ -102,7 +102,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
             onClick={() => setShowAll(!showAll)}
             className="group relative flex items-center gap-3 px-10 py-3.5 bg-card hover:bg-primary-soft border border-border hover:border-primary/20 rounded-2xl shadow-soft hover:shadow-floating transition-all duration-300 cursor-pointer overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-sky-50/0 via-sky-50/50 to-sky-50/0 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-100%] group-hover:translate-x-[100%] duration-1000"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-100%] group-hover:translate-x-[100%] duration-1000"></div>
             <span className="relative text-[11px] font-extrabold text-foreground group-hover:text-primary uppercase tracking-widest transition-colors">
               {showAll ? 'Σύμπτυξη Λίστας' : `Προβολή Όλων (${Math.max(inflow.length, outflow.length)})`}
             </span>

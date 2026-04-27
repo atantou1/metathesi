@@ -98,7 +98,7 @@ const FAQItem = ({ faq, isOpen, toggleOpen }: { faq: any; isOpen: boolean; toggl
 };
 
 export function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="bg-surface py-24 px-6 font-sans">

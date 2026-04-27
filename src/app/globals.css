@@ -14,53 +14,53 @@
   --color-primary-hover: var(--primary-hover);
   --color-primary-soft: var(--primary-soft);
   --color-primary-bright: var(--primary-bright);
-  
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  
+
   --color-destructive: var(--destructive);
   --color-destructive-foreground: #ffffff;
 
   /* Colors — Extended Semantic Tokens */
   --color-surface-dim: var(--surface-dim);
   --color-surface-bright: var(--surface-bright);
-  
+
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-tertiary: var(--text-tertiary);
   --color-text-quaternary: var(--text-quaternary);
   --color-text-inverted: var(--text-inverted);
-  
+
   --color-border-dim: var(--border-dim);
   --color-border-strong: var(--border-strong);
-  
+
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-success-soft: var(--success-soft);
-  
+
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-warning-soft: var(--warning-soft);
-  
+
   --color-danger: var(--danger);
   --color-danger-foreground: var(--danger-foreground);
   --color-danger-soft: var(--danger-soft);
-  
+
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
   --color-info-soft: var(--info-soft);
-  
+
   /* Tech Card Palette */
   --color-tech-card-start: var(--tech-card-start);
   --color-tech-card-end: var(--tech-card-end);
@@ -73,19 +73,20 @@
   --font-display: var(--font-inter);
 
   /* Custom Extended Scale */
-  --radius-4xl: 2rem;       /* 32px */
+  --radius-4xl: 2rem;
+  /* 32px */
 
-  /* Shadows */
   --shadow-ambient: 0 2px 8px rgba(0, 0, 0, 0.04);
   --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
   --shadow-floating: 0 10px 40px rgba(0, 0, 0, 0.08);
+  --shadow-glass: 0 8px 30px -4px rgba(3, 105, 161, 0.05);
 }
 
 :root {
   --background: #F8FAFC;
   --surface: #ffffff;
   --foreground: #0F172A;
-  
+
   /* Primary - Unified Blue */
   --primary: #0369a1;
   --primary-hover: #075985;
@@ -95,16 +96,16 @@
 
   --card: #ffffff;
   --card-foreground: #0F172A;
-  
+
   --popover: #ffffff;
   --popover-foreground: #0F172A;
-  
+
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
-  
+
   --accent: #f1f5f9;
   --accent-foreground: #0F172A;
-  
+
   --border: #e2e8f0;
   --input: #e2e8f0;
   --ring: #0369a1;
@@ -114,9 +115,9 @@
   --tech-card-end: #1e3a8a;
   --tech-card-border: rgba(30, 58, 138, 0.5);
   --tech-accent: #3b82f6;
-  
+
   --destructive: #ef4444;
-  
+
   --radius: 0.5rem;
 
   /* Extended: Surfaces */
@@ -138,15 +139,15 @@
   --success: #0d9488;
   --success-foreground: #ffffff;
   --success-soft: rgba(13, 148, 136, 0.1);
-  
+
   --warning: #d97706;
   --warning-foreground: #ffffff;
   --warning-soft: rgba(217, 119, 6, 0.1);
-  
+
   --danger: #e11d48;
   --danger-foreground: #ffffff;
   --danger-soft: rgba(225, 29, 72, 0.1);
-  
+
   --info: #0369a1;
   --info-foreground: #ffffff;
   --info-soft: rgba(3, 105, 161, 0.1);
@@ -156,7 +157,7 @@
   --background: #020617;
   --surface: #0f172a;
   --foreground: #F8FAFC;
-  
+
   --primary: #0369a1;
   --primary-hover: #0c4a6e;
   --primary-foreground: #ffffff;
@@ -165,16 +166,16 @@
 
   --card: #0f172a;
   --card-foreground: #F8FAFC;
-  
+
   --popover: #0f172a;
   --popover-foreground: #F8FAFC;
-  
+
   --muted: #1e293b;
   --muted-foreground: #94a3b8;
-  
+
   --accent: #1e293b;
   --accent-foreground: #F8FAFC;
-  
+
   --border: #1e293b;
   --input: #1e293b;
   --ring: #0369a1;
@@ -184,11 +185,11 @@
   --tech-card-end: #1e3a8a;
   --tech-card-border: rgba(30, 58, 138, 0.5);
   --tech-accent: #38bdf8;
-  
+
   --destructive: #f43f5e;
 
   /* Extended: Surfaces */
-  --surface-dim: #0f172a;
+  --surface-dim: #020617;
   --surface-bright: #1e293b;
 
   /* Extended: Text hierarchy */
@@ -206,15 +207,15 @@
   --success: #2dd4bf;
   --success-foreground: #042f2e;
   --success-soft: rgba(45, 212, 191, 0.15);
-  
+
   --warning: #fbbf24;
   --warning-foreground: #451a03;
   --warning-soft: rgba(251, 191, 36, 0.15);
-  
+
   --danger: #fb7185;
   --danger-foreground: #4c0519;
   --danger-soft: rgba(251, 113, 133, 0.15);
-  
+
   --info: #38bdf8;
   --info-foreground: #082f49;
   --info-soft: rgba(56, 189, 248, 0.15);
@@ -292,11 +293,11 @@
 
 @layer components {
   .glass-card {
-    @apply bg-card border border-border-dim rounded-4xl shadow-[0_8px_30px_-4px_rgba(3,105,161,0.05)];
+    @apply bg-card border border-border-dim rounded-4xl shadow-glass;
   }
 
   .form-input {
-    @apply w-full bg-surface-dim border border-border rounded-2xl text-sm transition-all text-foreground;
+    @apply w-full bg-muted border border-border rounded-2xl text-sm transition-all text-foreground;
     padding: 0.875rem 1rem;
   }
 

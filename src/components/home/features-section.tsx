@@ -103,7 +103,7 @@ export function FeaturesSection() {
         <div className="mb-16 text-center">
           <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">Πώς λειτουργεί</h4>
           <h2 className="text-[48px] font-semibold text-foreground dark:text-white leading-[48px] text-balance">Απλοποιήστε τη διαδικασία μετάθεσής σας</h2>
-          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-muted-foreground dark:text-slate-400 px-0 md:px-[104.5px]">Τρία απλά βήματα για να βρείτε την επόμενη επαγγελματική σας στέγη χωρίς περιττές καθυστερήσεις.</p>
+          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-muted-foreground dark:text-text-tertiary px-0 md:px-[104.5px]">Τρία απλά βήματα για να βρείτε την επόμενη επαγγελματική σας στέγη χωρίς περιττές καθυστερήσεις.</p>
         </div>
         <div className="flex flex-col-reverse lg:flex-row gap-10 lg:gap-16 items-center">
           {/* ================= ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ: Δυναμικά Κείμενα ================= */}
@@ -214,16 +214,16 @@ export function FeaturesSection() {
           {/* ================= ΔΕΞΙΑ ΣΤΗΛΗ: Animated Mac Screen & Placeholders ================= */}
           <div className="w-full lg:w-[55%] h-[500px] lg:h-[480px]">
             {activeIndex === 0 ? (
-              <div className="w-full rounded-4xl shadow-2xl border border-gray-200/80 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-950 flex flex-col h-full">
+              <div className="w-full rounded-4xl shadow-2xl border border-border overflow-hidden bg-card flex flex-col h-full">
                 {/* Mac Header */}
-                <div className="bg-[#f8fafc] dark:bg-slate-900 px-3 py-2 flex items-center justify-between border-b border-gray-200/80 dark:border-slate-800 flex-shrink-0">
+                <div className="bg-muted px-3 py-2 flex items-center justify-between border-b border-border flex-shrink-0">
                   <div className="flex space-x-1.5 w-16">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
                   </div>
                   <div className="flex-1 flex justify-center">
-                    <div className="bg-white/80 dark:bg-slate-800/80 border border-gray-200/50 dark:border-slate-700/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 dark:text-slate-500 font-medium">
+                    <div className="bg-background/80 border border-border rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-text-quaternary font-medium">
                       metathesi.gr
                     </div>
                   </div>
@@ -231,21 +231,21 @@ export function FeaturesSection() {
                 </div>
 
                 {/* Window Content */}
-                <div className="w-full h-full relative bg-[#f8fafc] pointer-events-none select-none overflow-hidden">
+                <div className="w-full h-full relative bg-background pointer-events-none select-none overflow-hidden">
                   <WizardStep1 />
                 </div>
               </div>
             ) : activeIndex === 1 ? (
-              <div className="w-full rounded-4xl shadow-2xl border border-gray-200/80 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-950 flex flex-col h-full">
+              <div className="w-full rounded-4xl shadow-2xl border border-border overflow-hidden bg-card flex flex-col h-full">
                 {/* Mac Header */}
-                <div className="bg-[#f8fafc] dark:bg-slate-900 px-3 py-2 flex items-center justify-between border-b border-gray-200/80 dark:border-slate-800 flex-shrink-0 z-50 relative">
+                <div className="bg-muted px-3 py-2 flex items-center justify-between border-b border-border flex-shrink-0 z-50 relative">
                   <div className="flex space-x-1.5 w-16">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
                   </div>
                   <div className="flex-1 flex justify-center">
-                    <div className="bg-white/80 dark:bg-slate-800/80 border border-gray-200/50 dark:border-slate-700/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 dark:text-slate-500 font-medium">
+                    <div className="bg-background/80 border border-border rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-text-quaternary font-medium">
                       metathesi.gr/dashboard
                     </div>
                   </div>
@@ -253,21 +253,21 @@ export function FeaturesSection() {
                 </div>
 
                 {/* Window Content */}
-                <div className="w-full h-full relative bg-[#f8fafc] overflow-hidden">
+                <div className="w-full h-full relative bg-background overflow-hidden">
                   <WizardStep2Updated />
                 </div>
               </div>
             ) : activeIndex === 2 ? (
-              <div className="w-full rounded-4xl shadow-2xl border border-gray-200/80 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-950 flex flex-col h-full">
+              <div className="w-full rounded-4xl shadow-2xl border border-border overflow-hidden bg-card flex flex-col h-full">
                 {/* Mac Header */}
-                <div className="bg-[#f8fafc] dark:bg-slate-900 px-3 py-2 flex items-center justify-between border-b border-gray-200/80 dark:border-slate-800 flex-shrink-0 z-50 relative">
+                <div className="bg-muted px-3 py-2 flex items-center justify-between border-b border-border flex-shrink-0 z-50 relative">
                   <div className="flex space-x-1.5 w-16">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
                   </div>
                   <div className="flex-1 flex justify-center">
-                    <div className="bg-white/80 dark:bg-slate-800/80 border border-gray-200/50 dark:border-slate-700/50 rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-gray-400 dark:text-slate-500 font-medium">
+                    <div className="bg-background/80 border border-border rounded h-6 w-3/4 max-w-[240px] flex items-center justify-center text-[10px] text-text-quaternary font-medium">
                       metathesi.gr/messages
                     </div>
                   </div>
@@ -275,7 +275,7 @@ export function FeaturesSection() {
                 </div>
 
                 {/* Window Content */}
-                <div className="w-full h-full relative bg-[#f8fafc] overflow-hidden">
+                <div className="w-full h-full relative bg-background overflow-hidden">
                   <WizardStep3Updated />
                 </div>
               </div>
@@ -412,7 +412,7 @@ function WizardStep1() {
                   type="text"
                   value={typedName}
                   placeholder="Πληκτρολογήστε όνομα..."
-                  className="w-full pl-9 pr-3 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none text-foreground"
+                  className="w-full pl-9 pr-3 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none text-foreground placeholder:text-text-quaternary"
                   readOnly
                   tabIndex={-1}
                 />
@@ -424,7 +424,7 @@ function WizardStep1() {
 
             {/* ΒΑΘΜΙΔΑ */}
             <div>
-              <label className="block text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-1.5">
+              <label className="block text-[8px] sm:text-[9px] font-bold text-text-quaternary uppercase tracking-widest pl-1 mb-1.5">
                 ΒΑΘΜΙΔΑ
               </label>
               <div className={getFieldClasses(1)}>
@@ -447,7 +447,7 @@ function WizardStep1() {
                       : "Επίλεξε Βαθμίδα"}
                   </option>
                 </select>
-                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400 pointer-events-none">
+                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-text-quaternary pointer-events-none">
                   expand_more
                 </span>
               </div>
@@ -455,20 +455,20 @@ function WizardStep1() {
 
             {/* ΕΙΔΙΚΟΤΗΤΑ */}
             <div>
-              <label className="block text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-1.5">
+              <label className="block text-[8px] sm:text-[9px] font-bold text-text-quaternary uppercase tracking-widest pl-1 mb-1.5">
                 ΕΙΔΙΚΟΤΗΤΑ
               </label>
               <div className={`flex overflow-hidden ${getFieldClasses(2)}`}>
-                <div className="relative w-16 border-r border-slate-200/60">
+                <div className="relative w-16 border-r border-border/60">
                   <select
                     tabIndex={-1}
                     className={`w-full h-full pl-2 pr-5 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-bold bg-transparent appearance-none transition-colors ${
-                      sequenceStep >= 2 ? "text-slate-700" : "text-slate-400"
+                      sequenceStep >= 2 ? "text-foreground" : "text-text-quaternary"
                     }`}
                   >
                     <option>{sequenceStep >= 2 ? "ΠΕ" : "-"}</option>
                   </select>
-                  <span className="material-symbols-outlined absolute right-1 top-1/2 -translate-y-1/2 text-[14px] text-slate-400 pointer-events-none">
+                  <span className="material-symbols-outlined absolute right-1 top-1/2 -translate-y-1/2 text-[14px] text-text-quaternary pointer-events-none">
                     expand_more
                   </span>
                 </div>
@@ -476,7 +476,7 @@ function WizardStep1() {
                   <select
                     tabIndex={-1}
                     className={`w-full h-full pl-3 pr-8 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-medium bg-transparent appearance-none transition-colors ${
-                      sequenceStep >= 2 ? "text-slate-700" : "text-slate-400"
+                      sequenceStep >= 2 ? "text-foreground" : "text-text-quaternary"
                     }`}
                   >
                     <option>
@@ -485,32 +485,32 @@ function WizardStep1() {
                         : "Επίλεξε Ειδικότητα"}
                     </option>
                   </select>
-                  <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400 pointer-events-none">
+                  <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-text-quaternary pointer-events-none">
                     expand_more
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="md:col-span-2 border-t border-slate-100 my-0.5 sm:my-1"></div>
+            <div className="md:col-span-2 border-t border-border my-0.5 sm:my-1"></div>
 
             {/* ΠΕΡΙΦΕΡΕΙΑ */}
             <div>
-              <label className="block text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-1.5">
+              <label className="block text-[8px] sm:text-[9px] font-bold text-text-quaternary uppercase tracking-widest pl-1 mb-1.5">
                 ΠΕΡΙΦΕΡΕΙΑ
               </label>
               <div className={getFieldClasses(3)}>
                 <select
                   tabIndex={-1}
                   className={`w-full pl-3 pr-8 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${
-                    sequenceStep >= 3 ? "text-slate-900" : "text-slate-400"
+                    sequenceStep >= 3 ? "text-foreground" : "text-text-quaternary"
                   }`}
                 >
                   <option>
                     {sequenceStep >= 3 ? "Αττική" : "Επίλεξε Περιφέρεια"}
                   </option>
                 </select>
-                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400 pointer-events-none">
+                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-text-quaternary pointer-events-none">
                   expand_more
                 </span>
               </div>
@@ -518,21 +518,21 @@ function WizardStep1() {
 
             {/* ΠΕΡΙΟΧΗ */}
             <div>
-              <label className="block text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-1.5">
+              <label className="block text-[8px] sm:text-[9px] font-bold text-text-quaternary uppercase tracking-widest pl-1 mb-1.5">
                 ΠΕΡΙΟΧΗ
               </label>
               <div className={getFieldClasses(4)}>
                 <select
                   tabIndex={-1}
                   className={`w-full pl-3 pr-8 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${
-                    sequenceStep >= 4 ? "text-slate-900" : "text-slate-400"
+                    sequenceStep >= 4 ? "text-foreground" : "text-text-quaternary"
                   }`}
                 >
                   <option>
                     {sequenceStep >= 4 ? "Β' Αθήνας" : "Επίλεξε Περιοχή"}
                   </option>
                 </select>
-                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-slate-400 pointer-events-none">
+                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-text-quaternary pointer-events-none">
                   expand_more
                 </span>
               </div>
@@ -547,11 +547,11 @@ function WizardStep1() {
             y: sequenceStep >= 5 ? 0 : 10,
           }}
           transition={{ duration: 0.5 }}
-          className="bg-white border border-slate-100 rounded-3xl shadow-[0_4px_20px_-4px_rgba(3,105,161,0.05)] p-4 sm:p-5 relative"
+          className="bg-card border border-border rounded-3xl shadow-[0_4px_20px_-4px_rgba(3,105,161,0.05)] p-4 sm:p-5 relative"
         >
           {sequenceStep < 5 && (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/50 backdrop-blur-[1px] rounded-3xl">
-              <span className="text-xs font-semibold text-slate-400">
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-card/50 backdrop-blur-[1px] rounded-3xl">
+              <span className="text-xs font-semibold text-text-quaternary">
                 Αναμονή δεδομένων...
               </span>
             </div>
@@ -559,7 +559,7 @@ function WizardStep1() {
 
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 sm:mb-5">
             <div>
-              <h2 className="text-[13px] sm:text-[14px] font-bold text-slate-800 tracking-tight flex items-center gap-2">
+              <h2 className="text-[13px] sm:text-[14px] font-bold text-foreground tracking-tight flex items-center gap-2">
                 <div className="p-1.5 rounded-2xl bg-success-soft text-success">
                   <span className="material-symbols-outlined text-[16px]">
                     map
@@ -578,13 +578,13 @@ function WizardStep1() {
                 x: sequenceStep >= 5 ? 0 : -10,
               }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className="bg-white rounded-xl p-1.5 sm:p-2 shadow-sm border border-slate-100 flex items-center justify-between group"
+              className="bg-card rounded-xl p-1.5 sm:p-2 shadow-sm border border-border flex items-center justify-between group"
             >
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-2xl bg-danger-soft text-danger border border-danger/20 flex items-center justify-center text-[10px] sm:text-[11px] font-bold">
                   1
                 </div>
-                <span className="text-[11px] sm:text-[12px] font-semibold text-slate-700">
+                <span className="text-[11px] sm:text-[12px] font-semibold text-foreground">
                   Α' Αθήνας
                 </span>
               </div>
@@ -597,13 +597,13 @@ function WizardStep1() {
                 x: sequenceStep >= 5 ? 0 : -10,
               }}
               transition={{ duration: 0.3, delay: 0.3 }}
-              className="bg-white rounded-xl p-1.5 sm:p-2 shadow-sm border border-slate-100 flex items-center justify-between group"
+              className="bg-card rounded-xl p-1.5 sm:p-2 shadow-sm border border-border flex items-center justify-between group"
             >
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-2xl bg-warning-soft text-warning border border-warning/20 flex items-center justify-center text-[10px] sm:text-[11px] font-bold">
                   2
                 </div>
-                <span className="text-[11px] sm:text-[12px] font-semibold text-slate-700">
+                <span className="text-[11px] sm:text-[12px] font-semibold text-foreground">
                   Ανατ. Αττική
                 </span>
               </div>
@@ -615,7 +615,7 @@ function WizardStep1() {
         <div className="flex flex-col sm:flex-row gap-3 items-center justify-end pt-3 sm:pt-4 pb-4">
           <button
             tabIndex={-1}
-            className="bg-white border border-slate-200 text-slate-600 px-5 py-2 rounded-xl text-[10px] sm:text-[11px] font-semibold w-full sm:w-auto"
+            className="bg-card border border-border text-text-secondary px-5 py-2 rounded-xl text-[10px] sm:text-[11px] font-semibold w-full sm:w-auto"
           >
             Ακύρωση
           </button>
@@ -655,7 +655,7 @@ function WizardStep2Updated() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="text-[#334155] antialiased flex flex-col min-h-full font-sans"
+      className="text-foreground antialiased flex flex-col min-h-full font-sans"
     >
       {/* MATCH BANNER */}
       <AnimatePresence>
@@ -664,20 +664,20 @@ function WizardStep2Updated() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="w-full bg-gradient-to-r from-slate-900 to-primary shadow-sm shadow-primary/10 shrink-0 overflow-hidden"
+            className="w-full bg-gradient-to-r from-tech-card-start to-primary shadow-sm shadow-primary/10 shrink-0 overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col sm:flex-row items-center justify-between py-2.5 gap-3">
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-2 w-2 relative flex-shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white dark:bg-primary-bright opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-white dark:bg-primary-bright"></span>
                   </span>
                   <p className="text-[12px] font-semibold text-white tracking-wide">
                     Βρέθηκε ενεργό match! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.
                   </p>
                 </div>
-                <button className="w-full sm:w-auto text-[11px] font-bold text-primary bg-white hover:bg-primary-soft px-4 py-1.5 rounded-full transition-all shadow-sm active:scale-95">
+                <button className="w-full sm:w-auto text-[11px] font-bold text-primary dark:text-primary-foreground bg-white dark:bg-primary hover:bg-white/90 dark:hover:bg-primary/90 px-4 py-1.5 rounded-full transition-all shadow-sm active:scale-95">
                   Προβολή →
                 </button>
               </div>
@@ -760,8 +760,8 @@ function WizardStep2Updated() {
                           REALTIME
                         </span>
                       </div>
-                      <div className="w-full bg-slate-800/80 rounded-full h-1.5 mb-2 overflow-hidden border border-slate-700/50">
-                        <div className="bg-gradient-to-r from-primary/80 via-primary to-tech-accent h-full rounded-full w-3/4 animate-shimmer"></div>
+                      <div className="w-full bg-muted/30 rounded-full h-1.5 mb-2 overflow-hidden border border-border/20">
+                        <div className="bg-gradient-to-r from-primary/80 via-primary to-primary-bright h-full rounded-full w-3/4 animate-shimmer"></div>
                       </div>
                       <p className="text-text-tertiary text-[11px]">
                         Φάση: Ανάλυση Περιοχών
@@ -780,7 +780,7 @@ function WizardStep2Updated() {
                       <div className="w-7 h-7 rounded-2xl bg-muted border border-border text-text-tertiary flex items-center justify-center text-[10px] font-bold mr-2.5">
                         1
                       </div>
-                      <div className="flex-grow flex justify-between items-center text-xs font-medium text-slate-700">
+                      <div className="flex-grow flex justify-between items-center text-xs font-medium text-foreground">
                         <span>Β' Αθήνας</span>
                         <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-danger-soft text-danger border border-danger/20 uppercase">
                           ΜΕΓΙΣΤΗ
@@ -791,7 +791,7 @@ function WizardStep2Updated() {
                       <div className="w-7 h-7 rounded-2xl bg-muted border border-border text-text-tertiary flex items-center justify-center text-[10px] font-bold mr-2.5">
                         2
                       </div>
-                      <div className="flex-grow flex justify-between items-center text-xs font-medium text-slate-700">
+                      <div className="flex-grow flex justify-between items-center text-xs font-medium text-foreground">
                         <span>Ανατ. Αττική</span>
                         <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-warning-soft text-warning border border-warning/20 uppercase">
                           ΥΨΗΛΗ
@@ -987,7 +987,7 @@ function WizardStep3Updated() {
           </div>
 
           <div className="flex justify-center mb-4">
-            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest bg-white border border-slate-100 px-2.5 py-0.5 rounded-full shadow-sm">
+            <span className="text-[9px] font-bold text-text-quaternary uppercase tracking-widest bg-card border border-border px-2.5 py-0.5 rounded-full shadow-sm">
               Σήμερα
             </span>
           </div>
@@ -1050,19 +1050,19 @@ function WizardStep3Updated() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 5, transition: { duration: 0.2 } }}
-                className="flex items-center gap-1.5 text-slate-400 text-[10px] font-medium italic ml-9 mt-2 absolute bottom-2"
+                className="flex items-center gap-1.5 text-text-quaternary text-[10px] font-medium italic ml-9 mt-2 absolute bottom-2"
               >
                 <span className="flex gap-0.5">
                   <span
-                    className="w-1 h-1 bg-slate-400 rounded-full animate-bounce"
+                    className="w-1 h-1 bg-text-quaternary rounded-full animate-bounce"
                     style={{ animationDelay: "0ms" }}
                   ></span>
                   <span
-                    className="w-1 h-1 bg-slate-400 rounded-full animate-bounce"
+                    className="w-1 h-1 bg-text-quaternary rounded-full animate-bounce"
                     style={{ animationDelay: "150ms" }}
                   ></span>
                   <span
-                    className="w-1 h-1 bg-slate-400 rounded-full animate-bounce"
+                    className="w-1 h-1 bg-text-quaternary rounded-full animate-bounce"
                     style={{ animationDelay: "300ms" }}
                   ></span>
                 </span>

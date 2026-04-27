@@ -4,8 +4,8 @@ import { useState } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Step1Identity } from "./step1-identity"
-import { Step2Locations } from "./step2-locations"
+import { IdentitySection } from "./identity-section"
+import { LocationsSection } from "./locations-section"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, ArrowLeft } from "lucide-react"
 
@@ -101,10 +101,10 @@ export function WizardContainer({ initialData, requestId }: { initialData?: Init
 
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8">
                     {/* Identity Section */}
-                    <Step1Identity />
+                    <IdentitySection />
 
                     {/* Locations Section */}
-                    <Step2Locations />
+                    <LocationsSection />
 
                     {/* Footer Actions */}
                     <div className="flex flex-col sm:flex-row gap-4 items-center justify-end pt-4">

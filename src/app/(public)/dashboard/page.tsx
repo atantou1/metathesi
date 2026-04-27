@@ -272,7 +272,7 @@ export default async function Dashboard() {
                                             <div className="w-20 h-20 relative flex items-center justify-center">
                                                 <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-20 animate-ping" style={{ animationDuration: '3s' }}></span>
                                                 <span className="absolute inline-flex h-[130%] w-[130%] rounded-full bg-primary opacity-10 animate-pulse"></span>
-                                                <div className="relative w-16 h-16 rounded-full bg-background border border-primary/50 flex items-center justify-center shadow-[0_0_20px_rgba(3,105,161,0.2)]">
+                                                <div className="relative w-16 h-16 rounded-full bg-card border border-primary/50 flex items-center justify-center shadow-soft">
                                                     <Radio className="w-8 h-8 text-primary animate-pulse" />
                                                     <div className="absolute inset-0 rounded-full border-t-2 border-primary/30 animate-spin" style={{ animationDuration: '4s' }}></div>
                                                 </div>
@@ -286,9 +286,9 @@ export default async function Dashboard() {
                                             <p className="text-text-quaternary text-sm mb-5 leading-relaxed font-light">
                                                 Ο αλγόριθμος αναζητά ευκαιρίες αμοιβαίας μετάθεσης στις Περιοχές Προτίμησής σας.
                                             </p>
-                                            <div className="w-full bg-slate-800/80 rounded-full h-2 mb-4 overflow-hidden shadow-inner border border-border/50">
-                                                <div className="bg-gradient-to-r from-primary via-primary/80 to-tech-accent h-full rounded-full w-3/4 animate-[shimmer_3s_infinite] relative overflow-hidden">
-                                                    <div className="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]"></div>
+                                            <div className="w-full bg-muted/30 rounded-full h-2 mb-4 overflow-hidden shadow-inner border border-border/20">
+                                                <div className="bg-gradient-to-r from-primary via-primary/80 to-primary-bright h-full rounded-full w-3/4 animate-[shimmer_3s_infinite] relative overflow-hidden">
+                                                    <div className="absolute inset-0 bg-primary-foreground/20 skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]"></div>
                                                 </div>
                                             </div>
                                             <div className="flex justify-between items-center text-[11px] text-text-quaternary font-medium">
