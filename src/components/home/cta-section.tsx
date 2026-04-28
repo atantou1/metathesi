@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Rocket } from "lucide-react";
 
 export function CtaSection() {
   return (
@@ -35,9 +36,7 @@ export function CtaSection() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 rounded-2xl bg-primary px-8 py-4 text-base font-semibold text-white shadow-soft hover:bg-primary-hover transition-colors"
           >
-            <span className="material-symbols-outlined text-[20px]">
-              rocket_launch
-            </span>
+            <Rocket className="w-5 h-5" />
             Ξεκινήστε τώρα
           </motion.button>
         </Link>

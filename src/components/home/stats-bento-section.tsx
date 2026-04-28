@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { ShieldCheck, RefreshCw, BarChart3, Users } from "lucide-react"
 
 export function StatsBentoSection() {
   return (
@@ -81,16 +82,16 @@ export function StatsBentoSection() {
             <div className="absolute inset-x-6 bottom-0 top-36 rounded-t-2xl border-x-2 border-t-2 border-neutral-800 bg-white shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-black">
               <div className="flex flex-col gap-3 p-4 w-full">
                 <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-surface-dim/50 dark:border-border dark:bg-card flex items-center justify-center text-xs text-neutral-400">
-                  <span className="material-symbols-outlined text-[16px] mr-1.5">verified</span> Επίσημες Πηγές
+                  <ShieldCheck className="w-4 h-4 mr-2 text-primary" /> Επίσημες Πηγές
                 </div>
                 <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-surface-dim/50 dark:border-border dark:bg-card flex items-center justify-center text-xs text-neutral-400">
-                  <span className="material-symbols-outlined text-[16px] mr-1.5">update</span> Ετήσια Ενημέρωση
+                  <RefreshCw className="w-4 h-4 mr-2 text-primary" /> Ετήσια Ενημέρωση
                 </div>
                 <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-surface-dim/50 dark:border-border dark:bg-card flex items-center justify-center text-xs text-neutral-400">
-                  <span className="material-symbols-outlined text-[16px] mr-1.5">analytics</span> 150+ Περιοχές
+                  <BarChart3 className="w-4 h-4 mr-2 text-primary" /> 150+ Περιοχές
                 </div>
                 <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-surface-dim/50 dark:border-border dark:bg-card flex items-center justify-center text-xs text-neutral-400">
-                  <span className="material-symbols-outlined text-[16px] mr-1.5">group</span> 40+ Ειδικότητες
+                  <Users className="w-4 h-4 mr-2 text-primary" /> 40+ Ειδικότητες
                 </div>
               </div>
             </div>

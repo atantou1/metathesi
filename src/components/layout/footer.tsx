@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Twitter } from "lucide-react";
+import { Facebook, Twitter, Mail, LifeBuoy, Repeat } from "lucide-react";
 
 export function Footer() {
     return (
@@ -9,7 +9,7 @@ export function Footer() {
                     <div className="col-span-1 md:col-span-2">
                         <div className="mb-6 flex items-center gap-2">
                             <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-primary text-white">
-                                <span className="material-symbols-outlined text-sm">sync_alt</span>
+                                <Repeat className="w-4 h-4" strokeWidth={2.5} />
                             </div>
                             <span className="text-xl font-bold tracking-tight text-foreground">metaThesi</span>
                         </div>
@@ -55,13 +55,11 @@ export function Footer() {
                         </h5>
                         <ul className="flex flex-col gap-4">
                             <li className="flex items-center gap-2 text-text-tertiary">
-                                <span className="material-symbols-outlined text-sm">mail</span>
+                                <Mail className="w-4 h-4 text-primary" />
                                 info@metathesi.gr
                             </li>
                             <li className="flex items-center gap-2 text-text-tertiary">
-                                <span className="material-symbols-outlined text-sm">
-                                    support_agent
-                                </span>
+                                <LifeBuoy className="w-4 h-4 text-primary" />
                                 Κέντρο Υποστήριξης
                             </li>
                         </ul>

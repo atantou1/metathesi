@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { format } from "date-fns"
 import { el } from "date-fns/locale"
-import { ArrowLeft, MapPin, Sparkles, CheckCheck, Paperclip, Send, MoreVertical, Lock } from "lucide-react"
+import { ArrowLeft, MapPin, Sparkles, CheckCheck, Paperclip, Send, MoreVertical, Lock, MessageCircle, History } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { getMatchMessages, sendMessage } from "@/actions/chat"
 import { useMatches } from "./MatchesContext"
@@ -177,7 +177,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
 
                 {messages.length === 0 ? (
                     <div className="flex flex-col items-center justify-center text-muted-foreground gap-2 h-full opacity-50 pb-20">
-                        <span className="material-symbols-outlined text-4xl">{isOnline ? 'chat' : 'history'}</span>
+                        {isOnline ? <MessageCircle className="w-10 h-10" /> : <History className="w-10 h-10" />}
                         <p className="text-sm">Δεν υπάρχουν μηνύματα ακόμη.</p>
                     </div>
                 ) : (

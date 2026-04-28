@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, useRef } from 'react'
+import { Plus, Minus } from 'lucide-react'
 import { MapContainer, GeoJSON, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import * as topojson from 'topojson-client'
@@ -69,14 +70,14 @@ function CustomZoomControls() {
         className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#0369a1] transition-colors rounded-full"
         title="Zoom In"
       >
-        <span className="material-symbols-outlined">add</span>
+        <Plus className="w-5 h-5" />
       </button>
       <button 
         onClick={(e) => { e.stopPropagation(); map.zoomOut() }}
         className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#0369a1] transition-colors rounded-full"
         title="Zoom Out"
       >
-        <span className="material-symbols-outlined">remove</span>
+        <Minus className="w-5 h-5" />
       </button>
     </div>
   )

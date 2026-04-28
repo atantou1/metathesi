@@ -2,6 +2,12 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { 
+  User, Search, Settings, ChevronDown, Send, 
+  Paperclip, Smile, MoreVertical, Bell, 
+  CheckCircle2, MapPin, Building2, Mail,
+  ArrowRight, Sparkles, CheckCheck
+} from "lucide-react";
 
 const DURATIONS = [9500, 6000, 6000];
 
@@ -74,7 +80,6 @@ export function FeaturesSection() {
         dangerouslySetInnerHTML={{
           __html: `
             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-            @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
             
             @keyframes shimmer {
               0% { transform: translateX(-100%); }
@@ -387,9 +392,7 @@ function WizardStep1() {
 
           <h2 className="text-[13px] sm:text-[14px] font-bold text-foreground tracking-tight flex items-center gap-2 mb-4 sm:mb-5 relative z-10">
             <div className="p-1.5 rounded-2xl bg-primary-soft text-primary">
-              <span className="material-symbols-outlined text-[16px]">
-                account_circle
-              </span>
+                <User className="w-4 h-4" />
             </div>
             Επαγγελματική Ταυτότητα & Τρέχουσα Θέση
           </h2>
@@ -401,13 +404,11 @@ function WizardStep1() {
                 ΟΝΟΜΑ
               </label>
               <div className={getFieldClasses(0)}>
-                <span
-                  className={`material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[15px] transition-colors ${
+                <Search
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-[15px] transition-colors ${
                     sequenceStep === 0 ? "text-primary" : "text-muted-foreground"
                   }`}
-                >
-                  person
-                </span>
+                />
                 <input
                   type="text"
                   value={typedName}
@@ -428,13 +429,11 @@ function WizardStep1() {
                 ΒΑΘΜΙΔΑ
               </label>
               <div className={getFieldClasses(1)}>
-                <span
-                  className={`material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[15px] transition-colors ${
+                <Search
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-[15px] transition-colors ${
                     sequenceStep === 1 ? "text-primary" : "text-muted-foreground"
                   }`}
-                >
-                  layers
-                </span>
+                />
                 <select
                   tabIndex={-1}
                   className={`w-full pl-9 pr-3 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${
@@ -447,9 +446,7 @@ function WizardStep1() {
                       : "Επίλεξε Βαθμίδα"}
                   </option>
                 </select>
-                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-text-quaternary pointer-events-none">
-                  expand_more
-                </span>
+                <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary pointer-events-none" />
               </div>
             </div>
 
@@ -468,9 +465,7 @@ function WizardStep1() {
                   >
                     <option>{sequenceStep >= 2 ? "ΠΕ" : "-"}</option>
                   </select>
-                  <span className="material-symbols-outlined absolute right-1 top-1/2 -translate-y-1/2 text-[14px] text-text-quaternary pointer-events-none">
-                    expand_more
-                  </span>
+                  <ChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-quaternary pointer-events-none" />
                 </div>
                 <div className="relative flex-grow">
                   <select
@@ -485,9 +480,7 @@ function WizardStep1() {
                         : "Επίλεξε Ειδικότητα"}
                     </option>
                   </select>
-                  <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-text-quaternary pointer-events-none">
-                    expand_more
-                  </span>
+                  <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -510,9 +503,7 @@ function WizardStep1() {
                     {sequenceStep >= 3 ? "Αττική" : "Επίλεξε Περιφέρεια"}
                   </option>
                 </select>
-                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-text-quaternary pointer-events-none">
-                  expand_more
-                </span>
+                <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary pointer-events-none" />
               </div>
             </div>
 
@@ -532,9 +523,7 @@ function WizardStep1() {
                     {sequenceStep >= 4 ? "Β' Αθήνας" : "Επίλεξε Περιοχή"}
                   </option>
                 </select>
-                <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-text-quaternary pointer-events-none">
-                  expand_more
-                </span>
+                <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-quaternary pointer-events-none" />
               </div>
             </div>
           </div>
@@ -561,9 +550,7 @@ function WizardStep1() {
             <div>
               <h2 className="text-[13px] sm:text-[14px] font-bold text-foreground tracking-tight flex items-center gap-2">
                 <div className="p-1.5 rounded-2xl bg-success-soft text-success">
-                  <span className="material-symbols-outlined text-[16px]">
-                    map
-                  </span>
+                  <MapPin className="w-4 h-4" />
                 </div>
                 ΠΕΡΙΟΧΕΣ ΠΡΟΤΙΜΗΣΗΣ
               </h2>
@@ -631,9 +618,7 @@ function WizardStep1() {
               <span className="absolute inset-0 bg-white/20 animate-ping rounded-xl"></span>
             )}
             Υποβολή Αίτησης
-            <span className="material-symbols-outlined text-[15px]">
-              arrow_forward
-            </span>
+            <ArrowRight className="w-[15px] h-[15px]" />
           </button>
         </div>
       </div>
@@ -957,9 +942,7 @@ function WizardStep3Updated() {
                 Μάριος Στεργίου
               </h3>
               <p className="text-[10px] font-medium text-text-tertiary flex items-center gap-1 mt-0.5">
-                <span className="material-symbols-outlined text-[12px]">
-                  location_on
-                </span>
+                <MapPin className="w-3 h-3" />
                 Α' Θεσσαλονίκης
               </p>
             </div>
@@ -969,9 +952,7 @@ function WizardStep3Updated() {
               Ενεργό Match
             </span>
             <button className="text-text-quaternary p-1.5 rounded-2xl">
-              <span className="material-symbols-outlined text-[18px]">
-                more_vert
-              </span>
+              <MoreVertical className="w-4 h-4" />
             </button>
           </div>
         </header>
@@ -980,9 +961,7 @@ function WizardStep3Updated() {
         <div className="flex-1 overflow-hidden p-4 space-y-4 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-opacity-5 relative flex flex-col">
           <div className="flex justify-center mb-2">
             <div className="bg-primary-soft border border-primary/20 text-primary text-[10px] font-semibold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-soft">
-              <span className="material-symbols-outlined text-[14px] animate-pulse">
-                auto_awesome
-              </span>
+              <Sparkles className="w-3.5 h-3.5 animate-pulse" />
               Το σύστημα εντόπισε αντιστοιχία στις 21 Απρ 2026
             </div>
           </div>
@@ -1036,9 +1015,7 @@ function WizardStep3Updated() {
                     <span className="text-[9px] font-medium text-text-quaternary">
                       14:25
                     </span>
-                    <span className="material-symbols-outlined text-[12px] text-primary">
-                      done_all
-                    </span>
+                    <CheckCheck className="w-3 h-3 text-primary" />
                   </div>
                 </div>
               </motion.div>
@@ -1077,9 +1054,7 @@ function WizardStep3Updated() {
         <footer className="p-3 sm:p-4 bg-background border-t border-border z-10 flex-shrink-0">
           <div className="flex items-end gap-2">
             <button className="w-10 h-10 flex-shrink-0 flex items-center justify-center text-text-quaternary rounded-2xl">
-              <span className="material-symbols-outlined text-[20px]">
-                attach_file
-              </span>
+              <Paperclip className="w-5 h-5" />
             </button>
             <div className="flex-1 relative">
               <textarea
@@ -1090,9 +1065,7 @@ function WizardStep3Updated() {
               ></textarea>
             </div>
             <button className="w-10 h-10 flex-shrink-0 bg-primary text-white rounded-2xl flex items-center justify-center shadow-floating">
-              <span className="material-symbols-outlined text-[18px]">
-                send
-              </span>
+              <Send className="w-4.5 h-4.5" />
             </button>
           </div>
         </footer>

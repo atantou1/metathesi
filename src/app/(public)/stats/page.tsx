@@ -4,6 +4,7 @@ import PostingZonesMapClient from './PostingZonesMapClient'
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { ChevronDown, X, Database, SlidersHorizontal } from 'lucide-react'
 
 // ─── useIsMobile hook ─────────────────────────────────────────────────────────
 function useIsMobile() {
@@ -79,15 +80,13 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
         }}
       >
         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '160px' }}>{label}</span>
-        <span
-          className="material-symbols-outlined text-[18px] text-muted-foreground transition-transform duration-200"
+        <ChevronDown
+          className="w-4 h-4 text-muted-foreground transition-transform duration-200"
           style={{
             flexShrink: 0,
             transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
           }}
-        >
-          expand_more
-        </span>
+        />
       </button>
 
       {open && (
@@ -196,7 +195,7 @@ function MobileFilterDrawer({
             style={{ padding: '6px', borderRadius: '9999px', border: 'none', background: 'none', cursor: 'pointer' }}
             className="text-text-tertiary"
           >
-            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>close</span>
+            <X className="w-5 h-5" />
           </button>
         </div>
 
@@ -342,7 +341,7 @@ function PanelContent({ title, specialtyName, data, division, specialty, onClose
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-12 text-center">
           <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center text-muted-foreground mb-4">
-            <span className="material-symbols-outlined text-4xl">database_off</span>
+            <Database className="w-8 h-8 opacity-40" />
           </div>
           <h3 className="text-lg font-bold text-foreground mb-2">Δεν βρέθηκαν δεδομένα</h3>
           <p className="text-sm text-muted-foreground max-w-[240px]">Δεν υπάρχουν στατιστικά στοιχεία για αυτή την περιοχή με τα επιλεγμένα φίλτρα.</p>
@@ -872,7 +871,7 @@ function StatsMapContent() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#0369a1' }}>tune</span>
+                <SlidersHorizontal className="w-4 h-4 text-primary" />
                 Φίλτρα
               </button>
             </div>

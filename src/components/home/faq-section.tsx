@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
@@ -68,13 +69,12 @@ const FAQItem = ({ faq, isOpen, toggleOpen }: { faq: any; isOpen: boolean; toggl
           {faq.question}
         </span>
         <span className="flex items-center flex-shrink-0 mt-[-2px]">
-          <motion.span
+          <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3 }}
-            className={`material-symbols-outlined text-[20px] transition-colors ${isOpen ? "text-primary" : "text-muted-foreground"}`}
           >
-            expand_more
-          </motion.span>
+            <ChevronDown className={`w-5 h-5 transition-colors ${isOpen ? "text-primary" : "text-muted-foreground"}`} />
+          </motion.div>
         </span>
       </button>
       <AnimatePresence initial={false}>
