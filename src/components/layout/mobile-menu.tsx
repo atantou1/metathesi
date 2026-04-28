@@ -150,9 +150,6 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                         <Link href="/login" onClick={() => setIsOpen(false)}>
                                             <Button variant="outline" className="w-full justify-center cursor-pointer bg-card/50 dark:bg-muted/50 border-border/50 dark:border-border/50">Σύνδεση</Button>
                                         </Link>
-                                        <Link href="/signup" onClick={() => setIsOpen(false)}>
-                                            <Button className="w-full justify-center bg-primary hover:bg-primary-hover text-white rounded-2xl cursor-pointer">Εγγραφή</Button>
-                                        </Link>
                                     </div>
                                 )}
                             </div>

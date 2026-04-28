@@ -100,7 +100,7 @@ export async function Navbar() {
                                 <Link href="/login">
                                     <Button variant="ghost" className="cursor-pointer">Σύνδεση</Button>
                                 </Link>
-                                <Link href="/signup">
+                                <Link href="/signup" className="hidden sm:block">
                                     <Button className="bg-primary hover:bg-primary-hover text-white rounded-2xl cursor-pointer">Εγγραφή</Button>
                                 </Link>
                             </div>
