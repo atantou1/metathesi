@@ -101,7 +101,7 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-surface py-24 px-6 font-sans">
+    <section className="bg-surface py-24 px-6">
       <div className="mx-auto max-w-[900px]">
         {/* Επικεφαλίδα */}
         <div className="mb-16 flex flex-col items-center text-center">

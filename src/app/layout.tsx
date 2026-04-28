@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
+  subsets: ["latin", "greek"],
 });
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function RootLayout({
       <head>
       </head>
       <body
-        className={`${inter.variable} font-display text-neutral-text-main antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} font-sans text-neutral-text-main antialiased min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
         <ThemeProvider

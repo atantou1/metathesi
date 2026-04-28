@@ -734,7 +734,7 @@ function StatsMapContent() {
 
   return (
     <div
-      className="text-foreground dark:text-foreground antialiased font-display bg-background"
+      className="text-foreground dark:text-foreground antialiased bg-background"
       style={{ height: '100vh', position: 'relative' }}
     >
       {/* Mobile filter drawer */}

@@ -5,7 +5,7 @@ import { ShieldCheck, RefreshCw, BarChart3, Users } from "lucide-react"
 
 export function StatsBentoSection() {
   return (
-    <section className="bg-background py-24 px-6 font-sans">
+    <section className="bg-background py-24 px-6">
       <div className="mx-auto max-w-[1200px]">
         {/* Επικεφαλίδα (Solution Section) */}
         <div className="mb-16 flex flex-col items-center text-center">

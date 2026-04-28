@@ -26,7 +26,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
 
   return (
     <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-border pb-6 font-sans">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-border pb-6">
         <div>
           <h3 className="text-xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
             <div className="p-2.5 rounded-2xl bg-info-soft text-info border border-info/20">
@@ -41,7 +41,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 relative">
         
         {/* Inflow */}
-        <div className="font-sans">
+        <div>
           <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-8 pb-2 border-b border-border flex items-center gap-2">
             <TrendingUp className="w-3 h-3 text-success" /> Απο που προηλθαν
           </h4>
@@ -68,7 +68,7 @@ export function MigrationFlows({ inflow, outflow }: MigrationFlowsProps) {
         </div>
 
         {/* Outflow */}
-        <div className="font-sans">
+        <div>
           <h4 className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-8 pb-2 border-b border-border-dim flex items-center gap-2">
             <TrendingDown className="w-3 h-3 text-danger" /> Που θελουν να πανε
           </h4>

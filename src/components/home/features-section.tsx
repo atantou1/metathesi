@@ -74,12 +74,10 @@ export function FeaturesSection() {
   return (
     <section
       className="py-16 lg:py-24 bg-surface overflow-hidden min-h-screen flex items-center"
-      style={{ fontFamily: "'Inter', sans-serif" }}
     >
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
             
             @keyframes shimmer {
               0% { transform: translateX(-100%); }
@@ -640,7 +638,7 @@ function WizardStep2Updated() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="text-foreground antialiased flex flex-col min-h-full font-sans"
+      className="text-foreground antialiased flex flex-col min-h-full"
     >
       {/* MATCH BANNER */}
       <AnimatePresence>
@@ -856,7 +854,7 @@ function WizardStep3Updated() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="text-foreground antialiased flex h-full w-full bg-background relative overflow-hidden font-sans pointer-events-none select-none"
+      className="text-foreground antialiased flex h-full w-full bg-background relative overflow-hidden pointer-events-none select-none"
     >
       {/* SIDEBAR - Κρυμμένο στα κινητά, ορατό από sm και πάνω */}
       <aside className="hidden sm:flex w-[180px] md:w-[220px] bg-background border-r border-border flex-col flex-shrink-0 z-10 h-full">

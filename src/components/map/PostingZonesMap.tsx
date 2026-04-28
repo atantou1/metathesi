@@ -229,7 +229,7 @@ export default function PostingZonesMap({ onZoneClick, selectedZone, statistics,
   if (!geoJsonData) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-slate-950">
-        <p className="text-slate-500 animate-pulse font-display">Φόρτωση χάρτη...</p>
+        <p className="text-slate-500 animate-pulse">Φόρτωση χάρτη...</p>
       </div>
     )
   }

@@ -18,7 +18,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     return (
         <SessionProvider session={session}>
             <SidebarProvider>
-                <div className="flex h-screen overflow-hidden bg-background font-display text-foreground">
+                <div className="flex h-screen overflow-hidden bg-background text-foreground">
                     {/* Sidebar Container */}
                     <AdminSidebar />
                     

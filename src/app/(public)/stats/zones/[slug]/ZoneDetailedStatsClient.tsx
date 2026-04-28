@@ -211,7 +211,7 @@ export default function ZoneDetailedStatsClient({
   }));
 
   return (
-    <div className="p-4 md:p-8 text-foreground antialiased min-h-screen bg-background font-sans">
+    <div className="p-4 md:p-8 text-foreground antialiased min-h-screen bg-background">
       <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8 pt-20 md:pt-24">
         
         {/* --- Premium Header --- */}
