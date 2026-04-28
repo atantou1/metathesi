@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Bell } from "lucide-react"
 import { getUnreadNotifications, markNotificationAsRead } from "@/actions/notifications"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
 
 type NotificationType = {
     id: number
@@ -65,17 +66,20 @@ export function NotificationBellClient() {
     }
 
     return (
-        <button
+        <Button
+            variant="ghost"
+            size="icon-sm"
             onClick={handleBellClick}
-            className={`relative p-2 transition-colors ${hasUnread
-                    ? "text-foreground dark:text-white cursor-pointer hover:bg-muted dark:hover:bg-muted rounded-full"
-                    : "text-text-quaternary dark:text-text-quaternary cursor-default"
+            className={`relative rounded-full transition-all duration-300 ${hasUnread
+                ? "text-foreground dark:text-white hover:bg-muted dark:hover:bg-muted/50 hover:text-primary"
+                : "text-text-tertiary cursor-default opacity-70"
                 }`}
+            title={hasUnread ? "Προβολή ειδοποιήσεων" : "Δεν υπάρχουν νέες ειδοποιήσεις"}
         >
-            <Bell className="w-6 h-6" />
+            <Bell className="w-5 h-5" />
             {hasUnread && (
-                <span className="absolute top-2 right-2 block h-2.5 w-2.5 rounded-full bg-danger ring-2 ring-white/80 dark:ring-card/80 animate-pulse"></span>
+                <span className="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-danger ring-2 ring-background dark:ring-card animate-pulse"></span>
             )}
-        </button>
+        </Button>
     )
 }

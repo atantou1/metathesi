@@ -44,9 +44,9 @@ export function ModeToggle() {
                     className="flex items-center justify-center"
                 >
                     {isDark ? (
-                        <Moon className="h-4 w-4" />
+                        <Moon className="h-5 w-5" />
                     ) : (
-                        <Sun className="h-4 w-4" />
+                        <Sun className="h-5 w-5" />
                     )}
                 </motion.div>
             </AnimatePresence>
