@@ -105,7 +105,7 @@ export function FeaturesSection() {
       <div className="max-w-[1280px] w-full mx-auto px-6">
         <div className="mb-16 text-center">
           <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">Πώς λειτουργεί</h4>
-          <h2 className="text-[48px] font-semibold text-foreground dark:text-white leading-[48px] text-balance">Απλοποιήστε τη διαδικασία μετάθεσής σας</h2>
+          <h2 className="text-[32px] md:text-[48px] font-semibold text-foreground dark:text-white leading-tight md:leading-[48px] text-balance">Απλοποιήστε τη διαδικασία μετάθεσής σας</h2>
           <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-muted-foreground dark:text-text-tertiary px-0 md:px-[104.5px]">Τρία απλά βήματα για να βρείτε την επόμενη επαγγελματική σας στέγη χωρίς περιττές καθυστερήσεις.</p>
         </div>
         <div className="flex flex-col-reverse lg:flex-row gap-10 lg:gap-16 items-center">

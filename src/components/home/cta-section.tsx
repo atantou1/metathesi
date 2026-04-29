@@ -20,7 +20,7 @@ export function CtaSection() {
         </h4>
 
         {/* Κύριος Τίτλος */}
-        <h2 className="mb-8 text-[48px] font-semibold tracking-tight text-foreground leading-[48px] dark:text-white">
+        <h2 className="mb-8 text-[32px] md:text-[48px] font-semibold tracking-tight text-foreground leading-tight md:leading-[48px] dark:text-white">
           Γίνετε μέλος της κοινότητας σήμερα.
         </h2>
 

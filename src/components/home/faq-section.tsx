@@ -108,7 +108,7 @@ export function FaqSection() {
           <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">
             Συχνες Ερωτησεις
           </h4>
-          <h2 className="mb-6 text-[48px] font-semibold tracking-tight text-foreground leading-[48px] dark:text-white">
+          <h2 className="mb-6 text-[32px] md:text-[48px] font-semibold tracking-tight text-foreground leading-tight md:leading-[48px] dark:text-white">
             Λύστε κάθε απορία σας
           </h2>
         </div>

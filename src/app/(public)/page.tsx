@@ -49,7 +49,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="text-center lg:text-left">
-                <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-7xl">
+                <h1 className="text-balance text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-7xl">
                   Βάλε την αναζήτηση στον αυτόματο πιλότο
                 </h1>
                 <p className="mt-8 text-pretty text-lg font-medium text-gray-500 dark:text-gray-400 sm:text-xl/8">
