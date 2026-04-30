@@ -189,38 +189,7 @@ export default async function Dashboard() {
                 {/* Reusing existing Mobile Nav at the bottom of the main Dashboard if needed, 
                     but strictly following the user's provided HTML structure which had a simple footer.
                     However, keeping consistent with the active dashboard's existing footer structure is safer.*/}
-                <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-card/90 dark:bg-card/90 backdrop-blur-md border-t border-border dark:border-border pb-safe z-50">
-                    <div className="flex justify-around items-center h-16 px-2">
-                        <button className="flex flex-col items-center justify-center w-full h-full text-primary">
-                            <LayoutDashboard className="w-6 h-6" />
-                            <span className="text-[10px] font-medium mt-1">Home</span>
-                        </button>
-                        <button className="flex flex-col items-center justify-center w-full h-full text-text-quaternary hover:text-foreground dark:hover:text-foreground transition-colors">
-                            <Users className="w-6 h-6" />
-                            <span className="text-[10px] font-medium mt-1">Matches</span>
-                        </button>
-                        <div className="relative -top-5">
-                            <Link href="/request/create">
-                                <button className="w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center transform transition-transform active:scale-95 border-2 border-background dark:border-card">
-                                    <Plus className="w-6 h-6" />
-                                </button>
-                            </Link>
-                        </div>
-                        <button className="flex flex-col items-center justify-center w-full h-full text-text-quaternary hover:text-foreground dark:hover:text-foreground transition-colors">
-                            <Bell className="w-6 h-6" />
-                            <span className="text-[10px] font-medium mt-1">Alerts</span>
-                        </button>
-                        <button className="flex flex-col items-center justify-center w-full h-full text-text-quaternary hover:text-foreground dark:hover:text-foreground transition-colors">
-                            <div className="w-6 h-6 rounded-full overflow-hidden bg-muted dark:bg-muted ring-1 ring-border-strong dark:ring-border">
-                                <Avatar className="w-full h-full">
-                                    <AvatarImage src={user.image || undefined} />
-                                    <AvatarFallback className="text-[10px]">{user.name?.substring(0, 2).toUpperCase()}</AvatarFallback>
-                                </Avatar>
-                            </div>
-                            <span className="text-[10px] font-medium mt-1">Profile</span>
-                        </button>
-                    </div>
-                </div>
+
             </div>
         )
     }
