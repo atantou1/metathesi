@@ -31,7 +31,7 @@ function MiniChart({ title, value, percent, bars, isPositive }: MiniChartProps) 
             className={`flex-1 rounded-[1px] transition-all duration-500 ${
               i === bars.length - 1 
                 ? "bg-primary" 
-                : "bg-neutral-200 dark:bg-neutral-800"
+                : "bg-border-strong"
             }`}
             style={{ height: `${height}%` }}
           />
@@ -41,33 +41,68 @@ function MiniChart({ title, value, percent, bars, isPositive }: MiniChartProps) 
   )
 }
 
-export function BentoStatsGrid() {
+interface BentoStatsGridProps {
+  variant?: "popularity" | "history"
+}
+
+export function BentoStatsGrid({ variant = "popularity" }: BentoStatsGridProps) {
+  if (variant === "history") {
+    return (
+      <div className="grid grid-cols-2 grid-rows-2 gap-3 w-full h-full p-2">
+        <MiniChart
+          title="Αριθμός Μεταθέσεων"
+          value="1.240"
+          bars={[40, 65, 50, 80, 90]}
+          isPositive={true}
+        />
+        <MiniChart
+          title="Ποσοστό Επιτυχίας"
+          value="18.5"
+          percent="%"
+          bars={[30, 25, 45, 35, 55]}
+          isPositive={true}
+        />
+        <MiniChart
+          title="Αιτήσεις Μετάθεσης"
+          value="6.702"
+          bars={[70, 85, 75, 95, 80]}
+          isPositive={false}
+        />
+        <MiniChart
+          title="Μη Ικανοποιηθέντες"
+          value="5.462"
+          bars={[60, 50, 70, 65, 75]}
+          isPositive={false}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="grid grid-cols-2 grid-rows-2 gap-3 w-full h-full p-2">
       <MiniChart
-        title="Αριθμός Μεταθέσεων"
-        value="1.240"
-        bars={[40, 65, 50, 80, 90]}
+        title="Ζήτηση (1η Προτ.)"
+        value="142"
+        bars={[45, 60, 55, 75, 88]}
         isPositive={true}
       />
       <MiniChart
-        title="Ποσοστό Επιτυχίας"
-        value="18.5"
-        percent="%"
-        bars={[30, 25, 45, 35, 55]}
+        title="Αιτήσεις Αποχώρησης"
+        value="86"
+        bars={[30, 45, 40, 55, 65]}
+        isPositive={false}
+      />
+      <MiniChart
+        title="Μ.Ο. Επιτυχόντων"
+        value="74.2"
+        bars={[65, 68, 70, 72, 74]}
         isPositive={true}
       />
       <MiniChart
-        title="Αιτήσεις Μετάθεσης"
-        value="6.702"
-        bars={[70, 85, 75, 95, 80]}
-        isPositive={false}
-      />
-      <MiniChart
-        title="Μη Ικανοποιηθέντες"
-        value="5.462"
-        bars={[60, 50, 70, 65, 75]}
-        isPositive={false}
+        title="Μ.Ο. Αιτούντων"
+        value="68.5"
+        bars={[60, 62, 64, 66, 68]}
+        isPositive={true}
       />
     </div>
   )

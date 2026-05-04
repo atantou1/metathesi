@@ -26,7 +26,7 @@ export function StatsBentoSection() {
         {/* Το Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[22rem]">
           {/* BOX 1: Advanced Algorithms */}
-          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-primary-soft md:col-start-1 md:row-start-1 lg:col-start-1 lg:row-start-1">
+          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-blue-50/80 dark:hover:bg-blue-950/40 md:col-start-1 md:row-start-1 lg:col-start-1 lg:row-start-1">
             <div className="relative z-10 flex flex-col items-start p-6">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
                 Ανάλυση Δημοτικότητας
@@ -35,20 +35,20 @@ export function StatsBentoSection() {
                 Δείτε σε πραγματικό χρόνο την ζήτηση (1η προτίμηση) για τις περιοχές που σας ενδιαφέρουν.
               </p>
             </div>
-            <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-white shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-card overflow-hidden flex flex-col">
-              <div className="flex h-8 items-center gap-1.5 border-b border-neutral-100 bg-surface-dim/50 px-3 dark:border-border dark:bg-card/50">
+            <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-background overflow-hidden flex flex-col">
+              <div className="flex h-9 items-center gap-2 border-b border-border bg-muted px-4 rounded-t-3xl">
                 <div className="h-2.5 w-2.5 rounded-full bg-red-400"></div>
                 <div className="h-2.5 w-2.5 rounded-full bg-amber-400"></div>
                 <div className="h-2.5 w-2.5 rounded-full bg-green-400"></div>
               </div>
               <div className="flex-1 p-2 overflow-hidden relative h-[calc(100%-32px)]">
-                <BentoStatsGrid />
+                <BentoStatsGrid variant="popularity" />
               </div>
             </div>
           </div>
 
           {/* BOX 2: Seamless Integration */}
-          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-primary-soft md:col-start-1 md:row-start-2 lg:col-start-2 lg:row-start-1">
+          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-teal-50/80 dark:hover:bg-teal-950/40 md:col-start-1 md:row-start-2 lg:col-start-2 lg:row-start-1">
             <div className="relative z-10 flex flex-col items-start p-6">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
                 Ιστορικό Βάσεων
@@ -57,24 +57,20 @@ export function StatsBentoSection() {
                 Συγκρίνετε τα μόρια των βάσεων για τα τελευταία έτη (2022-2024).
               </p>
             </div>
-            <div className="absolute inset-x-6 bottom-[-20px] top-32 flex flex-col gap-2.5 transition-transform duration-500 group-hover:-translate-y-2">
-              <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-white shadow-sm dark:border-border dark:bg-card flex items-center justify-between px-3 text-xs text-neutral-400">
-                <div className="flex items-center">
-                  <div className="h-5 w-5 rounded bg-teal-100 mr-2 dark:bg-teal-800/30"></div> 2024
-                </div>
-                <span className="font-mono text-teal-600">64.53 μ.</span>
+            <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-background overflow-hidden flex flex-col">
+              <div className="flex h-9 items-center gap-2 border-b border-border bg-muted px-4 rounded-t-3xl">
+                <div className="h-2.5 w-2.5 rounded-full bg-red-400"></div>
+                <div className="h-2.5 w-2.5 rounded-full bg-amber-400"></div>
+                <div className="h-2.5 w-2.5 rounded-full bg-green-400"></div>
               </div>
-              <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-white shadow-sm dark:border-border dark:bg-card flex items-center justify-between px-3 text-xs text-neutral-400">
-                <div className="flex items-center">
-                  <div className="h-5 w-5 rounded bg-neutral-100 mr-2 dark:bg-muted"></div> 2023
-                </div>
-                <span className="font-mono text-neutral-500">62.11 μ.</span>
+              <div className="flex-1 p-2 overflow-hidden relative h-[calc(100%-32px)]">
+                <BentoStatsGrid variant="history" />
               </div>
             </div>
           </div>
 
           {/* BOX 3: Secure Data Handling (Το ΨΗΛΟ κουτί) */}
-          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-primary-soft md:col-start-2 md:row-start-1 md:row-span-2 lg:col-start-3 lg:row-start-1 lg:row-span-2">
+          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/40 md:col-start-2 md:row-start-1 md:row-span-2 lg:col-start-3 lg:row-start-1 lg:row-span-2">
             <div className="relative z-10 flex flex-col items-start p-6">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
                 Έγκυρα & Ασφαλή Δεδομένα
@@ -83,8 +79,8 @@ export function StatsBentoSection() {
                 Επεξεργαζόμαστε τα επίσημα στοιχεία του Υπουργείου για να σας προσφέρουμε την πιο σαφή εικόνα της ζήτησης.
               </p>
             </div>
-            <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-white shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-card overflow-hidden flex flex-col">
-              <div className="flex h-8 items-center gap-1.5 border-b border-neutral-100 bg-surface-dim/50 px-3 dark:border-border dark:bg-card/50">
+            <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-background overflow-hidden flex flex-col">
+              <div className="flex h-9 items-center gap-2 border-b border-border bg-muted px-4 rounded-t-3xl">
                 <div className="h-2.5 w-2.5 rounded-full bg-red-400"></div>
                 <div className="h-2.5 w-2.5 rounded-full bg-amber-400"></div>
                 <div className="h-2.5 w-2.5 rounded-full bg-green-400"></div>
@@ -97,7 +93,7 @@ export function StatsBentoSection() {
           </div>
 
           {/* BOX 4: Customizable Solutions (Το ΦΑΡΔΥ κουτί) */}
-          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-surface-dim/50 md:col-start-1 md:col-span-2 md:row-start-3 lg:col-start-1 lg:col-span-2 lg:row-start-2">
+          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-amber-50/80 dark:hover:bg-amber-950/30 md:col-start-1 md:col-span-2 md:row-start-3 lg:col-start-1 lg:col-span-2 lg:row-start-2">
             <div className="relative z-10 flex flex-col items-start p-6 w-full md:w-1/2 lg:w-2/3">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
                 Διαδραστικά Γραφήματα & Πίνακες

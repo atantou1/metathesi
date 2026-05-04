@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form"
 import { Mail, Lock, Loader2, EyeOff, Eye } from "lucide-react"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 
 import { Logo } from "@/components/logo"
 
@@ -29,6 +29,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const urlError = searchParams.get("error")
 
   const [isPending, startTransition] = useTransition()
@@ -136,12 +137,13 @@ export function LoginForm({
                       <FormItem className="grid gap-2">
                         <div className="flex items-center justify-between">
                           <FormLabel className="text-sm font-medium text-muted-foreground">Κωδικός Πρόσβασης</FormLabel>
-                          <Link
-                            href="/forgot-password"
-                            className="text-xs font-medium text-primary hover:underline underline-offset-4"
+                          <button
+                            type="button"
+                            onClick={() => router.push("/forgot-password")}
+                            className="text-xs font-medium text-primary hover:underline underline-offset-4 cursor-pointer bg-transparent border-none p-0"
                           >
                             Ξεχάσατε τον κωδικό σας;
-                          </Link>
+                          </button>
                         </div>
                         <FormControl>
                           <div className="relative group">

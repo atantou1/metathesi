@@ -121,3 +121,61 @@ export async function sendVerificationEmail(
         return { success: false, error: err.message || 'Unknown error' };
     }
 }
+
+/**
+ * Sends a password reset email to a user.
+ * @param email - The destination email address
+ * @param token - The reset token
+ */
+export async function sendPasswordResetEmail(
+    email: string,
+    token: string
+) {
+    if (!resend) {
+        console.warn('RESEND_API_KEY is not defined. Skipping password reset email for:', email);
+        return { success: false, error: 'API key missing' };
+    }
+
+    const resetLink = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
+
+    if (process.env.NODE_ENV !== 'production') {
+        console.log("-----------------------------------------");
+        console.log(`[DEV MODE] Password Reset Link for ${email}:`);
+        console.log(resetLink);
+        console.log("-----------------------------------------");
+    }
+
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'metaThesi <auth@resend.dev>', // Update this to verified domain when going to prod
+            to: [email],
+            subject: '🔑 Επαναφορά κωδικού πρόσβασης - metaThesi',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #334155;">
+                    <h2 style="color: #0369a1;">Επαναφορά Κωδικού</h2>
+                    <p>Λάβαμε ένα αίτημα για επαναφορά του κωδικού πρόσβασης για τον λογαριασμό σας.</p>
+                    <p>Κάντε κλικ στον παρακάτω σύνδεσμο για να ορίσετε έναν νέο κωδικό:</p>
+                    
+                    <div style="text-align: center; margin-top: 32px; margin-bottom: 32px;">
+                        <a href="${resetLink}" style="background-color: #0369a1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                            Επαναφορά Κωδικού
+                        </a>
+                    </div>
+                    
+                    <p>Αν δεν ζητήσατε εσείς την επαναφορά, μπορείτε να αγνοήσετε αυτό το email. Ο σύνδεσμος θα λήξει σε 1 ώρα.</p>
+                </div>
+            `,
+        });
+
+        if (error) {
+            console.error('Failed to send password reset email with Resend:', error);
+            return { success: false, error: error.message };
+        }
+
+        console.log(`Password reset email sent successfully to ${email}`);
+        return { success: true, data };
+    } catch (err: any) {
+        console.error('Unexpected error while sending password reset email:', err);
+        return { success: false, error: err.message || 'Unknown error' };
+    }
+}

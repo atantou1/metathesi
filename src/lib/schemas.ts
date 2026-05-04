@@ -44,4 +44,19 @@ export const requestSchema = z.object({
 export type RequestValues = z.infer<typeof requestSchema>
 export type ProfileValues = z.infer<typeof profileSchema>
 export type LoginValues = z.infer<typeof loginSchema>
+
+export const resetPasswordSchema = z.object({
+    email: z.string().email("Μη έγκυρο email"),
+})
+
+export const newPasswordSchema = z.object({
+    password: z.string().min(6, "Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες"),
+    confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Οι κωδικοί δεν ταιριάζουν",
+    path: ["confirmPassword"],
+})
+
+export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>
+export type NewPasswordValues = z.infer<typeof newPasswordSchema>
 export type ChangePasswordValues = z.infer<typeof changePasswordSchema>
