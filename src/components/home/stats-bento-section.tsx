@@ -1,7 +1,11 @@
 "use client"
 
-import React from "react"
-import { ShieldCheck, RefreshCw, BarChart3, Users } from "lucide-react"
+import { BentoMap } from "./bento-map"
+import { BentoLegend } from "./bento-legend"
+
+import { BentoStatsGrid } from "./bento-stats-grid"
+
+import { BentoInteractiveCharts } from "./bento-interactive-charts"
 
 export function StatsBentoSection() {
   return (
@@ -31,14 +35,14 @@ export function StatsBentoSection() {
                 Δείτε σε πραγματικό χρόνο την ζήτηση (1η προτίμηση) για τις περιοχές που σας ενδιαφέρουν.
               </p>
             </div>
-            <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-white shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-card">
+            <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-white shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-card overflow-hidden flex flex-col">
               <div className="flex h-8 items-center gap-1.5 border-b border-neutral-100 bg-surface-dim/50 px-3 dark:border-border dark:bg-card/50">
                 <div className="h-2.5 w-2.5 rounded-full bg-red-400"></div>
                 <div className="h-2.5 w-2.5 rounded-full bg-amber-400"></div>
                 <div className="h-2.5 w-2.5 rounded-full bg-green-400"></div>
               </div>
-              <div className="flex h-full items-center justify-center p-4 pb-12 text-center text-sm text-neutral-300 dark:text-neutral-700">
-                [ Heatmap Overview ]
+              <div className="flex-1 p-2 overflow-hidden relative h-[calc(100%-32px)]">
+                <BentoStatsGrid />
               </div>
             </div>
           </div>
@@ -70,7 +74,7 @@ export function StatsBentoSection() {
           </div>
 
           {/* BOX 3: Secure Data Handling (Το ΨΗΛΟ κουτί) */}
-          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-emerald-50/50 md:col-start-2 md:row-start-1 md:row-span-2 lg:col-start-3 lg:row-start-1 lg:row-span-2">
+          <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-primary-soft md:col-start-2 md:row-start-1 md:row-span-2 lg:col-start-3 lg:row-start-1 lg:row-span-2">
             <div className="relative z-10 flex flex-col items-start p-6">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
                 Έγκυρα & Ασφαλή Δεδομένα
@@ -79,20 +83,15 @@ export function StatsBentoSection() {
                 Επεξεργαζόμαστε τα επίσημα στοιχεία του Υπουργείου για να σας προσφέρουμε την πιο σαφή εικόνα της ζήτησης.
               </p>
             </div>
-            <div className="absolute inset-x-6 bottom-0 top-36 rounded-t-2xl border-x-2 border-t-2 border-neutral-800 bg-white shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-black">
-              <div className="flex flex-col gap-3 p-4 w-full">
-                <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-surface-dim/50 dark:border-border dark:bg-card flex items-center justify-center text-xs text-neutral-400">
-                  <ShieldCheck className="w-4 h-4 mr-2 text-primary" /> Επίσημες Πηγές
-                </div>
-                <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-surface-dim/50 dark:border-border dark:bg-card flex items-center justify-center text-xs text-neutral-400">
-                  <RefreshCw className="w-4 h-4 mr-2 text-primary" /> Ετήσια Ενημέρωση
-                </div>
-                <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-surface-dim/50 dark:border-border dark:bg-card flex items-center justify-center text-xs text-neutral-400">
-                  <BarChart3 className="w-4 h-4 mr-2 text-primary" /> 150+ Περιοχές
-                </div>
-                <div className="h-12 w-full rounded-2xl border border-neutral-200/60 bg-surface-dim/50 dark:border-border dark:bg-card flex items-center justify-center text-xs text-neutral-400">
-                  <Users className="w-4 h-4 mr-2 text-primary" /> 40+ Ειδικότητες
-                </div>
+            <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-white shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-card overflow-hidden flex flex-col">
+              <div className="flex h-8 items-center gap-1.5 border-b border-neutral-100 bg-surface-dim/50 px-3 dark:border-border dark:bg-card/50">
+                <div className="h-2.5 w-2.5 rounded-full bg-red-400"></div>
+                <div className="h-2.5 w-2.5 rounded-full bg-amber-400"></div>
+                <div className="h-2.5 w-2.5 rounded-full bg-green-400"></div>
+              </div>
+              <div className="flex-1 flex items-center justify-center overflow-hidden relative">
+                <BentoMap />
+                <BentoLegend />
               </div>
             </div>
           </div>
@@ -107,14 +106,14 @@ export function StatsBentoSection() {
                 Εξερευνήστε δυναμικά την ανάλυση κενών και ικανοποίησης (Branch Satisfaction) με σύγχρονα Data Workflows.
               </p>
             </div>
-            <div className="absolute inset-x-6 md:left-[45%] lg:left-[50%] bottom-0 top-36 md:top-6 flex overflow-hidden rounded-t-2xl md:rounded-tl-2xl md:rounded-tr-none border border-neutral-200/60 bg-white shadow-xl transition-transform duration-500 group-hover:-translate-y-2 md:group-hover:-translate-x-2 md:group-hover:translate-y-0 dark:border-border dark:bg-card">
+            <div className="absolute inset-x-6 md:left-[45%] lg:left-[50%] bottom-0 top-36 md:top-6 flex overflow-hidden rounded-t-2xl md:rounded-tl-2xl md:rounded-tr-none border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 md:group-hover:-translate-x-2 md:group-hover:translate-y-0 dark:border-border">
               <div className="hidden sm:block w-1/3 border-r border-neutral-100 bg-surface-dim/50 p-4 dark:border-border dark:bg-card/30">
                 <div className="h-2 w-3/4 rounded bg-neutral-200 mb-3 dark:bg-muted"></div>
                 <div className="h-2 w-full rounded bg-neutral-200 mb-2 dark:bg-muted"></div>
                 <div className="h-2 w-5/6 rounded bg-neutral-200 mb-2 dark:bg-muted"></div>
               </div>
-              <div className="flex-1 p-4 flex items-center justify-center text-center text-xs text-neutral-400">
-                [ Interactive Charts View ]
+              <div className="flex-1 p-2 overflow-hidden relative">
+                <BentoInteractiveCharts />
               </div>
             </div>
           </div>

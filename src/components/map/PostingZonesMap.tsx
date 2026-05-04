@@ -62,18 +62,25 @@ function MapController({ selectedFeature, geoJsonLayerRef }: { selectedFeature: 
 // Custom Zoom Controls Component
 function CustomZoomControls() {
   const map = useMap()
+  const ZOOM_STEP = 0.5
 
   return (
     <div className="absolute bottom-8 right-8 flex flex-col gap-2 pointer-events-auto hidden md:flex" style={{ zIndex: 1000 }}>
       <button 
-        onClick={(e) => { e.stopPropagation(); map.zoomIn() }}
+        onClick={(e) => { 
+          e.stopPropagation(); 
+          map.setZoom(map.getZoom() + ZOOM_STEP)
+        }}
         className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#0369a1] transition-colors rounded-full"
         title="Zoom In"
       >
         <Plus className="w-5 h-5" />
       </button>
       <button 
-        onClick={(e) => { e.stopPropagation(); map.zoomOut() }}
+        onClick={(e) => { 
+          e.stopPropagation(); 
+          map.setZoom(map.getZoom() - ZOOM_STEP)
+        }}
         className="w-10 h-10 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md shadow-lg border border-white/20 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#0369a1] transition-colors rounded-full"
         title="Zoom Out"
       >
@@ -247,6 +254,8 @@ export default function PostingZonesMap({ onZoneClick, selectedZone, statistics,
         zoomControl={false} // Disable default zoom control as user wants custom ones
         attributionControl={false} // Disable Leaflet attribution watermarks
         scrollWheelZoom={true}
+        zoomSnap={0.25}
+        zoomDelta={0.25}
         className="w-full h-full"
         style={{ background: 'transparent' }} // Transparent background to blend with container
       >
