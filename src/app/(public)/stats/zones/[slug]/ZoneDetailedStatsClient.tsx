@@ -59,6 +59,19 @@ interface DetailedStatsClientProps {
   outflow: any[];
 }
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    function check() {
+      setIsMobile(window.innerWidth < 768);
+    }
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 export default function ZoneDetailedStatsClient({
   zoneName,
   specialtyCode,
@@ -75,6 +88,7 @@ export default function ZoneDetailedStatsClient({
   outflow,
 }: DetailedStatsClientProps) {
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   // Filter Data State
   const [allSpecialties, setAllSpecialties] = useState<any[]>([]);
@@ -253,23 +267,25 @@ export default function ZoneDetailedStatsClient({
         {/* --- Premium Header --- */}
         <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl">
           <div className="flex-1">
-            <div className="flex items-center space-x-3 mb-4">
-              <Link
-                href={`/stats?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialtyCode)}`}
-                className="text-muted-foreground hover:text-primary hover:bg-primary-soft transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-2xl border border-transparent hover:border-primary/20 cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4 mr-1.5" /> Επιστροφή στον Χάρτη
-              </Link>
-              
-              <FilterSelect 
-                value={specialtyCode}
-                onChange={handleSpecialtyChange}
-                options={specialtyOptions}
-                fontSize="11px"
-                fontWeight="700"
-                padding="6px 14px"
-                background="var(--card)"
-              />
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+              <div className="flex items-center gap-3">
+                <Link
+                  href={`/stats?division=${encodeURIComponent(division)}&specialty=${encodeURIComponent(specialtyCode)}`}
+                  className="text-muted-foreground hover:text-primary hover:bg-primary-soft transition-colors flex items-center text-xs font-bold px-3 py-1.5 rounded-2xl border border-transparent hover:border-primary/20 cursor-pointer"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-1.5" /> Επιστροφή στον Χάρτη
+                </Link>
+                
+                <FilterSelect 
+                  value={specialtyCode}
+                  onChange={handleSpecialtyChange}
+                  options={specialtyOptions}
+                  fontSize="11px"
+                  fontWeight="700"
+                  padding="6px 14px"
+                  background="var(--card)"
+                />
+              </div>
 
               <FilterSelect 
                 value={division}
@@ -279,7 +295,7 @@ export default function ZoneDetailedStatsClient({
                 fontWeight="700"
                 padding="6px 14px"
                 background="var(--card)"
-                className="!text-primary-hover"
+                className="!text-primary-hover w-fit"
               />
             </div>
             
@@ -288,17 +304,18 @@ export default function ZoneDetailedStatsClient({
                  value={zoneName}
                  onChange={handleRegionChange}
                  options={zoneOptions}
-                 fontSize="1.875rem" // 3xl
+                 fontSize="clamp(1.5rem, 6vw, 1.875rem)"
                  fontWeight="800"
                  padding="0"
                  background="transparent"
                  className="!border-none !shadow-none !p-0 -ml-1 hover:bg-surface-dim/50 rounded-xl px-1"
+                 multiline={isMobile}
                />
             </div>
           </div>
           
           <div className="mt-6 md:mt-0 flex flex-col items-start md:items-end">
-            <div className={`px-4 py-2.5 rounded-2xl text-[11px] font-bold uppercase tracking-widest border shadow-sm flex items-center ${diff.color}`}>
+            <div className={`px-4 py-2 rounded-2xl text-[10px] font-bold uppercase tracking-widest border shadow-sm flex items-center ${diff.color}`}>
               {diff.label}
             </div>
           </div>

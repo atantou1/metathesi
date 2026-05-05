@@ -14,6 +14,7 @@ interface FilterSelectProps {
   padding?: string;
   background?: string;
   className?: string;
+  multiline?: boolean;
 }
 
 export function FilterSelect({
@@ -27,6 +28,7 @@ export function FilterSelect({
   padding = "8px 16px",
   background, // No longer used as default hex
   className = "",
+  multiline = false,
 }: FilterSelectProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -48,14 +50,14 @@ export function FilterSelect({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className={`flex items-center gap-2 rounded-full border border-border/40 bg-card/40 backdrop-blur-md text-foreground transition-all hover:bg-card/60 hover:shadow-soft cursor-pointer whitespace-nowrap ${fullWidth ? 'w-full justify-between' : ''} ${className}`}
+        className={`flex items-center gap-2 rounded-full border border-border/40 bg-card/40 backdrop-blur-md text-foreground transition-all hover:bg-card/60 hover:shadow-soft cursor-pointer ${multiline ? 'whitespace-normal text-left' : 'whitespace-nowrap'} ${fullWidth ? 'w-full justify-between' : ''} ${className}`}
         style={{
           padding,
           fontSize,
           fontWeight,
         }}
       >
-        <span className="truncate">{label}</span>
+        <span className={multiline ? "" : "truncate"}>{label}</span>
         <ChevronDown
           className={`w-3.5 h-3.5 text-text-tertiary transition-transform duration-200 shrink-0 ${open ? 'rotate-180' : ''}`}
         />

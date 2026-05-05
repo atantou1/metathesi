@@ -201,8 +201,22 @@ const KPI_METADATA = [
   },
 ];
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    function check() {
+      setIsMobile(window.innerWidth < 768);
+    }
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 export default function SummaryPageClient() {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const searchParams = useSearchParams();
 
   // Filter state from URL
@@ -437,48 +451,82 @@ export default function SummaryPageClient() {
                 <ArrowLeft className="w-4 h-4 mr-1.5" /> Επιστροφή στον Χάρτη
               </Link>
 
-              {/* Dropdown Βαθμίδας */}
-              <FilterSelect
-                value={division}
-                onChange={(v) => {
-                  // Re-use logic for atomic update
-                  const newIsPrimary = v === "Πρωτοβάθμια Γενικής" || v === "Πρωτοβάθμια Ειδικής";
-                  const newIsSecondary = v === "Δευτεροβάθμια Γενικής" || v === "Δευτεροβάθμια Ειδικής";
-                  const newFiltered = allSpecialties
-                    .filter((s) => (newIsPrimary ? s.isPrimary : newIsSecondary ? s.isSecondary : true))
-                    .sort((a, b) => {
-                      if (!newIsSecondary) return 0;
-                      const order = ["ΠΕ", "ΤΕ", "ΔΕ"];
-                      const prefixOf = (code: string) => order.findIndex((p) => code.startsWith(p));
-                      const pa = prefixOf(a.code), pb = prefixOf(b.code);
-                      if (pa !== pb) return (pa === -1 ? 99 : pa) - (pb === -1 ? 99 : pb);
-                      return a.code.localeCompare(b.code, "el");
-                    });
-                  let newSpec = specialty;
-                  if (newFiltered.length > 0 && !newFiltered.some((s) => s.code === specialty)) {
-                    newSpec = newFiltered[0].code;
-                  }
-                updateFilters(v, newSpec);
-                }}
-                options={divisionOptions}
-                padding="4px 12px"
-                background="var(--card)"
-                className="text-[10px] font-bold uppercase tracking-wider border border-border/20"
-              />
+              {!isMobile && (
+                <FilterSelect
+                  value={division}
+                  onChange={(v) => {
+                    const newIsPrimary = v === "Πρωτοβάθμια Γενικής" || v === "Πρωτοβάθμια Ειδικής";
+                    const newIsSecondary = v === "Δευτεροβάθμια Γενικής" || v === "Δευτεροβάθμια Ειδικής";
+                    const newFiltered = allSpecialties
+                      .filter((s) => (newIsPrimary ? s.isPrimary : newIsSecondary ? s.isSecondary : true))
+                      .sort((a, b) => {
+                        if (!newIsSecondary) return 0;
+                        const order = ["ΠΕ", "ΤΕ", "ΔΕ"];
+                        const prefixOf = (code: string) => order.findIndex((p) => code.startsWith(p));
+                        const pa = prefixOf(a.code), pb = prefixOf(b.code);
+                        if (pa !== pb) return (pa === -1 ? 99 : pa) - (pb === -1 ? 99 : pb);
+                        return a.code.localeCompare(b.code, "el");
+                      });
+                    let newSpec = specialty;
+                    if (newFiltered.length > 0 && !newFiltered.some((s) => s.code === specialty)) {
+                      newSpec = newFiltered[0].code;
+                    }
+                    updateFilters(v, newSpec);
+                  }}
+                  options={divisionOptions}
+                  padding="4px 12px"
+                  background="var(--card)"
+                  className="text-[10px] font-bold uppercase tracking-wider border border-border/20"
+                />
+              )}
             </div>
 
-            {/* Specialty Selection Row */}
-            <div className="flex items-center gap-4 mt-2">
+            {/* Dropdown Βαθμίδας - Visible only on mobile here (Row 2 on mobile) */}
+            {isMobile && (
+              <div className="mb-4">
+                <FilterSelect
+                  value={division}
+                  onChange={(v) => {
+                    const newIsPrimary = v === "Πρωτοβάθμια Γενικής" || v === "Πρωτοβάθμια Ειδικής";
+                    const newIsSecondary = v === "Δευτεροβάθμια Γενικής" || v === "Δευτεροβάθμια Ειδικής";
+                    const newFiltered = allSpecialties
+                      .filter((s) => (newIsPrimary ? s.isPrimary : newIsSecondary ? s.isSecondary : true))
+                      .sort((a, b) => {
+                        if (!newIsSecondary) return 0;
+                        const order = ["ΠΕ", "ΤΕ", "ΔΕ"];
+                        const prefixOf = (code: string) => order.findIndex((p) => code.startsWith(p));
+                        const pa = prefixOf(a.code), pb = prefixOf(b.code);
+                        if (pa !== pb) return (pa === -1 ? 99 : pa) - (pb === -1 ? 99 : pb);
+                        return a.code.localeCompare(b.code, "el");
+                      });
+                    let newSpec = specialty;
+                    if (newFiltered.length > 0 && !newFiltered.some((s) => s.code === specialty)) {
+                      newSpec = newFiltered[0].code;
+                    }
+                    updateFilters(v, newSpec);
+                  }}
+                  options={divisionOptions}
+                  padding="4px 12px"
+                  background="var(--card)"
+                  className="text-[10px] font-bold uppercase tracking-wider border border-border/20 w-fit"
+                />
+              </div>
+            )}
+
+            <div className="flex items-center flex-wrap gap-4 mt-2">
               <FilterSelect
                 value={specialty}
                 onChange={(v) => updateFilters(division, v)}
                 options={filteredSpecialties.map((s) => ({ value: s.code, label: s.code }))}
                 padding="6px 16px"
                 className="text-2xl sm:text-3xl font-extrabold"
+                multiline={isMobile}
               />
-              <span className="text-2xl sm:text-3xl font-bold text-text-quaternary tracking-tight">
-                {activeSpecialtyNameOnly}
-              </span>
+              {!isMobile && (
+                <span className="text-2xl sm:text-3xl font-bold text-text-quaternary tracking-tight">
+                  {activeSpecialtyNameOnly}
+                </span>
+              )}
             </div>
           </div>
         </div>
