@@ -53,9 +53,7 @@ export default function Home() {
                   Βάλε την αναζήτηση στον αυτόματο πιλότο
                 </h1>
                 <p className="mt-8 text-pretty text-lg font-medium text-gray-500 dark:text-gray-400 sm:text-xl/8">
-                  Το Ψηφιακό Κέντρο Αμοιβαίων Μεταθέσεων. Ξέχνα το χάος των
-                  ομάδων στο Viber και το Facebook. Βρες τη μετάθεση που
-                  ψάχνεις, έξυπνα και γρήγορα.
+                  Ξέχνα το χάος των ομάδων στο Viber και το Facebook. Βρες τη μετάθεση που ψάχνεις, έξυπνα και γρήγορα.
                 </p>
                 <div className="mt-10 flex items-center justify-center lg:justify-start gap-x-6">
                   <Link

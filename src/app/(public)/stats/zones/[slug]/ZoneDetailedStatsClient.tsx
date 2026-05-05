@@ -133,9 +133,26 @@ export default function ZoneDetailedStatsClient({
 
   // Transform history to Recharts format
   const transformHistory = (history: Record<string, number | null>) => {
-    return ["2022", "2023", "2024", "2025", "2026"]
-      .map(year => ({ year, val: history[year] || 0 }))
+    if (!history) return [];
+    return Object.entries(history)
+      .filter(([_, val]) => val !== null && val !== undefined)
+      .map(([year, val]) => ({ year, val: val || 0 }))
       .sort((a, b) => a.year.localeCompare(b.year));
+  };
+
+  // Helper to dynamically calculate diff from history
+  const getDiff = (history: Record<string, number | null> | undefined) => {
+    if (!history) return null;
+    const years = Object.keys(history)
+      .filter(y => history[y] !== null && history[y] !== undefined)
+      .sort((a, b) => b.localeCompare(a)); // sort descending
+    
+    if (years.length >= 2) {
+      const current = history[years[0]] || 0;
+      const previous = history[years[1]] || 0;
+      return current - previous;
+    }
+    return null;
   };
 
   const kpis = [
@@ -143,7 +160,8 @@ export default function ZoneDetailedStatsClient({
       id: "success",
       title: "Μεταθέσεις (Πραγμ.)",
       value: stats.successCount,
-      diff: stats.successCountDiff,
+      diff: getDiff(successHistory),
+      isPercent: false,
       isPrimary: true,
       data: transformHistory(successHistory),
       infoWhat: "Ο ακριβής αριθμός των εκπαιδευτικών που πήραν μετάθεση στη συγκεκριμένη περιοχή.",
@@ -153,7 +171,8 @@ export default function ZoneDetailedStatsClient({
         id: "base",
         title: "Βάση Μορίων",
         value: stats.baseScore?.toFixed(2) || "0",
-        diff: stats.baseScoreDiff,
+        diff: getDiff(baseHistory),
+        isPercent: false,
         inverted: true,
         data: transformHistory(baseHistory),
         infoWhat: "Τα χαμηλότερα μόρια με τα οποία πήρε κάποιος μετάθεση στην περιοχή αυτή.",
@@ -163,7 +182,8 @@ export default function ZoneDetailedStatsClient({
         id: "demand",
         title: "Ζήτηση (1η Προτ.)",
         value: stats.targeting1stCount,
-        diff: stats.targeting1stCountDiff,
+        diff: getDiff(targetingHistory),
+        isPercent: false,
         inverted: true,
         data: transformHistory(targetingHistory),
         infoWhat: "Πόσοι εκπαιδευτικοί δήλωσαν την περιοχή αυτή ως 1η τους επιλογή.",
@@ -173,7 +193,8 @@ export default function ZoneDetailedStatsClient({
         id: "leaving",
         title: "Αιτήσεις Αποχώρησης",
         value: stats.leavingCount,
-        diff: stats.leavingCountDiff,
+        diff: getDiff(leavingHistory),
+        isPercent: false,
         data: transformHistory(leavingHistory),
         infoWhat: "Πόσοι εκπαιδευτικοί που βρίσκονται ήδη στην περιοχή ζήτησαν να φύγουν.",
         infoWhy: "Περισσότερες αποχωρήσεις σημαίνουν συνήθως περισσότερα κενά για εσάς."
@@ -182,7 +203,8 @@ export default function ZoneDetailedStatsClient({
         id: "avg_succ",
         title: "Μ.Ο. Επιτυχόντων",
         value: stats.avgScore?.toFixed(2) || "0",
-        diff: 0,
+        diff: getDiff(avgHistory),
+        isPercent: false,
         data: transformHistory(avgHistory),
         infoWhat: "Ο μέσος όρος των μορίων όσων ήρθαν με μετάθεση στην περιοχή.",
         infoWhy: "Δίνει μια πιο σταθερή εικόνα του ανταγωνισμού από ό,τι η βάση."
@@ -191,20 +213,34 @@ export default function ZoneDetailedStatsClient({
         id: "avg_app",
         title: "Μ.Ο. Αιτούντων",
         value: stats.avgScoreApplicants?.toFixed(2) || "0",
-        diff: stats.avgScoreAppDiff,
+        diff: getDiff(avgAppHistory),
+        isPercent: false,
         data: transformHistory(avgAppHistory),
         infoWhat: "Ο μέσος όρος των μορίων όλων όσων ζήτησαν την περιοχή αυτή.",
         infoWhy: "Αποκαλύπτει το επίπεδο των μορίων της 'μάζας' που διεκδικεί την περιοχή."
     }
   ];
 
-  const comparisonData = ["2024", "2025", "2026"].map(year => ({
+  const getValidYears = (...histories: (Record<string, number | null> | undefined)[]) => {
+    const years = new Set<string>();
+    histories.forEach(history => {
+      if (!history) return;
+      Object.entries(history).forEach(([year, val]) => {
+        if (val !== null && val !== undefined) years.add(year);
+      });
+    });
+    return Array.from(years).sort();
+  };
+
+  const comparisonYears = getValidYears(baseHistory, avgAppHistory);
+  const comparisonData = comparisonYears.map(year => ({
     year,
     base: baseHistory[year] || 0,
     avgApp: avgAppHistory[year] || 0
   }));
 
-  const balanceData = ["2024", "2025", "2026"].map(year => ({
+  const balanceYears = getValidYears(targetingHistory, successHistory);
+  const balanceData = balanceYears.map(year => ({
     year,
     demand: targetingHistory[year] || 0,
     success: successHistory[year] || 0
@@ -263,7 +299,6 @@ export default function ZoneDetailedStatsClient({
           
           <div className="mt-6 md:mt-0 flex flex-col items-start md:items-end">
             <div className={`px-4 py-2.5 rounded-2xl text-[11px] font-bold uppercase tracking-widest border shadow-sm flex items-center ${diff.color}`}>
-              <span className="h-2 w-2 rounded-full mr-3 animate-pulse bg-current shadow-[0_0_8px_rgba(0,0,0,0.1)]"></span>
               {diff.label}
             </div>
           </div>
@@ -272,9 +307,14 @@ export default function ZoneDetailedStatsClient({
         {/* --- KPI Grid (6 cards) --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {kpis.map((kpi) => {
-            const isPositive = kpi.diff > 0;
+            const isPositive = (kpi.diff || 0) > 0;
             const isGood = kpi.inverted ? !isPositive : isPositive;
-            const DiffIcon = isPositive ? TrendingUp : TrendingDown;
+            const DiffIcon = kpi.diff === 0 ? Activity : isPositive ? TrendingUp : TrendingDown;
+            const badgeClasses = kpi.diff === 0 
+              ? "text-text-tertiary bg-muted border border-border" 
+              : isGood 
+                ? "text-success bg-success-soft border border-success/20" 
+                : "text-danger bg-danger-soft border border-danger/20";
 
             return (
                   <div
@@ -301,11 +341,12 @@ export default function ZoneDetailedStatsClient({
                       </div>
                     </div>
 
-                    {kpi.diff !== 0 && (
-                      <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${
-                        kpi.diff === 0 ? "text-text-tertiary bg-muted" : isGood ? "text-success bg-success-soft border border-success/20" : "text-danger bg-danger-soft border border-danger/20"
-                      }`}>
-                        {isPositive ? "+" : ""}{kpi.diff}% <DiffIcon className="w-3 h-3 ml-0.5" strokeWidth={2.5} />
+                    {kpi.diff !== null && (
+                      <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${badgeClasses}`}>
+                        {isPositive ? "+" : ""}
+                        {typeof kpi.diff === 'number' ? kpi.diff.toFixed(kpi.id.includes('avg') || kpi.id === 'base' ? 1 : 0) : kpi.diff}
+                        {kpi.isPercent ? "%" : ""}{" "}
+                        <DiffIcon className="w-3 h-3 ml-0.5" strokeWidth={2.5} />
                       </div>
                     )}
                   </div>

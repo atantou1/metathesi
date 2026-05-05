@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  User, Search, Settings, ChevronDown, Send, 
-  Paperclip, Smile, MoreVertical, Bell, 
+import {
+  User, Search, Settings, ChevronDown, Send,
+  Paperclip, Smile, MoreVertical, Bell,
   CheckCircle2, MapPin, Building2, Mail,
   ArrowRight, Sparkles, CheckCheck
 } from "lucide-react";
@@ -20,15 +20,15 @@ const features = [
   },
   {
     id: 2,
-    title: "Παρακολούθηση & Matches",
+    title: "Σάρωση & Εντοπισμός",
     description:
-      "Μετά την υποβολή της αίτησης, αποκτάτε πρόσβαση στο προσωπικό σας Dashboard. Εδώ βλέπετε σε πραγματικό χρόνο την κατάσταση της ζήτησης.",
+      "Το σύστημα σαρώνει 24/7 τις αιτήσεις. Μόλις βρεθεί κάποιος που θέλει τη θέση σου και εσύ τη δική του, αυτό καταγράφεται.",
   },
   {
     id: 3,
-    title: "Ασφαλής Επικοινωνία",
+    title: "Ειδοποίηση & Επικοινωνία",
     description:
-      "Μόλις εντοπιστεί αμοιβαίο ταίριασμα, ανοίγει αυτόματα ένα ιδιωτικό κανάλι επικοινωνίας μεταξύ των δύο εκπαιδευτικών για να κανονίσετε τις λεπτομέρειες.",
+      "Μόλις εντοπιστεί αμοιβαία αντιστοίχηση, λαμβάνεις ειδοποίηση στο email σου και αποκτάς πρόσβαση σε ένα ιδιωτικό, ασφαλές chat μέσα στην πλατφόρμα για να κανονίσετε τις λεπτομέρειες.",
   },
 ];
 
@@ -106,7 +106,7 @@ export function FeaturesSection() {
         <div className="mb-16 text-center">
           <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">Πώς λειτουργεί</h4>
           <h2 className="text-[32px] md:text-[48px] font-semibold text-foreground dark:text-white leading-tight md:leading-[48px] text-balance">Απλοποιήστε τη διαδικασία μετάθεσής σας</h2>
-          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-muted-foreground dark:text-text-tertiary px-0 md:px-[104.5px]">Τρία απλά βήματα για να βρείτε την επόμενη επαγγελματική σας στέγη χωρίς περιττές καθυστερήσεις.</p>
+          <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-muted-foreground dark:text-text-tertiary px-0 md:px-[104.5px]">Τρία απλά βήματα για να βρείτε την αμοιβαία μετάθεση που επιθυμείτε χωρίς περιττές καθυστερήσεις.</p>
         </div>
         <div className="flex flex-col-reverse lg:flex-row gap-10 lg:gap-16 items-center">
           {/* ================= ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ: Δυναμικά Κείμενα ================= */}
@@ -129,11 +129,10 @@ export function FeaturesSection() {
                   </div>
                   <div className="py-4">
                     <h3
-                      className={`text-[26px] leading-[1.2] font-bold transition-colors duration-200 ${
-                        isActive
-                          ? "text-foreground dark:text-white"
-                          : "text-muted-foreground dark:text-slate-500 group-hover:text-foreground"
-                      }`}
+                      className={`text-[26px] leading-[1.2] font-bold transition-colors duration-200 ${isActive
+                        ? "text-foreground dark:text-white"
+                        : "text-muted-foreground dark:text-slate-500 group-hover:text-foreground"
+                        }`}
                     >
                       {feature.title}
                     </h3>
@@ -193,18 +192,16 @@ export function FeaturesSection() {
                       )}
                     </div>
                     <h3
-                      className={`text-[22px] leading-[1.2] font-bold transition-colors duration-200 mb-3 ${
-                        isActive ? "text-[#1d1c1d] dark:text-white" : "text-[#616061] dark:text-slate-500"
-                      }`}
+                      className={`text-[22px] leading-[1.2] font-bold transition-colors duration-200 mb-3 ${isActive ? "text-[#1d1c1d] dark:text-white" : "text-[#616061] dark:text-slate-500"
+                        }`}
                     >
                       {feature.title}
                     </h3>
                     <p
-                      className={`text-[16px] leading-relaxed transition-opacity duration-300 ${
-                        isActive
-                          ? "text-[#454245] dark:text-slate-300 opacity-100"
-                          : "text-[#454245] dark:text-slate-300 opacity-50"
-                      }`}
+                      className={`text-[16px] leading-relaxed transition-opacity duration-300 ${isActive
+                        ? "text-[#454245] dark:text-slate-300 opacity-100"
+                        : "text-[#454245] dark:text-slate-300 opacity-50"
+                        }`}
                     >
                       {feature.description}
                     </p>
@@ -368,11 +365,10 @@ function WizardStep1() {
 
   const getFieldClasses = (step: number) => {
     const isActive = sequenceStep === step
-    return `relative transition-all duration-500 rounded-xl ${
-      isActive
-        ? "ring-2 ring-primary bg-primary-soft shadow-soft scale-[1.02] z-10"
-        : "bg-muted border border-border"
-    }`
+    return `relative transition-all duration-500 rounded-xl ${isActive
+      ? "ring-2 ring-primary bg-primary-soft shadow-soft scale-[1.02] z-10"
+      : "bg-muted border border-border"
+      }`
   }
 
   return (
@@ -390,7 +386,7 @@ function WizardStep1() {
 
           <h2 className="text-[13px] sm:text-[14px] font-bold text-foreground tracking-tight flex items-center gap-2 mb-4 sm:mb-5 relative z-10">
             <div className="p-1.5 rounded-2xl bg-primary-soft text-primary">
-                <User className="w-4 h-4" />
+              <User className="w-4 h-4" />
             </div>
             Επαγγελματική Ταυτότητα & Τρέχουσα Θέση
           </h2>
@@ -403,9 +399,8 @@ function WizardStep1() {
               </label>
               <div className={getFieldClasses(0)}>
                 <Search
-                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-[15px] transition-colors ${
-                    sequenceStep === 0 ? "text-primary" : "text-muted-foreground"
-                  }`}
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-[15px] transition-colors ${sequenceStep === 0 ? "text-primary" : "text-muted-foreground"
+                    }`}
                 />
                 <input
                   type="text"
@@ -428,15 +423,13 @@ function WizardStep1() {
               </label>
               <div className={getFieldClasses(1)}>
                 <Search
-                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-[15px] transition-colors ${
-                    sequenceStep === 1 ? "text-primary" : "text-muted-foreground"
-                  }`}
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-[15px] transition-colors ${sequenceStep === 1 ? "text-primary" : "text-muted-foreground"
+                    }`}
                 />
                 <select
                   tabIndex={-1}
-                  className={`w-full pl-9 pr-3 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${
-                    sequenceStep >= 1 ? "text-foreground" : "text-text-quaternary"
-                  }`}
+                  className={`w-full pl-9 pr-3 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${sequenceStep >= 1 ? "text-foreground" : "text-text-quaternary"
+                    }`}
                 >
                   <option>
                     {sequenceStep >= 1
@@ -457,9 +450,8 @@ function WizardStep1() {
                 <div className="relative w-16 border-r border-border/60">
                   <select
                     tabIndex={-1}
-                    className={`w-full h-full pl-2 pr-5 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-bold bg-transparent appearance-none transition-colors ${
-                      sequenceStep >= 2 ? "text-foreground" : "text-text-quaternary"
-                    }`}
+                    className={`w-full h-full pl-2 pr-5 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-bold bg-transparent appearance-none transition-colors ${sequenceStep >= 2 ? "text-foreground" : "text-text-quaternary"
+                      }`}
                   >
                     <option>{sequenceStep >= 2 ? "ΠΕ" : "-"}</option>
                   </select>
@@ -468,9 +460,8 @@ function WizardStep1() {
                 <div className="relative flex-grow">
                   <select
                     tabIndex={-1}
-                    className={`w-full h-full pl-3 pr-8 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-medium bg-transparent appearance-none transition-colors ${
-                      sequenceStep >= 2 ? "text-foreground" : "text-text-quaternary"
-                    }`}
+                    className={`w-full h-full pl-3 pr-8 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-medium bg-transparent appearance-none transition-colors ${sequenceStep >= 2 ? "text-foreground" : "text-text-quaternary"
+                      }`}
                   >
                     <option>
                       {sequenceStep >= 2
@@ -493,9 +484,8 @@ function WizardStep1() {
               <div className={getFieldClasses(3)}>
                 <select
                   tabIndex={-1}
-                  className={`w-full pl-3 pr-8 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${
-                    sequenceStep >= 3 ? "text-foreground" : "text-text-quaternary"
-                  }`}
+                  className={`w-full pl-3 pr-8 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${sequenceStep >= 3 ? "text-foreground" : "text-text-quaternary"
+                    }`}
                 >
                   <option>
                     {sequenceStep >= 3 ? "Αττική" : "Επίλεξε Περιφέρεια"}
@@ -513,9 +503,8 @@ function WizardStep1() {
               <div className={getFieldClasses(4)}>
                 <select
                   tabIndex={-1}
-                  className={`w-full pl-3 pr-8 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${
-                    sequenceStep >= 4 ? "text-foreground" : "text-text-quaternary"
-                  }`}
+                  className={`w-full pl-3 pr-8 py-2 sm:py-2.5 bg-transparent rounded-xl text-[10px] sm:text-[11px] font-medium outline-none appearance-none transition-colors ${sequenceStep >= 4 ? "text-foreground" : "text-text-quaternary"
+                    }`}
                 >
                   <option>
                     {sequenceStep >= 4 ? "Β' Αθήνας" : "Επίλεξε Περιοχή"}
@@ -606,11 +595,10 @@ function WizardStep1() {
           </button>
           <button
             tabIndex={-1}
-            className={`px-5 py-2 rounded-xl text-[10px] sm:text-[11px] font-semibold w-full sm:w-auto flex items-center justify-center gap-1.5 transition-all duration-150 relative overflow-hidden ${
-              sequenceStep === 6
-                ? "bg-primary-hover text-white/90 scale-95 shadow-[inset_0_3px_6px_rgba(0,0,0,0.2)]"
-                : "bg-primary text-white shadow-soft scale-100"
-            }`}
+            className={`px-5 py-2 rounded-xl text-[10px] sm:text-[11px] font-semibold w-full sm:w-auto flex items-center justify-center gap-1.5 transition-all duration-150 relative overflow-hidden ${sequenceStep === 6
+              ? "bg-primary-hover text-white/90 scale-95 shadow-[inset_0_3px_6px_rgba(0,0,0,0.2)]"
+              : "bg-primary text-white shadow-soft scale-100"
+              }`}
           >
             {sequenceStep === 6 && (
               <span className="absolute inset-0 bg-white/20 animate-ping rounded-xl"></span>
@@ -657,8 +645,8 @@ function WizardStep2Updated() {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-white dark:bg-primary-bright"></span>
                   </span>
                   <p className="text-[12px] font-semibold text-white tracking-wide">
-                    <span className="hidden sm:inline">Βρέθηκε ενεργό match! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.</span>
-                    <span className="inline sm:hidden">Βρέθηκε μια αντιστοίχιση</span>
+                    <span className="hidden sm:inline">Βρέθηκε αντιστοίχιση! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.</span>
+                    <span className="inline sm:hidden">Βρέθηκε αντιστοίχιση!</span>
                   </p>
                 </div>
                 <button className="w-full sm:w-auto text-[11px] font-bold text-primary dark:text-primary-foreground bg-white dark:bg-primary hover:bg-white/90 dark:hover:bg-primary/90 px-4 py-1.5 rounded-full transition-all shadow-sm active:scale-95">

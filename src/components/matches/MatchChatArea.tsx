@@ -24,9 +24,9 @@ type MessageType = {
 export function MatchChatArea({ matchId }: { matchId: number }) {
     const { activeMatches, historyMatches, currentUserId } = useMatches()
     const router = useRouter()
-    
+
     const match = activeMatches.find(m => m.id === matchId) || historyMatches.find(m => m.id === matchId)
-    
+
     const [messages, setMessages] = useState<MessageType[]>([])
     const [newMessage, setNewMessage] = useState("")
     const [isSending, setIsSending] = useState(false)
@@ -69,7 +69,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
             const container = scrollRef.current
             const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 150 // 150px threshold
             const isNewMatch = prevMatchId.current !== match?.id
-            
+
             // Scroll if new match selected OR if we were already at bottom
             if (isNewMatch || isAtBottom) {
                 container.scrollTo({
@@ -77,7 +77,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                     behavior: isNewMatch ? "auto" : "smooth"
                 })
             }
-            
+
             if (match) prevMatchId.current = match.id
         }
     }, [messages, match?.id])
@@ -128,17 +128,16 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
         <div className="flex-1 flex flex-col relative h-full">
             <div className="h-20 px-4 sm:px-8 border-b border-border bg-card flex items-center justify-between flex-shrink-0 shadow-soft z-10 w-full">
                 <div className="flex items-center gap-3">
-                    <button 
+                    <button
                         onClick={() => router.push('/matches')}
                         className="md:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground transition-colors"
                     >
                         <ArrowLeft className="w-6 h-6" />
                     </button>
-                    
+
                     <div className="relative">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
-                            isOnline ? 'bg-warning-soft border-warning/20 text-warning' : 'bg-muted border-border text-muted-foreground grayscale'
-                        } border`}>
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${isOnline ? 'bg-warning-soft border-warning/20 text-warning' : 'bg-muted border-border text-muted-foreground grayscale'
+                            } border`}>
                             {getInitials(match.user.fullName)}
                         </div>
                         {isOnline && <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 border-2 border-background rounded-full bg-success"></div>}
@@ -150,15 +149,15 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                         </p>
                     </div>
                 </div>
-                
+
                 <div className="flex items-center gap-2 sm:gap-3">
                     {isOnline ? (
                         <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-success-soft text-success border border-success/20 uppercase tracking-wide">
-                            Ενεργο Match
+                            Ενεργή
                         </span>
                     ) : (
                         <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-muted text-muted-foreground border border-border uppercase tracking-wide">
-                            Ανενεργο
+                            Ανενεργή
                         </span>
                     )}
                     <button className="text-muted-foreground hover:text-primary hover:bg-primary-soft p-2 rounded-xl transition-colors cursor-pointer">
@@ -243,13 +242,13 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                                         handleSendMessage();
                                     }
                                 }}
-                                rows={1} 
-                                className="w-full bg-muted border border-border focus:border-primary focus:ring-[3px] focus:ring-primary/15 rounded-2xl py-3 sm:py-3.5 px-4 sm:px-5 text-sm outline-none resize-none transition-all text-foreground" 
+                                rows={1}
+                                className="w-full bg-muted border border-border focus:border-primary focus:ring-[3px] focus:ring-primary/15 rounded-2xl py-3 sm:py-3.5 px-4 sm:px-5 text-sm outline-none resize-none transition-all text-foreground"
                                 placeholder="Γράψτε ένα μήνυμα..."
                                 disabled={isSending}
                             />
                         </div>
-                        <button 
+                        <button
                             onClick={handleSendMessage}
                             disabled={!newMessage.trim() || isSending}
                             className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-primary hover:bg-primary-hover text-white rounded-xl flex items-center justify-center shadow-floating transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"

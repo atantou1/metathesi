@@ -13,8 +13,8 @@ export function MatchBanner() {
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-white dark:bg-primary-bright"></span>
                     </span>
                     <p className="text-[13px] font-semibold text-white tracking-wide">
-                        <span className="hidden sm:inline">Βρέθηκε ενεργό match! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.</span>
-                        <span className="inline sm:hidden">Βρέθηκε μια αντιστοίχιση</span>
+                        <span className="hidden sm:inline">Βρέθηκε αντιστοίχιση! Ένας εκπαιδευτικός πληροί τα κριτήριά σας.</span>
+                        <span className="inline sm:hidden">Βρέθηκε αντιστοίχιση</span>
                     </p>
                 </div>
                 <Link href="/matches" className="w-full sm:w-auto">

@@ -18,8 +18,7 @@ export function StatsBentoSection() {
             Όλα τα δεδομένα για την Ειδικότητά σας
           </h2>
           <p className="mt-[24px] mx-auto text-[18px] leading-[32px] text-muted-foreground px-0 md:px-[104.5px]">
-            Η πλατφόρμα μας σας παρέχει ολοκληρωμένη πρόσβαση σε διαδραστικά
-            στατιστικά, αναλύσεις ζήτησης και ιστορικά δεδομένα μεταθέσεων.
+            Η πλατφόρμα μας σας παρέχει ολοκληρωμένη πρόσβαση σε διαδραστικά στατιστικά, αναλύσεις ζήτησης και ιστορικά δεδομένα μεταθέσεων. Πάρτε έξυπνες αποφάσεις, βασισμένες σε πραγματικά δεδομένα.
           </p>
         </div>
 
@@ -29,10 +28,10 @@ export function StatsBentoSection() {
           <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-blue-50/80 dark:hover:bg-blue-950/40 md:col-start-1 md:row-start-1 lg:col-start-1 lg:row-start-1">
             <div className="relative z-10 flex flex-col items-start p-6">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
-                Ανάλυση Δημοτικότητας
+                Ανάλυση Περιοχών
               </h3>
               <p className="mt-1 text-[0.95rem] text-muted-foreground leading-6">
-                Δείτε σε πραγματικό χρόνο την ζήτηση (1η προτίμηση) για τις περιοχές που σας ενδιαφέρουν.
+                Αναλύστε τη δυναμική κάθε περιοχής μέσα από λεπτομερή γραφήματα.
               </p>
             </div>
             <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-background overflow-hidden flex flex-col">
@@ -51,10 +50,10 @@ export function StatsBentoSection() {
           <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-teal-50/80 dark:hover:bg-teal-950/40 md:col-start-1 md:row-start-2 lg:col-start-2 lg:row-start-1">
             <div className="relative z-10 flex flex-col items-start p-6">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
-                Ιστορικό Βάσεων
+                Δεδομένα ανά Κλάδο
               </h3>
               <p className="mt-1 text-[0.95rem] text-muted-foreground leading-6">
-                Συγκρίνετε τα μόρια των βάσεων για τα τελευταία έτη (2022-2024).
+                Εξερευνήστε συγκεντρωτικά δεδομένα και αναλύστε τη ζήτηση για τον κλάδο σας.
               </p>
             </div>
             <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-background overflow-hidden flex flex-col">
@@ -73,10 +72,10 @@ export function StatsBentoSection() {
           <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/40 md:col-start-2 md:row-start-1 md:row-span-2 lg:col-start-3 lg:row-start-1 lg:row-span-2">
             <div className="relative z-10 flex flex-col items-start p-6">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
-                Έγκυρα & Ασφαλή Δεδομένα
+                Διαδραστικός Χάρτης
               </h3>
               <p className="mt-1 text-[0.95rem] text-muted-foreground leading-6">
-                Επεξεργαζόμαστε τα επίσημα στοιχεία του Υπουργείου για να σας προσφέρουμε την πιο σαφή εικόνα της ζήτησης.
+                Δείτε τα στατιστικά να ζωντανεύουν σε όλη την Ελλάδα.
               </p>
             </div>
             <div className="absolute inset-x-6 bottom-0 top-32 rounded-t-3xl border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 dark:border-border dark:bg-background overflow-hidden flex flex-col">
@@ -94,15 +93,15 @@ export function StatsBentoSection() {
 
           {/* BOX 4: Customizable Solutions (Το ΦΑΡΔΥ κουτί) */}
           <div className="group relative overflow-hidden rounded-4xl border border-border bg-card transition-all duration-500 hover:bg-amber-50/80 dark:hover:bg-amber-950/30 md:col-start-1 md:col-span-2 md:row-start-3 lg:col-start-1 lg:col-span-2 lg:row-start-2">
-            <div className="relative z-10 flex flex-col items-start p-6 w-full md:w-1/2 lg:w-2/3">
+            <div className="relative z-10 flex flex-col items-start p-6 w-full md:w-[42%] lg:w-[45%]">
               <h3 className="text-[1.1rem] font-semibold text-foreground">
-                Διαδραστικά Γραφήματα & Πίνακες
+                Διορισμοί & Αποχωρήσεις
               </h3>
               <p className="mt-1 text-[0.95rem] text-muted-foreground leading-6 max-w-sm">
-                Εξερευνήστε δυναμικά την ανάλυση κενών και ικανοποίησης (Branch Satisfaction) με σύγχρονα Data Workflows.
+                Μείνετε ένα βήμα μπροστά αποκτώντας την πλήρη εικόνα της κινητικότητας.
               </p>
             </div>
-            <div className="absolute inset-x-6 md:left-[45%] lg:left-[50%] bottom-0 top-36 md:top-6 flex overflow-hidden rounded-t-2xl md:rounded-tl-2xl md:rounded-tr-none border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 md:group-hover:-translate-x-2 md:group-hover:translate-y-0 dark:border-border">
+            <div className="absolute inset-x-6 md:left-[50%] lg:left-[55%] bottom-0 top-36 md:top-6 flex overflow-hidden rounded-t-2xl md:rounded-tl-2xl md:rounded-tr-none border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 md:group-hover:-translate-x-2 md:group-hover:translate-y-0 dark:border-border">
               <div className="hidden sm:block w-1/3 border-r border-neutral-100 bg-surface-dim/50 p-4 dark:border-border dark:bg-card/30">
                 <div className="h-2 w-3/4 rounded bg-neutral-200 mb-3 dark:bg-muted"></div>
                 <div className="h-2 w-full rounded bg-neutral-200 mb-2 dark:bg-muted"></div>
