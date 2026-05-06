@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/form"
 import { getDivisions, getSpecialties, getRegions, getZones } from "@/actions/profile"
 import { User, UserCircle, Layers, ChevronDown } from "lucide-react"
+import { useUser } from "@/components/providers/user-context"
 
 type Option = { id: number; name: string; code?: string }
 
@@ -24,6 +25,16 @@ export function IdentitySection() {
     const [specialtyCategory, setSpecialtyCategory] = useState<string>("PE")
     const [regions, setRegions] = useState<Option[]>([])
     const [currentZones, setCurrentZones] = useState<Option[]>([])
+
+    // User Context Sync
+    const { setName } = useUser()
+    const fullName = watch("fullName")
+
+    useEffect(() => {
+        if (fullName !== undefined) {
+            setName(fullName)
+        }
+    }, [fullName, setName])
 
     // Filtered Specialties
     const filteredSpecialties = specialties.filter(s => {
@@ -93,21 +104,21 @@ export function IdentitySection() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-                {/* Full Name */}
+                {/* Full Name field */}
                 <div className="md:col-span-2">
                     <FormField
                         control={control}
                         name="fullName"
                         render={({ field }) => (
                             <FormItem className="space-y-2">
-                                <FormLabel className="block text-[10px] font-bold text-muted-foreground uppercase tracking-widest pl-1">Ονομα</FormLabel>
+                                <FormLabel className="block text-[10px] font-bold text-muted-foreground uppercase tracking-widest pl-1">Όνομα</FormLabel>
                                 <div className="relative">
                                     <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                     <FormControl>
                                         <input
                                             {...field}
                                             type="text"
-                                            placeholder="π.χ. Νικόλαος Παππάς"
+                                            placeholder="Μικρό όνομα (με ελληνικούς χαρακτήρες)"
                                             className="form-input pl-10 bg-muted border-border"
                                         />
                                     </FormControl>
@@ -117,6 +128,7 @@ export function IdentitySection() {
                         )}
                     />
                 </div>
+
 
                 {/* Division (Βαθμίδα) */}
                 <div>

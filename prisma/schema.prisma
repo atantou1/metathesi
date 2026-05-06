@@ -62,22 +62,23 @@ model PostingZone {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  email         String    @unique
-  passwordHash  String?   @map("password_hash")
-  fullName      String?   @map("full_name")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  emailVerified DateTime? @map("email_verified")
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  passwordHash  String?         @map("password_hash")
+  fullName      String?         @map("full_name")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  emailVerified DateTime?       @map("email_verified")
   image         String?
-  role          Role      @default(USER)
-  status        UserStatus @default(ACTIVE)
-  banReason     String?   @map("ban_reason")
-  bannedAt      DateTime? @map("banned_at")
+  banReason     String?         @map("ban_reason")
+  bannedAt      DateTime?       @map("banned_at")
+  role          Role            @default(USER)
+  status        UserStatus      @default(ACTIVE)
+  avatarColor   String?         @map("avatar_color")
   accounts      Account[]
-  profile       Profile?
-  sessions      Session[]
   auditLogs     AdminAuditLog[] @relation("AdminLogs")
   receivedLogs  AdminAuditLog[] @relation("TargetUserLogs")
+  profile       Profile?
+  sessions      Session[]
 
   @@map("users")
 }
@@ -89,7 +90,6 @@ model AdminAuditLog {
   action       String
   details      Json?
   createdAt    DateTime @default(now()) @map("created_at")
-  
   admin        User     @relation("AdminLogs", fields: [adminId], references: [id])
   targetUser   User?    @relation("TargetUserLogs", fields: [targetUserId], references: [id])
 
@@ -135,7 +135,6 @@ model Profile {
   serviceDays      Int               @default(10) @map("service_days")
   serviceMonths    Int               @default(10) @map("service_months")
   serviceYears     Int               @default(10) @map("service_years")
-  fullName         String?           @map("full_name")
   messages         Message[]
   notifications    Notification[]
   currentZone      PostingZone       @relation(fields: [currentZoneId], references: [id])
@@ -283,63 +282,62 @@ model TransferStatistics {
   targeting1stCountHistory  Json   @map("targeting_1st_count_history")
   inflowOriginsJson         Json   @map("inflow_origins_json")
   outflowTargetsJson        Json   @map("outflow_targets_json")
-  popularity                Float? @map("popularity")
-  popularityHistory         Json?  @map("popularity_history")
   difficultyCategory        String @map("difficulty_category")
   difficultyCategoryHistory Json   @map("difficulty_category_history")
   difficultyCategoryTrend   String @map("difficulty_category_trend")
+  popularity                Float? @map("popularity")
+  popularityHistory         Json?  @map("popularity_history")
 
   @@map("transfer_statistics")
 }
 
 model SpecialtyAnalytics {
-  id                              Int    @id @default(autoincrement())
-  specialty                       String
-  division                        String
-  successCount                    Int    @map("success_count")
-  successCountHistory             Json   @map("success_count_history")
-  successCountDiff                Int    @map("success_count_diff")
-  baseScore                       Float? @map("base_score")
-  baseScoreHistory                Json   @map("base_score_history")
-  baseScoreDiff                   Float? @map("base_score_diff")
-  avgScore                        Float? @map("avg_score")
-  avgScoreHistory                 Json   @map("avg_score_history")
-  avgScoreDiff                    Float? @map("avg_score_diff")
-  top5DestinationRegions          Json   @map("top_5_destination_regions")
-  top5CompetitiveRegions          Json   @map("top_5_competitive_regions")
-  nationalPointsRange             Float? @map("national_points_range")
-  nationalPointsRangeHistory      Json   @map("national_points_range_history")
-  nationalPointsRangeDiff         Float? @map("national_points_range_diff")
-  specialCategoryRate             Float? @map("special_category_rate")
-  specialCategoryRateHistory      Json   @map("special_category_rate_history")
-  specialCategoryRateDiff         Float? @map("special_category_rate_diff")
-  activeRegionsRate               Float? @map("active_regions_rate")
-  activeRegionsRateHistory        Json   @map("active_regions_rate_history")
-  activeRegionsRateDiff           Float? @map("active_regions_rate_diff")
-  leavingCount                    Int    @map("leaving_count")
-  leavingCountHistory             Json   @map("leaving_count_history")
-  leavingCountDiff                Int    @map("leaving_count_diff")
-  top5Targeting1st                Json   @map("top_5_targeting_1st")
-  avgScoreApplicants              Float? @map("avg_score_applicants")
-  avgScoreApplicantsHistory       Json   @map("avg_score_applicants_history")
-  avgScoreApplicantsDiff          Float? @map("avg_score_applicants_diff")
-  averagePreferenceCount          Float? @map("average_preference_count")
-  averagePreferenceCountHistory   Json   @map("average_preference_count_history")
-  averagePreferenceCountDiff      Float? @map("average_preference_count_diff")
-  pointsEntranceGap               Float? @map("points_entrance_gap")
-  pointsEntranceGapHistory        Json   @map("points_entrance_gap_history")
-  pointsEntranceGapDiff           Float? @map("points_entrance_gap_diff")
-  oddsOfTransfer                  Float? @map("odds_of_transfer")
-  oddsOfTransferHistory           Json   @map("odds_of_transfer_history")
-  oddsOfTransferDiff              Float? @map("odds_of_transfer_diff")
-  waitingListAbsolute             Int    @map("waiting_list_absolute")
-  waitingListAbsoluteHistory      Json   @map("waiting_list_absolute_history")
-  waitingListAbsoluteDiff         Int    @map("waiting_list_absolute_diff")
+  id                            Int    @id @default(autoincrement())
+  specialty                     String
+  division                      String
+  successCount                  Int    @map("success_count")
+  successCountHistory           Json   @map("success_count_history")
+  successCountDiff              Int    @map("success_count_diff")
+  baseScore                     Float? @map("base_score")
+  baseScoreHistory              Json   @map("base_score_history")
+  baseScoreDiff                 Float? @map("base_score_diff")
+  avgScore                      Float? @map("avg_score")
+  avgScoreHistory               Json   @map("avg_score_history")
+  avgScoreDiff                  Float? @map("avg_score_diff")
+  top5DestinationRegions        Json   @map("top_5_destination_regions")
+  top5CompetitiveRegions        Json   @map("top_5_competitive_regions")
+  nationalPointsRange           Float? @map("national_points_range")
+  nationalPointsRangeHistory    Json   @map("national_points_range_history")
+  nationalPointsRangeDiff       Float? @map("national_points_range_diff")
+  specialCategoryRate           Float? @map("special_category_rate")
+  specialCategoryRateHistory    Json   @map("special_category_rate_history")
+  specialCategoryRateDiff       Float? @map("special_category_rate_diff")
+  activeRegionsRate             Float? @map("active_regions_rate")
+  activeRegionsRateHistory      Json   @map("active_regions_rate_history")
+  activeRegionsRateDiff         Float? @map("active_regions_rate_diff")
+  leavingCount                  Int    @map("leaving_count")
+  leavingCountHistory           Json   @map("leaving_count_history")
+  leavingCountDiff              Int    @map("leaving_count_diff")
+  top5Targeting1st              Json   @map("top_5_targeting_1st")
+  avgScoreApplicants            Float? @map("avg_score_applicants")
+  avgScoreApplicantsHistory     Json   @map("avg_score_applicants_history")
+  avgScoreApplicantsDiff        Float? @map("avg_score_applicants_diff")
+  averagePreferenceCount        Float? @map("average_preference_count")
+  averagePreferenceCountHistory Json   @map("average_preference_count_history")
+  averagePreferenceCountDiff    Float? @map("average_preference_count_diff")
+  pointsEntranceGap             Float? @map("points_entrance_gap")
+  pointsEntranceGapHistory      Json   @map("points_entrance_gap_history")
+  pointsEntranceGapDiff         Float? @map("points_entrance_gap_diff")
+  oddsOfTransfer                Float? @map("odds_of_transfer")
+  oddsOfTransferHistory         Json   @map("odds_of_transfer_history")
+  oddsOfTransferDiff            Float? @map("odds_of_transfer_diff")
+  waitingListAbsolute           Int    @map("waiting_list_absolute")
+  waitingListAbsoluteHistory    Json   @map("waiting_list_absolute_history")
+  waitingListAbsoluteDiff       Int    @map("waiting_list_absolute_diff")
 
   @@unique([specialty, division])
   @@map("specialty_analytics")
 }
-
 
 enum DivisionType {
   Primary

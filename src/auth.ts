@@ -157,8 +157,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                             email: user.email,
                             image: user.image || "",
                             role: user.role,
-                            status: user.status
+                            status: user.status,
+                            avatarColor: (user as any).avatarColor
+
                         }
+
                     }
                 }
 
@@ -179,7 +182,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             }
             return true;
         },
-        async session({ session, token, user }) {
+        async session({ session, token }) {
             if (token?.sub) {
                 session.user.id = token.sub;
             }
@@ -189,11 +192,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             if (token?.status) {
                 session.user.status = token.status as any;
             }
+            if (token?.name) {
+                session.user.name = token.name as string;
+            }
+            if (token?.avatarColor) {
+                (session.user as any).avatarColor = token.avatarColor;
+            }
             return session
         },
-        async jwt({ token, user, account }) {
+
+        async jwt({ token, user, trigger, session }) {
+            if (trigger === "update" && session?.name) {
+                token.name = session.name;
+            }
+            if (trigger === "update" && session?.avatarColor) {
+                token.avatarColor = session.avatarColor;
+            }
+
             if (user) {
                 token.sub = user.id ? user.id.toString() : '';
+                token.name = user.name;
+                token.avatarColor = (user as any).avatarColor;
+
                 
                 // For OAuth users, the 'user' object might be the provider profile initially.
                 // We ensure role and status are fetched from the database.
@@ -211,6 +231,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             }
             return token
         }
+
     },
     session: { strategy: "jwt" }, // Because we are keeping credentials sign in
     secret: process.env.AUTH_SECRET,

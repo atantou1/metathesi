@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
-import { Prisma } from "@prisma/client"
+import { getGenderFromName, getRandomColorForGender } from "@/lib/avatar-utils"
 import { revalidatePath } from "next/cache"
 import { validateActiveMatches, findMatches } from "@/lib/matching"
 
@@ -26,21 +26,18 @@ export async function submitWizardRequest(data: any) {
         await prisma.$transaction(async (tx) => {
             // ... (existing code up to profile fetch)
             // 1. Create or Update Profile
-            // Casting to any to avoid stale IDE errors regarding fullName which definitely exists
             const updateData = {
-                fullName: data.fullName, // Update Profile Name
                 divisionId: Number(divisionId),
                 specialtyId: Number(specialtyId),
                 currentZoneId: Number(currentZoneId)
-            } as any
+            }
 
             const createData = {
                 userId: user.id,
-                fullName: data.fullName,
                 divisionId: Number(divisionId),
                 specialtyId: Number(specialtyId),
                 currentZoneId: Number(currentZoneId)
-            } as any
+            }
 
             await tx.profile.upsert({
                 where: { userId: user.id },
@@ -48,13 +45,23 @@ export async function submitWizardRequest(data: any) {
                 create: createData
             })
 
-            // Optionally sync User's fullName if they are the same concept
+            // Update User's fullName (Single source of truth)
             if (data.fullName) {
+                const updatePayload: any = { fullName: data.fullName }
+                
+                // If user doesn't have an avatar color yet, assign a random one
+                if (!user.avatarColor) {
+                    const gender = getGenderFromName(data.fullName)
+                    updatePayload.avatarColor = getRandomColorForGender(gender)
+                }
+
                 await tx.user.update({
                     where: { id: user.id },
-                    data: { fullName: data.fullName }
+                    data: updatePayload
                 })
             }
+
+
 
             // Get profile ID (just updated/created)
             const profile = await tx.profile.findUniqueOrThrow({
@@ -141,7 +148,11 @@ export async function submitWizardRequest(data: any) {
         }
 
         revalidatePath("/dashboard")
-        return { success: true }
+        return { 
+            success: true, 
+            avatarColor: (await prisma.user.findUnique({ where: { email: session.user.email }, select: { avatarColor: true } }))?.avatarColor 
+        }
+
     } catch (error) {
         console.error("Wizard Error:", error)
         return { error: "Failed to submit request" }

@@ -12,7 +12,9 @@ import { ArrowRight, ArrowLeft } from "lucide-react"
 // Define Unified Schema
 const wizardSchema = z.object({
     // Step 1
-    fullName: z.string().min(3, "Full Name is required"),
+    fullName: z.string()
+        .min(2, "Το όνομα είναι υποχρεωτικό")
+        .regex(/^[α-ωΑ-ΩάέίόύήώΑ-ΩΆΈΊΌΎΉΏ\s]+$/, "Επιτρέπονται μόνο ελληνικοί χαρακτήρες"),
     divisionId: z.number().min(1, "Required"),
     specialtyId: z.number().min(1, "Required"),
 
@@ -24,6 +26,7 @@ const wizardSchema = z.object({
 
 type WizardValues = z.infer<typeof wizardSchema>
 
+import { useSession } from "next-auth/react"
 import { submitWizardRequest } from "../../../actions/wizard"
 
 // Initial Data Type (Partial)
@@ -37,8 +40,10 @@ type InitialData = {
 }
 
 export function WizardContainer({ initialData, requestId }: { initialData?: InitialData, requestId?: number }) {
+    const { update } = useSession()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const isEditing = !!requestId
+
 
     const methods = useForm<WizardValues>({
         resolver: zodResolver(wizardSchema),
@@ -61,8 +66,15 @@ export function WizardContainer({ initialData, requestId }: { initialData?: Init
             const payload = { ...data, requestId }
             const result = await submitWizardRequest(payload)
             if (result?.success) {
+                // Update the session with the new name and color
+                await update({ 
+                    name: data.fullName,
+                    avatarColor: result.avatarColor 
+                })
                 window.location.href = "/dashboard"
             } else {
+
+
                 alert(result?.error || "Error submitting request")
             }
         } catch (err) {

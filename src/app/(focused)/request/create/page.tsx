@@ -9,7 +9,7 @@ export default async function CreateRequestPage() {
 
     // Construct Initial Data
     const initialData = {
-        fullName: (profile as any)?.fullName || "", // Or user name if we had it available in this query, but profile update handles it
+        fullName: (profile as any)?.user?.fullName || "", 
         divisionId: profile?.divisionId,
         specialtyId: profile?.specialtyId,
         currentRegionId: profile?.currentZone?.regionId,

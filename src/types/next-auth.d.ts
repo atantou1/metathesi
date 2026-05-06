@@ -8,7 +8,9 @@ declare module "next-auth" {
       id: string
       role: Role | string
       status: UserStatus | string
+      avatarColor?: string | null
     } & DefaultSession["user"]
+
   }
 
   interface User {
@@ -17,13 +19,17 @@ declare module "next-auth" {
     status?: UserStatus | string
     banReason?: string | null
     bannedAt?: Date | null
+    avatarColor?: string | null
   }
 }
+
 
 declare module "next-auth/jwt" {
   interface JWT {
     sub?: string
     role?: Role | string
     status?: UserStatus | string
+    avatarColor?: string | null
   }
 }
+

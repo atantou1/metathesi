@@ -17,8 +17,9 @@ export async function getUserProfile() {
             currentZone: true,
             division: true,
             specialty: true,
-            // We might want to include active transfer request here if needed
+            user: true,
         }
+
     })
 }
 
