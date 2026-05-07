@@ -19,7 +19,7 @@ export const TurnstileWidget = forwardRef<TurnstileInstance, TurnstileWidgetProp
         onExpire={onExpire}
         onError={onError}
         options={{
-            appearance: "always",
+            appearance: "execute", // invisible
         }}
       />
     );

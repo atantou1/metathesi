@@ -4,7 +4,7 @@ import { useState, useTransition, useEffect } from "react"
 import { Shield, Smartphone, Palette, FolderOpen, User, Lock, Download, Trash2, Moon, Sun, Monitor, Loader2, AlertTriangle, X, CheckCircle2, Check } from "lucide-react"
 import { useUser } from "@/components/providers/user-context"
 import { deleteAccount, changePassword, updateName } from "@/actions/settings"
-import { useSession, signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
 
 import { useForm } from "react-hook-form"
