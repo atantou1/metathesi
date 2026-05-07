@@ -16,8 +16,9 @@ export function MatchesSidebar() {
     const matchesList = activeTab === 'active' ? activeMatches : historyMatches
 
     const getInitials = (name: string) => {
-        return name ? (name.charAt(0).toUpperCase() + (name.split(' ')?.[1]?.charAt(0)?.toUpperCase() ?? '')) : "?"
+        return name ? name.substring(0, 2).toUpperCase() : "?"
     }
+
 
     return (
         <>
@@ -57,14 +58,16 @@ export function MatchesSidebar() {
                             >
                                 <div className={`flex gap-3 ${isOnline ? 'items-center' : 'items-start'}`}>
                                     <div className="relative flex-shrink-0">
-                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-bold ${
-                                            isOnline ? 'bg-warning-soft border border-warning/20 text-warning' :
-                                            'bg-muted border border-border text-muted-foreground grayscale'
-                                        }`}>
-                                            {getInitials(match.user.fullName)}
+                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold ${
+                                            match.user.avatarColor || (isOnline ? 'bg-warning-soft text-warning' : 'bg-muted text-muted-foreground')
+                                        } border border-border/10 shadow-sm overflow-hidden`}>
+                                            <span className="text-white drop-shadow-sm">
+                                                {getInitials(match.user.fullName)}
+                                            </span>
                                         </div>
-                                        {isOnline && <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-2 border-background rounded-full bg-success"></div>}
+                                        {isOnline && <div className="absolute bottom-0 right-0 w-3.5 h-3.5 border-2 border-background rounded-full bg-success shadow-sm"></div>}
                                     </div>
+
                                     <div className="flex-1 min-w-0">
                                         <div className="flex justify-between items-baseline mb-0.5">
                                             <h4 className={`text-sm font-bold truncate ${isActiveRoute ? 'text-primary' : isOnline ? 'text-foreground' : 'text-foreground/70 group-hover:text-foreground'}`}>{match.user.fullName}</h4>

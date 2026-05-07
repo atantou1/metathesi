@@ -17,9 +17,11 @@ type MessageType = {
         user: {
             id: number;
             fullName: string;
+            avatarColor: string | null;
         }
     }
 }
+
 
 export function MatchChatArea({ matchId }: { matchId: number }) {
     const { activeMatches, historyMatches, currentUserId } = useMatches()
@@ -121,8 +123,9 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
     }
 
     const getInitials = (name: string) => {
-        return name ? (name.charAt(0).toUpperCase() + (name.split(' ')?.[1]?.charAt(0)?.toUpperCase() ?? '')) : "?"
+        return name ? name.substring(0, 2).toUpperCase() : "?"
     }
+
 
     return (
         <div className="flex-1 flex flex-col relative h-full">
@@ -136,12 +139,16 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                     </button>
 
                     <div className="relative">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${isOnline ? 'bg-warning-soft border-warning/20 text-warning' : 'bg-muted border-border text-muted-foreground grayscale'
-                            } border`}>
-                            {getInitials(match.user.fullName)}
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
+                            match.user.avatarColor || (isOnline ? 'bg-warning-soft text-warning' : 'bg-muted text-muted-foreground')
+                            } border border-border/10 shadow-sm overflow-hidden`}>
+                            <span className="text-white drop-shadow-sm">
+                                {getInitials(match.user.fullName)}
+                            </span>
                         </div>
-                        {isOnline && <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 border-2 border-background rounded-full bg-success"></div>}
+                        {isOnline && <div className="absolute bottom-0 right-0 w-3 h-3 border-2 border-background rounded-full bg-success shadow-sm"></div>}
                     </div>
+
                     <div>
                         <h3 className="font-bold text-lg text-foreground tracking-tight leading-tight">{match.user.fullName}</h3>
                         <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
@@ -207,9 +214,14 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                                     </div>
                                 ) : (
                                     <div className={`flex items-end gap-2 sm:gap-3 max-w-[85%] sm:max-w-[80%] group/msg ${!isOnline ? 'opacity-70' : ''}`}>
-                                        <div className="hidden sm:flex w-8 h-8 rounded-full flex-shrink-0 border border-border shadow-soft font-bold items-center justify-center text-xs text-warning bg-card">
-                                            {getInitials(match.user.fullName)}
+                                        <div className={`hidden sm:flex w-8 h-8 rounded-full flex-shrink-0 border border-border/10 shadow-sm font-bold items-center justify-center text-[10px] ${
+                                            msg.senderProfile?.user?.avatarColor || 'bg-muted text-muted-foreground'
+                                        } overflow-hidden`}>
+                                            <span className="text-white">
+                                                {getInitials(match.user.fullName)}
+                                            </span>
                                         </div>
+
                                         <div className="flex flex-col gap-1">
                                             <div className="bg-card p-3.5 sm:p-4 rounded-2xl sm:rounded-bl-none shadow-soft border border-border text-foreground text-[13px] sm:text-[14px] leading-relaxed">
                                                 {msg.content}

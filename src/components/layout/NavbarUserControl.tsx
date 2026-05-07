@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { User as UserIcon, Settings, LogOut } from "lucide-react"
 import {
@@ -16,9 +17,18 @@ import { Session } from "next-auth"
 
 export function NavbarUserControl({ session }: { session: Session }) {
     const { name, avatarColor } = useUser()
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) return null
+
     
     // Fallback to session name if context name is empty (initial load)
     const displayName = name || session.user?.name || "User"
+
 
     return (
         <div className="hidden sm:block">

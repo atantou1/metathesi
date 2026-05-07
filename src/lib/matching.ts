@@ -71,7 +71,9 @@ export type MatchResult = {
         id: number
         fullName: string
         email: string
+        avatarColor: string | null
         specialty: { name: string }
+
         currentZone: { name: string }
     }
     targetZones: { id: number, name: string }[]
@@ -154,7 +156,9 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
                 id: otherProfile.userId,
                 fullName: otherProfile.user.fullName,
                 email: otherProfile.user.email,
+                avatarColor: otherProfile.user.avatarColor,
                 specialty: { name: otherProfile.specialty.name },
+
                 currentZone: { name: otherProfile.currentZone.name }
             },
             targetZones: otherParticipant.request.targetZones.map((tz: any) => ({ id: tz.zone.id, name: tz.zone.name })),
@@ -296,7 +300,9 @@ export async function findMatches(profileId: number): Promise<MatchResult[]> {
                 id: matchProfile.userId,
                 fullName: (matchProfile as any).user.fullName,
                 email: (matchProfile as any).user.email,
+                avatarColor: (matchProfile as any).user.avatarColor,
                 specialty: { name: (matchProfile as any).specialty.name },
+
                 currentZone: { name: (matchProfile as any).currentZone.name }
             },
             targetZones: matchRequest.targetZones.map((tz: any) => ({ id: tz.zone.id, name: tz.zone.name })),

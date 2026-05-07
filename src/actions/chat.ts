@@ -54,7 +54,9 @@ export async function getMatchMessages(matchId: number) {
                         select: {
                             id: true,
                             fullName: true,
-                            email: true
+                            email: true,
+                            avatarColor: true
+
                         }
                     }
                 }
@@ -124,7 +126,9 @@ export async function sendMessage(matchId: number, content: string) {
                         select: {
                             id: true,
                             fullName: true,
-                            email: true
+                            email: true,
+                            avatarColor: true
+
                         }
                     }
                 }

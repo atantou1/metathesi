@@ -118,3 +118,33 @@ export async function deleteAccount() {
         return { error: "Αποτυχία διαγραφής λογαριασμού. Παρακαλώ δοκιμάστε ξανά." };
     }
 }
+
+import { getGenderFromName, getRandomColorForGender } from "@/lib/avatar-utils";
+
+export async function updateName(newName: string) {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+        return { error: "Δεν είστε συνδεδεμένοι!" };
+    }
+
+    const userId = parseInt(session.user.id, 10);
+    const gender = getGenderFromName(newName);
+    const newColor = getRandomColorForGender(gender);
+
+    try {
+        await prisma.user.update({
+            where: { id: userId },
+            data: { 
+                fullName: newName,
+                avatarColor: newColor
+            }
+        });
+        return { success: true, avatarColor: newColor };
+    } catch (error) {
+        console.error("Failed to update name:", error);
+        return { error: "Αποτυχία ενημέρωσης ονόματος." };
+    }
+}
+
+

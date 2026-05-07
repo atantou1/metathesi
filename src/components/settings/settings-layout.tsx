@@ -3,8 +3,10 @@
 import { useState, useTransition, useEffect } from "react"
 import { Shield, Smartphone, Palette, FolderOpen, User, Lock, Download, Trash2, Moon, Sun, Monitor, Loader2, AlertTriangle, X, CheckCircle2, Check } from "lucide-react"
 import { useUser } from "@/components/providers/user-context"
-import { deleteAccount, changePassword } from "@/actions/settings"
-import { signOut } from "next-auth/react"
+import { deleteAccount, changePassword, updateName } from "@/actions/settings"
+import { useSession } from "next-auth/react"
+
+
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { changePasswordSchema, ChangePasswordValues } from "@/lib/schemas"
@@ -16,14 +18,16 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
     const [deleteError, setDeleteError] = useState<string | null>(null)
 
     const { theme, setTheme, resolvedTheme } = useTheme()
+    const { setName, setAvatarColor, name, avatarColor } = useUser()
+    const { update } = useSession()
     const [mounted, setMounted] = useState(false)
+
 
     useEffect(() => {
         setMounted(true)
     }, [])
 
     // Profile State (from Context)
-    const { name, setName, avatarColor } = useUser()
     const [nameError, setNameError] = useState<string | null>(null)
 
     // Sync initial name from server
@@ -33,9 +37,13 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
         }
     }, [initialName, setName])
 
+    const [isPendingName, setIsPendingName] = useState(false)
+    const [nameSuccess, setNameSuccess] = useState(false)
+
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         setName(value)
+        setNameSuccess(false)
         
         const greekRegex = /^[α-ωΑ-ΩάέίόύήώΑ-ΩΆΈΊΌΎΉΏ\s]*$/
         if (value && !greekRegex.test(value)) {
@@ -44,6 +52,35 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
             setNameError(null)
         }
     }
+
+    const handleSaveName = async () => {
+        if (!name || nameError) return;
+        
+        setIsPendingName(true);
+        try {
+            const result = await updateName(name);
+            if (result.success && result.avatarColor) {
+                // Update session
+                await update({ 
+                    name: name,
+                    avatarColor: result.avatarColor 
+                });
+                
+                // Update context state
+                setAvatarColor(result.avatarColor);
+                
+                setNameSuccess(true);
+                setTimeout(() => setNameSuccess(false), 3000);
+            } else if (result.error) {
+                setNameError(result.error);
+            }
+        } catch (error) {
+            setNameError("Προέκυψε κάποιο σφάλμα.");
+        } finally {
+            setIsPendingName(false);
+        }
+    }
+
 
     // Password Change State
     const [isPendingPassword, startTransitionPassword] = useTransition()
@@ -168,15 +205,23 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                                         </div>
                                     </div>
 
-                                    <div className="pt-4 flex justify-end">
+                                    <div className="pt-4 flex justify-end items-center gap-4">
+                                        {nameSuccess && (
+                                            <span className="text-xs text-green-500 font-medium flex items-center gap-1 animate-in fade-in slide-in-from-right-2">
+                                                <Check className="w-3 h-3" />
+                                                Αποθηκεύτηκε!
+                                            </span>
+                                        )}
                                         <button
-                                            disabled={!!nameError || !name}
-                                            className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors shadow-soft shadow-primary/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            disabled={!!nameError || !name || isPendingName}
+                                            onClick={handleSaveName}
+                                            className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors shadow-soft shadow-primary/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[140px] justify-center"
                                             type="button"
                                         >
-                                            Αποθήκευση Αλλαγών
+                                            {isPendingName ? <Loader2 className="w-4 h-4 animate-spin" /> : "Αποθήκευση Αλλαγών"}
                                         </button>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
