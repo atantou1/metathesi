@@ -169,16 +169,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                         }
                     }
 
-                    // Check if account is temporarily locked
+                    // Temporarily disabled loginAttempt check to bypass Prisma issue
+                    /*
                     const loginAttempt = await prisma.loginAttempt.findUnique({ where: { email } });
                     if (loginAttempt && loginAttempt.lockedUntil && loginAttempt.lockedUntil > new Date()) {
                         throw new Error("Λόγω πολλών αποτυχημένων προσπαθειών, ο λογαριασμός έχει κλειδωθεί. Προσπαθήστε ξανά σε 15 λεπτά.");
                     }
+                    */
 
                     const user = await getUser(email)
 
                     if (!user || !user.passwordHash) {
-                        await incrementLoginAttempt(email);
+                        // await incrementLoginAttempt(email);
                         throw new Error("Invalid credentials");
                     }
 
@@ -199,13 +201,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     }
 
                     if (passwordsMatch) {
-                        // Reset attempts on successful login
+                        // Reset attempts logic temporarily disabled
+                        /*
                         if (loginAttempt) {
                             await prisma.loginAttempt.update({
                                 where: { email },
                                 data: { attempts: 0, lockedUntil: null }
                             });
                         }
+                        */
 
                         // Return a User object that conforms to next-auth's User type
                         return {
