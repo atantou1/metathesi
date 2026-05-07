@@ -199,9 +199,18 @@ export function LoginForm({
                   <div className="flex justify-center">
                     <TurnstileWidget 
                       ref={turnstileRef}
-                      onSuccess={(token) => setTurnstileToken(token)}
-                      onExpire={() => setTurnstileToken(null)}
-                      onError={() => setTurnstileToken(null)}
+                      onSuccess={(token) => {
+                        console.log("Turnstile success:", token ? "Token received" : "No token");
+                        setTurnstileToken(token);
+                      }}
+                      onExpire={() => {
+                        console.log("Turnstile expired");
+                        setTurnstileToken(null);
+                      }}
+                      onError={() => {
+                        console.log("Turnstile error");
+                        setTurnstileToken(null);
+                      }}
                     />
                   </div>
                 </div>
