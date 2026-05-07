@@ -161,6 +161,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                             body: `secret=${process.env.TURNSTILE_SECRET_KEY}&response=${recaptchaToken}`
                         });
                         const verifyData = await verifyRes.json();
+                        console.log("Turnstile Server Verification:", verifyData);
                         if (!verifyData.success) {
                             throw new Error("Αποτυχία επαλήθευσης Turnstile (Πιθανό Bot).");
                         }
