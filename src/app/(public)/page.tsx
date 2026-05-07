@@ -39,7 +39,7 @@ export default function Home() {
         </div>
 
         {/* Main Grid/Flex Container (Μειωμένο Top Padding) */}
-        <div className="mx-auto max-w-7xl pt-16 pb-32 sm:pt-24 sm:pb-48 lg:pt-28 lg:pb-56 flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+        <div className="mx-auto max-w-7xl pt-16 pb-16 sm:pt-24 sm:pb-20 lg:pt-28 lg:pb-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
           {/* Αριστερή στήλη (2/3): Κείμενα */}
           <div className="w-full lg:w-2/3 relative z-10">
             <div className="mx-auto max-w-2xl lg:mx-0">
