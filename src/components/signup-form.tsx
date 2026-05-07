@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form"
 import { Mail, Lock, Loader2, EyeOff, Eye, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import { Logo } from "@/components/logo"
 
 export function SignUpForm({
@@ -28,6 +29,7 @@ export function SignUpForm({
     const [isPending, startTransition] = useTransition()
     const [showPassword, setShowPassword] = useState(false)
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
+    const { executeRecaptcha } = useGoogleReCaptcha()
 
     const form = useForm<SignUpValues>({
         resolver: zodResolver(signUpSchema),
@@ -42,7 +44,12 @@ export function SignUpForm({
     function onSubmit(values: SignUpValues) {
         startTransition(async () => {
             try {
-                const result = await signUp(values)
+                if (!executeRecaptcha) {
+                    form.setError("root", { message: "Το σύστημα προστασίας (reCAPTCHA) δεν έχει φορτώσει ακόμα." });
+                    return;
+                }
+                const recaptchaToken = await executeRecaptcha("signup");
+                const result = await signUp({ ...values, recaptchaToken })
                 if (result?.error) {
                     form.setError("root", { message: result.error })
                 }

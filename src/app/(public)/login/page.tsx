@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import { LoginForm } from "@/components/login-form"
+import { ReCaptchaProvider } from "@/components/recaptcha-provider"
 
 export default function LoginPage() {
   return (
@@ -12,7 +13,9 @@ export default function LoginPage() {
 
       <div className="w-full max-w-sm md:max-w-4xl relative z-10">
         <Suspense>
-          <LoginForm />
+          <ReCaptchaProvider>
+            <LoginForm />
+          </ReCaptchaProvider>
         </Suspense>
       </div>
     </div>

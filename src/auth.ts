@@ -4,6 +4,25 @@ import { z } from "zod"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
+async function incrementLoginAttempt(email: string) {
+    try {
+        const attempt = await prisma.loginAttempt.upsert({
+            where: { email },
+            update: { attempts: { increment: 1 } },
+            create: { email, attempts: 1 }
+        });
+
+        if (attempt.attempts >= 5) {
+            await prisma.loginAttempt.update({
+                where: { email },
+                data: { lockedUntil: new Date(Date.now() + 15 * 60 * 1000) }
+            });
+        }
+    } catch (error) {
+        console.error("Failed to increment login attempt:", error);
+    }
+}
+
 async function getUser(email: string) {
     try {
         const user = await prisma.user.findUnique({
@@ -128,14 +147,35 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         Credentials({
             async authorize(credentials) {
                 const parsedCredentials = z
-                    .object({ email: z.string().email(), password: z.string().min(6) })
+                    .object({ email: z.string().email(), password: z.string().min(6), recaptchaToken: z.string().optional() })
                     .safeParse(credentials)
 
                 if (parsedCredentials.success) {
-                    const { email, password } = parsedCredentials.data
+                    const { email, password, recaptchaToken } = parsedCredentials.data
+
+                    // Verify reCAPTCHA token
+                    if (recaptchaToken && process.env.RECAPTCHA_SECRET_KEY) {
+                        const verifyRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                            body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`
+                        });
+                        const verifyData = await verifyRes.json();
+                        if (!verifyData.success || verifyData.score < 0.5) {
+                            throw new Error("Αποτυχία επαλήθευσης reCAPTCHA (Πιθανό Bot).");
+                        }
+                    }
+
+                    // Check if account is temporarily locked
+                    const loginAttempt = await prisma.loginAttempt.findUnique({ where: { email } });
+                    if (loginAttempt && loginAttempt.lockedUntil && loginAttempt.lockedUntil > new Date()) {
+                        throw new Error("Λόγω πολλών αποτυχημένων προσπαθειών, ο λογαριασμός έχει κλειδωθεί. Προσπαθήστε ξανά σε 15 λεπτά.");
+                    }
+
                     const user = await getUser(email)
 
                     if (!user || !user.passwordHash) {
+                        await incrementLoginAttempt(email);
                         throw new Error("Invalid credentials");
                     }
 
@@ -149,7 +189,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     }
 
                     const passwordsMatch = await bcrypt.compare(password, user.passwordHash)
+                    
+                    if (!passwordsMatch) {
+                        await incrementLoginAttempt(email);
+                        throw new Error("Invalid credentials");
+                    }
+
                     if (passwordsMatch) {
+                        // Reset attempts on successful login
+                        if (loginAttempt) {
+                            await prisma.loginAttempt.update({
+                                where: { email },
+                                data: { attempts: 0, lockedUntil: null }
+                            });
+                        }
+
                         // Return a User object that conforms to next-auth's User type
                         return {
                             id: user.id.toString(),

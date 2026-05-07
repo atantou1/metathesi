@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import { ForgotPasswordForm } from "@/components/forgot-password-form"
+import { ReCaptchaProvider } from "@/components/recaptcha-provider"
 
 export default function ForgotPasswordPage() {
   return (
@@ -12,7 +13,9 @@ export default function ForgotPasswordPage() {
 
       <div className="w-full max-w-sm md:max-w-4xl relative z-10">
         <Suspense>
-          <ForgotPasswordForm />
+          <ReCaptchaProvider>
+            <ForgotPasswordForm />
+          </ReCaptchaProvider>
         </Suspense>
       </div>
     </div>

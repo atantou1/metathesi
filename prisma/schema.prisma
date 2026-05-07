@@ -362,3 +362,16 @@ enum UserStatus {
   BANNED
   SUSPENDED
 }
+
+model LoginAttempt {
+  id          Int       @id @default(autoincrement())
+  email       String
+  ip          String?
+  attempts    Int       @default(0)
+  lockedUntil DateTime? @map("locked_until")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@unique([email])
+  @@map("login_attempts")
+}
+

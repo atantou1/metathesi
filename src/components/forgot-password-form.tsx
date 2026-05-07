@@ -22,6 +22,7 @@ import { Mail, Loader2, ArrowLeft, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
 import { Logo } from "@/components/logo"
 import { useState } from "react"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 
 export function ForgotPasswordForm({
   className,
@@ -30,6 +31,7 @@ export function ForgotPasswordForm({
   const [isPending, startTransition] = useTransition()
   const [success, setSuccess] = useState<string | undefined>("")
   const [error, setError] = useState<string | undefined>("")
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const form = useForm<ResetPasswordValues>({
     resolver: zodResolver(resetPasswordSchema),
@@ -44,7 +46,12 @@ export function ForgotPasswordForm({
     
     startTransition(async () => {
       try {
-        const result = await requestPasswordReset(values)
+        if (!executeRecaptcha) {
+            setError("Το σύστημα προστασίας (reCAPTCHA) δεν έχει φορτώσει ακόμα.");
+            return;
+        }
+        const recaptchaToken = await executeRecaptcha("forgot_password");
+        const result = await requestPasswordReset({ ...values, recaptchaToken })
         if (result?.error) {
           setError(result.error)
         } else {

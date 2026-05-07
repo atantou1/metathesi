@@ -5,6 +5,7 @@ export const signUpSchema = z.object({
     email: z.string().email("Μη έγκυρο email"),
     password: z.string().min(6, "Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες"),
     confirmPassword: z.string(),
+    recaptchaToken: z.string().optional(),
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Οι κωδικοί δεν ταιριάζουν",
     path: ["confirmPassword"],
@@ -13,6 +14,7 @@ export const signUpSchema = z.object({
 export const loginSchema = z.object({
     email: z.string().email("Μη έγκυρο email"),
     password: z.string().min(1, "Απαιτείται κωδικός"),
+    recaptchaToken: z.string().optional(),
 })
 
 export const changePasswordSchema = z.object({
@@ -30,11 +32,6 @@ export const profileSchema = z.object({
     divisionId: z.number().min(1, "Επιλέξτε βαθμίδα"),
     specialtyId: z.number().min(1, "Επιλέξτε ειδικότητα"),
     currentZoneId: z.number().min(1, "Επιλέξτε περιοχή οργανικής"),
-    // bio: z.string().optional(), // Removed
-    // hireDate: z.string().min(1, "Επιλέξτε ημερομηνία διορισμού"), // Hidden for now
-    // serviceYears: z.number().min(0), // Hidden for now
-    // serviceMonths: z.number().min(0).max(11), // Hidden for now
-    // serviceDays: z.number().min(0).max(30), // Hidden for now
 })
 
 export const requestSchema = z.object({
@@ -47,6 +44,7 @@ export type LoginValues = z.infer<typeof loginSchema>
 
 export const resetPasswordSchema = z.object({
     email: z.string().email("Μη έγκυρο email"),
+    recaptchaToken: z.string().optional(),
 })
 
 export const newPasswordSchema = z.object({

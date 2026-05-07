@@ -1,17 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
 async function main() {
-  const stats = await prisma.transferStatistics.findFirst({
-    where: {
-      region: "ΛΑΡΙΣΑΣ",
-      division: "Πρωτοβάθμια Γενικής",
-      specialty: "ΠΕ70"
-    }
-  });
-  console.log(stats);
+  const attempts = await prisma.loginAttempt.findMany();
+  console.log("Login Attempts:");
+  console.log(attempts);
 }
-
-main()
-  .catch(e => console.error(e))
-  .finally(() => prisma.$disconnect());
+main().catch(console.error).finally(() => prisma.$disconnect());

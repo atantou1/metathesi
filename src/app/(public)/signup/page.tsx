@@ -1,4 +1,5 @@
 import { SignUpForm } from "@/components/signup-form"
+import { ReCaptchaProvider } from "@/components/recaptcha-provider"
 
 export default function SignUpPage() {
   return (
@@ -10,7 +11,9 @@ export default function SignUpPage() {
       </div>
 
       <div className="w-full max-w-sm md:max-w-4xl relative z-10">
-        <SignUpForm />
+        <ReCaptchaProvider>
+          <SignUpForm />
+        </ReCaptchaProvider>
       </div>
     </div>
   )

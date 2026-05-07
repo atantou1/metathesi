@@ -8,6 +8,23 @@ import { signIn } from "@/auth"
 import { generateVerificationToken, generatePasswordResetToken } from "@/lib/tokens"
 import { sendVerificationEmail, sendPasswordResetEmail } from "@/lib/emails"
 
+async function verifyRecaptcha(token: string | undefined) {
+    if (!token) return false;
+    if (!process.env.RECAPTCHA_SECRET_KEY) return true;
+    
+    try {
+        const verifyRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`
+        });
+        const verifyData = await verifyRes.json();
+        return verifyData.success && verifyData.score >= 0.5;
+    } catch {
+        return false;
+    }
+}
+
 export async function loginWithProvider(provider: 'google' | 'facebook') {
     await signIn(provider, { redirectTo: "/dashboard" })
 }
@@ -19,7 +36,7 @@ export async function login(values: LoginValues) {
         return { error: "Μη έγκυρα δεδομένα." }
     }
 
-    const { email, password } = validatedFields.data
+    const { email, password, recaptchaToken } = validatedFields.data
 
     const user = await prisma.user.findUnique({
         where: { email },
@@ -35,6 +52,7 @@ export async function login(values: LoginValues) {
         await signIn("credentials", {
             email,
             password,
+            recaptchaToken,
             redirectTo,
         })
     } catch (error) {
@@ -43,7 +61,10 @@ export async function login(values: LoginValues) {
             const errorMsg = error.cause?.err?.message || error.message;
 
             if (errorMsg === "Email not verified") {
-                return { error: "Παρακαλούμε επιβεβαιώστε το email σας πριν συνδεθείτε." }
+                return { error: "Λάθος email ή κωδικός." }
+            }
+            if (errorMsg?.includes("έχει κλειδωθεί") || errorMsg?.includes("αποκλειστεί") || errorMsg?.includes("reCAPTCHA")) {
+                return { error: errorMsg }
             }
             if (errorMsg === "Invalid credentials" || error.type === "CredentialsSignin") {
                 return { error: "Λάθος email ή κωδικός." }
@@ -66,8 +87,13 @@ export async function signUp(values: SignUpValues) {
         return { error: "Μη έγκυρα δεδομένα." }
     }
 
-    const { fullName, email, password } = validatedFields.data
+    const { fullName, email, password, recaptchaToken } = validatedFields.data
     
+    const isHuman = await verifyRecaptcha(recaptchaToken)
+    if (!isHuman) {
+        return { error: "Αποτυχία επαλήθευσης reCAPTCHA (Πιθανό Bot)." }
+    }
+
     // Use the part before @ as a default name if none provided
     const userFullName = fullName || email.split('@')[0]
 
@@ -76,7 +102,8 @@ export async function signUp(values: SignUpValues) {
     })
 
     if (existingUser) {
-        return { error: "Το email χρησιμοποιείται ήδη." }
+        // Return same success message as new registration to avoid enumeration
+        return { success: "Επιβεβαιώστε το email σας!" };
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -117,19 +144,21 @@ export async function requestPasswordReset(values: ResetPasswordValues) {
         return { error: "Μη έγκυρο email." }
     }
 
-    const { email } = validatedFields.data
+    const { email, recaptchaToken } = validatedFields.data
+
+    const isHuman = await verifyRecaptcha(recaptchaToken)
+    if (!isHuman) {
+        return { error: "Αποτυχία επαλήθευσης reCAPTCHA (Πιθανό Bot)." }
+    }
 
     try {
         const existingUser = await prisma.user.findUnique({
             where: { email },
         })
 
-        if (!existingUser) {
-            return { error: "Αυτό το email δεν είναι εγγεγραμμένο." }
-        }
-
-        if (!existingUser.passwordHash) {
-            return { error: "Αυτός ο λογαριασμός χρησιμοποιεί σύνδεση μέσω Google/Facebook." }
+        if (!existingUser || !existingUser.passwordHash) {
+            // Return generic success to avoid enumeration
+            return { success: "Το email επαναφοράς στάλθηκε!" }
         }
 
         const passwordResetToken = await generatePasswordResetToken(email)
