@@ -1,10 +1,12 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import crypto from "crypto";
 
 export const newVerification = async (token: string) => {
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
     const existingToken = await prisma.verificationToken.findUnique({
-        where: { token }
+        where: { token: hashedToken }
     });
 
     if (!existingToken) {

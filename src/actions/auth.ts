@@ -4,6 +4,7 @@ import { AuthError } from "next-auth"
 import { signUpSchema, SignUpValues, loginSchema, LoginValues, resetPasswordSchema, ResetPasswordValues, newPasswordSchema, NewPasswordValues } from "@/lib/schemas"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
+import crypto from "crypto"
 import { signIn } from "@/auth"
 import { generateVerificationToken, generatePasswordResetToken } from "@/lib/tokens"
 import { sendVerificationEmail, sendPasswordResetEmail } from "@/lib/emails"
@@ -191,8 +192,9 @@ export async function resetPassword(values: NewPasswordValues, token?: string | 
 
     const { password } = validatedFields.data
 
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
     const existingToken = await prisma.passwordResetToken.findFirst({
-        where: { token }
+        where: { token: hashedToken }
     })
 
     if (!existingToken) {

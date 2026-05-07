@@ -67,15 +67,31 @@ export async function banUser(userId: number, reason: string) {
     return { success: true };
 }
 
-// Dev helper to quickly elevate current logged user to SUPERADMIN
-export async function elevateSelfToAdmin() {
-    const session = await auth();
-    if (!session?.user?.id) throw new Error("Not logged in");
+export async function updateUserRole(userId: number, newRole: Role) {
+    const admin = await verifyAdmin();
+    
+    const targetUser = await prisma.user.findUnique({ where: { id: userId } });
+    if (!targetUser) throw new Error("User not found");
+
+    // Protection: Only SUPERADMIN can change roles to/from SUPERADMIN
+    if (admin.role !== "SUPERADMIN" && (targetUser.role === "SUPERADMIN" || newRole === "SUPERADMIN")) {
+        throw new Error("Unauthorized: Only SUPERADMINs can manage other SUPERADMIN privileges");
+    }
 
     await prisma.user.update({
-        where: { id: parseInt(session.user.id, 10) },
-        data: { role: "SUPERADMIN" }
+        where: { id: userId },
+        data: { role: newRole }
     });
-    
+
+    await prisma.adminAuditLog.create({
+        data: {
+            adminId: parseInt(admin.id, 10),
+            targetUserId: userId,
+            action: "ROLE_UPDATED",
+            details: { newRole, previousRole: targetUser.role }
+        }
+    });
+
+    revalidatePath("/admin/users");
     return { success: true };
 }
