@@ -155,10 +155,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
                     // Verify Turnstile token
                     if (recaptchaToken && process.env.TURNSTILE_SECRET_KEY) {
+                        const secretKey = process.env.TURNSTILE_SECRET_KEY.replace(/[^a-zA-Z0-9]/g, '');
+                        
                         const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
                             method: "POST",
                             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                            body: `secret=${process.env.TURNSTILE_SECRET_KEY}&response=${recaptchaToken}`
+                            body: `secret=${secretKey}&response=${recaptchaToken}`
                         });
                         const verifyData = await verifyRes.json();
                         console.log("Turnstile Server Verification:", verifyData);
