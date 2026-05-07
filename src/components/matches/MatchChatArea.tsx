@@ -98,7 +98,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
             createdAt: new Date(),
             senderProfileId: -1,
             senderProfile: {
-                user: { id: currentUserId, fullName: "You" }
+                user: { id: currentUserId, fullName: "You", avatarColor: null }
             }
         }
         setMessages(prev => [...prev, tempMsg])

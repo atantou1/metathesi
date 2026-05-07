@@ -55,20 +55,14 @@ export function Footer() {
                             Επικοινωνία
                         </h5>
                         <ul className="flex flex-col gap-4">
-                            <li className="flex items-center gap-2 text-text-tertiary">
+                            <li className="flex items-center gap-2">
                                 <Mail className="w-4 h-4 text-primary" />
-                                <a 
-                                    href="#" 
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        const user = "info";
-                                        const domain = "metathesi.gr";
-                                        window.location.href = `mailto:${user}@${domain}`;
-                                    }}
-                                    className="hover:text-primary transition-colors"
+                                <Link 
+                                    href="/contact"
+                                    className="text-text-tertiary hover:text-primary transition-colors"
                                 >
-                                    info [at] metathesi.gr
-                                </a>
+                                    Φόρμα Επικοινωνίας
+                                </Link>
                             </li>
                             <li className="flex items-center gap-2 text-text-tertiary">
                                 <LifeBuoy className="w-4 h-4 text-primary" />

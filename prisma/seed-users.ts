@@ -121,7 +121,6 @@ async function main() {
           specialtyId: specialty.id,
           divisionId: division.id,
           currentZoneId: zone.id,
-          fullName: user.fullName,
         },
       })
       console.log(`Created Profile for ${user.email}`)
