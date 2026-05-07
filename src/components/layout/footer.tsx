@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Facebook, Twitter, Mail, LifeBuoy, Repeat } from "lucide-react";
 
@@ -56,7 +57,18 @@ export function Footer() {
                         <ul className="flex flex-col gap-4">
                             <li className="flex items-center gap-2 text-text-tertiary">
                                 <Mail className="w-4 h-4 text-primary" />
-                                info@metathesi.gr
+                                <a 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const user = "info";
+                                        const domain = "metathesi.gr";
+                                        window.location.href = `mailto:${user}@${domain}`;
+                                    }}
+                                    className="hover:text-primary transition-colors"
+                                >
+                                    info [at] metathesi.gr
+                                </a>
                             </li>
                             <li className="flex items-center gap-2 text-text-tertiary">
                                 <LifeBuoy className="w-4 h-4 text-primary" />

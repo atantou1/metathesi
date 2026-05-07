@@ -22,7 +22,9 @@ import { Mail, Loader2, ArrowLeft, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
 import { Logo } from "@/components/logo"
 import { useState } from "react"
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
+import { TurnstileWidget } from "@/components/turnstile-widget"
+import { useRef } from "react"
+import { type TurnstileInstance } from "@marsidev/react-turnstile"
 
 export function ForgotPasswordForm({
   className,
@@ -31,7 +33,8 @@ export function ForgotPasswordForm({
   const [isPending, startTransition] = useTransition()
   const [success, setSuccess] = useState<string | undefined>("")
   const [error, setError] = useState<string | undefined>("")
-  const { executeRecaptcha } = useGoogleReCaptcha()
+  const turnstileRef = useRef<TurnstileInstance>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   const form = useForm<ResetPasswordValues>({
     resolver: zodResolver(resetPasswordSchema),
@@ -46,20 +49,23 @@ export function ForgotPasswordForm({
     
     startTransition(async () => {
       try {
-        if (!executeRecaptcha) {
-            setError("Το σύστημα προστασίας (reCAPTCHA) δεν έχει φορτώσει ακόμα.");
+        if (!turnstileToken) {
+            setError("Παρακαλώ ολοκληρώστε την επαλήθευση (Turnstile).");
             return;
         }
-        const recaptchaToken = await executeRecaptcha("forgot_password");
-        const result = await requestPasswordReset({ ...values, recaptchaToken })
+        const result = await requestPasswordReset({ ...values, recaptchaToken: turnstileToken })
         if (result?.error) {
           setError(result.error)
+          turnstileRef.current?.reset();
+          setTurnstileToken(null);
         } else {
           setSuccess(result?.success)
         }
       } catch (error) {
         console.error("ForgotPasswordForm error:", error)
         setError("Κάτι πήγε στραβά.")
+        turnstileRef.current?.reset();
+        setTurnstileToken(null);
       }
     })
   }
@@ -147,6 +153,15 @@ export function ForgotPasswordForm({
                     <Button type="submit" className="w-full h-11 font-medium text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-[0.98] rounded-2xl" disabled={isPending}>
                       {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : "Αποστολή συνδέσμου"}
                     </Button>
+
+                    <div className="flex justify-center">
+                      <TurnstileWidget 
+                        ref={turnstileRef}
+                        onSuccess={(token) => setTurnstileToken(token)}
+                        onExpire={() => setTurnstileToken(null)}
+                        onError={() => setTurnstileToken(null)}
+                      />
+                    </div>
 
                     <Button asChild variant="ghost" className="h-11 rounded-2xl">
                       <Link href="/login" className="flex items-center justify-center gap-2">

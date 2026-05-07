@@ -19,6 +19,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DeleteRequestButton } from "@/components/dashboard/delete-request-button";
 import { MatchBanner } from "@/components/dashboard/match-banner";
+import { prisma } from "@/lib/prisma";
 
 const PopularityBadge = ({ popularity }: { popularity: number }) => {
     let label = "ΧΑΜΗΛΗ";
@@ -199,6 +200,23 @@ export default async function Dashboard() {
     // but we need to assure TS of this.
     if (!profile) return null;
 
+    // 4. FETCH POPULAR AREAS (Analytics)
+    const analytics = await prisma.specialtyAnalytics.findUnique({
+        where: {
+            specialty_division: {
+                specialty: profile.specialty.code,
+                division: profile.division.name,
+            },
+        },
+    });
+
+    const topTargeting = analytics?.top5Targeting1st 
+        ? Object.entries(analytics.top5Targeting1st as Record<string, number>)
+            .map(([name, val]) => ({ name, val }))
+            .sort((a, b) => b.val - a.val)
+            .slice(0, 5)
+        : [];
+
     const hasActiveMatch = request.matchParticipations && request.matchParticipations.length > 0;
 
     return (
@@ -345,29 +363,34 @@ export default async function Dashboard() {
                             </div>
                         </div>
 
-                        {/* Target Zones */}
+                        {/* Popular Areas */}
                         <div className="glass-card rounded-4xl flex flex-col overflow-hidden h-fit">
                             <div className="p-6 border-b border-border-dim bg-card/50">
                                 <div className="flex justify-between items-center">
-                                    <h3 className="text-xs font-bold text-text-secondary uppercase tracking-widest">ΖΗΤΗΣΗ ΠΕΡΙΟΧΩΝ</h3>
+                                    <h3 className="text-xs font-bold text-text-secondary uppercase tracking-widest">ΔΗΜΟΦΙΛΕΙΣ ΠΕΡΙΟΧΕΣ</h3>
                                 </div>
                             </div>
                             <div className="p-4 space-y-3">
-                                {request.targetZones.map((target, index) => (
-                                    <div key={target.id} className="group flex items-center p-3 rounded-2xl hover:bg-primary-soft border border-transparent hover:border-primary/20 transition-all">
-                                        <div className="flex-shrink-0 mr-4">
-                                            <div className="w-8 h-8 rounded-2xl bg-muted flex items-center justify-center text-xs font-bold text-text-quaternary group-hover:text-primary transition-colors border border-border-dim group-hover:border-primary/30 group-hover:bg-primary-soft">
-                                                {index + 1}
+                                {topTargeting.length > 0 ? (
+                                    topTargeting.map((item, index) => (
+                                        <div key={index} className="group flex items-center p-3 rounded-2xl hover:bg-primary-soft border border-transparent hover:border-primary/20 transition-all">
+                                            <div className="flex-shrink-0 mr-4">
+                                                <div className="w-8 h-8 rounded-2xl bg-muted flex items-center justify-center text-xs font-bold text-text-quaternary group-hover:text-primary transition-colors border border-border-dim group-hover:border-primary/30 group-hover:bg-primary-soft">
+                                                    {index + 1}
+                                                </div>
+                                            </div>
+                                            <div className="flex-grow min-w-0">
+                                                <div className="flex justify-between items-center mb-0.5">
+                                                    <h4 className="text-sm font-medium text-text-secondary truncate">{item.name}</h4>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="flex-grow min-w-0">
-                                            <div className="flex justify-between items-center mb-0.5">
-                                                <h4 className="text-sm font-medium text-text-secondary truncate">{target.zone.name}</h4>
-                                                <PopularityBadge popularity={(target as any).popularity || 0} />
-                                            </div>
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="p-4 text-center">
+                                        <p className="text-xs text-text-tertiary">Δεν υπάρχουν διαθέσιμα δεδομένα</p>
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
                     </div>

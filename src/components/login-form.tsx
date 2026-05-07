@@ -21,7 +21,9 @@ import {
 import { Mail, Lock, Loader2, EyeOff, Eye } from "lucide-react"
 import Link from "next/link"
 import { useSearchParams, useRouter } from "next/navigation"
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
+import { TurnstileWidget } from "@/components/turnstile-widget"
+import { useRef } from "react"
+import { type TurnstileInstance } from "@marsidev/react-turnstile"
 
 import { Logo } from "@/components/logo"
 
@@ -35,7 +37,8 @@ export function LoginForm({
 
   const [isPending, startTransition] = useTransition()
   const [showPassword, setShowPassword] = useState(false)
-  const { executeRecaptcha } = useGoogleReCaptcha()
+  const turnstileRef = useRef<TurnstileInstance>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -56,15 +59,19 @@ export function LoginForm({
   function onSubmit(values: LoginValues) {
     startTransition(async () => {
       try {
-        if (!executeRecaptcha) {
-          form.setError("root", { message: "Το σύστημα προστασίας δεν έχει φορτώσει. Παρακαλώ περιμένετε..." });
+        let currentToken = turnstileToken;
+        
+        if (!currentToken) {
+          form.setError("root", { message: "Παρακαλώ ολοκληρώστε την επαλήθευση (Turnstile)." });
           return;
         }
 
-        const recaptchaToken = await executeRecaptcha("login");
-        const result = await login({ ...values, recaptchaToken })
+        const result = await login({ ...values, recaptchaToken: currentToken })
         if (result?.error) {
           form.setError("root", { message: result.error })
+          // Reset turnstile on error to allow retry
+          turnstileRef.current?.reset();
+          setTurnstileToken(null);
         }
       } catch (error) {
         if (
@@ -74,6 +81,8 @@ export function LoginForm({
           throw error
         }
         form.setError("root", { message: "Κάτι πήγε στραβά." })
+        turnstileRef.current?.reset();
+        setTurnstileToken(null);
       }
     })
   }
@@ -186,6 +195,15 @@ export function LoginForm({
                   <Button type="submit" className="w-full h-11 font-medium text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-[0.98] rounded-2xl" disabled={isPending}>
                     {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : "Σύνδεση"}
                   </Button>
+
+                  <div className="flex justify-center">
+                    <TurnstileWidget 
+                      ref={turnstileRef}
+                      onSuccess={(token) => setTurnstileToken(token)}
+                      onExpire={() => setTurnstileToken(null)}
+                      onError={() => setTurnstileToken(null)}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-4">

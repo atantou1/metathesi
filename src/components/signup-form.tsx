@@ -19,7 +19,9 @@ import {
 } from "@/components/ui/form"
 import { Mail, Lock, Loader2, EyeOff, Eye, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
+import { TurnstileWidget } from "@/components/turnstile-widget"
+import { useRef } from "react"
+import { type TurnstileInstance } from "@marsidev/react-turnstile"
 import { Logo } from "@/components/logo"
 
 export function SignUpForm({
@@ -29,7 +31,8 @@ export function SignUpForm({
     const [isPending, startTransition] = useTransition()
     const [showPassword, setShowPassword] = useState(false)
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
-    const { executeRecaptcha } = useGoogleReCaptcha()
+    const turnstileRef = useRef<TurnstileInstance>(null)
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
     const form = useForm<SignUpValues>({
         resolver: zodResolver(signUpSchema),
@@ -44,20 +47,23 @@ export function SignUpForm({
     function onSubmit(values: SignUpValues) {
         startTransition(async () => {
             try {
-                if (!executeRecaptcha) {
-                    form.setError("root", { message: "Το σύστημα προστασίας (reCAPTCHA) δεν έχει φορτώσει ακόμα." });
+                if (!turnstileToken) {
+                    form.setError("root", { message: "Παρακαλώ ολοκληρώστε την επαλήθευση (Turnstile)." });
                     return;
                 }
-                const recaptchaToken = await executeRecaptcha("signup");
-                const result = await signUp({ ...values, recaptchaToken })
+                const result = await signUp({ ...values, recaptchaToken: turnstileToken })
                 if (result?.error) {
                     form.setError("root", { message: result.error })
+                    turnstileRef.current?.reset();
+                    setTurnstileToken(null);
                 }
                 if (result?.success) {
                     setSuccessMessage(result.success)
                 }
             } catch (error) {
                 form.setError("root", { message: "Κάτι πήγε στραβά." })
+                turnstileRef.current?.reset();
+                setTurnstileToken(null);
             }
         })
     }
@@ -201,6 +207,15 @@ export function SignUpForm({
                                         <Button type="submit" className="w-full h-11 font-medium text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-[0.98] rounded-2xl" disabled={isPending}>
                                             {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : "Δημιουργία Λογαριασμού"}
                                         </Button>
+
+                                        <div className="flex justify-center">
+                                            <TurnstileWidget 
+                                                ref={turnstileRef}
+                                                onSuccess={(token) => setTurnstileToken(token)}
+                                                onExpire={() => setTurnstileToken(null)}
+                                                onError={() => setTurnstileToken(null)}
+                                            />
+                                        </div>
                                     </div>
 
                                     <div className="flex items-center gap-4">

@@ -153,16 +153,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 if (parsedCredentials.success) {
                     const { email, password, recaptchaToken } = parsedCredentials.data
 
-                    // Verify reCAPTCHA token
-                    if (recaptchaToken && process.env.RECAPTCHA_SECRET_KEY) {
-                        const verifyRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+                    // Verify Turnstile token
+                    if (recaptchaToken && process.env.TURNSTILE_SECRET_KEY) {
+                        const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
                             method: "POST",
                             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                            body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`
+                            body: `secret=${process.env.TURNSTILE_SECRET_KEY}&response=${recaptchaToken}`
                         });
                         const verifyData = await verifyRes.json();
-                        if (!verifyData.success || verifyData.score < 0.5) {
-                            throw new Error("Αποτυχία επαλήθευσης reCAPTCHA (Πιθανό Bot).");
+                        if (!verifyData.success) {
+                            throw new Error("Αποτυχία επαλήθευσης Turnstile (Πιθανό Bot).");
                         }
                     }
 

@@ -9,18 +9,18 @@ import { signIn } from "@/auth"
 import { generateVerificationToken, generatePasswordResetToken } from "@/lib/tokens"
 import { sendVerificationEmail, sendPasswordResetEmail } from "@/lib/emails"
 
-async function verifyRecaptcha(token: string | undefined) {
+async function verifyTurnstile(token: string | undefined) {
     if (!token) return false;
-    if (!process.env.RECAPTCHA_SECRET_KEY) return true;
+    if (!process.env.TURNSTILE_SECRET_KEY) return true;
     
     try {
-        const verifyRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`
+            body: `secret=${process.env.TURNSTILE_SECRET_KEY}&response=${token}`
         });
         const verifyData = await verifyRes.json();
-        return verifyData.success && verifyData.score >= 0.5;
+        return verifyData.success;
     } catch {
         return false;
     }
@@ -37,7 +37,7 @@ export async function login(values: LoginValues) {
         return { error: "Μη έγκυρα δεδομένα." }
     }
 
-    const { email, password, recaptchaToken } = validatedFields.data
+    const { email, password, recaptchaToken: turnstileToken } = validatedFields.data
 
     const user = await prisma.user.findUnique({
         where: { email },
@@ -53,7 +53,7 @@ export async function login(values: LoginValues) {
         await signIn("credentials", {
             email,
             password,
-            recaptchaToken,
+            recaptchaToken: turnstileToken,
             redirectTo,
         })
     } catch (error) {
@@ -64,7 +64,7 @@ export async function login(values: LoginValues) {
             if (errorMsg === "Email not verified") {
                 return { error: "Λάθος email ή κωδικός." }
             }
-            if (errorMsg?.includes("έχει κλειδωθεί") || errorMsg?.includes("αποκλειστεί") || errorMsg?.includes("reCAPTCHA")) {
+            if (errorMsg?.includes("έχει κλειδωθεί") || errorMsg?.includes("αποκλειστεί") || errorMsg?.includes("Turnstile")) {
                 return { error: errorMsg }
             }
             if (errorMsg === "Invalid credentials" || error.type === "CredentialsSignin") {
@@ -88,11 +88,11 @@ export async function signUp(values: SignUpValues) {
         return { error: "Μη έγκυρα δεδομένα." }
     }
 
-    const { fullName, email, password, recaptchaToken } = validatedFields.data
+    const { fullName, email, password, recaptchaToken: turnstileToken } = validatedFields.data
     
-    const isHuman = await verifyRecaptcha(recaptchaToken)
+    const isHuman = await verifyTurnstile(turnstileToken)
     if (!isHuman) {
-        return { error: "Αποτυχία επαλήθευσης reCAPTCHA (Πιθανό Bot)." }
+        return { error: "Αποτυχία επαλήθευσης Turnstile (Πιθανό Bot)." }
     }
 
     // Use the part before @ as a default name if none provided
@@ -145,11 +145,11 @@ export async function requestPasswordReset(values: ResetPasswordValues) {
         return { error: "Μη έγκυρο email." }
     }
 
-    const { email, recaptchaToken } = validatedFields.data
+    const { email, recaptchaToken: turnstileToken } = validatedFields.data
 
-    const isHuman = await verifyRecaptcha(recaptchaToken)
+    const isHuman = await verifyTurnstile(turnstileToken)
     if (!isHuman) {
-        return { error: "Αποτυχία επαλήθευσης reCAPTCHA (Πιθανό Bot)." }
+        return { error: "Αποτυχία επαλήθευσης Turnstile (Πιθανό Bot)." }
     }
 
     try {
