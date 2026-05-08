@@ -36,50 +36,8 @@ export default async function ContactPage() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-                    {/* Contact Info Cards */}
-                    <div className="lg:col-span-1 space-y-6">
-                        <div className="bg-white/50 dark:bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-border flex items-start gap-4 hover:border-primary/30 transition-colors group">
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                                <Mail className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-foreground mb-1">Email</h4>
-                                <p className="text-text-tertiary text-sm">
-                                    info@metathesi.gr
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/50 dark:bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-border flex items-start gap-4 hover:border-primary/30 transition-colors group">
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                                <MessageSquare className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-foreground mb-1">Live Chat</h4>
-                                <p className="text-text-tertiary text-sm">
-                                    Διαθέσιμο για εγγεγραμμένους χρήστες εντός των Matches.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/50 dark:bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-border flex items-start gap-4 hover:border-primary/30 transition-colors group">
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                                <MapPin className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-foreground mb-1">Τοποθεσία</h4>
-                                <p className="text-text-tertiary text-sm">
-                                    Αθήνα, Ελλάδα
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Contact Form */}
-                    <div className="lg:col-span-2">
-                        <ContactForm defaultValues={defaultValues} />
-                    </div>
+                <div className="max-w-3xl mx-auto">
+                    <ContactForm defaultValues={defaultValues} />
                 </div>
             </div>
         </div>

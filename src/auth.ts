@@ -1,11 +1,8 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { z } from "zod"
-import { prisma as importedPrisma } from "@/lib/prisma"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
-
-const prisma = importedPrisma || new PrismaClient();
 
 async function incrementLoginAttempt(email: string) {
     try {

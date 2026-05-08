@@ -76,9 +76,10 @@ model User {
   avatarColor   String?         @map("avatar_color")
   accounts      Account[]
   auditLogs     AdminAuditLog[] @relation("AdminLogs")
-  receivedLogs  AdminAuditLog[] @relation("TargetUserLogs")
-  profile       Profile?
-  sessions      Session[]
+  receivedLogs     AdminAuditLog[]  @relation("TargetUserLogs")
+  profile          Profile?
+  sessions         Session[]
+  contactInquiries ContactInquiry[]
 
   @@map("users")
 }
@@ -361,6 +362,28 @@ enum UserStatus {
   ACTIVE
   BANNED
   SUSPENDED
+}
+
+enum InquiryStatus {
+  PENDING
+  READ
+  RESOLVED
+  ARCHIVED
+}
+
+model ContactInquiry {
+  id        Int           @id @default(autoincrement())
+  userId    Int?          @map("user_id")
+  ip        String?
+  name      String
+  email     String
+  subject   String
+  message   String        @db.Text
+  status    InquiryStatus @default(PENDING)
+  createdAt DateTime      @default(now()) @map("created_at")
+  user      User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("contact_inquiries")
 }
 
 model LoginAttempt {

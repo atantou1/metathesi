@@ -28,7 +28,7 @@ export async function sendMatchEmail({
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'metaThesi <noreply@resend.dev>', // Update this to verified domain when going to prod
+            from: 'metaThesi <onboarding@resend.dev>', // Update this to verified domain when going to prod
             to: [email],
             subject: '🎉 Βρέθηκε Νέο Ταίριασμα Μετάθεσης!',
             html: `
@@ -147,7 +147,7 @@ export async function sendPasswordResetEmail(
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'metaThesi <auth@resend.dev>', // Update this to verified domain when going to prod
+            from: 'metaThesi <onboarding@resend.dev>', // Update this to verified domain when going to prod
             to: [email],
             subject: '🔑 Επαναφορά κωδικού πρόσβασης - metaThesi',
             html: `
@@ -177,5 +177,77 @@ export async function sendPasswordResetEmail(
     } catch (err: any) {
         console.error('Unexpected error while sending password reset email:', err);
         return { success: false, error: err.message || 'Unknown error' };
+    }
+}
+
+/**
+ * Sends an email notification to the admin for a new contact form inquiry.
+ */
+export async function sendContactInquiryEmail({
+    name,
+    email,
+    subject,
+    message,
+    userId
+}: {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    userId?: number | null;
+}) {
+    if (!resend) {
+        console.warn('RESEND_API_KEY is not defined. Skipping contact inquiry email.');
+        return { success: false, error: 'API key missing' };
+    }
+
+    const adminEmail = process.env.ADMIN_EMAIL || 'info@metathesi.gr';
+
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'metaThesi Contact <onboarding@resend.dev>', // Update this to verified domain when going to prod
+            to: [adminEmail],
+            subject: `📩 Νέο Μήνυμα: ${subject}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #334155; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                    <div style="background-color: #0369a1; padding: 20px; text-align: center;">
+                        <h2 style="color: white; margin: 0;">Νέο Μήνυμα Επικοινωνίας</h2>
+                    </div>
+                    
+                    <div style="padding: 24px;">
+                        <div style="margin-bottom: 20px;">
+                            <p style="margin: 0; color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: bold;">Από</p>
+                            <p style="margin: 4px 0 0 0; font-size: 16px;"><strong>${name}</strong> (${email})</p>
+                            ${userId ? `<p style="margin: 4px 0 0 0; font-size: 13px; color: #0369a1;">Συνδεδεμένος Χρήστης (ID: ${userId})</p>` : ''}
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <p style="margin: 0; color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: bold;">Θέμα</p>
+                            <p style="margin: 4px 0 0 0; font-size: 16px;">${subject}</p>
+                        </div>
+
+                        <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #f1f5f9;">
+                            <p style="margin: 0; color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: bold; margin-bottom: 8px;">Μήνυμα</p>
+                            <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${message}</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background-color: #f1f5f9; padding: 16px; text-align: center; font-size: 12px; color: #94a3b8;">
+                        Αυτό είναι ένα αυτοματοποιημένο μήνυμα από την πλατφόρμα metaThesi.
+                    </div>
+                </div>
+            `,
+        });
+
+        if (error) {
+            console.error('Failed to send contact inquiry email with Resend:', error);
+            return { success: false, error };
+        }
+
+        console.log(`Contact inquiry email sent successfully to admin: ${adminEmail}`);
+        return { success: true, data };
+    } catch (err) {
+        console.error('Unexpected error while sending contact email:', err);
+        return { success: false, error: err };
     }
 }

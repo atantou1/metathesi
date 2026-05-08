@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Send, CheckCircle2, AlertCircle, User, MessageSquare, Info } from "lucide-react";
+import { Mail, Send, CheckCircle2, AlertCircle, User, MessageSquare, Info, Home } from "lucide-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,8 +19,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { sendContactForm } from "@/actions/contact";
+import { TurnstileWidget } from "@/components/turnstile-widget";
+import type { TurnstileInstance } from "@marsidev/react-turnstile";
 
 const ContactSchema = z.object({
     name: z.string().min(2, "Το όνομα πρέπει να είναι τουλάχιστον 2 χαρακτήρες"),
@@ -38,6 +48,8 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
     const [isPending, setIsPending] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
     const [success, setSuccess] = React.useState<string | null>(null);
+    const [recaptchaToken, setRecaptchaToken] = React.useState<string | null>(null);
+    const turnstileRef = React.useRef<TurnstileInstance>(null);
 
     const form = useForm<ContactFormValues>({
         resolver: zodResolver(ContactSchema),
@@ -55,9 +67,13 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
         setSuccess(null);
 
         try {
-            const result = await sendContactForm(values);
+            const result = await sendContactForm({
+                ...values,
+                recaptchaToken: recaptchaToken || undefined
+            });
             if (result.error) {
                 setError(result.error);
+                turnstileRef.current?.reset();
             } else if (result.success) {
                 setSuccess(result.success);
                 form.reset({
@@ -66,9 +82,11 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
                     subject: "",
                     message: "",
                 });
+                turnstileRef.current?.reset();
             }
         } catch (e) {
             setError("Παρουσιάστηκε ένα σφάλμα. Παρακαλώ δοκιμάστε ξανά.");
+            turnstileRef.current?.reset();
         } finally {
             setIsPending(false);
         }
@@ -89,11 +107,14 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
                     {success}
                 </p>
                 <Button
+                    asChild
                     variant="outline"
-                    onClick={() => setSuccess(null)}
-                    className="rounded-full px-8"
+                    className="rounded-full px-8 gap-2"
                 >
-                    Αποστολή νέου μηνύματος
+                    <Link href="/">
+                        <Home className="w-4 h-4" />
+                        Επιστροφή στην αρχική σελίδα
+                    </Link>
                 </Button>
             </motion.div>
         );
@@ -125,7 +146,7 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
                                             placeholder="π.χ. Ιωάννης Παπαδόπουλος"
                                             {...field}
                                             disabled={isPending}
-                                            className="h-12 bg-white/50 dark:bg-black/20 border-border focus:ring-primary/20 rounded-2xl"
+                                            className="!h-12 bg-white/50 dark:bg-black/20 border-border focus:ring-primary/20 rounded-2xl"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -147,7 +168,7 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
                                             placeholder="π.χ. email@example.com"
                                             {...field}
                                             disabled={isPending}
-                                            className="h-12 bg-white/50 dark:bg-black/20 border-border focus:ring-primary/20 rounded-2xl"
+                                            className="!h-12 bg-white/50 dark:bg-black/20 border-border focus:ring-primary/20 rounded-2xl"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -165,14 +186,24 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
                                     <Info className="w-4 h-4 text-primary" />
                                     Θέμα
                                 </FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Πώς μπορούμε να σας βοηθήσουμε;"
-                                        {...field}
-                                        disabled={isPending}
-                                        className="h-12 bg-white/50 dark:bg-black/20 border-border focus:ring-primary/20 rounded-2xl"
-                                    />
-                                </FormControl>
+                                <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                    disabled={isPending}
+                                >
+                                    <FormControl>
+                                        <SelectTrigger className="!h-12 w-full bg-white/50 dark:bg-black/20 border-border focus:ring-primary/20 rounded-2xl">
+                                            <SelectValue placeholder="Επιλέξτε θέμα επικοινωνίας" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="Τεχνικό Πρόβλημα">Τεχνικό Πρόβλημα</SelectItem>
+                                        <SelectItem value="Λάθος ή Έλλειψη στα Δεδομένα">Λάθος ή Έλλειψη στα Δεδομένα</SelectItem>
+                                        <SelectItem value="Διαχείριση Λογαριασμού">Διαχείριση Λογαριασμού</SelectItem>
+                                        <SelectItem value="Πρόταση Βελτίωσης">Πρόταση Βελτίωσης</SelectItem>
+                                        <SelectItem value="Άλλο / Γενική Ερώτηση">Άλλο / Γενική Ερώτηση</SelectItem>
+                                    </SelectContent>
+                                </Select>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -190,10 +221,10 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
                                 <FormControl>
                                     <Textarea
                                         placeholder="Γράψτε το μήνυμά σας εδώ..."
-                                        rows={5}
+                                        rows={8}
                                         {...field}
                                         disabled={isPending}
-                                        className="bg-white/50 dark:bg-black/20 border-border focus:ring-primary/20 rounded-3xl resize-none"
+                                        className="min-h-[200px] bg-white/50 dark:bg-black/20 border-border focus:ring-primary/20 rounded-3xl resize-none"
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -232,6 +263,13 @@ export function ContactForm({ defaultValues }: ContactFormProps) {
                             </div>
                         )}
                     </Button>
+
+                    <TurnstileWidget
+                        ref={turnstileRef}
+                        onSuccess={(token) => setRecaptchaToken(token)}
+                        onExpire={() => setRecaptchaToken(null)}
+                        onError={() => setRecaptchaToken(null)}
+                    />
                 </form>
             </Form>
         </div>
