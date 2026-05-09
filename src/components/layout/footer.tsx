@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Facebook, Twitter, Mail, LifeBuoy, Repeat } from "lucide-react";
+import { Facebook, Twitter, Mail, LifeBuoy, Repeat, ShieldAlert } from "lucide-react";
 
 export function Footer() {
     return (
@@ -27,7 +27,7 @@ export function Footer() {
                             <li>
                                 <Link
                                     className="text-text-tertiary hover:text-primary transition-colors"
-                                    href="#"
+                                    href="/terms"
                                 >
                                     Όροι Χρήσης
                                 </Link>
@@ -35,7 +35,7 @@ export function Footer() {
                             <li>
                                 <Link
                                     className="text-text-tertiary hover:text-primary transition-colors"
-                                    href="#"
+                                    href="/privacy"
                                 >
                                     Πολιτική Απορρήτου
                                 </Link>
@@ -43,7 +43,7 @@ export function Footer() {
                             <li>
                                 <Link
                                     className="text-text-tertiary hover:text-primary transition-colors"
-                                    href="#"
+                                    href="/faq"
                                 >
                                     Συχνές Ερωτήσεις
                                 </Link>
@@ -64,9 +64,14 @@ export function Footer() {
                                     Φόρμα Επικοινωνίας
                                 </Link>
                             </li>
-                            <li className="flex items-center gap-2 text-text-tertiary">
-                                <LifeBuoy className="w-4 h-4 text-primary" />
-                                Κέντρο Υποστήριξης
+                            <li className="flex items-center gap-2">
+                                <ShieldAlert className="w-4 h-4 text-primary" />
+                                <Link 
+                                    href="/contact?subject=report"
+                                    className="text-text-tertiary hover:text-primary transition-colors"
+                                >
+                                    Αναφορά Προβλήματος
+                                </Link>
                             </li>
                         </ul>
                     </div>
