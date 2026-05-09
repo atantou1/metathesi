@@ -9,12 +9,18 @@ export const metadata: Metadata = {
     description: "Επικοινωνήστε με την ομάδα της metaThesi για οποιαδήποτε απορία ή πρόβλημα αντιμετωπίζετε.",
 };
 
-export default async function ContactPage() {
+export default async function ContactPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
     const session = await auth();
+    const params = await searchParams;
 
     const defaultValues = {
         name: session?.user?.name || "",
         email: session?.user?.email || "",
+        subject: params.subject === "report" ? "Τεχνικό Πρόβλημα" : "",
     };
 
     return (

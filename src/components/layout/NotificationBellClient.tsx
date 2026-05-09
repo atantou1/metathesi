@@ -41,28 +41,12 @@ export function NotificationBellClient() {
 
     const hasUnread = notifications.length > 0
 
-    const handleBellClick = async () => {
-        if (!hasUnread) return // Do nothing if there are no new matches/messages
 
-        // Take the latest notification
-        const latest = notifications[0]
 
-        try {
-            // Mark all notifications for this match as read
-            const relatedNotifications = notifications.filter(n => n.matchId === latest.matchId);
-            for (const notif of relatedNotifications) {
-                await markNotificationAsRead(notif.id)
-            }
+    if (!hasUnread) return null;
 
-            // Navigate to matches page, optionally opening the specific chat
-            router.push(`/matches?openChat=${latest.matchId}`)
-
-            // Optimistically clear the read notifications from state
-            setNotifications(prev => prev.filter(n => n.matchId !== latest.matchId))
-
-        } catch (error) {
-            console.error("Failed to mark notification as read", error)
-        }
+    const handleBellClick = () => {
+        router.push("/matches")
     }
 
     return (
@@ -70,16 +54,11 @@ export function NotificationBellClient() {
             variant="ghost"
             size="icon-sm"
             onClick={handleBellClick}
-            className={`relative rounded-full transition-all duration-300 ${hasUnread
-                ? "text-foreground dark:text-white hover:bg-muted dark:hover:bg-muted/50 hover:text-primary"
-                : "text-text-tertiary cursor-default opacity-70"
-                }`}
-            title={hasUnread ? "Προβολή ειδοποιήσεων" : "Δεν υπάρχουν νέες ειδοποιήσεις"}
+            className="relative rounded-full transition-all duration-300 text-foreground dark:text-white hover:bg-muted dark:hover:bg-muted/50 hover:text-primary animate-in fade-in zoom-in-90 duration-300"
+            title="Προβολή ειδοποιήσεων"
         >
-            <Bell className="w-5 h-5" />
-            {hasUnread && (
-                <span className="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-danger ring-2 ring-background dark:ring-card animate-pulse"></span>
-            )}
+            <Bell className="w-5 h-5 fill-primary/10" />
+            <span className="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-danger ring-2 ring-background dark:ring-card animate-pulse"></span>
         </Button>
     )
 }

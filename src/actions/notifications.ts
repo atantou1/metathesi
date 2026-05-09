@@ -25,7 +25,10 @@ export async function getUnreadNotifications() {
     const notifications = await (prisma as any).notification.findMany({
         where: {
             profileId: profile.id,
-            isRead: false
+            isRead: false,
+            match: {
+                status: "active"
+            }
         },
         orderBy: {
             createdAt: 'desc'
