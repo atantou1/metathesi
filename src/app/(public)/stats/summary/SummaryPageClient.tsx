@@ -438,8 +438,8 @@ export default function SummaryPageClient() {
 
 
   return (
-    <div className="p-4 md:p-8 text-foreground antialiased min-h-screen bg-background font-inter">
-      <div className="max-w-7xl mx-auto space-y-6 lg:space-y-8 pt-20 md:pt-24">
+    <div className="flex flex-col items-center px-4 text-foreground antialiased min-h-screen bg-background font-inter">
+      <div className="w-full max-w-7xl space-y-6 lg:space-y-8 pt-20 md:pt-24 pb-8">
         {/* --- Header with Seamless Dropdowns --- */}
         <div className="flex flex-col md:flex-row md:items-start justify-between bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl">
           <div>

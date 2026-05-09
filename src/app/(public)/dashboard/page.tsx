@@ -68,8 +68,8 @@ export default async function Dashboard() {
 
     if (!request) {
         return (
-            <div className="min-h-screen pt-20 flex flex-col items-center">
-                <main className="w-full max-w-7xl px-4 lg:px-0 py-8 flex-grow">
+            <div className="min-h-screen pt-20 flex flex-col items-center px-4">
+                <main className="w-full max-w-7xl py-8 flex-grow">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
                         {/* LEFT COLUMN */}
                         <div className="lg:col-span-8 space-y-6">
@@ -220,8 +220,8 @@ export default async function Dashboard() {
     const hasActiveMatch = request.matchParticipations && request.matchParticipations.length > 0;
 
     return (
-        <div className="min-h-screen pt-20 flex flex-col items-center">
-            <div className="w-full max-w-7xl px-4 lg:px-0 py-8 flex-grow">
+        <div className="min-h-screen pt-20 flex flex-col items-center px-4">
+            <div className="w-full max-w-7xl py-8 flex-grow">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
 
                     {/* LEFT COLUMN */}

@@ -5,7 +5,7 @@ import { Facebook, Twitter, Mail, LifeBuoy, Repeat, ShieldAlert } from "lucide-r
 export function Footer() {
     return (
         <footer className="border-t border-border bg-background py-16 mt-auto">
-            <div className="mx-auto max-w-7xl px-4 lg:px-0">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
                     <div className="col-span-1 md:col-span-2">
                         <div className="mb-6 flex items-center gap-2">
