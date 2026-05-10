@@ -252,7 +252,7 @@ function MobileFilterDrawer({
 
 // ─── Legend card ─────────────────────────────────────────────────────────────
 
-function LegendCard({ indicator }: { indicator: string }) {
+function LegendCard({ indicator, isMobile }: { indicator: string; isMobile?: boolean }) {
   const indicatorLabel = INDICATOR_OPTIONS.find(o => o.value === indicator)?.label ?? 'Βάση Μορίων'
 
   let items: { color: string, label: string }[] = []
@@ -300,7 +300,13 @@ function LegendCard({ indicator }: { indicator: string }) {
   }
 
   return (
-    <div style={{ position: 'absolute', bottom: '40px', left: '40px', zIndex: 500, pointerEvents: 'auto' }}>
+    <div style={{ 
+      position: 'absolute', 
+      bottom: isMobile ? '24px' : '40px', 
+      left: isMobile ? '20px' : '40px', 
+      zIndex: 500, 
+      pointerEvents: 'auto' 
+    }}>
       <div className="bg-card/40 backdrop-blur-xl border border-border/40 rounded-2xl shadow-floating px-5 py-4 max-w-[240px] transition-all">
         <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-[10px]">
           {indicatorLabel}
@@ -676,7 +682,7 @@ function StatsMapContent() {
   return (
     <div
       className="text-foreground dark:text-foreground antialiased bg-background"
-      style={{ height: '100vh', position: 'relative' }}
+      style={{ height: isMobile ? '100svh' : '100vh', position: 'relative' }}
     >
       {/* Mobile filter drawer */}
       <MobileFilterDrawer
@@ -803,7 +809,7 @@ function StatsMapContent() {
           )}
 
           {/* ── Legend card (bottom-left) ────────────────────────────────── */}
-          {(!isMobile || !selectedZone) && <LegendCard indicator={indicator} />}
+          {(!isMobile || !selectedZone) && <LegendCard indicator={indicator} isMobile={isMobile} />}
 
         {/* ── Desktop Side Panel (Right) ─────────────────────────────────── */}
           {!isMobile && (
