@@ -27,20 +27,22 @@ export function MobileMenu({ session }: MobileMenuProps) {
     }, [])
 
     const links = [
-        {
-            href: "/dashboard",
-            label: "Επισκόπηση",
-            subtext: "Κεντρικός πίνακας ελέγχου",
-            active: pathname === "/dashboard",
-            icon: FileText
-        },
-        {
-            href: "/matches",
-            label: "Ταιριάσματα",
-            subtext: "Προτάσεις και αιτήσεις",
-            active: pathname === "/matches",
-            icon: UserIcon
-        },
+        ...(session ? [
+            {
+                href: "/dashboard",
+                label: "Επισκόπηση",
+                subtext: "Κεντρικός πίνακας ελέγχου",
+                active: pathname === "/dashboard",
+                icon: FileText
+            },
+            {
+                href: "/matches",
+                label: "Ταιριάσματα",
+                subtext: "Προτάσεις και αιτήσεις",
+                active: pathname === "/matches",
+                icon: UserIcon
+            }
+        ] : []),
         {
             href: "/stats",
             label: "Στατιστικά",

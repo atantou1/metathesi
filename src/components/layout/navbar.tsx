@@ -39,7 +39,7 @@ export async function Navbar() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    {session ? <MainNav /> : null}
+                    <MainNav session={session} />
 
                     <div className="flex items-center gap-2 sm:gap-4">
                         <div className="hidden sm:block">

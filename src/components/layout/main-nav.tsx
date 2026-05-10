@@ -4,20 +4,22 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
-export function MainNav() {
+export function MainNav({ session }: { session: any }) {
     const pathname = usePathname()
 
     const links = [
-        {
-            href: "/dashboard",
-            label: "Επισκόπηση",
-            active: pathname === "/dashboard"
-        },
-        {
-            href: "/matches",
-            label: "Αμοιβαίες",
-            active: pathname === "/matches"
-        },
+        ...(session ? [
+            {
+                href: "/dashboard",
+                label: "Επισκόπηση",
+                active: pathname === "/dashboard"
+            },
+            {
+                href: "/matches",
+                label: "Αμοιβαίες",
+                active: pathname === "/matches"
+            }
+        ] : []),
         {
             href: "/stats",
             label: "Στατιστικά",
