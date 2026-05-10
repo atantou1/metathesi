@@ -24,7 +24,19 @@ export function MainNav({ session }: { session: any }) {
             href: "/stats",
             label: "Στατιστικά",
             active: pathname === "/stats"
-        }
+        },
+        ...(!session ? [
+            {
+                href: "/faq",
+                label: "Συχνές ερωτήσεις",
+                active: pathname === "/faq"
+            },
+            {
+                href: "/contact",
+                label: "Επικοινωνία",
+                active: pathname === "/contact"
+            }
+        ] : [])
     ]
 
     return (

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, LogOut, User as UserIcon, Settings, BarChart3, FileText, Moon, ArrowRight } from "lucide-react"
+import { Menu, X, LogOut, User as UserIcon, Settings, BarChart3, FileText, Moon, ArrowRight, HelpCircle, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { signOut } from "next-auth/react"
@@ -49,7 +49,23 @@ export function MobileMenu({ session }: MobileMenuProps) {
             subtext: "Δεδομένα μεταθέσεων",
             active: pathname === "/stats",
             icon: BarChart3
-        }
+        },
+        ...(!session ? [
+            {
+                href: "/faq",
+                label: "Συχνές ερωτήσεις",
+                subtext: "Απαντήσεις σε απορίες",
+                active: pathname === "/faq",
+                icon: HelpCircle
+            },
+            {
+                href: "/contact",
+                label: "Επικοινωνία",
+                subtext: "Στείλτε μας μήνυμα",
+                active: pathname === "/contact",
+                icon: MessageSquare
+            }
+        ] : [])
     ]
 
     const menuContent = (
