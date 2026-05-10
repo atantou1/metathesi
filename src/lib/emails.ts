@@ -3,6 +3,9 @@ import { Resend } from 'resend';
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
+// Default sender email using the verified domain
+const FROM_EMAIL = process.env.EMAIL_FROM || 'metaThesi <noreply@metathesi.gr>';
+
 /**
  * Sends a notification email to a user when they get a new match.
  * @param email - The destination email address
@@ -28,7 +31,7 @@ export async function sendMatchEmail({
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'metaThesi <onboarding@resend.dev>', // Update this to verified domain when going to prod
+            from: FROM_EMAIL,
             to: [email],
             subject: '🎉 Βρέθηκε Νέο Ταίριασμα Μετάθεσης!',
             html: `
@@ -90,7 +93,7 @@ export async function sendVerificationEmail(
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'metaThesi <onboarding@resend.dev>', // Update this to verified domain when going to prod
+            from: FROM_EMAIL,
             to: [email],
             subject: '✅ Επιβεβαιώστε το email σας - metaThesi',
             html: `
@@ -147,7 +150,7 @@ export async function sendPasswordResetEmail(
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'metaThesi <onboarding@resend.dev>', // Update this to verified domain when going to prod
+            from: FROM_EMAIL,
             to: [email],
             subject: '🔑 Επαναφορά κωδικού πρόσβασης - metaThesi',
             html: `
@@ -205,7 +208,7 @@ export async function sendContactInquiryEmail({
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'metaThesi Contact <onboarding@resend.dev>', // Update this to verified domain when going to prod
+            from: FROM_EMAIL,
             to: [adminEmail],
             subject: `📩 Νέο Μήνυμα: ${subject}`,
             html: `

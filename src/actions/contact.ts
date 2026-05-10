@@ -38,7 +38,7 @@ export async function sendContactForm(values: z.infer<typeof ContactSchema>) {
         },
     });
 
-    if (recentInquiriesCount >= 3) {
+    if (recentInquiriesCount >= 30) {
         return { error: "Έχετε υπερβεί το όριο υποβολών. Παρακαλώ δοκιμάστε ξανά σε μία ώρα." };
     }
 
