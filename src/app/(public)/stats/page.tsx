@@ -175,6 +175,17 @@ function MobileFilterDrawer({
     onClose()
   }
 
+  // Shorten labels for mobile to save space
+  const mobileDivisionOptions = divisionOptions.map(opt => ({
+    ...opt,
+    label: opt.label.replace('Πρωτοβάθμια', 'Πρωτ.').replace('Δευτεροβάθμια', 'Δευτ.')
+  }))
+
+  const mobileSpecialtyOptions = specialtyOptions.map(opt => ({
+    ...opt,
+    label: opt.value // Show only the code (e.g. ΠΕ70)
+  }))
+
   return (
     <>
       {/* Overlay */}
@@ -217,12 +228,12 @@ function MobileFilterDrawer({
           {/* Row 1 ─ Βαθμίδα */}
           <div>
             <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">Βαθμίδα</p>
-            <FilterSelect value={pDiv} onChange={handleDivChange} options={divisionOptions} fullWidth />
+            <FilterSelect value={pDiv} onChange={handleDivChange} options={mobileDivisionOptions} fullWidth />
           </div>
           {/* Row 1 ─ Ειδικότητα */}
           <div>
             <p className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-1">Ειδικότητα</p>
-            <FilterSelect value={pSpec} onChange={setPSpec} options={specialtyOptions} fullWidth />
+            <FilterSelect value={pSpec} onChange={setPSpec} options={mobileSpecialtyOptions} fullWidth />
           </div>
           {/* Row 2 ─ Δείκτης */}
           <div>
@@ -307,19 +318,25 @@ function LegendCard({ indicator, isMobile }: { indicator: string; isMobile?: boo
       zIndex: 500, 
       pointerEvents: 'auto' 
     }}>
-      <div className="bg-card/40 backdrop-blur-xl border border-border/40 rounded-2xl shadow-floating px-5 py-4 max-w-[240px] transition-all">
-        <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-[10px]">
+      <div className={`bg-card/40 backdrop-blur-xl border border-border/40 rounded-2xl shadow-floating transition-all ${
+        isMobile ? "px-3 py-2.5 max-w-[200px]" : "px-5 py-4 max-w-[240px]"
+      }`}>
+        <h3 className={`font-bold text-muted-foreground uppercase tracking-widest ${
+          isMobile ? "text-[9px] mb-2" : "text-[10px] mb-[10px]"
+        }`}>
           {indicatorLabel}
         </h3>
 
-        <div className="flex flex-col gap-2">
+        <div className={`flex flex-col ${isMobile ? "gap-1.5" : "gap-2"}`}>
           {items.map(item => (
-            <div key={item.label} className="flex items-center gap-[10px]">
+            <div key={item.label} className={`flex items-center ${isMobile ? "gap-2" : "gap-[10px]"}`}>
               <div 
-                className="w-[10px] h-[10px] rounded-full shrink-0" 
+                className={`${isMobile ? "w-2 h-2" : "w-[10px] h-[10px]"} rounded-full shrink-0`}
                 style={{ background: item.color }} 
               />
-              <span className="text-[12px] font-medium text-foreground">{item.label}</span>
+              <span className={`${isMobile ? "text-[11px]" : "text-[12px]"} font-medium text-foreground`}>
+                {item.label}
+              </span>
             </div>
           ))}
         </div>
@@ -682,7 +699,7 @@ function StatsMapContent() {
   return (
     <div
       className="text-foreground dark:text-foreground antialiased bg-background"
-      style={{ height: isMobile ? '100svh' : '100vh', position: 'relative' }}
+      style={{ height: '100svh', position: 'relative' }}
     >
       {/* Mobile filter drawer */}
       <MobileFilterDrawer

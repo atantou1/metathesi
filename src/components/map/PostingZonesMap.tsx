@@ -65,7 +65,7 @@ function CustomZoomControls() {
   const ZOOM_STEP = 0.5
 
   return (
-    <div className="absolute bottom-8 right-8 flex flex-col gap-2 pointer-events-auto hidden md:flex" style={{ zIndex: 1000 }}>
+    <div className="absolute bottom-12 right-6 flex-col gap-2 pointer-events-auto hidden lg:flex" style={{ zIndex: 9999 }}>
       <button 
         onClick={(e) => { 
           e.stopPropagation(); 
