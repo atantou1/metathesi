@@ -103,8 +103,22 @@ export async function signUp(values: SignUpValues) {
     })
 
     if (existingUser) {
-        // Return same success message as new registration to avoid enumeration
-        return { success: "Επιβεβαιώστε το email σας!" };
+        // If user exists but is not verified, resend the verification email
+        if (!existingUser.emailVerified) {
+            try {
+                const verificationToken = await generateVerificationToken(email);
+                await sendVerificationEmail(
+                    verificationToken.email,
+                    verificationToken.token
+                );
+                return { success: "Το email επιβεβαίωσης στάλθηκε ξανά!" };
+            } catch (error) {
+                return { error: "Αποτυχία επαναποστολής email επιβεβαίωσης." };
+            }
+        }
+        
+        // If user is already verified, inform them clearly
+        return { error: "Το email χρησιμοποιείται ήδη!" };
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
