@@ -224,11 +224,11 @@ export function SignUpForm({
                                         <div className="flex-1 border-t border-border" />
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 gap-4">
                                         <Button
                                             variant="outline"
                                             type="button"
-                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-card/50 rounded-2xl"
+                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-card/50 rounded-2xl w-full"
                                             onClick={() => startTransition(() => loginWithProvider('google'))}
                                             disabled={isPending}
                                         >
@@ -238,19 +238,7 @@ export function SignUpForm({
                                                     fill="currentColor"
                                                 />
                                             </svg>
-                                            Google
-                                        </Button>
-                                        <Button
-                                            variant="outline"
-                                            type="button"
-                                            className="h-11 font-medium border-border transition-all active:scale-[0.98] bg-card/50 rounded-2xl"
-                                            onClick={() => startTransition(() => loginWithProvider('facebook'))}
-                                            disabled={isPending}
-                                        >
-                                            <svg className="mr-2 h-4 w-4 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
-                                            </svg>
-                                            Facebook
+                                            Συνέχεια με Google
                                         </Button>
                                     </div>
 
