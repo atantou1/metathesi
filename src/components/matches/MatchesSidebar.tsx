@@ -25,13 +25,13 @@ export function MatchesSidebar() {
             <div className="h-20 px-4 border-b border-border/50 bg-muted/50 flex items-center">
                 <div className="relative flex justify-center mx-auto p-1 bg-muted/50 backdrop-blur-sm rounded-full w-full max-w-sm">
                     <div className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-card rounded-full shadow-sm z-0 transition-transform duration-300 ease-out ${activeTab === 'active' ? 'left-1 translate-x-0' : 'left-1 translate-x-[100%]'}`}></div>
-                    <button 
+                    <button
                         onClick={() => setActiveTab('active')}
                         className={`relative z-10 py-2 rounded-full font-bold text-[13px] select-none w-1/2 text-center transition-colors ${activeTab === 'active' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
                     >
                         Ενεργές ({activeMatches.length})
                     </button>
-                    <button 
+                    <button
                         onClick={() => setActiveTab('history')}
                         className={`relative z-10 py-2 rounded-full font-bold text-[13px] select-none w-1/2 text-center transition-colors ${activeTab === 'history' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
                     >
@@ -45,22 +45,20 @@ export function MatchesSidebar() {
                     matchesList.map((match) => {
                         const isOnline = match.status === 'active'
                         const isActiveRoute = pathname === `/matches/${match.id}`
-                        
+
                         return (
-                            <div 
+                            <div
                                 key={match.id}
                                 onClick={() => router.push(`/matches/${match.id}`, { scroll: false })}
-                                className={`group p-3 rounded-2xl cursor-pointer transition-all border ${
-                                    isActiveRoute ? 'bg-primary-soft border-primary/20' : 
-                                    isOnline ? 'bg-card border-border hover:border-primary/30' : 
-                                    'bg-card border-border hover:border-primary/30 opacity-80 hover:opacity-100'
-                                }`}
+                                className={`group p-3 rounded-2xl cursor-pointer transition-all border ${isActiveRoute ? 'bg-primary-soft border-primary/20' :
+                                        isOnline ? 'bg-card border-border hover:border-primary/30' :
+                                            'bg-card border-border hover:border-primary/30 opacity-80 hover:opacity-100'
+                                    }`}
                             >
                                 <div className={`flex gap-3 ${isOnline ? 'items-center' : 'items-start'}`}>
                                     <div className="relative flex-shrink-0">
-                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold ${
-                                            match.user.avatarColor || (isOnline ? 'bg-warning-soft text-warning' : 'bg-muted text-muted-foreground')
-                                        } border border-border/10 shadow-sm overflow-hidden`}>
+                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold ${match.user.avatarColor || (isOnline ? 'bg-warning-soft text-warning' : 'bg-muted text-muted-foreground')
+                                            } border border-border/10 shadow-sm overflow-hidden`}>
                                             <span className="text-white drop-shadow-sm">
                                                 {getInitials(match.user.fullName)}
                                             </span>
@@ -75,11 +73,11 @@ export function MatchesSidebar() {
                                                 {format(new Date(match.matchDate), "d MMM yyyy", { locale: el })}
                                             </span>
                                         </div>
-                                        
+
                                         <span className="text-[10px] font-medium text-muted-foreground block mb-1.5 truncate">
                                             {match.user.currentZone.name}
                                         </span>
-                                        
+
                                         {isOnline ? (
                                             <div className="flex gap-2">
                                                 <span className="text-[10px] font-bold bg-card text-primary px-2 py-0.5 rounded-2xl border border-primary/20 shadow-soft">
@@ -114,7 +112,7 @@ export function MatchesSidebar() {
                         </div>
                         <h3 className="text-sm font-bold text-foreground mb-2">Καμία {activeTab === 'active' ? 'ενεργή σύνδεση' : 'ιστορική καταγραφή'}</h3>
                         <p className="text-xs text-muted-foreground leading-relaxed max-w-[250px]">
-                            Δεν βρέθηκαν αντιστοιχίσεις σε αυτήν την καρτέλα. Ο αλγόριθμος λειτουργεί 24/7 και θα σας ειδοποιήσει αν υπάρξει νέο ταίριασμα.
+                            Δεν βρέθηκαν αντιστοιχίσεις σε αυτήν την καρτέλα. Ο αλγόριθμος λειτουργεί 24/7 και θα σας ειδοποιήσει αν υπάρξει νέα αντιστοίχιση.
                         </p>
                     </div>
                 )}

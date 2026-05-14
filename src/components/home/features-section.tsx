@@ -973,7 +973,7 @@ function WizardStep3Updated() {
                 </div>
                 <div className="flex flex-col gap-1">
                   <div className="bg-background px-3.5 py-2.5 rounded-2xl rounded-bl-sm shadow-sm border border-border text-foreground text-[12px] leading-relaxed">
-                    Καλησπέρα! Είδα ότι έχουμε ταίριασμα για τις περιοχές μας.
+                    Καλησπέρα! Είδα ότι έχουμε αντιστοίχιση στις περιοχές μας.
                     Με ενδιαφέρει πολύ η Αθήνα.
                   </div>
                   <span className="text-[9px] font-medium text-text-quaternary ml-1">

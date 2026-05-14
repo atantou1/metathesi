@@ -33,11 +33,11 @@ export async function sendMatchEmail({
         const { data, error } = await resend.emails.send({
             from: FROM_EMAIL,
             to: [email],
-            subject: '🎉 Βρέθηκε Νέο Ταίριασμα Μετάθεσης!',
+            subject: '🎉 Βρέθηκε Νέα αντιστοίχιση Μετάθεσης!',
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #334155;">
                     <h2 style="color: #0369a1;">Συγχαρητήρια ${userName}!</h2>
-                    <p>Μόλις βρέθηκε ένα νέο ταίριασμα για την αίτηση μετάθεσής σας.</p>
+                    <p>Μόλις βρέθηκε μια νέα αντιστοίχιση για την αίτηση μετάθεσής σας.</p>
                     
                     <div style="background-color: #f8fafc; border-left: 4px solid #0369a1; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0;">
                         <p style="margin: 0 0 8px 0;"><strong>Ονοματεπώνυμο:</strong> ${matchName}</p>

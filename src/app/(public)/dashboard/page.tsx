@@ -118,7 +118,7 @@ export default async function Dashboard() {
                                     <div className="space-y-3">
                                         <div className="w-10 h-10 rounded-2xl bg-surface-dim flex items-center justify-center text-text-secondary font-bold text-sm border border-border-dim">3</div>
                                         <h4 className="font-semibold text-foreground text-sm">Επικοινωνία & Ταυτοποίηση</h4>
-                                        <p className="text-xs leading-relaxed text-text-tertiary font-medium">Μόλις βρεθεί ταίριασμα, ενημερώνεστε αμέσως για να ξεκινήσετε τη διαδικασία.</p>
+                                        <p className="text-xs leading-relaxed text-text-tertiary font-medium">Μόλις βρεθεί αντιστοίχιση, ενημερώνεστε αμέσως για να ξεκινήσετε τη διαδικασία.</p>
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +210,7 @@ export default async function Dashboard() {
         },
     });
 
-    const topTargeting = analytics?.top5Targeting1st 
+    const topTargeting = analytics?.top5Targeting1st
         ? Object.entries(analytics.top5Targeting1st as Record<string, number>)
             .map(([name, val]) => ({ name, val }))
             .sort((a, b) => b.val - a.val)

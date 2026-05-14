@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Public Sector Mutual Matcher",
+  title: "metaThesi | Πλατφόρμα Αμοιβαίων Μεταθέσεων",
   description: "A platform for mutual transfers in the public sector.",
 };
 

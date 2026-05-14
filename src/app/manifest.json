@@ -1,6 +1,6 @@
 {
-  "name": "Public Sector Mutual Matcher",
-  "short_name": "Metathesi",
+  "name": "metaThesi: Πλατφόρμα Αμοιβαίων Μεταθέσεων",
+  "short_name": "metaThesi",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

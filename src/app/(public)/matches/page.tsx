@@ -9,7 +9,7 @@ export default function MatchesPage() {
             </div>
             <h3 className="text-sm font-bold text-foreground mb-2">Καμία επιλεγμένη συνομιλία</h3>
             <p className="text-xs text-muted-foreground leading-relaxed max-w-[250px]">
-                Επιλέξτε ένα ενεργό match σας ή μια παλαιότερη συνομιλία από τα αριστερά για να δείτε τα μηνύματα ή την κατάσταση της αντιστοίχισης.
+                Επιλέξτε μια ενεργή αντιστοίχιση σας ή μια παλαιότερη συνομιλία από τα αριστερά για να δείτε τα μηνύματα ή την κατάσταση της αντιστοίχισης.
             </p>
         </div>
     )
