@@ -722,6 +722,7 @@ function StatsMapContent() {
 
       {/* ── Full-height Map + Overlays ─────────────────────────────────────── */}
       <main style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+        <h1 className="sr-only">Διαδραστικός Χάρτης Στατιστικών Αμοιβαίων Μεταθέσεων</h1>
 
         {/* Map layer */}
         <div className="absolute inset-0 z-0 bg-background" style={{ position: 'absolute', pointerEvents: 'auto' }}>

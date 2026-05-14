@@ -3,8 +3,11 @@ import { Info, Building2, Scale, FileText, ShieldCheck, UserCheck, Lock, Globe, 
 import { SafeEmail } from "@/components/ui/safe-email";
 
 export const metadata: Metadata = {
-  title: "Όροι Χρήσης | metaThesi",
+  title: "Όροι Χρήσης",
   description: "Παρακαλούμε διαβάστε προσεκτικά τους Όρους Χρήσης πριν χρησιμοποιήσετε την πλατφόρμα metaThesi.gr.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

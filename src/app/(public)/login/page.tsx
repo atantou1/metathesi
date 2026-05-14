@@ -1,5 +1,15 @@
 import { Suspense } from "react"
 import { LoginForm } from "@/components/login-form"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Είσοδος",
+  description: "Συνδεθείτε στον λογαριασμό σας στο metaThesi για να δείτε τις αντιστοιχίσεις σας.",
+  alternates: {
+    canonical: "/login",
+  },
+}
+
 
 export default function LoginPage() {
   return (

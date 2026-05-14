@@ -5,8 +5,11 @@ import { ContactForm } from "@/components/contact-form";
 import { Mail, MessageSquare, Phone, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Επικοινωνία | metaThesi",
+    title: "Επικοινωνία",
     description: "Επικοινωνήστε με την ομάδα της metaThesi για οποιαδήποτε απορία ή πρόβλημα αντιμετωπίζετε.",
+    alternates: {
+        canonical: "/contact",
+    },
 };
 
 export default async function ContactPage({

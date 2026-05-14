@@ -1,4 +1,14 @@
 import { SignUpForm } from "@/components/signup-form"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Εγγραφή",
+  description: "Δημιουργήστε νέο λογαριασμό στο metaThesi και βάλτε την αναζήτηση για μετάθεση στον αυτόματο πιλότο.",
+  alternates: {
+    canonical: "/signup",
+  },
+}
+
 
 export default function SignUpPage() {
   return (

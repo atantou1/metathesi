@@ -11,8 +11,35 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "metaThesi | Πλατφόρμα Αμοιβαίων Μεταθέσεων",
-  description: "A platform for mutual transfers in the public sector.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://metathesi.gr"),
+  title: {
+    template: "%s | metaThesi",
+    default: "Αμοιβαίες Μεταθέσεις Εκπαιδευτικών | metaThesi",
+  },
+  description: "Η πρώτη ψηφιακή πλατφόρμα για αμοιβαίες μεταθέσεις εκπαιδευτικών και δημοσίων υπαλλήλων. Βρείτε την ιδανική μετάθεση έξυπνα, αυτοματοποιημένα και γρήγορα.",
+  keywords: ["αμοιβαίες μεταθέσεις", "εκπαιδευτικοί", "μεταθέσεις εκπαιδευτικών", "υπουργείο παιδείας", "δημόσιοι υπάλληλοι", "μετάθεση"],
+  openGraph: {
+    type: "website",
+    locale: "el_GR",
+    url: "https://metathesi.gr",
+    siteName: "metaThesi",
+    title: "Αμοιβαίες Μεταθέσεις Εκπαιδευτικών | metaThesi",
+    description: "Η πρώτη ψηφιακή πλατφόρμα για αμοιβαίες μεταθέσεις εκπαιδευτικών και δημοσίων υπαλλήλων.",
+    images: [
+      {
+        url: "/api/og",
+        width: 1200,
+        height: 630,
+        alt: "metaThesi Platform",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Αμοιβαίες Μεταθέσεις Εκπαιδευτικών | metaThesi",
+    description: "Η πρώτη ψηφιακή πλατφόρμα για αμοιβαίες μεταθέσεις εκπαιδευτικών και δημοσίων υπαλλήλων.",
+    images: ["/api/og"],
+  },
 };
 
 export default function RootLayout({

@@ -15,9 +15,9 @@ export function CtaSection() {
 
       <div className="relative z-10 mx-auto max-w-4xl flex flex-col items-center text-center">
         {/* Υπότιτλος */}
-        <h4 className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">
+        <p className="mb-4 text-[14px] font-medium uppercase tracking-[0.7px] leading-[20px] text-primary">
           Ετοιμοι να ξεκινησετε;
-        </h4>
+        </p>
 
         {/* Κύριος Τίτλος */}
         <h2 className="mb-8 text-[32px] md:text-[48px] font-semibold tracking-tight text-foreground leading-tight md:leading-[48px] dark:text-white">

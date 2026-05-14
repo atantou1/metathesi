@@ -3,8 +3,11 @@ import { Lock, Eye, FileText, UserCheck, RefreshCw, Mail, MapPin, Building2, Sca
 import { SafeEmail } from "@/components/ui/safe-email";
 
 export const metadata: Metadata = {
-  title: "Πολιτική Απορρήτου | metaThesi",
+  title: "Πολιτική Απορρήτου",
   description: "Η παρούσα Πολιτική Απορρήτου περιγράφει πώς το metaThesi συλλέγει, χρησιμοποιεί, διατηρεί και προστατεύει τα προσωπικά σας δεδομένα.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPage() {
