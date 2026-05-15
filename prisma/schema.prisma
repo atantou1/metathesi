@@ -398,3 +398,21 @@ model LoginAttempt {
   @@map("login_attempts")
 }
 
+model RetirementAnalytics {
+  id                        Int    @id @default(autoincrement())
+  specialty                 String
+  division                  String
+  totalRetirements          Int    @map("total_retirements")
+  totalRetirementsHistory   Json   @map("total_retirements_history")
+  totalRetirementsDiff      Int    @map("total_retirements_diff")
+  totalNewHires             Int?   @map("total_new_hires")
+  totalNewHiresHistory      Json?  @map("total_new_hires_history")
+  totalNewHiresDiff         Int?   @map("total_new_hires_diff")
+  netStaffingBalance        Int?   @map("net_staffing_balance")
+  netStaffingBalanceHistory Json?  @map("net_staffing_balance_history")
+  netStaffingBalanceDiff    Int?   @map("net_staffing_balance_diff")
+
+  @@unique([specialty, division])
+  @@map("retirement_analytics")
+}
+

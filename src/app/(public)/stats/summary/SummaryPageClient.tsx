@@ -78,6 +78,17 @@ interface AnalyticsData {
   waitingListAbsolute: number;
   waitingListAbsoluteHistory: Record<string, number>;
   waitingListAbsoluteDiff: number;
+  retirement?: {
+    totalRetirements: number;
+    totalRetirementsHistory: Record<string, number>;
+    totalRetirementsDiff: number;
+    totalNewHires: number | null;
+    totalNewHiresHistory: Record<string, number> | null;
+    totalNewHiresDiff: number | null;
+    netStaffingBalance: number | null;
+    netStaffingBalanceHistory: Record<string, number> | null;
+    netStaffingBalanceDiff: number | null;
+  } | null;
 }
 
 // --- Helper: Αφαίρεση τόνων για τα κεφαλαία ---
@@ -423,16 +434,63 @@ export default function SummaryPageClient() {
             const baseHist = analytics.baseScoreHistory;
             const appHist = analytics.avgScoreApplicantsHistory;
             const years = Array.from(new Set([...Object.keys(baseHist), ...Object.keys(appHist)])).sort();
-            return years.map(y => ({
-                year: y,
-                base: baseHist[y] || 0,
-                avgApp: appHist[y] || 0
-            }));
+            
+            // Omit the first 2 years completely as requested
+            const relevantYears = years.slice(2);
+            
+            return relevantYears.map(y => {
+                const base = baseHist[y] || 0;
+                const avgApp = appHist[y] || 0;
+                
+                // If either is missing, show no bars to avoid confusing the user
+                if (base === 0 || avgApp === 0) {
+                    return { year: y, base: 0, avgApp: 0 };
+                }
+                
+                return { year: y, base, avgApp };
+            });
         })()
     },
     topDestinations: transformTopList(analytics.top5DestinationRegions),
     topCompetitive: transformTopList(analytics.top5CompetitiveRegions),
     topTargeting: transformTopList(analytics.top5Targeting1st),
+    hrAnalytics: analytics.retirement ? {
+      retirements: {
+        value: analytics.retirement.totalRetirements,
+        diff: analytics.retirement.totalRetirementsDiff,
+        data: transformHistory(analytics.retirement.totalRetirementsHistory as Record<string, number>),
+      },
+      newHires: {
+        value: analytics.retirement.totalNewHires,
+        diff: analytics.retirement.totalNewHiresDiff,
+        fallback2025: (analytics.retirement.totalNewHiresHistory as Record<string, number>)?.["2025"],
+        data: (() => {
+          const hist = analytics.retirement?.totalNewHiresHistory as Record<string, number> || {};
+          const transformed = transformHistory(hist);
+          if (analytics.retirement?.totalNewHires === null) {
+            if (!transformed.find((d: any) => d.year === "2026")) {
+              transformed.push({ year: "2026", val: 0 });
+            }
+          }
+          return transformed;
+        })()
+      },
+      netStaffingBalance: {
+        value: analytics.retirement.netStaffingBalance,
+        diff: analytics.retirement.netStaffingBalanceDiff,
+        fallback2025: (analytics.retirement.netStaffingBalanceHistory as Record<string, number>)?.["2025"],
+        data: (() => {
+          const hist = analytics.retirement?.netStaffingBalanceHistory as Record<string, number> || {};
+          const transformed = transformHistory(hist);
+          if (analytics.retirement?.netStaffingBalance === null) {
+            if (!transformed.find((d: any) => d.year === "2026")) {
+              transformed.push({ year: "2026", val: 0 });
+            }
+          }
+          return transformed;
+        })()
+      }
+    } : null,
   } : null;
 
 
@@ -694,19 +752,206 @@ export default function SummaryPageClient() {
               })}
             </div>
 
+            {/* --- HR Analytics (Retirements & New Hires & Net Staffing) --- */}
+            {dashboardData?.hrAnalytics && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mt-6 lg:mt-8 mb-6 lg:mb-8">
+                {/* Retirements Card */}
+                <div className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
+                  <div>
+                    <div className="flex justify-between items-start mb-1 h-8">
+                      <div className="flex items-center gap-1.5 relative group/tooltip">
+                        <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
+                          ΑΠΟΧΩΡΗΣΕΙΣ
+                        </div>
+                        <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
+                        <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
+                          <div className="mb-3">
+                            <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+                            <span className="text-xs text-text-secondary leading-snug">Ο συνολικός αριθμός των εκπαιδευτικών της ειδικότητάς που συνταξιοδοτήθηκαν ή παραιτήθηκαν οριστικά από την υπηρεσία.</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+                            <span className="text-xs text-text-secondary leading-snug">Αποτελεί την κύρια πηγή δημιουργίας νέων, πραγματικών οργανικών κενών. Ένας υψηλός αριθμός αποχωρήσεων συνήθως &quot;ξεκλειδώνει&quot; περισσότερες θέσεις για τις μεταθέσεις της επόμενης χρονιάς.</span>
+                          </div>
+                          <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
+                        </div>
+                      </div>
+                      {dashboardData.hrAnalytics.retirements.diff !== 0 && (
+                        <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${dashboardData.hrAnalytics.retirements.diff > 0 ? "text-success bg-success-soft border border-success/20" : "text-danger bg-danger-soft border border-danger/20"}`}>
+                          {dashboardData.hrAnalytics.retirements.diff > 0 ? "+" : ""}{dashboardData.hrAnalytics.retirements.diff}
+                          {dashboardData.hrAnalytics.retirements.diff > 0 ? <TrendingUp className="w-3 h-3 ml-0.5" strokeWidth={2.5} /> : <TrendingDown className="w-3 h-3 ml-0.5" strokeWidth={2.5} />}
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-3xl mt-1 font-extrabold tracking-tight text-foreground">
+                      {dashboardData.hrAnalytics.retirements.value}
+                    </div>
+                  </div>
+                  <div className="h-20 w-full mt-auto">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={dashboardData.hrAnalytics.retirements.data} margin={{ top: 15, right: 0, bottom: 0, left: 0 }}>
+                        <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--text-tertiary)", fontWeight: 500 }} dy={5} />
+                        <RechartsTooltip cursor={{ fill: "var(--muted)" }} contentStyle={{ display: "none" }} />
+                        <Bar dataKey="val" radius={[4, 4, 0, 0]}>
+                          <LabelList dataKey="val" position="top" formatter={(value: any) => value} content={(props: any) => {
+                            const { x, y, value, index } = props;
+                            const isLast = index === dashboardData.hrAnalytics!.retirements.data.length - 1;
+                            return (
+                              <text x={x + props.width / 2} y={y - 5} fill={isLast ? theme.labels.current : theme.labels.past} fontSize={10} fontWeight={600} textAnchor="middle">
+                                {value}
+                              </text>
+                            );
+                          }} />
+                          {dashboardData.hrAnalytics.retirements.data.map((entry, index) => {
+                            const isLast = index === dashboardData.hrAnalytics!.retirements.data.length - 1;
+                            return <Cell key={`cell-${index}`} fill={isLast ? theme.bars.current : theme.bars.past} />;
+                          })}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* New Hires Card */}
+                <div className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
+                  <div>
+                    <div className="flex justify-between items-start mb-1 h-8">
+                      <div className="flex items-center gap-1.5 relative group/tooltip">
+                        <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
+                          ΔΙΟΡΙΣΜΟΙ
+                        </div>
+                        <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
+                        <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
+                          <div className="mb-3">
+                            <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+                            <span className="text-xs text-text-secondary leading-snug">Ο συνολικός αριθμός των εκπαιδευτικών που διορίστηκαν μόνιμα στην ειδικότητά σας.</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+                            <span className="text-xs text-text-secondary leading-snug">Δείχνει τον βαθμό αναπλήρωσης του κλάδου. Οι μαζικοί διορισμοί καλύπτουν τα κενά, γεγονός που μακροπρόθεσμα μπορεί να μειώσει τις ευκαιρίες μετάθεσης και να αυξήσει τον ανταγωνισμό.</span>
+                          </div>
+                          <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
+                        </div>
+                      </div>
+                      {dashboardData.hrAnalytics.newHires.diff !== 0 && dashboardData.hrAnalytics.newHires.diff !== null && (
+                        <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${dashboardData.hrAnalytics.newHires.diff > 0 ? "text-success bg-success-soft border border-success/20" : "text-danger bg-danger-soft border border-danger/20"}`}>
+                          {dashboardData.hrAnalytics.newHires.diff > 0 ? "+" : ""}{dashboardData.hrAnalytics.newHires.diff}
+                          {dashboardData.hrAnalytics.newHires.diff > 0 ? <TrendingUp className="w-3 h-3 ml-0.5" strokeWidth={2.5} /> : <TrendingDown className="w-3 h-3 ml-0.5" strokeWidth={2.5} />}
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-3xl mt-1 font-extrabold tracking-tight text-foreground">
+                      {dashboardData.hrAnalytics.newHires.value === null ? (
+                        <span className="text-text-tertiary text-3xl">
+                          {dashboardData.hrAnalytics.newHires.fallback2025 !== undefined ? `${dashboardData.hrAnalytics.newHires.fallback2025} (2025)` : "N/A"}
+                        </span>
+                      ) : (
+                        dashboardData.hrAnalytics.newHires.value
+                      )}
+                    </div>
+                  </div>
+                  <div className="h-20 w-full mt-auto">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={dashboardData.hrAnalytics.newHires.data} margin={{ top: 15, right: 0, bottom: 0, left: 0 }}>
+                        <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--text-tertiary)", fontWeight: 500 }} dy={5} />
+                        <RechartsTooltip cursor={{ fill: "var(--muted)" }} contentStyle={{ display: "none" }} />
+                        <Bar dataKey="val" radius={[4, 4, 0, 0]}>
+                          <LabelList dataKey="val" position="top" formatter={(value: any) => value} content={(props: any) => {
+                            const { x, y, value, index } = props;
+                            const isLast = index === dashboardData.hrAnalytics!.newHires.data.length - 1;
+                            const isNullFallback = isLast && dashboardData.hrAnalytics!.newHires.value === null;
+                            if (isNullFallback) return null; // No label if the bar is artificially 0 for a null current year
+                            return (
+                              <text x={x + props.width / 2} y={y - 5} fill={isLast ? theme.labels.current : theme.labels.past} fontSize={10} fontWeight={600} textAnchor="middle">
+                                {value}
+                              </text>
+                            );
+                          }} />
+                          {dashboardData.hrAnalytics.newHires.data.map((entry, index) => {
+                            const isLast = index === dashboardData.hrAnalytics!.newHires.data.length - 1;
+                            return <Cell key={`cell-${index}`} fill={isLast ? theme.bars.current : theme.bars.past} />;
+                          })}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* Net Staffing Balance Card */}
+                <div className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
+                  <div>
+                    <div className="flex justify-between items-start mb-1 h-8">
+                      <div className="flex items-center gap-1.5 relative group/tooltip">
+                        <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
+                          ΙΣΟΖΥΓΙΟ ΠΡΟΣΩΠΙΚΟΥ
+                        </div>
+                        <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
+                        <div className="absolute right-0 lg:left-0 lg:right-auto top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
+                          <div className="mb-3">
+                            <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+                            <span className="text-xs text-text-secondary leading-snug">Η μαθηματική διαφορά μεταξύ των νέων διορισμών και των αποχωρήσεων (Διορισμοί μείον Αποχωρήσεις) για τη συγκεκριμένη χρονιά.</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+                            <span className="text-xs text-text-secondary leading-snug">Αποκαλύπτει τη &quot;δυναμική&quot; του κλάδου. Αρνητικό ισοζύγιο σημαίνει ότι η ειδικότητα &quot;αδειάζει&quot; (άρα θα προκύψουν ευκαιρίες μετάθεσης), ενώ θετικό δείχνει κορεσμό και σταδιακό κλείσιμο διαθέσιμων θέσεων.</span>
+                          </div>
+                          <div className="absolute -top-1 right-4 lg:left-4 lg:right-auto w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
+                        </div>
+                      </div>
+                      {dashboardData.hrAnalytics.netStaffingBalance.diff !== 0 && dashboardData.hrAnalytics.netStaffingBalance.diff !== null && (
+                        <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${dashboardData.hrAnalytics.netStaffingBalance.diff > 0 ? "text-success bg-success-soft border border-success/20" : "text-danger bg-danger-soft border border-danger/20"}`}>
+                          {dashboardData.hrAnalytics.netStaffingBalance.diff > 0 ? "+" : ""}{dashboardData.hrAnalytics.netStaffingBalance.diff}
+                          {dashboardData.hrAnalytics.netStaffingBalance.diff > 0 ? <TrendingUp className="w-3 h-3 ml-0.5" strokeWidth={2.5} /> : <TrendingDown className="w-3 h-3 ml-0.5" strokeWidth={2.5} />}
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-3xl mt-1 font-extrabold tracking-tight text-foreground">
+                      {dashboardData.hrAnalytics.netStaffingBalance.value === null ? (
+                        <span className="text-text-tertiary text-3xl">
+                          {dashboardData.hrAnalytics.netStaffingBalance.fallback2025 !== undefined ? `${dashboardData.hrAnalytics.netStaffingBalance.fallback2025} (2025)` : "N/A"}
+                        </span>
+                      ) : (
+                        dashboardData.hrAnalytics.netStaffingBalance.value
+                      )}
+                    </div>
+                  </div>
+                  <div className="h-20 w-full mt-auto">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={dashboardData.hrAnalytics.netStaffingBalance.data} margin={{ top: 15, right: 0, bottom: 0, left: 0 }}>
+                        <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "var(--text-tertiary)", fontWeight: 500 }} dy={5} />
+                        <RechartsTooltip cursor={{ fill: "var(--muted)" }} contentStyle={{ display: "none" }} />
+                        <Bar dataKey="val" radius={[4, 4, 0, 0]}>
+                          <LabelList dataKey="val" position="top" formatter={(value: any) => value} content={(props: any) => {
+                            const { x, y, value, index } = props;
+                            const isLast = index === dashboardData.hrAnalytics!.netStaffingBalance.data.length - 1;
+                            const isNullFallback = isLast && dashboardData.hrAnalytics!.netStaffingBalance.value === null;
+                            if (isNullFallback) return null; // No label if the bar is artificially 0 for a null current year
+                            return (
+                              <text x={x + props.width / 2} y={y - 5} fill={isLast ? theme.labels.current : theme.labels.past} fontSize={10} fontWeight={600} textAnchor="middle">
+                                {value}
+                              </text>
+                            );
+                          }} />
+                          {dashboardData.hrAnalytics.netStaffingBalance.data.map((entry, index) => {
+                            const isLast = index === dashboardData.hrAnalytics!.netStaffingBalance.data.length - 1;
+                            return <Cell key={`cell-${index}`} fill={isLast ? theme.bars.current : theme.bars.past} />;
+                          })}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* --- Comparison Chart (Clean) --- */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
               <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col">
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">
-                      Σύγκριση Μορίων & Βάσεων
-                    </h3>
-                    <p className="text-[11px] font-medium text-text-tertiary uppercase tracking-wider">
-                      {removeGreekAccents(
-                        "Πού κυμαίνεται η βάση σε σχέση με τη μάζα"
-                      ).toUpperCase()}
-                    </p>
+                     <h3 className="text-xl font-bold text-foreground tracking-tight mb-4">
+                        Σύγκριση Μ.Ο. Αιτούντων & Βάσεων
+                      </h3>
                   </div>
                   <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
                       <div className="w-3 h-3 rounded-sm bg-primary"></div> ΒΑΣΗ
@@ -769,16 +1014,10 @@ export default function SummaryPageClient() {
               </div>
 
               <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
-                <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 rounded-xl bg-surface-dim border border-border-dim text-text-tertiary">
-                        <Activity className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-lg font-bold text-foreground">
-                    Στρατηγική Ανάλυση
-                    </h3>
-                </div>
+                <h3 className="text-xl font-bold text-foreground mb-4">
+                Δημοφιλείς Περιοχές (1η Προτίμηση)
+                </h3>
                 <div className="w-full space-y-4">
-                    <p className="text-xs text-text-tertiary mb-2 uppercase tracking-widest font-bold">ΠΕΡΙΟΧΕΣ ΜΕ ΤΗ ΜΕΓΑΛΥΤΕΡΗ ΖΗΤΗΣΗ (1η ΠΡΟΤΙΜΗΣΗ)</p>
                     {dashboardData?.topTargeting.map((item, idx) => (
                         <div key={idx} className="group">
                              <div className="flex justify-between items-end mb-2">
@@ -804,76 +1043,61 @@ export default function SummaryPageClient() {
               </div>
             </div>
 
+
+
             {/* --- Rankings Area (Top 5) --- */}
-            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 border-b border-border-dim pb-6">
-                <div>
-                  <h3 className="text-xl font-bold text-foreground tracking-tight flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-surface-dim border border-border-dim text-text-tertiary">
-                      <Map className="w-5 h-5" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+              {/* Card 1: Top Destinations */}
+              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+                <h3 className="text-xl font-bold text-foreground mb-4">
+                  Κορυφαίοι Προορισμοί Απορρόφησης
+                </h3>
+                <div className="w-full space-y-6">
+                  {dashboardData?.topDestinations.map((item, idx) => (
+                    <div key={idx} className="group cursor-pointer">
+                      <div className="flex justify-between items-end mb-2">
+                        <span className="text-sm font-semibold text-text-secondary group-hover:text-primary-hover transition-colors">
+                          {item.name}
+                        </span>
+                        <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
+                          {item.val} θέσεις
+                        </span>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
+                        <div
+                          className="bg-primary h-1.5 rounded-full transition-all duration-500"
+                          style={{ width: `${(item.val / item.max) * 100}%` }}
+                        ></div>
+                      </div>
                     </div>
-                    Γεωγραφική Ανάλυση Ειδικότητας
-                  </h3>
-                  <p className="text-xs font-medium text-text-tertiary mt-2 pl-12">
-                    Ποιες περιοχές απορρόφησαν τον κόσμο & ποιες απαιτούν τα
-                    περισσότερα μόρια.
-                  </p>
+                  ))}
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
-                {/* List 1: Top Destinations */}
-                <div>
-                  <h4 className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-6 pb-2 border-b border-border-dim">
-                    13. ΚΟΡΥΦΑΙΟΙ ΠΡΟΟΡΙΣΜΟΙ ΑΠΟΡΡΟΦΗΣΗΣ
-                  </h4>
-                  <div className="space-y-6">
-                    {dashboardData?.topDestinations.map((item, idx) => (
-                      <div key={idx} className="group cursor-pointer">
-                        <div className="flex justify-between items-end mb-2">
-                          <span className="text-sm font-semibold text-text-secondary group-hover:text-primary-hover transition-colors">
-                            {item.name}
-                          </span>
-                          <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
-                            {item.val} θέσεις
-                          </span>
-                        </div>
-                        <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
-                          <div
-                            className="bg-primary h-1.5 rounded-full transition-all duration-500"
-                            style={{ width: `${(item.val / item.max) * 100}%` }}
-                          ></div>
-                        </div>
+              {/* Card 2: Top Competitive */}
+              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+                <h3 className="text-xl font-bold text-foreground mb-4">
+                  Περιοχές με τις Υψηλότερες Βάσεις
+                </h3>
+                <div className="w-full space-y-6">
+                  {dashboardData?.topCompetitive.map((item, idx) => (
+                    <div key={idx} className="group cursor-pointer">
+                      <div className="flex justify-between items-end mb-2">
+                        <span className="text-sm font-semibold text-text-secondary group-hover:text-primary transition-colors">
+                          {item.name}
+                        </span>
+                        <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
+                          {item.val} μόρια
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* List 2: Top Competitive */}
-                <div>
-                  <h4 className="text-[10px] font-bold text-text-quaternary uppercase tracking-widest mb-6 pb-2 border-b border-border-dim">
-                    14. ΠΕΡΙΟΧΕΣ ΜΕ ΤΙΣ ΥΨΗΛΟΤΕΡΕΣ ΒΑΣΕΙΣ
-                  </h4>
-                  <div className="space-y-6">
-                    {dashboardData?.topCompetitive.map((item, idx) => (
-                      <div key={idx} className="group cursor-pointer">
-                        <div className="flex justify-between items-end mb-2">
-                          <span className="text-sm font-semibold text-text-secondary group-hover:text-primary transition-colors">
-                            {item.name}
-                          </span>
-                          <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
-                            {item.val} μόρια
-                          </span>
-                        </div>
-                        <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
-                          <div
-                            className="bg-primary h-1.5 rounded-full transition-all duration-500"
-                            style={{ width: `${(item.val / item.max) * 100}%` }}
-                          ></div>
-                        </div>
+                      <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
+                        <div
+                          className="bg-primary h-1.5 rounded-full transition-all duration-500"
+                          style={{ width: `${(item.val / item.max) * 100}%` }}
+                        ></div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

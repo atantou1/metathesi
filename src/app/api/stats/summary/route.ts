@@ -14,14 +14,24 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const analytics = await prisma.specialtyAnalytics.findUnique({
-      where: {
-        specialty_division: {
-          specialty,
-          division,
+    const [analytics, retirement] = await Promise.all([
+      prisma.specialtyAnalytics.findUnique({
+        where: {
+          specialty_division: {
+            specialty,
+            division,
+          },
         },
-      },
-    })
+      }),
+      prisma.retirementAnalytics.findUnique({
+        where: {
+          specialty_division: {
+            specialty,
+            division,
+          },
+        },
+      }),
+    ])
 
     if (!analytics) {
       return NextResponse.json(
@@ -30,7 +40,12 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    return NextResponse.json({ data: analytics })
+    const combinedData = {
+      ...analytics,
+      retirement: retirement || null,
+    }
+
+    return NextResponse.json({ data: combinedData })
   } catch (error) {
     console.error('Error fetching specialty analytics:', error)
     return NextResponse.json({ error: String(error) }, { status: 500 })
