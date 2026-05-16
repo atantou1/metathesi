@@ -2,7 +2,7 @@
 
 import React from "react"
 
-interface MiniChartProps {
+export interface MiniChartProps {
   title: string
   value: string
   percent?: string
@@ -10,7 +10,7 @@ interface MiniChartProps {
   isPositive?: boolean
 }
 
-function MiniChart({ title, value, percent, bars, isPositive }: MiniChartProps) {
+export function MiniChart({ title, value, percent, bars, isPositive }: MiniChartProps) {
   return (
     <div className="flex flex-col gap-1 p-2 h-full bg-card border border-border rounded-xl shadow-soft">
       <div className="flex justify-between items-start">

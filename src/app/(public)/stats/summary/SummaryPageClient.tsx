@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   BarChart,
   Bar,
@@ -13,7 +14,19 @@ import {
   ResponsiveContainer,
   Cell,
   LabelList,
+  PieChart,
+  Pie,
+  RadialBarChart,
+  RadialBar,
 } from "recharts";
+
+const PIE_COLORS = [
+  "hsl(217, 91%, 60%)", 
+  "hsl(142, 71%, 45%)", 
+  "hsl(35, 92%, 53%)",  
+  "hsl(262, 83%, 58%)", 
+  "hsl(199, 89%, 48%)"  
+];
 import {
   ArrowLeft,
   TrendingUp,
@@ -947,11 +960,25 @@ export default function SummaryPageClient() {
             {/* --- Comparison Chart (Clean) --- */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
               <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col">
-                <div className="flex justify-between items-start mb-6">
+                <div className="flex flex-col xl:flex-row justify-between items-start mb-6 gap-4 xl:gap-0">
                   <div>
-                     <h3 className="text-xl font-bold text-foreground tracking-tight mb-4">
-                        Σύγκριση Μ.Ο. Αιτούντων & Βάσεων
-                      </h3>
+                      <div className="flex items-center gap-2 relative group/tooltip w-fit xl:mb-4">
+                        <h3 className="text-xl font-bold text-foreground tracking-tight">
+                          Σύγκριση Μ.Ο. Αιτούντων & Βάσεων
+                        </h3>
+                        <Info className="w-5 h-5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
+                        <div className="absolute left-0 top-8 hidden group-hover/tooltip:block w-72 sm:w-80 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none font-sans">
+                          <div className="mb-3">
+                            <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+                            <span className="text-xs text-text-secondary leading-snug font-normal">Απεικονίζει τη διαχρονική εξέλιξη του Μέσου Όρου των Μορίων των Αιτούντων σε σχέση με τη Βάση (τα μόρια του τελευταίου μετατεθέντα).</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+                            <span className="text-xs text-text-secondary leading-snug font-normal">Δείχνει την τάση του ανταγωνισμού και τη δυσκολία της χρονιάς, βοηθώντας σας να κατανοήσετε αν οι βάσεις κινούνται ανοδικά ή καθοδικά.</span>
+                          </div>
+                          <div className="absolute -top-1 left-6 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
+                        </div>
+                      </div>
                   </div>
                   <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
                       <div className="w-3 h-3 rounded-sm bg-primary"></div> ΒΑΣΗ
@@ -1014,25 +1041,43 @@ export default function SummaryPageClient() {
               </div>
 
               <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
-                <h3 className="text-xl font-bold text-foreground mb-4">
-                Δημοφιλείς Περιοχές (1η Προτίμηση)
-                </h3>
-                <div className="w-full space-y-4">
+                <div className="flex items-center gap-2 relative group/tooltip w-fit mb-4">
+                  <h3 className="text-xl font-bold text-foreground">
+                  Δημοφιλείς Περιοχές (1η Προτίμηση)
+                  </h3>
+                  <Info className="w-5 h-5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
+                  <div className="absolute left-0 top-8 hidden group-hover/tooltip:block w-72 sm:w-80 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none font-sans">
+                    <div className="mb-3">
+                      <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+                      <span className="text-xs text-text-secondary leading-snug font-normal">Οι 5 περιοχές που δηλώθηκαν περισσότερο ως πρώτη (1η) επιλογή από τους εκπαιδευτικούς της ειδικότητάς σας κατά την τελευταία χρονιά.</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+                      <span className="text-xs text-text-secondary leading-snug font-normal">Σας δείχνει τις περιοχές με τον υψηλότερο ανταγωνισμό και τη μεγαλύτερη συγκέντρωση ζήτησης, βοηθώντας σας να αξιολογήσετε τις δικές σας επιλογές.</span>
+                    </div>
+                    <div className="absolute -top-1 left-6 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
+                  </div>
+                </div>
+                <div className="w-full space-y-6">
                     {dashboardData?.topTargeting.map((item, idx) => (
-                        <div key={idx} className="group">
+                        <div key={idx} className="group cursor-pointer">
                              <div className="flex justify-between items-end mb-2">
                                 <span className="text-sm font-semibold text-text-secondary group-hover:text-primary-hover transition-colors">
                                     {item.name}
                                 </span>
-                                <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
-                                    {item.val} άτομα
+                                <span className="text-[11px] bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
+                                    <span className="font-extrabold text-foreground">{item.val}</span>
+                                    <span className="text-text-tertiary ml-1">άτομα</span>
                                 </span>
                              </div>
-                             <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
-                                <div
-                                    className="bg-primary h-1.5 rounded-full transition-all duration-500"
-                                    style={{ width: `${(item.val / item.max) * 100}%` }}
-                                ></div>
+                             <div className="w-full bg-muted rounded-full h-2 overflow-hidden shadow-inner">
+                                <motion.div
+                                    className="bg-gradient-to-r from-primary/70 to-primary h-2 rounded-full"
+                                    initial={{ width: 0 }}
+                                    whileInView={{ width: `${(item.val / item.max) * 100}%` }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                />
                             </div>
                         </div>
                     ))}
@@ -1049,9 +1094,23 @@ export default function SummaryPageClient() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
               {/* Card 1: Top Destinations */}
               <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
-                <h3 className="text-xl font-bold text-foreground mb-4">
-                  Κορυφαίοι Προορισμοί Απορρόφησης
-                </h3>
+                <div className="flex items-center gap-2 relative group/tooltip w-fit mb-4">
+                  <h3 className="text-xl font-bold text-foreground">
+                    Κορυφαίοι Προορισμοί Απορρόφησης
+                  </h3>
+                  <Info className="w-5 h-5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
+                  <div className="absolute left-0 top-8 hidden group-hover/tooltip:block w-72 sm:w-80 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none font-sans z-[60]">
+                    <div className="mb-3">
+                      <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+                      <span className="text-xs text-text-secondary leading-snug font-normal">Οι περιοχές όπου πραγματοποιήθηκαν οι περισσότερες μεταθέσεις (μεγαλύτερος αριθμός ατόμων που μετακινήθηκαν) την τελευταία χρονιά.</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+                      <span className="text-xs text-text-secondary leading-snug font-normal">Υποδεικνύει ποιες περιοχές εμφανίζουν ιστορικά τα μεγαλύτερα οργανικά κενά ή κινητικότητα, αυξάνοντας στατιστικά τις πιθανότητες μετάθεσης.</span>
+                    </div>
+                    <div className="absolute -top-1 left-6 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
+                  </div>
+                </div>
                 <div className="w-full space-y-6">
                   {dashboardData?.topDestinations.map((item, idx) => (
                     <div key={idx} className="group cursor-pointer">
@@ -1059,15 +1118,19 @@ export default function SummaryPageClient() {
                         <span className="text-sm font-semibold text-text-secondary group-hover:text-primary-hover transition-colors">
                           {item.name}
                         </span>
-                        <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
-                          {item.val} θέσεις
+                        <span className="text-[11px] bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
+                          <span className="font-extrabold text-foreground">{item.val}</span>
+                          <span className="text-text-tertiary ml-1">θέσεις</span>
                         </span>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
-                        <div
-                          className="bg-primary h-1.5 rounded-full transition-all duration-500"
-                          style={{ width: `${(item.val / item.max) * 100}%` }}
-                        ></div>
+                      <div className="w-full bg-muted rounded-full h-2 overflow-hidden shadow-inner">
+                        <motion.div
+                          className="bg-gradient-to-r from-primary/70 to-primary h-2 rounded-full"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${(item.val / item.max) * 100}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.8, ease: "easeOut" }}
+                        />
                       </div>
                     </div>
                   ))}
@@ -1076,9 +1139,23 @@ export default function SummaryPageClient() {
 
               {/* Card 2: Top Competitive */}
               <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
-                <h3 className="text-xl font-bold text-foreground mb-4">
-                  Περιοχές με τις Υψηλότερες Βάσεις
-                </h3>
+                <div className="flex items-center gap-2 relative group/tooltip w-fit mb-4">
+                  <h3 className="text-xl font-bold text-foreground">
+                    Περιοχές με τις Υψηλότερες Βάσεις
+                  </h3>
+                  <Info className="w-5 h-5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
+                  <div className="absolute right-0 sm:left-0 sm:right-auto top-8 hidden group-hover/tooltip:block w-72 sm:w-80 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-[60] pointer-events-none font-sans">
+                    <div className="mb-3">
+                      <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+                      <span className="text-xs text-text-secondary leading-snug font-normal">Οι περιοχές που απαίτησαν τα περισσότερα μόρια για μετάθεση (βάση τελευταίου μετατεθέντα) κατά την τελευταία χρονιά.</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+                      <span className="text-xs text-text-secondary leading-snug font-normal">Σας βοηθά να εντοπίσετε τους πιο "απρόσιτους" ή απαιτητικούς προορισμούς, ώστε να ρυθμίσετε ρεαλιστικά τη στρατηγική των δηλώσεών σας.</span>
+                    </div>
+                    <div className="absolute -top-1 right-6 sm:right-auto sm:left-6 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
+                  </div>
+                </div>
                 <div className="w-full space-y-6">
                   {dashboardData?.topCompetitive.map((item, idx) => (
                     <div key={idx} className="group cursor-pointer">
@@ -1086,15 +1163,19 @@ export default function SummaryPageClient() {
                         <span className="text-sm font-semibold text-text-secondary group-hover:text-primary transition-colors">
                           {item.name}
                         </span>
-                        <span className="text-[11px] font-bold text-text-tertiary bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
-                          {item.val} μόρια
+                        <span className="text-[11px] bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
+                          <span className="font-extrabold text-foreground">{item.val}</span>
+                          <span className="text-text-tertiary ml-1">μόρια</span>
                         </span>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
-                        <div
-                          className="bg-primary h-1.5 rounded-full transition-all duration-500"
-                          style={{ width: `${(item.val / item.max) * 100}%` }}
-                        ></div>
+                      <div className="w-full bg-muted rounded-full h-2 overflow-hidden shadow-inner">
+                        <motion.div
+                          className="bg-gradient-to-r from-primary/70 to-primary h-2 rounded-full"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${(item.val / item.max) * 100}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.8, ease: "easeOut" }}
+                        />
                       </div>
                     </div>
                   ))}

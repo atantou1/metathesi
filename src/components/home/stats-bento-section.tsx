@@ -101,14 +101,21 @@ export function StatsBentoSection() {
                 Μείνετε ένα βήμα μπροστά αποκτώντας την πλήρη εικόνα της κινητικότητας.
               </p>
             </div>
-            <div className="absolute inset-x-6 md:left-[50%] lg:left-[55%] bottom-0 top-36 md:top-6 flex overflow-hidden rounded-t-2xl md:rounded-tl-2xl md:rounded-tr-none border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 md:group-hover:-translate-x-2 md:group-hover:translate-y-0 dark:border-border">
-              <div className="hidden sm:block w-1/3 border-r border-neutral-100 bg-surface-dim/50 p-4 dark:border-border dark:bg-card/30">
-                <div className="h-2 w-3/4 rounded bg-neutral-200 mb-3 dark:bg-muted"></div>
-                <div className="h-2 w-full rounded bg-neutral-200 mb-2 dark:bg-muted"></div>
-                <div className="h-2 w-5/6 rounded bg-neutral-200 mb-2 dark:bg-muted"></div>
+            <div className="absolute inset-x-6 md:left-[50%] lg:left-[55%] bottom-0 top-36 md:top-6 flex flex-col overflow-hidden rounded-t-2xl md:rounded-tl-2xl md:rounded-tr-none border border-neutral-200/60 bg-background shadow-xl transition-transform duration-500 group-hover:-translate-y-2 md:group-hover:-translate-x-2 md:group-hover:translate-y-0 dark:border-border">
+              <div className="flex h-9 items-center gap-2 border-b border-border bg-muted px-4">
+                <div className="h-2.5 w-2.5 rounded-full bg-red-400"></div>
+                <div className="h-2.5 w-2.5 rounded-full bg-amber-400"></div>
+                <div className="h-2.5 w-2.5 rounded-full bg-green-400"></div>
               </div>
-              <div className="flex-1 p-2 overflow-hidden relative">
-                <BentoInteractiveCharts />
+              <div className="flex-1 flex overflow-hidden">
+                <div className="hidden sm:block w-1/3 border-r border-neutral-100 bg-surface-dim/50 p-4 dark:border-border dark:bg-card/30">
+                  <div className="h-2 w-3/4 rounded bg-neutral-200 mb-3 dark:bg-muted"></div>
+                  <div className="h-2 w-full rounded bg-neutral-200 mb-2 dark:bg-muted"></div>
+                  <div className="h-2 w-5/6 rounded bg-neutral-200 mb-2 dark:bg-muted"></div>
+                </div>
+                <div className="flex-1 p-2 overflow-hidden relative">
+                  <BentoInteractiveCharts />
+                </div>
               </div>
             </div>
           </div>
