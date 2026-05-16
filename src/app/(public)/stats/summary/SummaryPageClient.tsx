@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -236,6 +236,65 @@ function useIsMobile() {
     return () => window.removeEventListener("resize", check);
   }, []);
   return isMobile;
+}
+
+function InfoTooltip({ 
+  title, 
+  description, 
+  alignRight = false, 
+  containerClassName = "w-72 sm:w-80",
+  iconClassName = "w-5 h-5",
+  arrowClassName = "left-6"
+}: { 
+  title: string, 
+  description: string, 
+  alignRight?: boolean, 
+  containerClassName?: string,
+  iconClassName?: string,
+  arrowClassName?: string
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div 
+      className="group/tooltip inline-flex items-center justify-center cursor-pointer"
+      ref={tooltipRef}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsOpen(!isOpen);
+      }}
+    >
+      <Info className={`${iconClassName} text-text-quaternary hover:text-text-tertiary transition-colors`} />
+      
+      <div className={`absolute top-12 left-4 right-4 w-auto sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:w-72 ${isOpen ? "block" : "hidden sm:group-hover/tooltip:block"} bg-card border border-border text-left p-4 rounded-xl shadow-xl z-[60] font-sans`}>
+        <div className="mb-3">
+          <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+          <span className="text-xs text-text-secondary leading-snug font-normal">{title}</span>
+        </div>
+        <div>
+          <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+          <span className="text-xs text-text-secondary leading-snug font-normal">{description}</span>
+        </div>
+        <div className={`hidden sm:block absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45`}></div>
+      </div>
+    </div>
+  );
 }
 
 export default function SummaryPageClient() {
@@ -639,37 +698,22 @@ export default function SummaryPageClient() {
                 return (
                     <div
                     key={kpi.id}
-                    className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
+                    className="relative bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
                   >
                     <div>
                       <div className="flex justify-between items-start mb-1 h-8">
                         {/* Header with Title and Tooltip */}
-                        <div className="flex items-center gap-1.5 relative group/tooltip">
+                        <div className="flex items-center gap-1.5 w-fit">
                           <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
                             {removeGreekAccents(kpi.title).toUpperCase()}
                           </div>
-                          <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-
-                          {/* Tooltip Content */}
-                          <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
-                            <div className="mb-3">
-                              <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">
-                                ΤΙ ΕΙΝΑΙ
-                              </span>
-                              <span className="text-xs text-text-secondary leading-snug">
-                                {kpi.infoWhat}
-                              </span>
-                            </div>
-                            <div>
-                              <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">
-                                ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ
-                              </span>
-                              <span className="text-xs text-text-secondary leading-snug">
-                                {kpi.infoWhy}
-                              </span>
-                            </div>
-                            <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                          </div>
+                          <InfoTooltip 
+                            title={kpi.infoWhat}
+                            description={kpi.infoWhy}
+                            iconClassName="w-3.5 h-3.5"
+                            containerClassName="w-64"
+                            arrowClassName="left-4"
+                          />
                         </div>
 
                         {/* Semantic Diff Badge */}
@@ -769,25 +813,20 @@ export default function SummaryPageClient() {
             {dashboardData?.hrAnalytics && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mt-6 lg:mt-8 mb-6 lg:mb-8">
                 {/* Retirements Card */}
-                <div className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
+                <div className="relative bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
                   <div>
                     <div className="flex justify-between items-start mb-1 h-8">
-                      <div className="flex items-center gap-1.5 relative group/tooltip">
+                      <div className="flex items-center gap-1.5 w-fit">
                         <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
                           ΑΠΟΧΩΡΗΣΕΙΣ
                         </div>
-                        <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                        <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
-                          <div className="mb-3">
-                            <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                            <span className="text-xs text-text-secondary leading-snug">Ο συνολικός αριθμός των εκπαιδευτικών της ειδικότητάς που συνταξιοδοτήθηκαν ή παραιτήθηκαν οριστικά από την υπηρεσία.</span>
-                          </div>
-                          <div>
-                            <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                            <span className="text-xs text-text-secondary leading-snug">Αποτελεί την κύρια πηγή δημιουργίας νέων, πραγματικών οργανικών κενών. Ένας υψηλός αριθμός αποχωρήσεων συνήθως &quot;ξεκλειδώνει&quot; περισσότερες θέσεις για τις μεταθέσεις της επόμενης χρονιάς.</span>
-                          </div>
-                          <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                        </div>
+                        <InfoTooltip 
+                          title="Ο συνολικός αριθμός των εκπαιδευτικών της ειδικότητάς που συνταξιοδοτήθηκαν ή παραιτήθηκαν οριστικά από την υπηρεσία."
+                          description='Αποτελεί την κύρια πηγή δημιουργίας νέων, πραγματικών οργανικών κενών. Ένας υψηλός αριθμός αποχωρήσεων συνήθως "ξεκλειδώνει" περισσότερες θέσεις για τις μεταθέσεις της επόμενης χρονιάς.'
+                          iconClassName="w-3.5 h-3.5"
+                          containerClassName="w-64"
+                          arrowClassName="left-4"
+                        />
                       </div>
                       {dashboardData.hrAnalytics.retirements.diff !== 0 && (
                         <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${dashboardData.hrAnalytics.retirements.diff > 0 ? "text-success bg-success-soft border border-success/20" : "text-danger bg-danger-soft border border-danger/20"}`}>
@@ -826,25 +865,20 @@ export default function SummaryPageClient() {
                 </div>
 
                 {/* New Hires Card */}
-                <div className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
+                <div className="relative bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
                   <div>
                     <div className="flex justify-between items-start mb-1 h-8">
-                      <div className="flex items-center gap-1.5 relative group/tooltip">
+                      <div className="flex items-center gap-1.5 w-fit">
                         <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
                           ΔΙΟΡΙΣΜΟΙ
                         </div>
-                        <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                        <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
-                          <div className="mb-3">
-                            <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                            <span className="text-xs text-text-secondary leading-snug">Ο συνολικός αριθμός των εκπαιδευτικών που διορίστηκαν μόνιμα στην ειδικότητά σας.</span>
-                          </div>
-                          <div>
-                            <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                            <span className="text-xs text-text-secondary leading-snug">Δείχνει τον βαθμό αναπλήρωσης του κλάδου. Οι μαζικοί διορισμοί καλύπτουν τα κενά, γεγονός που μακροπρόθεσμα μπορεί να μειώσει τις ευκαιρίες μετάθεσης και να αυξήσει τον ανταγωνισμό.</span>
-                          </div>
-                          <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                        </div>
+                        <InfoTooltip 
+                          title="Ο συνολικός αριθμός των εκπαιδευτικών που διορίστηκαν μόνιμα στην ειδικότητά σας."
+                          description="Δείχνει τον βαθμό αναπλήρωσης του κλάδου. Οι μαζικοί διορισμοί καλύπτουν τα κενά, γεγονός που μακροπρόθεσμα μπορεί να μειώσει τις ευκαιρίες μετάθεσης και να αυξήσει τον ανταγωνισμό."
+                          iconClassName="w-3.5 h-3.5"
+                          containerClassName="w-64"
+                          arrowClassName="left-4"
+                        />
                       </div>
                       {dashboardData.hrAnalytics.newHires.diff !== 0 && dashboardData.hrAnalytics.newHires.diff !== null && (
                         <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${dashboardData.hrAnalytics.newHires.diff > 0 ? "text-success bg-success-soft border border-success/20" : "text-danger bg-danger-soft border border-danger/20"}`}>
@@ -891,25 +925,21 @@ export default function SummaryPageClient() {
                 </div>
 
                 {/* Net Staffing Balance Card */}
-                <div className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
+                <div className="relative bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group">
                   <div>
                     <div className="flex justify-between items-start mb-1 h-8">
-                      <div className="flex items-center gap-1.5 relative group/tooltip">
+                      <div className="flex items-center gap-1.5 w-fit">
                         <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
                           ΙΣΟΖΥΓΙΟ ΠΡΟΣΩΠΙΚΟΥ
                         </div>
-                        <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                        <div className="absolute right-0 lg:left-0 lg:right-auto top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
-                          <div className="mb-3">
-                            <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                            <span className="text-xs text-text-secondary leading-snug">Η μαθηματική διαφορά μεταξύ των νέων διορισμών και των αποχωρήσεων (Διορισμοί μείον Αποχωρήσεις) για τη συγκεκριμένη χρονιά.</span>
-                          </div>
-                          <div>
-                            <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                            <span className="text-xs text-text-secondary leading-snug">Αποκαλύπτει τη &quot;δυναμική&quot; του κλάδου. Αρνητικό ισοζύγιο σημαίνει ότι η ειδικότητα &quot;αδειάζει&quot; (άρα θα προκύψουν ευκαιρίες μετάθεσης), ενώ θετικό δείχνει κορεσμό και σταδιακό κλείσιμο διαθέσιμων θέσεων.</span>
-                          </div>
-                          <div className="absolute -top-1 right-4 lg:left-4 lg:right-auto w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                        </div>
+                        <InfoTooltip 
+                          title="Η μαθηματική διαφορά μεταξύ των νέων διορισμών και των αποχωρήσεων (Διορισμοί μείον Αποχωρήσεις) για τη συγκεκριμένη χρονιά."
+                          description='Αποκαλύπτει τη "δυναμική" του κλάδου. Αρνητικό ισοζύγιο σημαίνει ότι η ειδικότητα "αδειάζει" (άρα θα προκύψουν ευκαιρίες μετάθεσης), ενώ θετικό δείχνει κορεσμό και σταδιακό κλείσιμο διαθέσιμων θέσεων.'
+                          iconClassName="w-3.5 h-3.5"
+                          containerClassName="w-64"
+                          alignRight={true}
+                          arrowClassName="right-4 sm:right-auto sm:left-4 lg:right-auto lg:left-4"
+                        />
                       </div>
                       {dashboardData.hrAnalytics.netStaffingBalance.diff !== 0 && dashboardData.hrAnalytics.netStaffingBalance.diff !== null && (
                         <div className={`text-[10px] whitespace-nowrap font-bold px-2 py-0.5 rounded-2xl flex items-center h-fit ${dashboardData.hrAnalytics.netStaffingBalance.diff > 0 ? "text-success bg-success-soft border border-success/20" : "text-danger bg-danger-soft border border-danger/20"}`}>
@@ -959,25 +989,17 @@ export default function SummaryPageClient() {
 
             {/* --- Comparison Chart (Clean) --- */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col">
+              <div className="relative bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col">
                 <div className="flex flex-col xl:flex-row justify-between items-start mb-6 gap-4 xl:gap-0">
                   <div>
-                      <div className="flex items-center gap-2 relative group/tooltip w-fit xl:mb-4">
+                      <div className="flex items-center gap-2 w-fit xl:mb-4">
                         <h3 className="text-xl font-bold text-foreground tracking-tight">
                           Σύγκριση Μ.Ο. Αιτούντων & Βάσεων
                         </h3>
-                        <Info className="w-5 h-5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                        <div className="absolute left-0 top-8 hidden group-hover/tooltip:block w-72 sm:w-80 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none font-sans">
-                          <div className="mb-3">
-                            <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                            <span className="text-xs text-text-secondary leading-snug font-normal">Απεικονίζει τη διαχρονική εξέλιξη του Μέσου Όρου των Μορίων των Αιτούντων σε σχέση με τη Βάση (τα μόρια του τελευταίου μετατεθέντα).</span>
-                          </div>
-                          <div>
-                            <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                            <span className="text-xs text-text-secondary leading-snug font-normal">Δείχνει την τάση του ανταγωνισμού και τη δυσκολία της χρονιάς, βοηθώντας σας να κατανοήσετε αν οι βάσεις κινούνται ανοδικά ή καθοδικά.</span>
-                          </div>
-                          <div className="absolute -top-1 left-6 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                        </div>
+                        <InfoTooltip 
+                          title="Απεικονίζει τη διαχρονική εξέλιξη του Μέσου Όρου των Μορίων των Αιτούντων σε σχέση με τη Βάση (τα μόρια του τελευταίου μετατεθέντα)."
+                          description="Δείχνει την τάση του ανταγωνισμού και τη δυσκολία της χρονιάς, βοηθώντας σας να κατανοήσετε αν οι βάσεις κινούνται ανοδικά ή καθοδικά."
+                        />
                       </div>
                   </div>
                   <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
@@ -1040,23 +1062,15 @@ export default function SummaryPageClient() {
                 </div>
               </div>
 
-              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
-                <div className="flex items-center gap-2 relative group/tooltip w-fit mb-4">
+              <div className="relative bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+                <div className="flex items-center gap-2 w-fit mb-4">
                   <h3 className="text-xl font-bold text-foreground">
                   Δημοφιλείς Περιοχές (1η Προτίμηση)
                   </h3>
-                  <Info className="w-5 h-5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                  <div className="absolute left-0 top-8 hidden group-hover/tooltip:block w-72 sm:w-80 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none font-sans">
-                    <div className="mb-3">
-                      <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                      <span className="text-xs text-text-secondary leading-snug font-normal">Οι 5 περιοχές που δηλώθηκαν περισσότερο ως πρώτη (1η) επιλογή από τους εκπαιδευτικούς της ειδικότητάς σας κατά την τελευταία χρονιά.</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                      <span className="text-xs text-text-secondary leading-snug font-normal">Σας δείχνει τις περιοχές με τον υψηλότερο ανταγωνισμό και τη μεγαλύτερη συγκέντρωση ζήτησης, βοηθώντας σας να αξιολογήσετε τις δικές σας επιλογές.</span>
-                    </div>
-                    <div className="absolute -top-1 left-6 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                  </div>
+                  <InfoTooltip 
+                    title="Οι 5 περιοχές που δηλώθηκαν περισσότερο ως πρώτη (1η) επιλογή από τους εκπαιδευτικούς της ειδικότητάς σας κατά την τελευταία χρονιά."
+                    description="Σας δείχνει τις περιοχές με τον υψηλότερο ανταγωνισμό και τη μεγαλύτερη συγκέντρωση ζήτησης, βοηθώντας σας να αξιολογήσετε τις δικές σας επιλογές."
+                  />
                 </div>
                 <div className="w-full space-y-6">
                     {dashboardData?.topTargeting.map((item, idx) => (
@@ -1093,23 +1107,15 @@ export default function SummaryPageClient() {
             {/* --- Rankings Area (Top 5) --- */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
               {/* Card 1: Top Destinations */}
-              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
-                <div className="flex items-center gap-2 relative group/tooltip w-fit mb-4">
+              <div className="relative bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+                <div className="flex items-center gap-2 w-fit mb-4">
                   <h3 className="text-xl font-bold text-foreground">
                     Κορυφαίοι Προορισμοί Απορρόφησης
                   </h3>
-                  <Info className="w-5 h-5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                  <div className="absolute left-0 top-8 hidden group-hover/tooltip:block w-72 sm:w-80 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none font-sans z-[60]">
-                    <div className="mb-3">
-                      <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                      <span className="text-xs text-text-secondary leading-snug font-normal">Οι περιοχές όπου πραγματοποιήθηκαν οι περισσότερες μεταθέσεις (μεγαλύτερος αριθμός ατόμων που μετακινήθηκαν) την τελευταία χρονιά.</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                      <span className="text-xs text-text-secondary leading-snug font-normal">Υποδεικνύει ποιες περιοχές εμφανίζουν ιστορικά τα μεγαλύτερα οργανικά κενά ή κινητικότητα, αυξάνοντας στατιστικά τις πιθανότητες μετάθεσης.</span>
-                    </div>
-                    <div className="absolute -top-1 left-6 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                  </div>
+                  <InfoTooltip 
+                    title="Οι περιοχές όπου πραγματοποιήθηκαν οι περισσότερες μεταθέσεις (μεγαλύτερος αριθμός ατόμων που μετακινήθηκαν) την τελευταία χρονιά."
+                    description="Υποδεικνύει ποιες περιοχές εμφανίζουν ιστορικά τα μεγαλύτερα οργανικά κενά ή κινητικότητα, αυξάνοντας στατιστικά τις πιθανότητες μετάθεσης."
+                  />
                 </div>
                 <div className="w-full space-y-6">
                   {dashboardData?.topDestinations.map((item, idx) => (
@@ -1138,23 +1144,16 @@ export default function SummaryPageClient() {
               </div>
 
               {/* Card 2: Top Competitive */}
-              <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
-                <div className="flex items-center gap-2 relative group/tooltip w-fit mb-4">
+              <div className="relative bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+                <div className="flex items-center gap-2 w-fit mb-4">
                   <h3 className="text-xl font-bold text-foreground">
                     Περιοχές με τις Υψηλότερες Βάσεις
                   </h3>
-                  <Info className="w-5 h-5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                  <div className="absolute right-0 sm:left-0 sm:right-auto top-8 hidden group-hover/tooltip:block w-72 sm:w-80 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-[60] pointer-events-none font-sans">
-                    <div className="mb-3">
-                      <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                      <span className="text-xs text-text-secondary leading-snug font-normal">Οι περιοχές που απαίτησαν τα περισσότερα μόρια για μετάθεση (βάση τελευταίου μετατεθέντα) κατά την τελευταία χρονιά.</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                      <span className="text-xs text-text-secondary leading-snug font-normal">Σας βοηθά να εντοπίσετε τους πιο "απρόσιτους" ή απαιτητικούς προορισμούς, ώστε να ρυθμίσετε ρεαλιστικά τη στρατηγική των δηλώσεών σας.</span>
-                    </div>
-                    <div className="absolute -top-1 right-6 sm:right-auto sm:left-6 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                  </div>
+                  <InfoTooltip 
+                    title="Οι περιοχές που απαίτησαν τα περισσότερα μόρια για μετάθεση (βάση τελευταίου μετατεθέντα) κατά την τελευταία χρονιά."
+                    description="Σας βοηθά να εντοπίσετε τους πιο 'απρόσιτους' ή απαιτητικούς προορισμούς, ώστε να ρυθμίσετε ρεαλιστικά τη στρατηγική των δηλώσεών σας."
+                    alignRight={true}
+                  />
                 </div>
                 <div className="w-full space-y-6">
                   {dashboardData?.topCompetitive.map((item, idx) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -20,9 +20,10 @@ import {
   TrendingDown,
   Info,
   Activity,
+  ChevronDown,
 } from "lucide-react";
 import { FilterSelect } from "@/components/stats/FilterSelect";
-import { MigrationFlows } from "@/components/stats/MigrationFlows";
+import { motion } from "framer-motion";
 
 // --- Design System Colors ---
 const theme = {
@@ -72,6 +73,59 @@ function useIsMobile() {
   return isMobile;
 }
 
+function InfoTooltip({ 
+  title, 
+  description, 
+  iconClassName = "w-5 h-5",
+}: { 
+  title: string, 
+  description: string, 
+  iconClassName?: string,
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div 
+      className="group/tooltip inline-flex items-center justify-center cursor-pointer"
+      ref={tooltipRef}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsOpen(!isOpen);
+      }}
+    >
+      <Info className={`${iconClassName} text-text-quaternary hover:text-text-tertiary transition-colors`} />
+      
+      <div className={`absolute top-12 left-4 right-4 w-auto sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:w-72 ${isOpen ? "block" : "hidden sm:group-hover/tooltip:block"} bg-card border border-border text-left p-4 rounded-xl shadow-xl z-[60] font-sans`}>
+        <div className="mb-3">
+          <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
+          <span className="text-xs text-text-secondary leading-snug font-normal">{title}</span>
+        </div>
+        <div>
+          <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
+          <span className="text-xs text-text-secondary leading-snug font-normal">{description}</span>
+        </div>
+        <div className={`hidden sm:block absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45`}></div>
+      </div>
+    </div>
+  );
+}
+
 export default function ZoneDetailedStatsClient({
   zoneName,
   specialtyCode,
@@ -94,6 +148,10 @@ export default function ZoneDetailedStatsClient({
   const [allSpecialties, setAllSpecialties] = useState<any[]>([]);
   const [allDivisions, setAllDivisions] = useState<any[]>([]);
   const [allZones, setAllZones] = useState<string[]>([]);
+
+  // Show All State for Migration Flows
+  const [showAllInflow, setShowAllInflow] = useState(false);
+  const [showAllOutflow, setShowAllOutflow] = useState(false);
 
   useEffect(() => {
     fetch("/api/stats/filters")
@@ -246,14 +304,14 @@ export default function ZoneDetailedStatsClient({
     return Array.from(years).sort();
   };
 
-  const comparisonYears = getValidYears(baseHistory, avgAppHistory);
+  const comparisonYears = getValidYears(baseHistory, avgAppHistory).filter(y => y !== "2022" && y !== "2023");
   const comparisonData = comparisonYears.map(year => ({
     year,
     base: baseHistory[year] || 0,
     avgApp: avgAppHistory[year] || 0
   }));
 
-  const balanceYears = getValidYears(targetingHistory, successHistory);
+  const balanceYears = getValidYears(targetingHistory, successHistory).filter(y => y !== "2022" && y !== "2023");
   const balanceData = balanceYears.map(year => ({
     year,
     demand: targetingHistory[year] || 0,
@@ -336,26 +394,19 @@ export default function ZoneDetailedStatsClient({
             return (
                   <div
                 key={kpi.id}
-                className="bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
+                className="relative bg-card p-5 rounded-4xl border border-border shadow-soft hover:shadow-floating hover:border-primary/30 transition-all flex flex-col justify-between h-56 group"
               >
                 <div>
                   <div className="flex justify-between items-start mb-1 h-8">
-                    <div className="flex items-center gap-1.5 relative group/tooltip">
+                    <div className="flex items-center gap-1.5 w-fit">
                       <div className="text-text-tertiary text-[10px] font-bold uppercase tracking-widest leading-tight">
                         {removeGreekAccents(kpi.title).toUpperCase()}
                       </div>
-                      <Info className="w-3.5 h-3.5 text-text-quaternary hover:text-text-tertiary cursor-help transition-colors" />
-                      <div className="absolute left-0 top-6 hidden group-hover/tooltip:block w-64 bg-card border border-border text-left p-4 rounded-xl shadow-xl z-50 pointer-events-none">
-                        <div className="mb-3">
-                          <span className="text-[10px] font-extrabold text-info uppercase tracking-widest block mb-1">ΤΙ ΕΙΝΑΙ</span>
-                          <span className="text-xs text-text-secondary leading-snug">{kpi.infoWhat}</span>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-extrabold text-text-quaternary uppercase tracking-widest block mb-1">ΓΙΑΤΙ ΕΙΝΑΙ ΣΗΜΑΝΤΙΚΟ</span>
-                          <span className="text-xs text-text-secondary leading-snug">{kpi.infoWhy}</span>
-                        </div>
-                        <div className="absolute -top-1 left-4 w-2.5 h-2.5 bg-card border-l border-t border-border transform rotate-45"></div>
-                      </div>
+                      <InfoTooltip 
+                        title={kpi.infoWhat}
+                        description={kpi.infoWhy}
+                        iconClassName="w-3.5 h-3.5"
+                      />
                     </div>
 
                     {kpi.diff !== null && (
@@ -404,11 +455,22 @@ export default function ZoneDetailedStatsClient({
 
         {/* --- Main Charts --- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col h-[400px]">
-                <div className="flex justify-between items-start mb-6">
-                    <div>
-                        <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">Σύγκριση Μορίων & Βάσεων</h3>
-                        <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">ΠΩΣ ΚΙΝΗΘΗΚΕ Η ΒΑΣΗ ΣΕ ΣΧΕΣΗ ΜΕ ΤΟΥΣ ΑΙΤΟΥΝΤΕΣ</p>
+            <div className="relative bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col h-[400px]">
+                <div className="flex flex-col xl:flex-row justify-between items-start mb-6 gap-4 xl:gap-0">
+                    <div className="flex items-center gap-2 mb-1 z-50">
+                        <h3 className="text-lg font-bold text-foreground tracking-tight">Σύγκριση Μ.Ο. Αιτούντων & Βάσεων</h3>
+                        <InfoTooltip 
+                          title="Απεικονίζει τη διαχρονική εξέλιξη του Μέσου Όρου των Μορίων των Αιτούντων σε σχέση με τη Βάση (τα μόρια του τελευταίου μετατεθέντα)."
+                          description="Δείχνει την τάση του ανταγωνισμού και τη δυσκολία της χρονιάς, βοηθώντας σας να κατανοήσετε αν οι βάσεις κινούνται ανοδικά ή καθοδικά."
+                        />
+                    </div>
+                    <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
+                        <div className="flex items-center gap-1.5">
+                            <div className="w-3 h-3 rounded-sm bg-primary"></div> ΒΑΣΗ
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <div className="w-3 h-3 rounded-sm bg-muted"></div> ΑΙΤΟΥΝΤΕΣ
+                        </div>
                     </div>
                 </div>
                 <div className="flex-1 w-full mt-4">
@@ -436,11 +498,22 @@ export default function ZoneDetailedStatsClient({
                 </div>
             </div>
 
-            <div className="bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col h-[400px]">
-                <div className="flex justify-between items-start mb-6">
-                    <div>
-                        <h3 className="text-lg font-bold text-foreground tracking-tight mb-1">Ισοζύγιο Προσφοράς & Ζήτησης</h3>
-                        <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">ΣΥΓΚΡΙΣΗ ΑΙΤΗΣΕΩΝ ΜΕ ΠΡΑΓΜΑΤΙΚΕΣ ΘΕΣΕΙΣ</p>
+            <div className="relative bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col h-[400px]">
+                <div className="flex flex-col xl:flex-row justify-between items-start mb-6 gap-4 xl:gap-0">
+                    <div className="flex items-center gap-2 mb-1 z-50">
+                        <h3 className="text-lg font-bold text-foreground tracking-tight">Ισοζύγιο Προσφοράς & Ζήτησης</h3>
+                        <InfoTooltip 
+                          title="Σύγκριση του συνολικού αριθμού των αιτήσεων με τον αριθμό των εκπαιδευτικών που τελικά πήραν μετάθεση."
+                          description="Δείχνει τον πραγματικό 'συνωστισμό' και την πιθανότητα επιτυχίας. Μεγάλη διαφορά υποδηλώνει υψηλό ανταγωνισμό για λίγες θέσεις."
+                        />
+                    </div>
+                    <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
+                        <div className="flex items-center gap-1.5">
+                            <div className="w-3 h-3 rounded-sm bg-primary"></div> ΜΕΤΑΘΕΣΕΙΣ
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <div className="w-3 h-3 rounded-sm bg-muted"></div> ΖΗΤΗΣΗ
+                        </div>
                     </div>
                 </div>
                 <div className="flex-1 w-full mt-4">
@@ -469,8 +542,110 @@ export default function ZoneDetailedStatsClient({
             </div>
         </div>
 
-        {/* --- Migration Flows --- */}
-        <MigrationFlows inflow={inflow} outflow={outflow} />
+        {/* --- Migration Flows (Split into 2 cards) --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          {/* Card 1: Inflow */}
+          <div className="relative bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+            <div className="flex items-center gap-2 w-fit mb-4 z-50">
+              <h3 className="text-xl font-bold text-foreground">
+                Ροές Εισόδου
+              </h3>
+              <InfoTooltip 
+                title="Η προέλευση των εκπαιδευτικών που κατάφεραν να πάρουν μετάθεση προς τη συγκεκριμένη περιοχή."
+                description="Χρήσιμο για να εντοπίσετε από ποιες περιοχές 'αδειάζουν' θέσεις και ποιες περιοχές τροφοδοτούν τη συγκεκριμένη ζώνη."
+              />
+            </div>
+            <div className="w-full space-y-6">
+              {(showAllInflow ? inflow : inflow.slice(0, 5)).map((item, idx) => (
+                <div key={idx} className="group cursor-pointer">
+                  <div className="flex justify-between items-end mb-2">
+                    <span className="text-sm font-semibold text-text-secondary group-hover:text-primary transition-colors">
+                      {item.name}
+                    </span>
+                    <span className="text-[11px] bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
+                      <span className="font-extrabold text-foreground">{item.count}</span>
+                      <span className="text-text-tertiary ml-1">μεταθέσεις</span>
+                    </span>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-2 overflow-hidden shadow-inner">
+                    <motion.div
+                      className="bg-gradient-to-r from-primary/70 to-primary h-2 rounded-full"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${(item.count / Math.max(...inflow.map(f => f.count), 1)) * 100}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
+                    />
+                  </div>
+                </div>
+              ))}
+              {inflow.length === 0 && (
+                <p className="text-sm text-text-quaternary italic">Δεν υπάρχουν διαθέσιμα δεδομένα εισροών.</p>
+              )}
+              {inflow.length > 5 && (
+                <div className="flex justify-center pt-2">
+                  <button
+                    onClick={() => setShowAllInflow(!showAllInflow)}
+                    className="text-xs font-bold text-primary hover:text-primary-hover transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    {showAllInflow ? "Σύμπτυξη" : `Περισσότερα (${inflow.length})`}
+                    <ChevronDown className={`w-3.5 h-3.5 transform transition-transform ${showAllInflow ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Card 2: Outflow */}
+          <div className="relative bg-card border border-border shadow-soft p-6 sm:p-8 rounded-4xl flex flex-col justify-start items-start text-left">
+            <div className="flex items-center gap-2 w-fit mb-4 z-50">
+              <h3 className="text-xl font-bold text-foreground">
+                Ροές Εξόδου
+              </h3>
+              <InfoTooltip 
+                title="Οι κορυφαίες προτιμήσεις των εκπαιδευτικών που υπηρετούν ήδη εδώ και ζητούν μετάθεση."
+                description="Ιδανικό εργαλείο αν αναζητάτε αμοιβαία μετάθεση, καθώς σας δείχνει προς τα πού υπάρχει τάση φυγής."
+              />
+            </div>
+            <div className="w-full space-y-6">
+              {(showAllOutflow ? outflow : outflow.slice(0, 5)).map((item, idx) => (
+                <div key={idx} className="group cursor-pointer">
+                  <div className="flex justify-between items-end mb-2">
+                    <span className="text-sm font-semibold text-text-secondary group-hover:text-primary transition-colors">
+                      {item.name}
+                    </span>
+                    <span className="text-[11px] bg-muted border border-border px-2 py-0.5 rounded-2xl shadow-sm">
+                      <span className="font-extrabold text-foreground">{item.count}</span>
+                      <span className="text-text-tertiary ml-1">αιτήσεις</span>
+                    </span>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-2 overflow-hidden shadow-inner">
+                    <motion.div
+                      className="bg-gradient-to-r from-primary/70 to-primary h-2 rounded-full"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${(item.count / Math.max(...outflow.map(f => f.count), 1)) * 100}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
+                    />
+                  </div>
+                </div>
+              ))}
+              {outflow.length === 0 && (
+                <p className="text-sm text-text-quaternary italic">Δεν υπάρχουν διαθέσιμα δεδομένα εκροών.</p>
+              )}
+              {outflow.length > 5 && (
+                <div className="flex justify-center pt-2">
+                  <button
+                    onClick={() => setShowAllOutflow(!showAllOutflow)}
+                    className="text-xs font-bold text-primary hover:text-primary-hover transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    {showAllOutflow ? "Σύμπτυξη" : `Περισσότερα (${outflow.length})`}
+                    <ChevronDown className={`w-3.5 h-3.5 transform transition-transform ${showAllOutflow ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
