@@ -14,6 +14,7 @@ import { UserNavLogout } from "@/components/layout/user-nav-logout"
 import { ThemeToggleClient } from "@/components/layout/ThemeToggleClient"
 import { useUser } from "@/components/providers/user-context"
 import { Session } from "next-auth"
+import { getInitials } from "@/lib/utils"
 
 export function NavbarUserControl({ session }: { session: Session }) {
     const { name, avatarColor } = useUser()
@@ -47,7 +48,7 @@ export function NavbarUserControl({ session }: { session: Session }) {
                             <Avatar className="w-full h-full border-none">
                                 <AvatarImage src={session.user?.image || undefined} />
                                 <AvatarFallback className="bg-transparent text-white font-bold">
-                                    {displayName.substring(0, 2).toUpperCase()}
+                                    {getInitials(displayName)}
                                 </AvatarFallback>
                             </Avatar>
                         </div>

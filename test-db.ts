@@ -1,18 +1,13 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { findMatches } from './src/lib/matching'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 async function main() {
-  const stats = await prisma.transferStatistics.findFirst({
-    where: {
-      region: "ΛΑΡΙΣΑΣ",
-      division: "Πρωτοβάθμια Γενικής",
-      specialty: "ΠΕ70"
-    }
-  })
-  console.dir(stats, { depth: null })
+    console.log("Running matching for Profile 52...")
+    await findMatches(52)
+    console.log("Running matching for Profile 53...")
+    await findMatches(53)
+    console.log("Done!")
 }
 
-main()
-  .catch(e => console.error(e))
-  .finally(() => prisma.$disconnect())
+main().catch(console.error)

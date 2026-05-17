@@ -7,6 +7,7 @@ import { ArrowLeft, MapPin, Sparkles, CheckCheck, Paperclip, Send, MoreVertical,
 import { useRouter } from "next/navigation"
 import { getMatchMessages, sendMessage } from "@/actions/chat"
 import { useMatches } from "./MatchesContext"
+import { getInitials } from "@/lib/utils"
 
 type MessageType = {
     id: number;
@@ -122,9 +123,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
         )
     }
 
-    const getInitials = (name: string) => {
-        return name ? name.substring(0, 2).toUpperCase() : "?"
-    }
+
 
 
     return (
@@ -143,7 +142,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                             match.user.avatarColor || (isOnline ? 'bg-warning-soft text-warning' : 'bg-muted text-muted-foreground')
                             } border border-border/10 shadow-sm overflow-hidden`}>
                             <span className="text-white drop-shadow-sm">
-                                {getInitials(match.user.fullName)}
+                                {getInitials(match.user.fullName, "?")}
                             </span>
                         </div>
                         {isOnline && <div className="absolute bottom-0 right-0 w-3 h-3 border-2 border-background rounded-full bg-success shadow-sm"></div>}
@@ -218,7 +217,7 @@ export function MatchChatArea({ matchId }: { matchId: number }) {
                                             msg.senderProfile?.user?.avatarColor || 'bg-muted text-muted-foreground'
                                         } overflow-hidden`}>
                                             <span className="text-white">
-                                                {getInitials(match.user.fullName)}
+                                                {getInitials(match.user.fullName, "?")}
                                             </span>
                                         </div>
 

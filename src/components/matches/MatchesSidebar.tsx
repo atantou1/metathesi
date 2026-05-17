@@ -6,6 +6,7 @@ import { format } from "date-fns"
 import { el } from "date-fns/locale"
 import { Satellite } from "lucide-react"
 import { useMatches } from "./MatchesContext"
+import { getInitials } from "@/lib/utils"
 
 export function MatchesSidebar() {
     const { activeMatches, historyMatches } = useMatches()
@@ -15,9 +16,7 @@ export function MatchesSidebar() {
 
     const matchesList = activeTab === 'active' ? activeMatches : historyMatches
 
-    const getInitials = (name: string) => {
-        return name ? name.substring(0, 2).toUpperCase() : "?"
-    }
+
 
 
     return (
@@ -60,7 +59,7 @@ export function MatchesSidebar() {
                                         <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold ${match.user.avatarColor || (isOnline ? 'bg-warning-soft text-warning' : 'bg-muted text-muted-foreground')
                                             } border border-border/10 shadow-sm overflow-hidden`}>
                                             <span className="text-white drop-shadow-sm">
-                                                {getInitials(match.user.fullName)}
+                                                {getInitials(match.user.fullName, "?")}
                                             </span>
                                         </div>
                                         {isOnline && <div className="absolute bottom-0 right-0 w-3.5 h-3.5 border-2 border-background rounded-full bg-success shadow-sm"></div>}

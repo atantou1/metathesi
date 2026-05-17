@@ -32,12 +32,17 @@ async function main() {
     ]
 
     for (const div of divisionsData) {
-        await prisma.division.create({
-            data: {
-                name: div.name,
-                sectorId: sector.id,
-            },
+        let division = await prisma.division.findFirst({
+            where: { name: div.name, sectorId: sector.id }
         })
+        if (!division) {
+            await prisma.division.create({
+                data: {
+                    name: div.name,
+                    sectorId: sector.id,
+                },
+            })
+        }
     }
     console.log('Created Divisions')
 
@@ -108,12 +113,17 @@ async function main() {
             regionMap.set(cleanRegionName, regionId!)
         }
 
-        await prisma.postingZone.create({
-            data: {
-                name: name.trim(),
-                regionId: regionId!,
-            },
+        let postingZone = await prisma.postingZone.findFirst({
+            where: { name: name.trim(), regionId: regionId! }
         })
+        if (!postingZone) {
+            await prisma.postingZone.create({
+                data: {
+                    name: name.trim(),
+                    regionId: regionId!,
+                },
+            })
+        }
     }
     console.log('Imported Regions & Posting Zones')
 

@@ -7,6 +7,7 @@ import { deleteAccount, changePassword, updateName, updateAvatarColor } from "@/
 import { useSession, signOut } from "next-auth/react"
 import { MALE_COLORS, FEMALE_COLORS, NEUTRAL_COLORS } from "@/lib/avatar-utils"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "@/components/ui/dropdown-menu"
+import { getInitials } from "@/lib/utils"
 
 
 import { useForm } from "react-hook-form"
@@ -184,7 +185,7 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                                 {/* Avatar Preview Section */}
                                 <div className="flex flex-col items-center gap-4">
                                     <div className={`w-24 h-24 ${selectedColor} text-white rounded-full flex items-center justify-center text-3xl font-bold border-4 border-background dark:border-muted shadow-soft transition-colors duration-500`}>
-                                        {name.trim() ? name.trim().substring(0, 2).toUpperCase() : "Γ"}
+                                        {getInitials(name.trim(), "Γ")}
                                     </div>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>

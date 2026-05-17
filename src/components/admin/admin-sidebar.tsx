@@ -9,11 +9,12 @@ import {
     Settings,
     ShieldCheck,
     ChevronUp,
-    MoreHorizontal
+    MoreHorizontal,
+    GitCompare
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 import { useSidebar } from "./sidebar-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -28,6 +29,7 @@ import {
 const menuItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Χρήστες", href: "/admin/users", icon: Users },
+    { name: "Matches", href: "/admin/matches", icon: GitCompare },
     { name: "Ρυθμίσεις", href: "/admin/settings", icon: Settings },
 ];
 
@@ -107,7 +109,7 @@ export function AdminSidebar() {
                             <Avatar className="w-8 h-8 rounded-2xl shadow-sm">
                                 <AvatarImage src={session?.user?.image || undefined} />
                                 <AvatarFallback className="bg-muted text-muted-foreground text-[10px] font-bold rounded-2xl">
-                                    {session?.user?.name?.substring(0, 2).toUpperCase() || "AD"}
+                                    {getInitials(session?.user?.name, "AD")}
                                 </AvatarFallback>
                             </Avatar>
                             {isOpen && (

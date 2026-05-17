@@ -95,3 +95,42 @@ export async function updateUserRole(userId: number, newRole: Role) {
     revalidatePath("/admin/users");
     return { success: true };
 }
+
+export async function getMatchesList() {
+    await verifyAdmin();
+    return await prisma.match.findMany({
+        include: {
+            participants: {
+                include: {
+                    request: {
+                        include: {
+                            profile: {
+                                include: {
+                                    user: {
+                                        select: {
+                                            id: true,
+                                            fullName: true,
+                                            email: true,
+                                        }
+                                    },
+                                    specialty: true,
+                                    division: true,
+                                    currentZone: true,
+                                }
+                            },
+                            targetZones: {
+                                include: {
+                                    zone: true
+                                },
+                                orderBy: {
+                                    priorityOrder: 'asc'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        orderBy: { createdAt: "desc" },
+    });
+}

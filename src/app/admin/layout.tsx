@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { SidebarProvider } from "@/components/admin/sidebar-provider";
 import { SidebarTrigger } from "@/components/admin/sidebar-trigger";
+import { ThemeToggle } from "@/components/admin/theme-toggle";
 import { ChevronRight } from "lucide-react";
 import { ReactNode } from "react";
 import Link from "next/link";
@@ -38,6 +39,10 @@ export default async function AdminLayout({ children }: { children: ReactNode })
                                 <ChevronRight className="w-4 h-4 text-muted-foreground/30" />
                                 <span className="font-semibold text-foreground">Dashboard</span>
                             </nav>
+
+                            <div className="ml-auto flex items-center gap-2">
+                                <ThemeToggle />
+                            </div>
                         </header>
                         
                         {/* Scrollable Scroll Area */}

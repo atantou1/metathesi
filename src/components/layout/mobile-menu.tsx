@@ -8,7 +8,7 @@ import { Menu, X, LogOut, User as UserIcon, Settings, BarChart3, FileText, Moon,
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { signOut } from "next-auth/react"
-import { cn } from "@/lib/utils"
+import { cn, getInitials } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { useNav } from "./floating-nav-wrapper"
 
@@ -146,7 +146,7 @@ export function MobileMenu({ session }: MobileMenuProps) {
                                 <div className="flex items-center gap-4 px-2">
                                     <Avatar className="h-12 w-12 border border-border/50 shadow-sm">
                                         <AvatarImage src={session.user?.image || undefined} />
-                                        <AvatarFallback className="font-bold">{session.user?.name?.substring(0, 2).toUpperCase() || "US"}</AvatarFallback>
+                                        <AvatarFallback className="font-bold">{getInitials(session.user?.name, "US")}</AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col">
                                         <span className="text-base font-bold text-foreground">

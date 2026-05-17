@@ -72,6 +72,13 @@ export async function deleteAccount() {
                 const requestIds = profile.transferRequests.map(r => r.id);
 
                 if (requestIds.length > 0) {
+                    // Find all matchIds for these requests before deleting them
+                    const matchParticipants = await tx.matchParticipant.findMany({
+                        where: { requestId: { in: requestIds } },
+                        select: { matchId: true }
+                    });
+                    const matchIds = matchParticipants.map(m => m.matchId);
+
                     // Delete TargetZones associated with requests
                     await tx.targetZone.deleteMany({
                         where: { requestId: { in: requestIds } }
@@ -81,6 +88,29 @@ export async function deleteAccount() {
                     await tx.matchParticipant.deleteMany({
                         where: { requestId: { in: requestIds } }
                     });
+
+                    // Check and delete orphaned matches
+                    for (const mId of matchIds) {
+                        const remainingCount = await tx.matchParticipant.count({
+                            where: { matchId: mId }
+                        });
+                        if (remainingCount < 2) {
+                            // Delete remaining participants
+                            await tx.matchParticipant.deleteMany({
+                                where: { matchId: mId }
+                            });
+                            
+                            // Delete notifications
+                            await tx.notification.deleteMany({
+                                where: { matchId: mId }
+                            });
+                            
+                            // Delete the match
+                            await (tx as any).match.delete({
+                                where: { id: mId }
+                            });
+                        }
+                    }
 
                     // Delete the TransferRequests
                     await tx.transferRequest.deleteMany({
