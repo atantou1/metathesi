@@ -8,6 +8,13 @@ export function MainNav({ session }: { session: any }) {
     const pathname = usePathname()
 
     const links = [
+        ...(!session ? [
+            {
+                href: "/",
+                label: "Αρχική",
+                active: pathname === "/"
+            }
+        ] : []),
         ...(session ? [
             {
                 href: "/dashboard",
@@ -30,11 +37,6 @@ export function MainNav({ session }: { session: any }) {
                 href: "/faq",
                 label: "Συχνές ερωτήσεις",
                 active: pathname === "/faq"
-            },
-            {
-                href: "/contact",
-                label: "Επικοινωνία",
-                active: pathname === "/contact"
             }
         ] : [])
     ]
