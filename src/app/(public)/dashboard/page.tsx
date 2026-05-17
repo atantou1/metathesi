@@ -236,9 +236,6 @@ export default async function Dashboard() {
                                     <div>
                                         <h2 className="text-xl font-bold text-foreground tracking-tight flex items-center gap-3">
                                             Αίτηση Αμοιβαίας
-                                            <span className="px-2.5 py-1 rounded-2xl bg-muted border border-border text-muted-foreground font-mono tracking-wider">
-                                                #TR-{request.id}
-                                            </span>
                                         </h2>
                                         <div className="flex items-center gap-2 mt-2">
                                             <span className="text-sm text-text-tertiary">Υποβλήθηκε στις <span className="text-text-secondary font-medium">{request.createdAt.toLocaleDateString("el-GR", { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>

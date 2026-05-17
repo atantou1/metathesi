@@ -163,7 +163,29 @@ export async function getTransferRequestsList() {
             },
             matchParticipations: {
                 include: {
-                    match: true
+                    match: {
+                        include: {
+                            participants: {
+                                include: {
+                                    request: {
+                                        include: {
+                                            profile: {
+                                                include: {
+                                                    user: {
+                                                        select: {
+                                                            id: true,
+                                                            fullName: true,
+                                                            email: true,
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },

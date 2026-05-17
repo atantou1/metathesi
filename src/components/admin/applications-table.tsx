@@ -149,22 +149,54 @@ export function ApplicationsTable({ applications }: { applications: any[] }) {
                                         <tr className="bg-muted/10 border-b border-border">
                                             <td colSpan={7} className="px-6 py-6">
                                                 <div className="space-y-4">
-                                                    <h4 className="font-semibold text-foreground border-b border-border pb-2">
-                                                        Προτιμήσεις (Ζώνες)
-                                                    </h4>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {app.targetZones?.map((tz: any) => (
-                                                            <div key={tz.id} className="flex gap-1.5 items-center bg-muted/50 px-2.5 py-1 rounded-lg border border-border">
-                                                                <span className="text-xs font-bold text-primary">
-                                                                    {tz.priorityOrder}.
-                                                                </span>
-                                                                <span className="text-sm font-medium">{tz.zone.name}</span>
-                                                            </div>
-                                                        ))}
-                                                        {(!app.targetZones || app.targetZones.length === 0) && (
-                                                            <div className="text-text-tertiary text-sm">Δεν έχουν επιλεγεί ζώνες προτίμησης.</div>
-                                                        )}
+                                                    <div>
+                                                        <h4 className="font-semibold text-foreground border-b border-border pb-2">
+                                                            Προτιμήσεις (Ζώνες)
+                                                        </h4>
+                                                        <div className="flex flex-wrap gap-2 mt-2">
+                                                            {app.targetZones?.map((tz: any) => (
+                                                                <div key={tz.id} className="flex gap-1.5 items-center bg-muted/50 px-2.5 py-1 rounded-lg border border-border">
+                                                                    <span className="text-xs font-bold text-primary">
+                                                                        {tz.priorityOrder}.
+                                                                    </span>
+                                                                    <span className="text-sm font-medium">{tz.zone.name}</span>
+                                                                </div>
+                                                            ))}
+                                                            {(!app.targetZones || app.targetZones.length === 0) && (
+                                                                <div className="text-text-tertiary text-sm">Δεν έχουν επιλεγεί ζώνες προτίμησης.</div>
+                                                            )}
+                                                        </div>
                                                     </div>
+
+                                                    {/* Matched Users Section */}
+                                                    {app.matchParticipations && app.matchParticipations.length > 0 && (
+                                                        <div>
+                                                            <h4 className="font-semibold text-foreground border-b border-border pb-2">
+                                                                Συμμετέχοντες σε Match
+                                                            </h4>
+                                                            <div className="space-y-2 mt-2">
+                                                                {app.matchParticipations.map((mp: any) => {
+                                                                    const match = mp.match;
+                                                                    const otherParticipant = match.participants.find((p: any) => p.requestId !== app.id);
+                                                                    if (!otherParticipant) return null;
+                                                                    
+                                                                    const otherUser = otherParticipant.request.profile.user;
+                                                                    
+                                                                    return (
+                                                                        <div key={match.id} className="flex items-center justify-between bg-muted/30 p-3 rounded-lg border border-border">
+                                                                            <div className="flex flex-col">
+                                                                                <span className="font-semibold text-foreground">{otherUser.fullName || "Άγνωστος"}</span>
+                                                                                <span className="text-xs text-text-tertiary">{otherUser.email}</span>
+                                                                            </div>
+                                                                            <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                                                                                Match #{match.id}
+                                                                            </span>
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </td>
                                         </tr>

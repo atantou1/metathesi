@@ -10,7 +10,7 @@ const FAQItem = ({ faq, isOpen, toggleOpen }: { faq: any; isOpen: boolean; toggl
     <div className="border border-border rounded-2xl bg-surface transition-all duration-200 hover:bg-muted/30">
       <button
         type="button"
-        className="flex w-full items-start justify-between gap-[16px] p-[16px] text-left focus:outline-none rounded-2xl"
+        className="flex w-full items-start justify-between gap-[16px] p-[16px] text-left focus:outline-none rounded-2xl cursor-pointer"
         onClick={toggleOpen}
       >
         <span className="text-[14px] font-medium leading-[20px] flex-1 text-foreground">

@@ -190,7 +190,7 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                                     </div>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <button className="text-xs font-semibold text-primary hover:text-primary-hover transition-colors">
+                                            <button className="text-xs font-semibold text-primary hover:text-primary-hover transition-colors cursor-pointer">
                                                 Αλλαγή χρώματος
                                             </button>
                                         </DropdownMenuTrigger>
@@ -239,7 +239,7 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                                         <button
                                             disabled={!!nameError || !name || isPendingName}
                                             onClick={handleSaveName}
-                                            className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors shadow-soft shadow-primary/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[140px] justify-center"
+                                            className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors shadow-soft shadow-primary/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[140px] justify-center cursor-pointer"
                                             type="button"
                                         >
                                             {isPendingName ? <Loader2 className="w-4 h-4 animate-spin" /> : "Αποθήκευση Αλλαγών"}
@@ -335,7 +335,7 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                                 <div className="pt-4 flex justify-end border-t border-border dark:border-border">
                                     <button
                                         disabled={isPendingPassword}
-                                        className="mt-2 bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors shadow-soft shadow-primary/20 flex items-center gap-2 disabled:opacity-50 min-w-[160px] justify-center"
+                                        className="mt-2 bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors shadow-soft shadow-primary/20 flex items-center gap-2 disabled:opacity-50 min-w-[160px] justify-center cursor-pointer"
                                         type="submit"
                                     >
                                         {isPendingPassword ? (
@@ -491,7 +491,7 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                                     }
                                 }}
                                 disabled={isDeleting}
-                                className="p-2 text-text-quaternary hover:text-text-secondary hover:bg-muted dark:hover:bg-muted rounded-full transition-colors disabled:opacity-50"
+                                className="p-2 text-text-quaternary hover:text-text-secondary hover:bg-muted dark:hover:bg-muted rounded-full transition-colors disabled:opacity-50 cursor-pointer"
                             >
                                 <X className="w-6 h-6" />
                             </button>
@@ -531,14 +531,14 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                                     setDeleteConfirmationInput("");
                                 }}
                                 disabled={isDeleting}
-                                className="px-6 py-3 rounded-full font-medium text-text-secondary bg-background border border-border hover:bg-muted dark:bg-muted dark:border-border dark:text-foreground dark:hover:bg-border transition-colors disabled:opacity-50"
+                                className="px-6 py-3 rounded-full font-medium text-text-secondary bg-background border border-border hover:bg-muted dark:bg-muted dark:border-border dark:text-foreground dark:hover:bg-border transition-colors disabled:opacity-50 cursor-pointer"
                             >
                                 Ακύρωση
                             </button>
                             <button
                                 onClick={handleDeleteAccount}
                                 disabled={isDeleting || deleteConfirmationInput !== "ΔΙΑΓΡΑΦΗ"}
-                                className="px-6 py-3 rounded-full font-bold text-white bg-red-600 hover:bg-red-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px] shadow-soft shadow-red-600/20"
+                                className="px-6 py-3 rounded-full font-bold text-white bg-red-600 hover:bg-red-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px] shadow-soft shadow-red-600/20 cursor-pointer"
                             >
                                 {isDeleting ? (
                                     <>

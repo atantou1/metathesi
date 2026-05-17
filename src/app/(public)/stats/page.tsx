@@ -90,12 +90,12 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
       </button>
 
       {open && (
-        <div className="absolute top-[calc(100%+8px)] left-0 z-[9999] min-w-[200px] max-h-[240px] overflow-y-auto bg-card/95 backdrop-blur-xl border border-border rounded-2xl shadow-floating">
+        <div className="absolute top-[calc(100%+8px)] left-0 z-[9999] min-w-[200px] max-h-[240px] overflow-y-auto bg-card/95 backdrop-blur-xl border border-border rounded-2xl shadow-floating p-2">
           {placeholder && (
             <button
               type="button"
               onClick={() => { onChange(''); setOpen(false) }}
-              className="w-full text-left px-4 py-[10px] text-[13px] text-muted-foreground bg-transparent border-none cursor-pointer"
+              className="w-full text-left p-2.5 rounded-xl text-[13px] text-muted-foreground bg-transparent border-none cursor-pointer transition-all hover:bg-muted hover:text-foreground"
             >
               {placeholder}
             </button>
@@ -105,7 +105,7 @@ function FilterSelect({ value, onChange, options, placeholder, className = '', f
               key={opt.value}
               type="button"
               onClick={() => { onChange(opt.value); setOpen(false) }}
-              className={`w-full text-left px-4 py-[10px] text-[13px] font-medium border-none cursor-pointer transition-colors ${
+              className={`w-full text-left p-2.5 rounded-xl text-[13px] font-medium border-none cursor-pointer transition-all ${
                 value === opt.value ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
               }`}
             >
