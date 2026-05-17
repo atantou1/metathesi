@@ -3,8 +3,10 @@
 import { useState, useTransition, useEffect } from "react"
 import { Shield, Smartphone, Palette, FolderOpen, User, Lock, Download, Trash2, Moon, Sun, Monitor, Loader2, AlertTriangle, X, CheckCircle2, Check } from "lucide-react"
 import { useUser } from "@/components/providers/user-context"
-import { deleteAccount, changePassword, updateName } from "@/actions/settings"
+import { deleteAccount, changePassword, updateName, updateAvatarColor } from "@/actions/settings"
 import { useSession, signOut } from "next-auth/react"
+import { MALE_COLORS, FEMALE_COLORS, NEUTRAL_COLORS } from "@/lib/avatar-utils"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "@/components/ui/dropdown-menu"
 
 
 import { useForm } from "react-hook-form"
@@ -21,6 +23,11 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
     const { setName, setAvatarColor, name, avatarColor } = useUser()
     const { update } = useSession()
     const [mounted, setMounted] = useState(false)
+    const [selectedColor, setSelectedColor] = useState(avatarColor)
+
+    useEffect(() => {
+        setSelectedColor(avatarColor)
+    }, [avatarColor])
 
 
     useEffect(() => {
@@ -58,7 +65,7 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
         
         setIsPendingName(true);
         try {
-            const result = await updateName(name);
+            const result = await updateName(name, selectedColor);
             if (result.success && result.avatarColor) {
                 // Update session
                 await update({ 
@@ -176,12 +183,27 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                             <div className="flex flex-col items-center sm:items-start sm:flex-row gap-8">
                                 {/* Avatar Preview Section */}
                                 <div className="flex flex-col items-center gap-4">
-                                    <div className={`w-24 h-24 ${avatarColor} text-white rounded-full flex items-center justify-center text-3xl font-bold border-4 border-background dark:border-muted shadow-soft transition-colors duration-500`}>
-                                        {name.trim() ? name.trim().charAt(0).toUpperCase() : "Γ"}
+                                    <div className={`w-24 h-24 ${selectedColor} text-white rounded-full flex items-center justify-center text-3xl font-bold border-4 border-background dark:border-muted shadow-soft transition-colors duration-500`}>
+                                        {name.trim() ? name.trim().substring(0, 2).toUpperCase() : "Γ"}
                                     </div>
-                                    <button className="text-xs font-semibold text-primary hover:text-primary-hover transition-colors">
-                                        Αλλαγή χρώματος
-                                    </button>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <button className="text-xs font-semibold text-primary hover:text-primary-hover transition-colors">
+                                                Αλλαγή χρώματος
+                                            </button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="center" className="w-64 p-3 bg-card rounded-2xl border border-border shadow-floating">
+                                            <div className="grid grid-cols-6 gap-2">
+                                                {[...MALE_COLORS, ...FEMALE_COLORS, ...NEUTRAL_COLORS].map((color) => (
+                                                    <div
+                                                        key={color}
+                                                        className={`w-6 h-6 rounded-full ${color} cursor-pointer hover:scale-110 transition-transform`}
+                                                        onClick={() => setSelectedColor(color)}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
                                 </div>
 
                                 {/* Form Section */}

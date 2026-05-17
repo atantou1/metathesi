@@ -43,10 +43,16 @@ export function FloatingNavWrapper({ children }: { children: ReactNode }) {
 
     return (
         <NavContext.Provider value={{ isOpen, setIsOpen }}>
-            <div className={cn(
-                "fixed top-0 inset-x-0 w-full flex justify-center z-50 transition-all duration-500",
-                isOpen ? "pt-0 px-0 h-screen" : "pt-2 px-4 pointer-events-none"
-            )}>
+            <div 
+                className={cn(
+                    "fixed top-0 inset-x-0 w-full flex justify-center z-50",
+                    isOpen ? "pt-0 px-0 h-screen" : "pt-2 px-4 pointer-events-none"
+                )}
+                style={{ 
+                    paddingRight: "var(--removed-body-scroll-bar-size, 0px)",
+                    transition: "padding-left 500ms, padding-top 500ms, padding-bottom 500ms"
+                }}
+            >
                 <motion.nav
                     initial={{ y: -100, opacity: 0 }}
                     animate={{ 

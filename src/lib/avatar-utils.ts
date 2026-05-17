@@ -11,7 +11,7 @@ export const FEMALE_COLORS = [
 export const NEUTRAL_COLORS = [
     "bg-emerald-600", "bg-violet-600", "bg-purple-600", "bg-teal-600", 
     "bg-lime-600", "bg-yellow-600", "bg-emerald-700", "bg-violet-700",
-    "bg-purple-700", "bg-teal-700"
+    "bg-purple-700", "bg-teal-700", "bg-lime-700", "bg-yellow-700"
 ];
 
 export const getGenderFromName = (name: string) => {

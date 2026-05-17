@@ -121,7 +121,7 @@ export async function deleteAccount() {
 
 import { getGenderFromName, getRandomColorForGender } from "@/lib/avatar-utils";
 
-export async function updateName(newName: string) {
+export async function updateName(newName: string, color?: string) {
     const session = await auth();
 
     if (!session?.user?.id) {
@@ -129,21 +129,48 @@ export async function updateName(newName: string) {
     }
 
     const userId = parseInt(session.user.id, 10);
-    const gender = getGenderFromName(newName);
-    const newColor = getRandomColorForGender(gender);
+    
+    let colorToUse = color;
+    if (!colorToUse) {
+        const gender = getGenderFromName(newName);
+        colorToUse = getRandomColorForGender(gender);
+    }
 
     try {
         await prisma.user.update({
             where: { id: userId },
             data: { 
                 fullName: newName,
-                avatarColor: newColor
+                avatarColor: colorToUse
             }
         });
-        return { success: true, avatarColor: newColor };
+        return { success: true, avatarColor: colorToUse };
     } catch (error) {
         console.error("Failed to update name:", error);
         return { error: "Αποτυχία ενημέρωσης ονόματος." };
+    }
+}
+
+export async function updateAvatarColor(newColor: string) {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+        return { error: "Δεν είστε συνδεδεμένοι!" };
+    }
+
+    const userId = parseInt(session.user.id, 10);
+
+    try {
+        await prisma.user.update({
+            where: { id: userId },
+            data: { 
+                avatarColor: newColor
+            }
+        });
+        return { success: true };
+    } catch (error) {
+        console.error("Failed to update avatar color:", error);
+        return { error: "Αποτυχία ενημέρωσης χρώματος." };
     }
 }
 

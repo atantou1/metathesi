@@ -45,42 +45,7 @@ export default function PrivacyPage() {
               </div>
             </section>
 
-            {/* 1. Υπεύθυνος Επεξεργασίας */}
-            <section className="relative md:pl-10">
-              <div className="absolute left-[-2.75rem] top-1 hidden md:flex h-6 w-6 items-center justify-center rounded-full bg-background border border-primary/50">
-                <Building2 className="h-3 w-3 text-primary" />
-              </div>
-              <div className="glass-card overflow-hidden">
-                <div className="p-6 border-b border-border-dim bg-card/50">
-                  <h2 className="text-label">Υπεύθυνος Επεξεργασίας</h2>
-                </div>
-                <div className="p-6 sm:p-8 space-y-6">
-                  <p className="text-sm text-text-secondary">
-                    Υπεύθυνος Επεξεργασίας για τα δεδομένα που συλλέγονται μέσω της Εφαρμογής είναι:
-                  </p>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-2">
-                      <div className="text-sm">
-                        <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary mb-0.5">Επωνυμία / Ονοματεπώνυμο</span>
-                        <span className="text-text-secondary">Ατλάσης Αντώνιος</span>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="text-sm">
-                        <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary mb-0.5">Έδρα / Διεύθυνση</span>
-                        <span className="text-text-secondary">Εξοχών, 62100 Σέρρες, Ελλάδα</span>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="text-sm">
-                        <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary mb-0.5">Email Επικοινωνίας (DPO / Privacy)</span>
-                        <SafeEmail user="privacy" domain="metathesi.gr" />
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
+
 
             {/* 2. Ορισμοί Βασικών Εννοιών */}
             <section className="relative md:pl-10">
@@ -334,6 +299,43 @@ export default function PrivacyPage() {
                   <p className="text-sm text-text-secondary leading-relaxed">
                     Διατηρούμε το δικαίωμα να επικαιροποιούμε την παρούσα Πολιτική. Κάθε ουσιώδης αλλαγή θα σας γνωστοποιείται μέσω της Εφαρμογής και μέσω email.
                   </p>
+                </div>
+              </div>
+            </section>
+
+            {/* 10. Υπεύθυνος Επεξεργασίας */}
+            <section className="relative md:pl-10">
+              <div className="absolute left-[-2.75rem] top-1 hidden md:flex h-6 w-6 items-center justify-center rounded-full bg-background border border-primary/50">
+                <Building2 className="h-3 w-3 text-primary" />
+              </div>
+              <div className="glass-card overflow-hidden">
+                <div className="p-6 border-b border-border-dim bg-card/50">
+                  <h2 className="text-label">10. Υπεύθυνος Επεξεργασίας</h2>
+                </div>
+                <div className="p-6 sm:p-8 space-y-6">
+                  <p className="text-sm text-text-secondary">
+                    Υπεύθυνος Επεξεργασίας για τα δεδομένα που συλλέγονται μέσω της Εφαρμογής είναι:
+                  </p>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-2">
+                      <div className="text-sm">
+                        <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary mb-0.5">Επωνυμία / Ονοματεπώνυμο</span>
+                        <span className="text-text-secondary">Ατλάσης Αντώνιος</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="text-sm">
+                        <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary mb-0.5">Έδρα / Διεύθυνση</span>
+                        <span className="text-text-secondary">Εξοχών, 62100 Σέρρες, Ελλάδα</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="text-sm">
+                        <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary mb-0.5">Email Επικοινωνίας (DPO / Privacy)</span>
+                        <SafeEmail user="privacy" domain="metathesi.gr" />
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </section>

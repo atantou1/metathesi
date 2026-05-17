@@ -45,34 +45,7 @@ export default function TermsPage() {
               </div>
             </section>
 
-            {/* Στοιχεία Παρόχου */}
-            <section className="relative md:pl-10">
-              <div className="absolute left-[-2.75rem] top-1 hidden md:flex h-6 w-6 items-center justify-center rounded-full bg-background border border-primary/50">
-                <Building2 className="h-3 w-3 text-primary" />
-              </div>
-              <div className="glass-card overflow-hidden">
-                <div className="p-6 border-b border-border-dim bg-card/50">
-                  <h2 className="text-label">Στοιχεία Παρόχου</h2>
-                </div>
-                <div className="p-6 sm:p-8 space-y-6 text-sm text-text-secondary">
-                  <p>Η Εφαρμογή ανήκει και τελεί υπό τη διαχείριση του:</p>
-                  <ul className="space-y-4 ml-4">
-                    <li className="space-y-1">
-                      <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary">Ονοματεπώνυμο</span>
-                      <span className="text-foreground">Ατλάσης Αντώνιος</span>
-                    </li>
-                    <li className="space-y-1">
-                      <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary">Έδρα</span>
-                      <span className="text-foreground">Εξοχών, 62100 Σέρρες, Ελλάδα</span>
-                    </li>
-                    <li className="space-y-1">
-                      <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary">Email Επικοινωνίας</span>
-                      <SafeEmail user="privacy" domain="metathesi.gr" />
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
+
 
             {/* Ορισμοί */}
             <section className="relative md:pl-10">
@@ -254,6 +227,35 @@ export default function TermsPage() {
                 </div>
                 <div className="p-6 sm:p-8 text-sm text-text-secondary leading-relaxed">
                   <p>Οι παρόντες όροι διέπονται από το Ελληνικό Δίκαιο και για οποιαδήποτε διαφορά προκύψει, αρμόδια είναι τα δικαστήρια των Σερρών.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* Στοιχεία Παρόχου */}
+            <section className="relative md:pl-10">
+              <div className="absolute left-[-2.75rem] top-1 hidden md:flex h-6 w-6 items-center justify-center rounded-full bg-background border border-primary/50">
+                <Building2 className="h-3 w-3 text-primary" />
+              </div>
+              <div className="glass-card overflow-hidden">
+                <div className="p-6 border-b border-border-dim bg-card/50">
+                  <h2 className="text-label">Στοιχεία Παρόχου</h2>
+                </div>
+                <div className="p-6 sm:p-8 space-y-6 text-sm text-text-secondary">
+                  <p>Η Εφαρμογή ανήκει και τελεί υπό τη διαχείριση του:</p>
+                  <ul className="space-y-4 ml-4">
+                    <li className="space-y-1">
+                      <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary">Ονοματεπώνυμο</span>
+                      <span className="text-foreground">Ατλάσης Αντώνιος</span>
+                    </li>
+                    <li className="space-y-1">
+                      <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary">Έδρα</span>
+                      <span className="text-foreground">Εξοχών, 62100 Σέρρες, Ελλάδα</span>
+                    </li>
+                    <li className="space-y-1">
+                      <span className="block text-xs font-bold uppercase tracking-wider text-text-quaternary">Email Επικοινωνίας</span>
+                      <SafeEmail user="privacy" domain="metathesi.gr" />
+                    </li>
+                  </ul>
                 </div>
               </div>
             </section>
