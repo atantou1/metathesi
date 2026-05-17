@@ -134,3 +134,40 @@ export async function getMatchesList() {
         orderBy: { createdAt: "desc" },
     });
 }
+
+export async function getTransferRequestsList() {
+    await verifyAdmin();
+    return await prisma.transferRequest.findMany({
+        include: {
+            profile: {
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            fullName: true,
+                            email: true,
+                        }
+                    },
+                    specialty: true,
+                    division: true,
+                    currentZone: true,
+                }
+            },
+            targetZones: {
+                include: {
+                    zone: true
+                },
+                orderBy: {
+                    priorityOrder: 'asc'
+                }
+            },
+            matchParticipations: {
+                include: {
+                    match: true
+                }
+            }
+        },
+        orderBy: { createdAt: "desc" },
+    });
+}
+

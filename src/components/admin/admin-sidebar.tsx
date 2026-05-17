@@ -10,7 +10,8 @@ import {
     ShieldCheck,
     ChevronUp,
     MoreHorizontal,
-    GitCompare
+    GitCompare,
+    ClipboardList
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
@@ -30,6 +31,7 @@ const menuItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Χρήστες", href: "/admin/users", icon: Users },
     { name: "Matches", href: "/admin/matches", icon: GitCompare },
+    { name: "Αιτήσεις", href: "/admin/applications", icon: ClipboardList },
     { name: "Ρυθμίσεις", href: "/admin/settings", icon: Settings },
 ];
 

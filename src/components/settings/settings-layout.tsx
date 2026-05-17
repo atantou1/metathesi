@@ -19,6 +19,7 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
     const [isDeleting, setIsDeleting] = useState(false)
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
     const [deleteError, setDeleteError] = useState<string | null>(null)
+    const [deleteConfirmationInput, setDeleteConfirmationInput] = useState("")
 
     const { theme, setTheme, resolvedTheme } = useTheme()
     const { setName, setAvatarColor, name, avatarColor } = useUser()
@@ -483,7 +484,12 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                                 <AlertTriangle className="w-8 h-8" />
                             </div>
                             <button
-                                onClick={() => !isDeleting && setShowDeleteConfirm(false)}
+                                onClick={() => {
+                                    if (!isDeleting) {
+                                        setShowDeleteConfirm(false);
+                                        setDeleteConfirmationInput("");
+                                    }
+                                }}
                                 disabled={isDeleting}
                                 className="p-2 text-text-quaternary hover:text-text-secondary hover:bg-muted dark:hover:bg-muted rounded-full transition-colors disabled:opacity-50"
                             >
@@ -494,9 +500,23 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                         <h3 className="text-2xl font-bold text-foreground dark:text-white mb-2">
                             Είστε σίγουροι;
                         </h3>
-                        <p className="text-text-secondary dark:text-text-quaternary mb-8 text-base">
+                        <p className="text-text-secondary dark:text-text-quaternary mb-6 text-base">
                             Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Ο λογαριασμός σας και όλα τα σχετικά δεδομένα, μηνύματα και αιτήσεις θα διαγραφούν οριστικά από τους διακομιστές μας.
                         </p>
+
+                        <div className="mb-6 space-y-1.5">
+                            <label className="block text-sm font-medium text-text-secondary dark:text-foreground">
+                                Πληκτρολογήστε <span className="font-bold text-foreground dark:text-white">ΔΙΑΓΡΑΦΗ</span> για επιβεβαίωση:
+                            </label>
+                            <input
+                                type="text"
+                                value={deleteConfirmationInput}
+                                onChange={(e) => setDeleteConfirmationInput(e.target.value)}
+                                className="w-full px-4 py-3 rounded-2xl border border-border dark:border-border bg-background dark:bg-muted text-foreground dark:text-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-shadow sm:text-sm"
+                                placeholder="ΔΙΑΓΡΑΦΗ"
+                                disabled={isDeleting}
+                            />
+                        </div>
 
                         {deleteError && (
                             <div className="mb-6 p-4 bg-red-50 text-red-600 border border-red-200 rounded-2xl text-sm font-medium">
@@ -506,7 +526,10 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
 
                         <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
                             <button
-                                onClick={() => setShowDeleteConfirm(false)}
+                                onClick={() => {
+                                    setShowDeleteConfirm(false);
+                                    setDeleteConfirmationInput("");
+                                }}
                                 disabled={isDeleting}
                                 className="px-6 py-3 rounded-full font-medium text-text-secondary bg-background border border-border hover:bg-muted dark:bg-muted dark:border-border dark:text-foreground dark:hover:bg-border transition-colors disabled:opacity-50"
                             >
@@ -514,8 +537,8 @@ export function SettingsLayout({ initialName }: { initialName: string }) {
                             </button>
                             <button
                                 onClick={handleDeleteAccount}
-                                disabled={isDeleting}
-                                className="px-6 py-3 rounded-full font-bold text-white bg-red-600 hover:bg-red-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 min-w-[160px] shadow-soft shadow-red-600/20"
+                                disabled={isDeleting || deleteConfirmationInput !== "ΔΙΑΓΡΑΦΗ"}
+                                className="px-6 py-3 rounded-full font-bold text-white bg-red-600 hover:bg-red-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px] shadow-soft shadow-red-600/20"
                             >
                                 {isDeleting ? (
                                     <>

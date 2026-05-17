@@ -255,8 +255,8 @@ export function SignUpForm({
                 </CardContent>
             </Card>
             <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary transition-colors">
-                Κάνοντας κλικ στη συνέχεια, συμφωνείτε με τους <a href="#">Όρους Παροχής Υπηρεσιών</a>{" "}
-                και την <a href="#">Πολιτική Απορρήτου</a>.
+                Κάνοντας κλικ στη συνέχεια, συμφωνείτε με τους <Link href="/terms">Όρους Παροχής Υπηρεσιών</Link>{" "}
+                και την <Link href="/privacy">Πολιτική Απορρήτου</Link>.
             </div>
         </div>
     )
