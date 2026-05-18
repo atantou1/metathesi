@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description: "Η πρώτη ψηφιακή πλατφόρμα για αμοιβαίες μεταθέσεις εκπαιδευτικών και δημοσίων υπαλλήλων.",
     images: [
       {
-        url: "/api/og",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "metaThesi Platform",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Αμοιβαίες Μεταθέσεις Εκπαιδευτικών | metaThesi",
     description: "Η πρώτη ψηφιακή πλατφόρμα για αμοιβαίες μεταθέσεις εκπαιδευτικών και δημοσίων υπαλλήλων.",
-    images: ["/api/og"],
+    images: ["/opengraph-image.png"],
   },
 };
 
